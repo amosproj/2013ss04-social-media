@@ -354,6 +354,9 @@ public class MainUI {
 
 		JTabbedPane twitterPane = new JTabbedPane(JTabbedPane.TOP);
 		mediaPanes.addTab("Twitter", null, twitterPane, null);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		mediaPanes.addTab("Client data", null, tabbedPane, null);
 
 		return panel_right_bottom;
 	}
