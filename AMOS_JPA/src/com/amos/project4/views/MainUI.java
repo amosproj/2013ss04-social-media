@@ -51,6 +51,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.amos.project4.controllers.ClientController;
+import javax.swing.JList;
+import java.awt.Choice;
 
 public class MainUI {
 
@@ -295,12 +297,10 @@ public class MainUI {
 		btnSearch.setPreferredSize(new Dimension(75, 25));
 
 		search_textField = new JTextField();
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField, 10, SpringLayout.NORTH, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.WEST, search_textField,
-				5, SpringLayout.WEST, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField,
-				0, SpringLayout.NORTH, btnSearch);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, search_textField,
-				-5, SpringLayout.WEST, btnSearch);
+				313, SpringLayout.WEST, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, search_textField, -5, SpringLayout.WEST, btnSearch);
 		panel_right_top.add(search_textField);
 		search_textField.setColumns(20);
 
@@ -315,6 +315,24 @@ public class MainUI {
 		sl_panel_right_top.putConstraint(SpringLayout.EAST,
 				client_result_panel, 0, SpringLayout.EAST, btnCheckSocialMedia);
 		panel_right_top.add(client_result_panel);
+		
+		JList list = new JList();
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list, 22, SpringLayout.NORTH, panel_right_top);
+		panel_right_top.add(list);
+		
+		JList list_1 = new JList();
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list_1, 10, SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.WEST, list_1, -7, SpringLayout.WEST, search_textField);
+		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, list_1, 30, SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, list_1, -166, SpringLayout.WEST, search_textField);
+		panel_right_top.add(list_1);
+		
+		Choice choice = new Choice();
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, choice, 10, SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.WEST, choice, 10, SpringLayout.EAST, list);
+		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, choice, 30, SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, choice, 303, SpringLayout.EAST, list);
+		panel_right_top.add(choice);
 
 		return panel_right_top;
 	}
