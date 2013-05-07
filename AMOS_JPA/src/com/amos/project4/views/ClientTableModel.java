@@ -27,21 +27,22 @@ import com.amos.project4.controllers.ClientController;
 
 /**
  * Basic table Model for the Client Table in the GUI
+ * 
  * @author Jupiter BAKAKEU
- *
+ * 
  */
-public class ClientTableModel extends AbstractTableModel  {	
-	
+public class ClientTableModel extends AbstractTableModel {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	ClientController controller;
-	
+
 	public ClientTableModel(ClientController controller) {
 		this.controller = controller;
 	}
-	
+
 	public ClientController getController() {
 		return controller;
 	}
@@ -49,7 +50,6 @@ public class ClientTableModel extends AbstractTableModel  {
 	public void setController(ClientController controller) {
 		this.controller = controller;
 	}
-
 
 	@Override
 	public Class<?> getColumnClass(int i) {
@@ -98,57 +98,51 @@ public class ClientTableModel extends AbstractTableModel  {
 	}
 
 	@Override
-	public int getRowCount() {		
-		return ((ClientController)(this.getController())).getAllClients().size();
+	public int getRowCount() {
+		return ((ClientController) (this.getController())).getAllClients()
+				.size();
 	}
 
 	@Override
 	public Object getValueAt(int i, int j) {
 		switch (j) {
 		case 0:
-			return ((ClientController)(this.getController())).getAllClients().get(i).getID();
+			return ((ClientController) (this.getController())).getAllClients()
+					.get(i).getID();
 		case 1:
-			return ((ClientController)(this.getController())).getAllClients().get(i).getName();
+			return ((ClientController) (this.getController())).getAllClients()
+					.get(i).getName();
 		case 2:
-			return ((ClientController)(this.getController())).getAllClients().get(i).getFirstname();
+			return ((ClientController) (this.getController())).getAllClients()
+					.get(i).getFirstname();
 		case 3:
-			return ((ClientController)(this.getController())).getAllClients().get(i).getBirthdate();
+			return ((ClientController) (this.getController())).getAllClients()
+					.get(i).getBirthdate();
 		case 4:
-			return ((ClientController)(this.getController())).getAllClients().get(i).getMail();
+			return ((ClientController) (this.getController())).getAllClients()
+					.get(i).getMail();
 		case 5:
-			return ((ClientController)(this.getController())).getAllClients().get(i).getPlace();
+			return ((ClientController) (this.getController())).getAllClients()
+					.get(i).getPlace();
 		default:
 			return "";
 		}
 	}
-	
+
 	@Override
 	public void setValueAt(Object val, int i, int j) {
-		
+
 		/*
-		Client old_client = ((ClientController)(this.getController())).getAllClients().get(i);
-		
-		switch (j) {
-		case 0:
-			firePropertyChange("ID", old_client.getID(), val);
-			break;
-		case 1:
-			firePropertyChange("Name", old_client.getName(), val);
-			break;
-		case 2:
-			firePropertyChange("ID", old_client.getID(), val);
-			break;
-		case 3:
-			firePropertyChange("ID", old_client.getID(), val);
-			break;
-		case 4:
-			firePropertyChange("ID", old_client.getID(), val);
-			break;
-		default:
-			return ;
-		}
-		
-		*/
+		 * Client old_client =
+		 * ((ClientController)(this.getController())).getAllClients().get(i);
+		 * 
+		 * switch (j) { case 0: firePropertyChange("ID", old_client.getID(),
+		 * val); break; case 1: firePropertyChange("Name", old_client.getName(),
+		 * val); break; case 2: firePropertyChange("ID", old_client.getID(),
+		 * val); break; case 3: firePropertyChange("ID", old_client.getID(),
+		 * val); break; case 4: firePropertyChange("ID", old_client.getID(),
+		 * val); break; default: return ; }
+		 */
 	}
 
 	@Override
@@ -159,7 +153,7 @@ public class ClientTableModel extends AbstractTableModel  {
 	@Override
 	public void removeTableModelListener(TableModelListener arg0) {
 	}
-	
+
 	@Override
 	public void addTableModelListener(TableModelListener l) {
 	}

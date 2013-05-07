@@ -16,32 +16,31 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
- 
+
 package com.amos.project4.models;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public abstract class AbstractViewModel
-{
-    protected PropertyChangeSupport propertyChangeSupport;
+public abstract class AbstractViewModel {
+	protected PropertyChangeSupport propertyChangeSupport;
 
-    public AbstractViewModel()
-    {
-        propertyChangeSupport = new PropertyChangeSupport(this);
-    }
+	public AbstractViewModel() {
+		propertyChangeSupport = new PropertyChangeSupport(this);
+	}
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.addPropertyChangeListener(listener);
+	}
 
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
-    }
+	public void removePropertyChangeListener(PropertyChangeListener listener) {
+		propertyChangeSupport.removePropertyChangeListener(listener);
+	}
 
-    protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
-        propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
-    }
-
+	protected void firePropertyChange(String propertyName, Object oldValue,
+			Object newValue) {
+		propertyChangeSupport.firePropertyChange(propertyName, oldValue,
+				newValue);
+	}
 
 }

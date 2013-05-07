@@ -25,14 +25,14 @@ import javax.swing.JTable;
 
 import com.amos.project4.controllers.ClientController;
 
-public class ClientTable  extends JTable implements  AbstractControlledView {
+public class ClientTable extends JTable implements AbstractControlledView {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -9143258101609845500L;
 	ClientTableModel model;
-	
+
 	public ClientTable(ClientController controller) {
 		super();
 		this.model = new ClientTableModel(controller);

@@ -16,12 +16,12 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
- 
+
 package com.amos.project4.views;
 
 import java.beans.PropertyChangeEvent;
 
 public interface AbstractControlledView {
-	
-	public abstract  void modelPropertyChange(final PropertyChangeEvent evt);
+
+	public abstract void modelPropertyChange(final PropertyChangeEvent evt);
 }

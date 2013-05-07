@@ -16,8 +16,8 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
- 
- package com.amos.project4.controllers;
+
+package com.amos.project4.controllers;
 
 import java.util.ArrayList;
 
@@ -25,8 +25,9 @@ import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
 import com.amos.project4.views.SearchParameters;
 
-public class ClientController extends AbstractController implements ClientControllerInterface{
-	
+public class ClientController extends AbstractController implements
+		ClientControllerInterface {
+
 	private ClientDAO clientDAO;
 	SearchParameters search;
 
@@ -38,14 +39,14 @@ public class ClientController extends AbstractController implements ClientContro
 
 	@Override
 	public ArrayList<Client> getAllClients() {
-		if(this.evt_object != null){
+		if (this.evt_object != null) {
 			search = (SearchParameters) this.evt_object;
-		}		
+		}
 		return new ArrayList<Client>(clientDAO.getAllFilteredClients(search));
 	}
 
 	@Override
-	public boolean addClient(Client client) {		
+	public boolean addClient(Client client) {
 		return clientDAO.addClient(client);
 	}
 
@@ -58,7 +59,7 @@ public class ClientController extends AbstractController implements ClientContro
 	public boolean deleteClient(Client client) {
 		return clientDAO.deleteClient(client);
 	}
-	
+
 	public void setSearch(SearchParameters search) {
 		this.search = search;
 	}

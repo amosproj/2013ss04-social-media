@@ -1,5 +1,4 @@
 /*
- * 
  * This file is part of the software project "Social Media and Datev".
  *
  * This program is free software: you can redistribute it and/or modify
@@ -113,7 +112,7 @@ public class MainUI {
 				"C:\\Users\\Lili\\Desktop\\Facebook.ico"));
 		frame.setBounds(100, 100, 700, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		 frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
 		// set the system look and feel
 		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -201,7 +200,6 @@ public class MainUI {
 		return client_controller;
 	}
 
-	
 	private JScrollPane initLeftpanel() {
 		JScrollPane left_scroll_pane = new JScrollPane();
 		left_scroll_pane.setPreferredSize(new Dimension(150, 0));
@@ -268,7 +266,7 @@ public class MainUI {
 		panel_right_top.setLayout(sl_panel_right_top);
 
 		JButton btnCheckSocialMedia = new JButton("Check Social Media");
-		
+
 		sl_panel_right_top.putConstraint(SpringLayout.NORTH,
 				btnCheckSocialMedia, 10, SpringLayout.NORTH, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.EAST,
@@ -286,7 +284,7 @@ public class MainUI {
 
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new searchAction());
-		
+
 		sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnSearch, 0,
 				SpringLayout.NORTH, btnFilter);
 		sl_panel_right_top.putConstraint(SpringLayout.EAST, btnSearch, -5,
@@ -295,10 +293,12 @@ public class MainUI {
 		btnSearch.setPreferredSize(new Dimension(75, 25));
 
 		search_textField = new JTextField();
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField, 10, SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField,
+				10, SpringLayout.NORTH, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.WEST, search_textField,
 				313, SpringLayout.WEST, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, search_textField, -5, SpringLayout.WEST, btnSearch);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, search_textField,
+				-5, SpringLayout.WEST, btnSearch);
 		panel_right_top.add(search_textField);
 		search_textField.setColumns(20);
 
@@ -313,23 +313,32 @@ public class MainUI {
 		sl_panel_right_top.putConstraint(SpringLayout.EAST,
 				client_result_panel, 0, SpringLayout.EAST, btnCheckSocialMedia);
 		panel_right_top.add(client_result_panel);
-		
+
 		JList list = new JList();
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list, 22, SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list, 22,
+				SpringLayout.NORTH, panel_right_top);
 		panel_right_top.add(list);
-		
+
 		JList list_1 = new JList();
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list_1, 10, SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.WEST, list_1, -7, SpringLayout.WEST, search_textField);
-		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, list_1, 30, SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, list_1, -166, SpringLayout.WEST, search_textField);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list_1, 10,
+				SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.WEST, list_1, -7,
+				SpringLayout.WEST, search_textField);
+		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, list_1, 30,
+				SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, list_1, -166,
+				SpringLayout.WEST, search_textField);
 		panel_right_top.add(list_1);
-		
+
 		Choice choice = new Choice();
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, choice, 10, SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.WEST, choice, 10, SpringLayout.EAST, list);
-		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, choice, 30, SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, choice, 303, SpringLayout.EAST, list);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, choice, 10,
+				SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.WEST, choice, 10,
+				SpringLayout.EAST, list);
+		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, choice, 30,
+				SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, choice, 303,
+				SpringLayout.EAST, list);
 		panel_right_top.add(choice);
 
 		return panel_right_top;
@@ -370,7 +379,7 @@ public class MainUI {
 
 		JTabbedPane twitterPane = new JTabbedPane(JTabbedPane.TOP);
 		mediaPanes.addTab("Twitter", null, twitterPane, null);
-		
+
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		mediaPanes.addTab("Client data", null, tabbedPane, null);
 
@@ -406,20 +415,20 @@ public class MainUI {
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			
+
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			System.exit(0);
 		}
 	}
-	
+
 	private class searchAction implements ActionListener {
-	      public void actionPerformed( ActionEvent e ) {
-	        searc_params.setSearchParameters(6, search_textField.getText());
-	        client_controller.setSearch(searc_params);
-	        tclients.model.fireTableDataChanged();
-	        tclients.repaint();
-	        clienTable_scrollPane.repaint();
-	      }
+		public void actionPerformed(ActionEvent e) {
+			searc_params.setSearchParameters(6, search_textField.getText());
+			client_controller.setSearch(searc_params);
+			tclients.model.fireTableDataChanged();
+			tclients.repaint();
+			clienTable_scrollPane.repaint();
+		}
 	}
 
 	public ClientTable getTclients() {
