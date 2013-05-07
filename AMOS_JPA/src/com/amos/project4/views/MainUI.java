@@ -29,6 +29,7 @@ import java.util.Vector;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -60,6 +61,8 @@ public class MainUI {
 	private ClientTable tclients;
 	private JTextField search_textField;
 	private SearchParameters searc_params;
+	private JComboBox drop_down;
+	private String[] input_dd={"","ID","Name", "Firstname", "Birthdate", "E-Mail","Place"};
 
 	/**
 	 * Launch the application.
@@ -330,16 +333,16 @@ public class MainUI {
 				SpringLayout.WEST, search_textField);
 		panel_right_top.add(list_1);
 
-		Choice choice = new Choice();
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, choice, 10,
+		drop_down = new JComboBox(input_dd);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, drop_down, 10,
 				SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.WEST, choice, 10,
+		sl_panel_right_top.putConstraint(SpringLayout.WEST, drop_down, 10,
 				SpringLayout.EAST, list);
-		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, choice, 30,
+		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, drop_down, 30,
 				SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, choice, 303,
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, drop_down, 303,
 				SpringLayout.EAST, list);
-		panel_right_top.add(choice);
+		panel_right_top.add(drop_down);
 
 		return panel_right_top;
 	}
@@ -417,7 +420,7 @@ public class MainUI {
 		public void actionPerformed(ActionEvent e) {
 
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			System.exit(0);
+			//System.exit(0);
 		}
 	}
 
