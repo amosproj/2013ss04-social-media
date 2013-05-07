@@ -29,8 +29,8 @@ import java.util.Vector;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -62,8 +62,7 @@ public class MainUI {
 	private JTextField search_textField;
 	private SearchParameters searc_params;
 	private JComboBox drop_down;
-	private String[] input_dd={"","ID","Name", "Firstname", "Birthdate", "E-Mail","Place"};
-
+	private String[] dd_input = {""}; //get_cat
 	/**
 	 * Launch the application.
 	 */
@@ -277,21 +276,21 @@ public class MainUI {
 		btnCheckSocialMedia.setPreferredSize(new Dimension(150, 25));
 		panel_right_top.add(btnCheckSocialMedia);
 
-		JButton btnFilter = new JButton("Filter");
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnFilter, 0,
-				SpringLayout.NORTH, btnCheckSocialMedia);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, btnFilter, -5,
-				SpringLayout.WEST, btnCheckSocialMedia);
-		panel_right_top.add(btnFilter);
-		btnFilter.setPreferredSize(new Dimension(70, 25));
+//		JButton btnFilter = new JButton("Filter");
+//		sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnFilter, 0,
+//				SpringLayout.NORTH, btnCheckSocialMedia);
+//		sl_panel_right_top.putConstraint(SpringLayout.EAST, btnFilter, -5,
+//				SpringLayout.WEST, btnCheckSocialMedia);
+//		panel_right_top.add(btnFilter);
+//		btnFilter.setPreferredSize(new Dimension(70, 25));
 
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new searchAction());
 
 		sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnSearch, 0,
-				SpringLayout.NORTH, btnFilter);
+				SpringLayout.NORTH, btnCheckSocialMedia);
 		sl_panel_right_top.putConstraint(SpringLayout.EAST, btnSearch, -5,
-				SpringLayout.WEST, btnFilter);
+				SpringLayout.WEST, btnCheckSocialMedia);
 		panel_right_top.add(btnSearch);
 		btnSearch.setPreferredSize(new Dimension(75, 25));
 
@@ -333,7 +332,7 @@ public class MainUI {
 				SpringLayout.WEST, search_textField);
 		panel_right_top.add(list_1);
 
-		drop_down = new JComboBox(input_dd);
+		drop_down = new JComboBox(dd_input);
 		sl_panel_right_top.putConstraint(SpringLayout.NORTH, drop_down, 10,
 				SpringLayout.NORTH, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.WEST, drop_down, 10,
@@ -420,7 +419,7 @@ public class MainUI {
 		public void actionPerformed(ActionEvent e) {
 
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			//System.exit(0);
+			System.exit(0);
 		}
 	}
 
