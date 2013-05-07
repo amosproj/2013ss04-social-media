@@ -1,9 +1,6 @@
-package com.amos.project4.views;
-
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
- *
- * This file is part of the Wahlzeit rating application.
+ * 
+ * This file is part of the software project "Social Media and Datev".
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -19,6 +16,7 @@ package com.amos.project4.views;
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
+package com.amos.project4.views;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
