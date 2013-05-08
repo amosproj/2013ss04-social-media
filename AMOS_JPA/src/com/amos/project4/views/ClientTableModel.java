@@ -1,6 +1,7 @@
 /*
- * 
- * This file is part of the software project "Social Media and Datev".
+ * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
+ *
+ * This file is part of the Wahlzeit rating application.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -16,6 +17,7 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
+
 package com.amos.project4.views;
 
 import java.util.Date;
@@ -23,33 +25,34 @@ import java.util.Date;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
-import com.amos.project4.controllers.ClientController;
+import com.amos.project4.controllers.ClientsController;
+import com.amos.project4.models.Client;
 
 /**
  * Basic table Model for the Client Table in the GUI
- * 
  * @author Jupiter BAKAKEU
- * 
+ *
  */
-public class ClientTableModel extends AbstractTableModel {
-
+public class ClientTableModel extends AbstractTableModel  {	
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	ClientController controller;
-
-	public ClientTableModel(ClientController controller) {
+	ClientsController controller;
+	
+	public ClientTableModel(ClientsController controller) {
 		this.controller = controller;
 	}
-
-	public ClientController getController() {
+	
+	public ClientsController getController() {
 		return controller;
 	}
 
-	public void setController(ClientController controller) {
+	public void setController(ClientsController controller) {
 		this.controller = controller;
 	}
+
 
 	@Override
 	public Class<?> getColumnClass(int i) {
@@ -98,51 +101,57 @@ public class ClientTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public int getRowCount() {
-		return ((ClientController) (this.getController())).getAllClients()
-				.size();
+	public int getRowCount() {		
+		return ((ClientsController)(this.getController())).getAllClients().size();
 	}
 
 	@Override
 	public Object getValueAt(int i, int j) {
 		switch (j) {
 		case 0:
-			return ((ClientController) (this.getController())).getAllClients()
-					.get(i).getID();
+			return ((ClientsController)(this.getController())).getAllClients().get(i).getID();
 		case 1:
-			return ((ClientController) (this.getController())).getAllClients()
-					.get(i).getName();
+			return ((ClientsController)(this.getController())).getAllClients().get(i).getName();
 		case 2:
-			return ((ClientController) (this.getController())).getAllClients()
-					.get(i).getFirstname();
+			return ((ClientsController)(this.getController())).getAllClients().get(i).getFirstname();
 		case 3:
-			return ((ClientController) (this.getController())).getAllClients()
-					.get(i).getBirthdate();
+			return ((ClientsController)(this.getController())).getAllClients().get(i).getBirthdate();
 		case 4:
-			return ((ClientController) (this.getController())).getAllClients()
-					.get(i).getMail();
+			return ((ClientsController)(this.getController())).getAllClients().get(i).getMail();
 		case 5:
-			return ((ClientController) (this.getController())).getAllClients()
-					.get(i).getPlace();
+			return ((ClientsController)(this.getController())).getAllClients().get(i).getPlace();
 		default:
 			return "";
 		}
 	}
-
+	
 	@Override
 	public void setValueAt(Object val, int i, int j) {
-
+		
 		/*
-		 * Client old_client =
-		 * ((ClientController)(this.getController())).getAllClients().get(i);
-		 * 
-		 * switch (j) { case 0: firePropertyChange("ID", old_client.getID(),
-		 * val); break; case 1: firePropertyChange("Name", old_client.getName(),
-		 * val); break; case 2: firePropertyChange("ID", old_client.getID(),
-		 * val); break; case 3: firePropertyChange("ID", old_client.getID(),
-		 * val); break; case 4: firePropertyChange("ID", old_client.getID(),
-		 * val); break; default: return ; }
-		 */
+		Client old_client = ((ClientController)(this.getController())).getAllClients().get(i);
+		
+		switch (j) {
+		case 0:
+			firePropertyChange("ID", old_client.getID(), val);
+			break;
+		case 1:
+			firePropertyChange("Name", old_client.getName(), val);
+			break;
+		case 2:
+			firePropertyChange("ID", old_client.getID(), val);
+			break;
+		case 3:
+			firePropertyChange("ID", old_client.getID(), val);
+			break;
+		case 4:
+			firePropertyChange("ID", old_client.getID(), val);
+			break;
+		default:
+			return ;
+		}
+		
+		*/
 	}
 
 	@Override
@@ -153,8 +162,12 @@ public class ClientTableModel extends AbstractTableModel {
 	@Override
 	public void removeTableModelListener(TableModelListener arg0) {
 	}
-
+	
 	@Override
 	public void addTableModelListener(TableModelListener l) {
+	}
+	
+	public Client getClientAt(int i){
+		return ((ClientsController)(this.getController())).getAllClients().get(i); 
 	}
 }

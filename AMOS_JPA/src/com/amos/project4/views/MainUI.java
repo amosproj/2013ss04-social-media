@@ -1,5 +1,7 @@
 /*
- * This file is part of the software project "Social Media and Datev".
+ * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
+ *
+ * This file is part of the Wahlzeit rating application.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -15,6 +17,7 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
+
 package com.amos.project4.views;
 
 import java.awt.BorderLayout;
@@ -30,8 +33,8 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -46,23 +49,25 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.JComboBox;
 import javax.swing.tree.TreeSelectionModel;
 
-import com.amos.project4.controllers.ClientController;
-import javax.swing.JList;
-import java.awt.Choice;
+import com.amos.project4.controllers.ClientsController;
 
 public class MainUI {
 
 	private JFrame frame;
 	private final Action action = new ExitAction();
-	ClientController client_controller;
+	ClientsController client_controller;
 	JScrollPane clienTable_scrollPane;
 	private ClientTable tclients;
 	private JTextField search_textField;
-	private SearchParameters searc_params;
+	private SearchParameters search_params;
 	private JComboBox drop_down;
-	private String[] dd_input = {""}; //get_cat
+	private String[] dd_input = { " ", "ID", "Name", "Firstname", "Birthdate",
+			"E-Mail", "Place" };
+	ClientDetailMainPanel clientDetailsPane;
+
 	/**
 	 * Launch the application.
 	 */
@@ -104,20 +109,26 @@ public class MainUI {
 			InstantiationException, IllegalAccessException,
 			UnsupportedLookAndFeelException {
 		// Initialized The Controller
-		client_controller = new ClientController();
-		searc_params = new SearchParameters();
-		searc_params.addPropertyChangeListener(client_controller);
+		client_controller = new ClientsController();
+
+		// Initialise and register the search view Model
+		search_params = new SearchParameters();
+		client_controller.addModel(search_params);
+
+		// Initialise and register the selected client ViewModel
+		clientDetailsPane = new ClientDetailMainPanel();
+		this.client_controller.addView(clientDetailsPane);
 
 		// Initialise the Frame
 		frame = new JFrame();
 		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				"C:\\Users\\Lili\\Desktop\\Facebook.ico"));
-		frame.setBounds(100, 100, 700, 700);
+		frame.setBounds(100, 100, 820, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
 		// set the system look and feel
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
 		// Initialise The menus
 		initMenus();
@@ -198,7 +209,7 @@ public class MainUI {
 
 	}
 
-	public ClientController getClient_controller() {
+	public ClientsController getClient_controller() {
 		return client_controller;
 	}
 
@@ -260,6 +271,65 @@ public class MainUI {
 
 	}
 
+	// private JPanel initRightTopPanel() {
+	// JPanel panel_right_top = new JPanel();
+	// panel_right_top.setPreferredSize(new Dimension(10, 350));
+	//
+	// SpringLayout sl_panel_right_top = new SpringLayout();
+	// panel_right_top.setLayout(sl_panel_right_top);
+	//
+	// JButton btnCheckSocialMedia = new JButton("Check Social Media");
+	//
+	// sl_panel_right_top.putConstraint(SpringLayout.NORTH,
+	// btnCheckSocialMedia, 10, SpringLayout.NORTH, panel_right_top);
+	// sl_panel_right_top.putConstraint(SpringLayout.EAST,
+	// btnCheckSocialMedia, -5, SpringLayout.EAST, panel_right_top);
+	// btnCheckSocialMedia.setPreferredSize(new Dimension(150, 25));
+	// panel_right_top.add(btnCheckSocialMedia);
+	//
+	// JButton btnFilter = new JButton("Filter");
+	// sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnFilter, 0,
+	// SpringLayout.NORTH, btnCheckSocialMedia);
+	// sl_panel_right_top.putConstraint(SpringLayout.EAST, btnFilter, -5,
+	// SpringLayout.WEST, btnCheckSocialMedia);
+	// panel_right_top.add(btnFilter);
+	// btnFilter.setPreferredSize(new Dimension(70, 25));
+	//
+	// JButton btnSearch = new JButton("Search");
+	// btnSearch.addActionListener(new searchAction());
+	//
+	// sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnSearch, 0,
+	// SpringLayout.NORTH, btnFilter);
+	// sl_panel_right_top.putConstraint(SpringLayout.EAST, btnSearch, -5,
+	// SpringLayout.WEST, btnFilter);
+	// panel_right_top.add(btnSearch);
+	// btnSearch.setPreferredSize(new Dimension(75, 25));
+	//
+	// search_textField = new JTextField();
+	// sl_panel_right_top.putConstraint(SpringLayout.WEST, search_textField,
+	// 5, SpringLayout.WEST, panel_right_top);
+	// sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField,
+	// 0, SpringLayout.NORTH, btnSearch);
+	// sl_panel_right_top.putConstraint(SpringLayout.EAST, search_textField,
+	// -5, SpringLayout.WEST, btnSearch);
+	// panel_right_top.add(search_textField);
+	// search_textField.setColumns(20);
+	//
+	// JPanel client_result_panel = InitClientTablePanel();
+	// sl_panel_right_top.putConstraint(SpringLayout.NORTH,
+	// client_result_panel, 10, SpringLayout.SOUTH,
+	// btnCheckSocialMedia);
+	// sl_panel_right_top.putConstraint(SpringLayout.WEST,
+	// client_result_panel, 0, SpringLayout.WEST, panel_right_top);
+	// sl_panel_right_top.putConstraint(SpringLayout.SOUTH,
+	// client_result_panel, -10, SpringLayout.SOUTH, panel_right_top);
+	// sl_panel_right_top.putConstraint(SpringLayout.EAST,
+	// client_result_panel, 0, SpringLayout.EAST, btnCheckSocialMedia);
+	// panel_right_top.add(client_result_panel);
+	//
+	// return panel_right_top;
+	// }
+
 	private JPanel initRightTopPanel() {
 		JPanel panel_right_top = new JPanel();
 		panel_right_top.setPreferredSize(new Dimension(10, 350));
@@ -276,13 +346,13 @@ public class MainUI {
 		btnCheckSocialMedia.setPreferredSize(new Dimension(150, 25));
 		panel_right_top.add(btnCheckSocialMedia);
 
-//		JButton btnFilter = new JButton("Filter");
-//		sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnFilter, 0,
-//				SpringLayout.NORTH, btnCheckSocialMedia);
-//		sl_panel_right_top.putConstraint(SpringLayout.EAST, btnFilter, -5,
-//				SpringLayout.WEST, btnCheckSocialMedia);
-//		panel_right_top.add(btnFilter);
-//		btnFilter.setPreferredSize(new Dimension(70, 25));
+		// JButton btnFilter = new JButton("Filter");
+		// sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnFilter, 0,
+		// SpringLayout.NORTH, btnCheckSocialMedia);
+		// sl_panel_right_top.putConstraint(SpringLayout.EAST, btnFilter, -5,
+		// SpringLayout.WEST, btnCheckSocialMedia);
+		// panel_right_top.add(btnFilter);
+		// btnFilter.setPreferredSize(new Dimension(70, 25));
 
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new searchAction());
@@ -333,6 +403,7 @@ public class MainUI {
 		panel_right_top.add(list_1);
 
 		drop_down = new JComboBox(dd_input);
+		drop_down.addActionListener(new SearchCatListener());
 		sl_panel_right_top.putConstraint(SpringLayout.NORTH, drop_down, 10,
 				SpringLayout.NORTH, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.WEST, drop_down, 10,
@@ -369,21 +440,22 @@ public class MainUI {
 		JTabbedPane mediaPanes = new JTabbedPane(JTabbedPane.TOP);
 		panel_right_bottom.add(mediaPanes, BorderLayout.CENTER);
 
-		JTabbedPane facebookPane = new JTabbedPane(JTabbedPane.TOP);
-		mediaPanes.addTab("Facebook", null, facebookPane, null);
+		clientDetailsPane = new ClientDetailMainPanel();
+		this.client_controller.addView(clientDetailsPane);
+		mediaPanes.addTab("Client' details", null, clientDetailsPane, null);
 		mediaPanes.setEnabledAt(0, true);
 
-		JTabbedPane xingPane = new JTabbedPane(JTabbedPane.TOP);
+		JPanel facebookPane = new JPanel();
+		mediaPanes.addTab("Facebook", null, facebookPane, null);
+
+		JPanel xingPane = new JPanel();
 		mediaPanes.addTab("Xing", null, xingPane, null);
 
-		JTabbedPane linkedInPane = new JTabbedPane(JTabbedPane.TOP);
+		JPanel linkedInPane = new JPanel();
 		mediaPanes.addTab("LinkedIn", null, linkedInPane, null);
 
-		JTabbedPane twitterPane = new JTabbedPane(JTabbedPane.TOP);
+		JPanel twitterPane = new JPanel();
 		mediaPanes.addTab("Twitter", null, twitterPane, null);
-
-		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		mediaPanes.addTab("Client data", null, tabbedPane, null);
 
 		return panel_right_bottom;
 	}
@@ -425,11 +497,22 @@ public class MainUI {
 
 	private class searchAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			searc_params.setSearchParameters(6, search_textField.getText());
-			client_controller.setSearch(searc_params);
-			tclients.model.fireTableDataChanged();
-			tclients.repaint();
-			clienTable_scrollPane.repaint();
+			search_params.setSearchCat(drop_down.getSelectedIndex());
+			search_params.setSearchText(search_textField.getText());
+			tclients.getModel().fireTableDataChanged();
+			clienTable_scrollPane.invalidate();
+			clienTable_scrollPane.revalidate();
+			frame.repaint();
+		}
+	}
+
+	private class SearchCatListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			search_params.setSearchCat(drop_down.getSelectedIndex());
+			tclients.getModel().fireTableDataChanged();
+			clienTable_scrollPane.invalidate();
+			clienTable_scrollPane.revalidate();
+			frame.repaint();
 		}
 	}
 

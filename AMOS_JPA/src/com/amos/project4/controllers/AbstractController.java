@@ -1,6 +1,7 @@
 /*
- * 
- * This file is part of the software project "Social Media and Datev".
+ * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
+ *
+ * This file is part of the Wahlzeit rating application.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -18,19 +19,18 @@
  */
 package com.amos.project4.controllers;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-import com.amos.project4.models.AbstractViewModel;
 import com.amos.project4.views.AbstractControlledView;
+import com.amos.project4.views.AbstractViewModel;
 
-public abstract class AbstractController implements PropertyChangeListener {
+public abstract class AbstractController implements Observer {
 
 	private ArrayList<AbstractControlledView> registeredViews;
 	private ArrayList<AbstractViewModel> registeredModels;
-	protected Object evt_object;
 
 	public AbstractController() {
 		registeredViews = new ArrayList<AbstractControlledView>();
@@ -39,12 +39,12 @@ public abstract class AbstractController implements PropertyChangeListener {
 
 	public void addModel(AbstractViewModel model) {
 		registeredModels.add(model);
-		model.addPropertyChangeListener(this);
+		model.addChangeListener(this);
 	}
 
 	public void removeModel(AbstractViewModel model) {
 		registeredModels.remove(model);
-		model.removePropertyChangeListener(this);
+		model.removeChangeListener(this);
 	}
 
 	public void addView(AbstractControlledView view) {
@@ -57,12 +57,15 @@ public abstract class AbstractController implements PropertyChangeListener {
 
 	// Use this to observe property changes from registered models
 	// and propagate them on to all the views.
-	public void propertyChange(PropertyChangeEvent evt) {
-		evt_object = evt.getNewValue();
+	@Override
+	public void update(Observable o, Object arg) {
+		updateInternally(arg);
 		for (AbstractControlledView view : registeredViews) {
-			view.modelPropertyChange(evt);
-		}
+			view.modelPropertyChange(o, arg);
+		}		
 	}
+	
+	public abstract void updateInternally(Object arg);
 
 	/**
 	 * This is a convenience method that subclasses can call upon to fire

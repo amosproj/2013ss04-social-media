@@ -1,6 +1,7 @@
 /*
- * 
- * This file is part of the software project "Social Media and Datev".
+ * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
+ *
+ * This file is part of the Wahlzeit rating application.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -19,28 +20,48 @@
 
 package com.amos.project4.views;
 
-import java.beans.PropertyChangeEvent;
+import java.util.Observable;
 
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-import com.amos.project4.controllers.ClientController;
+import com.amos.project4.controllers.ClientsController;
 
-public class ClientTable extends JTable implements AbstractControlledView {
+public class ClientTable  extends JTable implements  AbstractControlledView {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -9143258101609845500L;
-	ClientTableModel model;
-
-	public ClientTable(ClientController controller) {
+	private ClientTableModel model;
+	private SelectedClientViewModel selectedClient;
+	
+	public ClientTable(ClientsController controller) {
 		super();
 		this.model = new ClientTableModel(controller);
 		this.setModel(model);
+		//Initialise and register the Model
+		selectedClient = new SelectedClientViewModel();
+		controller.addModel(selectedClient);
+		this.getSelectionModel().addListSelectionListener(new ClientSelectionListener());
 	}
 
+
 	@Override
-	public void modelPropertyChange(PropertyChangeEvent evt) {
-		this.model.fireTableDataChanged();
+	public void modelPropertyChange(Observable o, Object arg) {
+		if(o.getClass().equals(SearchParameters.class) )
+			this.model.fireTableDataChanged();		
+	}
+	
+	public ClientTableModel getModel() {
+		return model;
+	}
+	
+	private class ClientSelectionListener implements ListSelectionListener {
+		@Override
+		public void valueChanged(ListSelectionEvent e) {
+			selectedClient.setSelectedClient(getModel().getClientAt(getSelectedRows()[0]));			
+		}
 	}
 }

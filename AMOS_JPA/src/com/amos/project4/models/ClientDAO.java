@@ -1,6 +1,7 @@
 /*
- * 
- * This file is part of the software project "Social Media and Datev".
+ * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
+ *
+ * This file is part of the Wahlzeit rating application.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -19,7 +20,8 @@
 
 package com.amos.project4.models;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -71,41 +73,124 @@ public class ClientDAO {
 		}
 		em = factory.createEntityManager();
 		Query q = null;
-		String column = "";
+		HashMap<String, Client> resultlist = new HashMap<String, Client>();
+
 		switch (search.getSearch_cat()) {
 		case 1:
-			q = em.createQuery("SELECT c FROM Client c WHERE c.ID = :param  ORDER BY c.ID");
-			q.setParameter("param", new Integer(search.getSearch_text()));
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.ID = :param  ORDER BY c.ID");
+				q.setParameter("param", new Integer(search.getSearch_text()));
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
 			break;
 		case 2:
-			q = em.createQuery("SELECT c FROM Client c WHERE c.name = :param  ORDER BY c.ID");
-			q.setParameter("param", search.getSearch_text());
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.name = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
 			break;
 		case 3:
-			q = em.createQuery("SELECT c FROM Client c WHERE c.firstname = :param  ORDER BY c.ID");
-			q.setParameter("param", search.getSearch_text());
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.firstname = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
 			break;
 		case 4:
-			// q =
-			// em.createQuery("SELECT c FROM Client c WHERE c.birthdate = :param  ORDER BY c.ID");
-			// q.setParameter("param", new Date() search.getSearch_text());
+			try {
+				// em.createQuery("SELECT c FROM Client c WHERE c.birthdate = :param  ORDER BY c.ID");
+				// q.setParameter("param", new Date() search.getSearch_text());
+				// addClientToMap(resultlist,q.getResultList());
+			} catch (Exception e) {
+
+			}
 			break;
 		case 5:
-			q = em.createQuery("SELECT c FROM Client c WHERE c.mail = :param  ORDER BY c.ID");
-			q.setParameter("param", search.getSearch_text());
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.mail = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
 			break;
 		case 6:
-			q = em.createQuery("SELECT c FROM Client c WHERE c.place = :param  ORDER BY c.ID");
-			q.setParameter("param", search.getSearch_text());
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.place = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
 			break;
 		default:
-			q = em.createQuery("SELECT c FROM Client c");
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.ID = :param  ORDER BY c.ID");
+				q.setParameter("param", new Integer(search.getSearch_text()));
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
+
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.name = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
+
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.firstname = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
+
+			try {
+				// em.createQuery("SELECT c FROM Client c WHERE c.birthdate = :param  ORDER BY c.ID");
+				// q.setParameter("param", new Date() search.getSearch_text());
+				// addClientToMap(resultlist,q.getResultList());
+			} catch (Exception e) {
+
+			}
+
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.mail = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
+
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.place = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
 			break;
 		}
-
-		List<Client> clients = q.getResultList();
+		
+		List<Client> clients = new ArrayList<Client>();
+		clients.addAll(resultlist.values());
 		em.close();
 		return clients;
+	}
+
+	private void addClientToMap(HashMap<String, Client> map, List<Client> list) {
+		for (Client c : list) {
+			map.put("" + c.getID(), c);
+		}
 	}
 
 	public Client getclient(Integer ID) {
