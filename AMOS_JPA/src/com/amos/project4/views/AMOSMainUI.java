@@ -54,7 +54,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.amos.project4.controllers.ClientsController;
 
-public class MainUI {
+public class AMOSMainUI {
 
 	private JFrame frame;
 	private final Action action = new ExitAction();
@@ -75,7 +75,7 @@ public class MainUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainUI window = new MainUI();
+					AMOSMainUI window = new AMOSMainUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -92,7 +92,7 @@ public class MainUI {
 	 * @throws InstantiationException
 	 * @throws ClassNotFoundException
 	 */
-	public MainUI() throws ClassNotFoundException, InstantiationException,
+	public AMOSMainUI() throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException {
 		initialize();
 	}
