@@ -1,7 +1,6 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
  *
- * This file is part of the Wahlzeit rating application.
+ * This file is part of the Datev and Social Media project.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -30,21 +29,22 @@ import com.amos.project4.models.Client;
 
 /**
  * Basic table Model for the Client Table in the GUI
+ * 
  * @author Jupiter BAKAKEU
- *
+ * 
  */
-public class ClientTableModel extends AbstractTableModel  {	
-	
+public class ClientTableModel extends AbstractTableModel {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	ClientsController controller;
-	
+
 	public ClientTableModel(ClientsController controller) {
 		this.controller = controller;
 	}
-	
+
 	public ClientsController getController() {
 		return controller;
 	}
@@ -52,7 +52,6 @@ public class ClientTableModel extends AbstractTableModel  {
 	public void setController(ClientsController controller) {
 		this.controller = controller;
 	}
-
 
 	@Override
 	public Class<?> getColumnClass(int i) {
@@ -101,57 +100,51 @@ public class ClientTableModel extends AbstractTableModel  {
 	}
 
 	@Override
-	public int getRowCount() {		
-		return ((ClientsController)(this.getController())).getAllClients().size();
+	public int getRowCount() {
+		return ((ClientsController) (this.getController())).getAllClients()
+				.size();
 	}
 
 	@Override
 	public Object getValueAt(int i, int j) {
 		switch (j) {
 		case 0:
-			return ((ClientsController)(this.getController())).getAllClients().get(i).getID();
+			return ((ClientsController) (this.getController())).getAllClients()
+					.get(i).getID();
 		case 1:
-			return ((ClientsController)(this.getController())).getAllClients().get(i).getName();
+			return ((ClientsController) (this.getController())).getAllClients()
+					.get(i).getName();
 		case 2:
-			return ((ClientsController)(this.getController())).getAllClients().get(i).getFirstname();
+			return ((ClientsController) (this.getController())).getAllClients()
+					.get(i).getFirstname();
 		case 3:
-			return ((ClientsController)(this.getController())).getAllClients().get(i).getBirthdate();
+			return ((ClientsController) (this.getController())).getAllClients()
+					.get(i).getBirthdate();
 		case 4:
-			return ((ClientsController)(this.getController())).getAllClients().get(i).getMail();
+			return ((ClientsController) (this.getController())).getAllClients()
+					.get(i).getMail();
 		case 5:
-			return ((ClientsController)(this.getController())).getAllClients().get(i).getPlace();
+			return ((ClientsController) (this.getController())).getAllClients()
+					.get(i).getPlace();
 		default:
 			return "";
 		}
 	}
-	
+
 	@Override
 	public void setValueAt(Object val, int i, int j) {
-		
+
 		/*
-		Client old_client = ((ClientController)(this.getController())).getAllClients().get(i);
-		
-		switch (j) {
-		case 0:
-			firePropertyChange("ID", old_client.getID(), val);
-			break;
-		case 1:
-			firePropertyChange("Name", old_client.getName(), val);
-			break;
-		case 2:
-			firePropertyChange("ID", old_client.getID(), val);
-			break;
-		case 3:
-			firePropertyChange("ID", old_client.getID(), val);
-			break;
-		case 4:
-			firePropertyChange("ID", old_client.getID(), val);
-			break;
-		default:
-			return ;
-		}
-		
-		*/
+		 * Client old_client =
+		 * ((ClientController)(this.getController())).getAllClients().get(i);
+		 * 
+		 * switch (j) { case 0: firePropertyChange("ID", old_client.getID(),
+		 * val); break; case 1: firePropertyChange("Name", old_client.getName(),
+		 * val); break; case 2: firePropertyChange("ID", old_client.getID(),
+		 * val); break; case 3: firePropertyChange("ID", old_client.getID(),
+		 * val); break; case 4: firePropertyChange("ID", old_client.getID(),
+		 * val); break; default: return ; }
+		 */
 	}
 
 	@Override
@@ -162,12 +155,13 @@ public class ClientTableModel extends AbstractTableModel  {
 	@Override
 	public void removeTableModelListener(TableModelListener arg0) {
 	}
-	
+
 	@Override
 	public void addTableModelListener(TableModelListener l) {
 	}
-	
-	public Client getClientAt(int i){
-		return ((ClientsController)(this.getController())).getAllClients().get(i); 
+
+	public Client getClientAt(int i) {
+		return ((ClientsController) (this.getController())).getAllClients()
+				.get(i);
 	}
 }

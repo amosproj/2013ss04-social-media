@@ -1,7 +1,6 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
  *
- * This file is part of the Wahlzeit rating application.
+ * This file is part of the Datev and Social Media project.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -22,6 +21,6 @@ package com.amos.project4.views;
 import java.util.Observable;
 
 public interface AbstractControlledView {
-	
+
 	public abstract void modelPropertyChange(Observable o, Object arg);
 }

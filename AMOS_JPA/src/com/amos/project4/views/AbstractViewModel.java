@@ -1,7 +1,6 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
  *
- * This file is part of the Wahlzeit rating application.
+ * This file is part of the Datev and Social Media project.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -22,23 +21,22 @@ package com.amos.project4.views;
 import java.util.Observable;
 import java.util.Observer;
 
-public abstract class AbstractViewModel extends Observable
-{
+public abstract class AbstractViewModel extends Observable {
 
-    public AbstractViewModel()
-    {
-    }
+	public AbstractViewModel() {
+	}
 
-    public void addChangeListener(Observer listener) {
-        this.addObserver(listener);
-    }
+	public void addChangeListener(Observer listener) {
+		this.addObserver(listener);
+	}
 
-    public void removeChangeListener(Observer listener) {
-        this.deleteObserver(listener);
-    }
+	public void removeChangeListener(Observer listener) {
+		this.deleteObserver(listener);
+	}
 
-    protected void fireChange(String propertyName, Object oldValue, Object newValue) {
-        this.setChanged();
-        this.notifyObservers(newValue);
-    }
+	protected void fireChange(String propertyName, Object oldValue,
+			Object newValue) {
+		this.setChanged();
+		this.notifyObservers(newValue);
+	}
 }

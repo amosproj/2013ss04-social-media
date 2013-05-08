@@ -1,7 +1,6 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
  *
- * This file is part of the Wahlzeit rating application.
+ * This file is part of the Datev and Social Media project.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -50,7 +49,7 @@ public class ClientDAOTest {
 		// No, so lets create new entries
 		if (createNewEntries) {
 			assertTrue(cDAO.getAllClients().size() == 0);
-			for (int i = 0; i < 40 ; i++) {
+			for (int i = 0; i < 40; i++) {
 				Client client = new Client();
 				client.setFirstname("Jupiter_" + i);
 				client.setName("BAKAKEU_" + i);
