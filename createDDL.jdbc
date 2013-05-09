@@ -1,1 +1,1 @@
-CREATE TABLE "Kundendaten" ("ID"  SERIAL NOT NULL, "Geburtstag" DATE, "Vorname" VARCHAR(255), "Mail" VARCHAR(255), "Nachname" VARCHAR(255), "Wohnort" VARCHAR(255), PRIMARY KEY ("ID"))
+CREATE TABLE "Kundendaten" ("ID"  SERIAL NOT NULL, "Geburtstag" DATE, "Vorname" VARCHAR(255), "Gender" CHAR(1), "Mail" VARCHAR(255), "Nachname" VARCHAR(255), "Wohnort" VARCHAR(255), "ZipCode" VARCHAR(255), PRIMARY KEY ("ID"))

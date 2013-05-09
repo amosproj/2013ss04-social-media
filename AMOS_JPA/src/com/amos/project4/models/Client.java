@@ -68,18 +68,26 @@ public class Client implements Serializable {
 	@Column(name = "\"Wohnort\"")
 	private String place;
 
+	@Column(name = "\"ZipCode\"")
+	private String zipCode;
+
+	@Column(name = "\"Gender\"")
+	private char gender;
+
 	public Client() {
 		super();
 	}
 
 	public Client(String name, String firstname, Date birthdate, String mail,
-			String place) {
+			String place, String zipCode, char gender) {
 		super();
 		this.name = name;
 		this.firstname = firstname;
 		this.birthdate = birthdate;
 		this.mail = mail;
 		this.place = place;
+		this.zipCode = zipCode;
+		this.gender = gender;
 	}
 
 	public Integer getID() {
@@ -130,6 +138,22 @@ public class Client implements Serializable {
 		this.place = place;
 	}
 
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
+
+	public char getGender() {
+		return gender;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -142,6 +166,8 @@ public class Client implements Serializable {
 		result = prime * result + ((mail == null) ? 0 : mail.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((place == null) ? 0 : place.hashCode());
+		result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
+		//result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		return result;
 	}
 

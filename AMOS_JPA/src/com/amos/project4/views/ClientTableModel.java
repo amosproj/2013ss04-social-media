@@ -68,6 +68,10 @@ public class ClientTableModel extends AbstractTableModel {
 			return String.class;
 		case 5:
 			return String.class;
+		case 6:
+			return String.class;
+		case 7:
+			return char.class;
 		default:
 			return String.class;
 		}
@@ -76,7 +80,7 @@ public class ClientTableModel extends AbstractTableModel {
 
 	@Override
 	public int getColumnCount() {
-		return 6;
+		return 8;
 	}
 
 	@Override
@@ -94,6 +98,10 @@ public class ClientTableModel extends AbstractTableModel {
 			return "E-Mail";
 		case 5:
 			return "Place";
+		case 6:
+			return "ZipCode";
+		case 7:
+			return "Gender";
 		default:
 			return "Unknown";
 		}
@@ -126,6 +134,12 @@ public class ClientTableModel extends AbstractTableModel {
 		case 5:
 			return ((ClientsController) (this.getController())).getAllClients()
 					.get(i).getPlace();
+		case 6:
+			return ((ClientsController) (this.getController())).getAllClients()
+					.get(i).getZipCode();
+		case 7:
+			return ((ClientsController) (this.getController())).getAllClients()
+					.get(i).getGender();
 		default:
 			return "";
 		}

@@ -64,7 +64,7 @@ public class AMOSMainUI {
 	private SearchParameters search_params;
 	private JComboBox drop_down;
 	private String[] dd_input = { " ", "ID", "Name", "Firstname", "Birthdate",
-			"E-Mail", "Place" };
+			"E-Mail", "Place", "ZipCode", "Gender" };
 	ClientDetailMainPanel clientDetailsPane;
 
 	/**
@@ -287,7 +287,6 @@ public class AMOSMainUI {
 	// panel_right_top.add(btnCheckSocialMedia);
 	//
 	// JButton btnFilter = new JButton("Filter");
-	// sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnFilter, 0,
 	// SpringLayout.NORTH, btnCheckSocialMedia);
 	// sl_panel_right_top.putConstraint(SpringLayout.EAST, btnFilter, -5,
 	// SpringLayout.WEST, btnCheckSocialMedia);
