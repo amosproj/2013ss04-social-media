@@ -65,6 +65,7 @@ public class ClientDAO {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Client> getAllFilteredClients(SearchParameters search) {
 		if (search == null || search.getSearch_text() == ""
 				|| search.getSearch_text().equalsIgnoreCase("%")) {
@@ -129,6 +130,25 @@ public class ClientDAO {
 
 			}
 			break;
+		case 7:
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.zipCode = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
+			break;
+		case 8:
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.gender = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
+			break;
+		
 		default:
 			try {
 				q = em.createQuery("SELECT c FROM Client c WHERE c.ID = :param  ORDER BY c.ID");
@@ -172,6 +192,20 @@ public class ClientDAO {
 
 			try {
 				q = em.createQuery("SELECT c FROM Client c WHERE c.place = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.zipCode = :param  ORDER BY c.ID");
+				q.setParameter("param", search.getSearch_text());
+				addClientToMap(resultlist, q.getResultList());
+			} catch (Exception e) {
+
+			}
+			try {
+				q = em.createQuery("SELECT c FROM Client c WHERE c.gender = :param  ORDER BY c.ID");
 				q.setParameter("param", search.getSearch_text());
 				addClientToMap(resultlist, q.getResultList());
 			} catch (Exception e) {

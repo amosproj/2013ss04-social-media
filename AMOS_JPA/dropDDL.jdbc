@@ -1,1 +1,2 @@
 DROP TABLE "Kundendaten"
+DROP TABLE "Userdatas"
