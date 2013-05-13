@@ -43,6 +43,7 @@ public class ClientTable extends JTable implements AbstractControlledView {
 		// Initialise and register the Model
 		selectedClient = new SelectedClientViewModel();
 		controller.addModel(selectedClient);
+		this.setAutoCreateRowSorter(true);
 		this.getSelectionModel().addListSelectionListener(
 				new ClientSelectionListener());
 	}
@@ -60,8 +61,9 @@ public class ClientTable extends JTable implements AbstractControlledView {
 	private class ClientSelectionListener implements ListSelectionListener {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
-			selectedClient.setSelectedClient(getModel().getClientAt(
-					getSelectedRows()[0]));
+			if(getSelectedRows() != null && getSelectedRows().length > 0){
+				selectedClient.setSelectedClient(getModel().getClientAt(getSelectedRows()[0]));
+			}
 		}
 	}
 }

@@ -28,8 +28,8 @@ import com.amos.project4.views.AbstractViewModel;
 
 public abstract class AbstractController implements Observer {
 
-	private ArrayList<AbstractControlledView> registeredViews;
-	private ArrayList<AbstractViewModel> registeredModels;
+	protected ArrayList<AbstractControlledView> registeredViews;
+	protected ArrayList<AbstractViewModel> registeredModels;
 
 	public AbstractController() {
 		registeredViews = new ArrayList<AbstractControlledView>();

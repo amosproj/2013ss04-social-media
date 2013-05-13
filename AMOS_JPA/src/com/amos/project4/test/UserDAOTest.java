@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
+import com.amos.project4.utils.AMOSUtils;
 
 public class UserDAOTest {
 	
@@ -33,26 +34,13 @@ public class UserDAOTest {
 				user.setUsername("Jupiter_" + i);
 				user.setUsermail("jupiterbak_" +i+ "@yahoo.fr");
 				// hash the Password				
-				user.setUserpass(makeMD5("Jupiter_" + i));
+				user.setUserpass(AMOSUtils.makeMD5("Jupiter_" + i));
 				uDAO.addUser(user);
 			}
 		}
 	}
 	
-	private String makeMD5(String word) throws NoSuchAlgorithmException {
-        /* Berechnung */
-        MessageDigest md5 = MessageDigest.getInstance("MD5");
-        md5.reset();
-        md5.update(word.getBytes());
-        byte[] result = md5.digest();
-
-        /* Ausgabe */
-        StringBuffer hexString = new StringBuffer();
-        for (int i=0; i<result.length; i++) {
-            hexString.append(Integer.toHexString(0xFF & result[i]));
-        }
-        return hexString.toString();
-    }
+	
 
 	@Test
 	public void checkAvailableUsers() {
@@ -90,7 +78,7 @@ public class UserDAOTest {
 		Integer ID = new Integer(115);//(int) (Math.random() * 10));
 		User user = uDAO.getUserByID(ID);
 		try {
-			user.setUserpass(makeMD5("TEST_USER_FOR_ID_" + ID));
+			user.setUserpass(AMOSUtils.makeMD5("TEST_USER_FOR_ID_" + ID));
 		} catch (NoSuchAlgorithmException e) {
 			fail("Error while hashing");
 		}
