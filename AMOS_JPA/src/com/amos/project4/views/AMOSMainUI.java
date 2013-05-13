@@ -67,20 +67,10 @@ public class AMOSMainUI {
 			"E-Mail", "Place", "ZipCode", "Gender" };
 	ClientDetailMainPanel clientDetailsPane;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AMOSMainUI window = new AMOSMainUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	
+	
+	public JFrame getMainFrame(){
+		return frame;
 	}
 
 	/**
