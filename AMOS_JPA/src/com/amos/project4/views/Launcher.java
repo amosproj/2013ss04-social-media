@@ -16,7 +16,6 @@ public class Launcher {
 //					AMOSMainUI window = new AMOSMainUI();
 //					window.getMainFrame().setVisible(true);
 					Login dialog = new Login();
-					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					dialog.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

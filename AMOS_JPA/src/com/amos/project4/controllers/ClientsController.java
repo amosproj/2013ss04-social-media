@@ -20,6 +20,7 @@
 package com.amos.project4.controllers;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
@@ -40,7 +41,7 @@ public class ClientsController extends AbstractController implements
 	}
 
 	@Override
-	public void updateInternally(Object arg) {
+	public void updateInternally(Object arg, Observable o) {
 		if (arg != null && arg.getClass().equals(SearchParameters.class)) {
 			clientlist = new ArrayList<Client>(
 					clientDAO.getAllFilteredClients((SearchParameters) arg));

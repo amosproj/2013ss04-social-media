@@ -105,13 +105,13 @@ public class User implements Serializable {
 	private String x_userpass;
 	
 	/**
-	 * Unique identifier of the user on Xing
+	 * Unique identifier of the user on LinkedIn
 	 */
 	@Column(name = "\"l_username\"",columnDefinition="VARCHAR(50)")
 	private String l_username;
 	
 	/**
-	 * User Xing password to log on Xing
+	 * User Xing password to log on LinkedIn
 	 */
 	@Column(name = "\"l_userpass\"",columnDefinition="VARCHAR(50)")
 	private String l_userpass;

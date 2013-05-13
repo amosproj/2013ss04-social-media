@@ -58,13 +58,14 @@ public abstract class AbstractController implements Observer {
 	// and propagate them on to all the views.
 	@Override
 	public void update(Observable o, Object arg) {
-		updateInternally(arg);
+		updateInternally(arg, o);
 		for (AbstractControlledView view : registeredViews) {
-			view.modelPropertyChange(o, arg);
+			if(view != null)
+				view.modelPropertyChange(o, arg);
 		}		
 	}
 	
-	public abstract void updateInternally(Object arg);
+	public abstract void updateInternally(Object arg, Observable o);
 
 	/**
 	 * This is a convenience method that subclasses can call upon to fire
