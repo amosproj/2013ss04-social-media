@@ -31,10 +31,9 @@ public class Login extends JDialog implements AbstractControlledView {
 	private JPasswordField passwordField;
 	private JLabel lblPassword;
 	private JLabel lblLoginMessage;
-	private AbstractController user_controller;
+	private UserController user_controller;
 	private UserViewModel u_model;
 	
-	JDialog me;
 
 	/**
 	 * Create the dialog.
@@ -44,13 +43,13 @@ public class Login extends JDialog implements AbstractControlledView {
 		user_controller = new UserController();
 		u_model = new UserViewModel();
 		user_controller.addModel(u_model);
-		me = this;
 		user_controller.addView(this);
+		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 	}
 
 	public void init() {
 		setTitle("AMOS Project 4");
-		setBounds(100, 100, 450, 250);
+		setBounds(100, 100, 450, 170);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -58,7 +57,7 @@ public class Login extends JDialog implements AbstractControlledView {
 		contentPanel.setLayout(sl_contentPanel);
 
 		JLabel lblUsername = new JLabel("Username :");
-		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblUsername, 50,
+		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblUsername, 10,
 				SpringLayout.NORTH, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, lblUsername, 10,
 				SpringLayout.WEST, contentPanel);
@@ -70,7 +69,7 @@ public class Login extends JDialog implements AbstractControlledView {
 		sl_contentPanel.putConstraint(SpringLayout.SOUTH, usernametextField, 0,
 				SpringLayout.SOUTH, lblUsername);
 		contentPanel.add(usernametextField);
-		usernametextField.setColumns(10);
+		usernametextField.setColumns(25);
 		{
 			lblPassword = new JLabel("Password :");
 			sl_contentPanel.putConstraint(SpringLayout.NORTH, lblPassword, 10,
@@ -146,7 +145,7 @@ public class Login extends JDialog implements AbstractControlledView {
 
 	@Override
 	public void modelPropertyChange(Observable o, Object arg) {
-		if (arg.getClass().equals(UserViewModel.class)) {
+		if (o.getClass().equals(UserViewModel.class) && ((String) arg).equalsIgnoreCase("Login")) {
 			try {
 				User _user = ((UserContollerInterface) user_controller)
 						.getCurrent_user();
@@ -160,16 +159,15 @@ public class Login extends JDialog implements AbstractControlledView {
 					setloginMessage("Wrong password !", 1);
 					return;
 				}
-				AMOSMainUI window = new AMOSMainUI();
+				//this.user_controller.removeView(this);
+				AMOSMainUI window = AMOSMainUI.getInstance((UserController)user_controller,u_model);
 				window.getMainFrame().setVisible(true);
-				this.dispose();
+				setVisible(false);
 			} catch (Exception e) {
 				setloginMessage("Something went wrong. Please try again !", 1);
 				return;
 			}
-
 		}
-
 	}
 	
 	
@@ -186,8 +184,7 @@ public class Login extends JDialog implements AbstractControlledView {
 	private class CancelLoginAction implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			me.dispose();
-			me = null;
+			setVisible(false);
 		}
 		
 	}

@@ -51,7 +51,9 @@ import javax.swing.border.TitledBorder;
 import javax.swing.JComboBox;
 import javax.swing.tree.TreeSelectionModel;
 
+import com.amos.project4.controllers.AbstractController;
 import com.amos.project4.controllers.ClientsController;
+import com.amos.project4.controllers.UserController;
 
 public class AMOSMainUI {
 
@@ -66,8 +68,32 @@ public class AMOSMainUI {
 	private String[] dd_input = { " ", "ID", "Name", "Firstname", "Birthdate",
 			"E-Mail", "Place", "ZipCode", "Gender" };
 	ClientDetailMainPanel clientDetailsPane;
-
 	
+	private UserViewModel user_model;
+	private UserController user_controller;
+
+	private static AMOSMainUI instance;
+	
+	public static AMOSMainUI getInstance(UserController user_controller, UserViewModel u_model){
+		if(instance == null){
+			try {
+				instance = new AMOSMainUI(user_controller, u_model);
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnsupportedLookAndFeelException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return instance;
+	}
 	
 	public JFrame getMainFrame(){
 		return frame;
@@ -84,6 +110,13 @@ public class AMOSMainUI {
 	public AMOSMainUI() throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException {
 		initialize();
+	}
+
+	public AMOSMainUI(UserController user_controller, UserViewModel u_model) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		this();
+		this.user_controller = user_controller;
+		this.user_model = u_model;
+		
 	}
 
 	/**
@@ -461,6 +494,13 @@ public class AMOSMainUI {
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.setAction(action);
 		mnFile.add(mntmExit);
+		
+		JMenu mnSettings = new JMenu("Settings");
+		menuBar.add(mnSettings);
+
+		JMenuItem mntmGenSetting = new JMenuItem("General Settings");
+		mntmGenSetting.addActionListener(new GeneralsettingsAction());
+		mnSettings.add(mntmGenSetting);
 
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -481,6 +521,15 @@ public class AMOSMainUI {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			System.exit(0);
 		}
+	}
+	
+	private class GeneralsettingsAction implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GeneralSettingsDialog dialog = new GeneralSettingsDialog(user_controller, user_model);
+			dialog.setVisible(true);
+		}
+		
 	}
 
 	private class searchAction implements ActionListener {
