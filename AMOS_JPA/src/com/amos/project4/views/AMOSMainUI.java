@@ -68,14 +68,15 @@ public class AMOSMainUI {
 	private String[] dd_input = { " ", "ID", "Name", "Firstname", "Birthdate",
 			"E-Mail", "Place", "ZipCode", "Gender" };
 	ClientDetailMainPanel clientDetailsPane;
-	
+
 	private UserViewModel user_model;
 	private UserController user_controller;
 
 	private static AMOSMainUI instance;
-	
-	public static AMOSMainUI getInstance(UserController user_controller, UserViewModel u_model){
-		if(instance == null){
+
+	public static AMOSMainUI getInstance(UserController user_controller,
+			UserViewModel u_model) {
+		if (instance == null) {
 			try {
 				instance = new AMOSMainUI(user_controller, u_model);
 			} catch (ClassNotFoundException e) {
@@ -94,8 +95,8 @@ public class AMOSMainUI {
 		}
 		return instance;
 	}
-	
-	public JFrame getMainFrame(){
+
+	public JFrame getMainFrame() {
 		return frame;
 	}
 
@@ -112,11 +113,13 @@ public class AMOSMainUI {
 		initialize();
 	}
 
-	public AMOSMainUI(UserController user_controller, UserViewModel u_model) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+	public AMOSMainUI(UserController user_controller, UserViewModel u_model)
+			throws ClassNotFoundException, InstantiationException,
+			IllegalAccessException, UnsupportedLookAndFeelException {
 		this();
 		this.user_controller = user_controller;
 		this.user_model = u_model;
-		
+
 	}
 
 	/**
@@ -359,6 +362,7 @@ public class AMOSMainUI {
 		panel_right_top.setLayout(sl_panel_right_top);
 
 		JButton btnCheckSocialMedia = new JButton("Check Social Media");
+		btnCheckSocialMedia.addActionListener(new SocialMediaScanAction());
 
 		sl_panel_right_top.putConstraint(SpringLayout.NORTH,
 				btnCheckSocialMedia, 10, SpringLayout.NORTH, panel_right_top);
@@ -494,7 +498,7 @@ public class AMOSMainUI {
 		JMenuItem mntmExit = new JMenuItem("Exit");
 		mntmExit.setAction(action);
 		mnFile.add(mntmExit);
-		
+
 		JMenu mnSettings = new JMenu("Settings");
 		menuBar.add(mnSettings);
 
@@ -522,14 +526,26 @@ public class AMOSMainUI {
 			System.exit(0);
 		}
 	}
-	
-	private class GeneralsettingsAction implements ActionListener{
+
+	private class GeneralsettingsAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			GeneralSettingsDialog dialog = new GeneralSettingsDialog(user_controller, user_model);
+			GeneralSettingsDialog dialog = new GeneralSettingsDialog(
+					user_controller, user_model);
 			dialog.setVisible(true);
 		}
-		
+
+	}
+
+	public class SocialMediaScanAction implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			SocialMediaScanDialog dialog = new SocialMediaScanDialog();
+			dialog.setVisible(true);
+
+		}
+
 	}
 
 	private class searchAction implements ActionListener {
