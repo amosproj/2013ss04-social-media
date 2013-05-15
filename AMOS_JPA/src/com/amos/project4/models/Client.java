@@ -72,14 +72,14 @@ public class Client implements Serializable {
 	private String zipCode;
 
 	@Column(name = "\"Gender\"")
-	private char gender;
+	private String gender;
 
 	public Client() {
 		super();
 	}
 
 	public Client(String name, String firstname, Date birthdate, String mail,
-			String place, String zipCode, char gender) {
+			String place, String zipCode, String gender) {
 		super();
 		this.name = name;
 		this.firstname = firstname;
@@ -146,11 +146,11 @@ public class Client implements Serializable {
 		return zipCode;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
@@ -167,7 +167,7 @@ public class Client implements Serializable {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((place == null) ? 0 : place.hashCode());
 		result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
-		//result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
 		return result;
 	}
 

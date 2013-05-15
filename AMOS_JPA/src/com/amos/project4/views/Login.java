@@ -85,6 +85,7 @@ public class Login extends JDialog implements AbstractControlledView {
 		contentPanel.add(lblUsername);
 
 		usernametextField = new JTextField();
+		usernametextField.setToolTipText("Username: test");
 		sl_contentPanel.putConstraint(SpringLayout.WEST, usernametextField, 20,
 				SpringLayout.EAST, lblUsername);
 		sl_contentPanel.putConstraint(SpringLayout.SOUTH, usernametextField, 0,
@@ -103,6 +104,7 @@ public class Login extends JDialog implements AbstractControlledView {
 		}
 
 		passwordField = new JPasswordField();
+		passwordField.setToolTipText("Password: test");
 		sl_contentPanel.putConstraint(SpringLayout.WEST, passwordField, 20,
 				SpringLayout.EAST, lblPassword);
 		sl_contentPanel.putConstraint(SpringLayout.SOUTH, passwordField, 0,
