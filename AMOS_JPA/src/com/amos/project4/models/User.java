@@ -28,19 +28,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * 
- * @author Jupiter BAKAKEU
- * 
- */
 @Entity
 @Table(name = "\"Userdatas\"")
 public class User implements Serializable {
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -51017586851741159L;
+
+	private static final long serialVersionUID = -1;
 
 	/**
 	 * Identifier ID of the user

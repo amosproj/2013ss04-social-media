@@ -1,3 +1,22 @@
+/*
+ *
+ * This file is part of the Datev and Social Media project.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 package com.amos.project4.views;
 
 import java.awt.BorderLayout;
@@ -5,20 +24,18 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.NoSuchAlgorithmException;
 import java.util.Observable;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.SpringLayout;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
+import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
-import com.amos.project4.controllers.AbstractController;
 import com.amos.project4.controllers.UserContollerInterface;
 import com.amos.project4.controllers.UserController;
 import com.amos.project4.models.User;
@@ -26,6 +43,7 @@ import com.amos.project4.utils.AMOSUtils;
 
 public class Login extends JDialog implements AbstractControlledView {
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField usernametextField;
 	private JPasswordField passwordField;
@@ -44,8 +62,11 @@ public class Login extends JDialog implements AbstractControlledView {
 		u_model = new UserViewModel();
 		user_controller.addModel(u_model);
 		user_controller.addView(this);
-		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}
+	
+	
 
 	public void init() {
 		setTitle("AMOS Project 4");
@@ -107,14 +128,14 @@ public class Login extends JDialog implements AbstractControlledView {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("login");
 				okButton.setActionCommand("OK");
 				okButton.addActionListener(new LoginAction());
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Exit");
 				cancelButton.setActionCommand("Cancel");
 				cancelButton.addActionListener(new CancelLoginAction());
 				buttonPane.add(cancelButton);
@@ -184,7 +205,8 @@ public class Login extends JDialog implements AbstractControlledView {
 	private class CancelLoginAction implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			setVisible(false);
+			dispose();
+			System.exit(0);
 		}
 		
 	}

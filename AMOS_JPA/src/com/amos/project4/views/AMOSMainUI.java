@@ -22,21 +22,21 @@ package com.amos.project4.views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -48,55 +48,53 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.JComboBox;
+import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import com.amos.project4.controllers.AbstractController;
 import com.amos.project4.controllers.ClientsController;
 import com.amos.project4.controllers.UserController;
 
 public class AMOSMainUI {
 
 	private JFrame frame;
-	private final Action action = new ExitAction();
 	ClientsController client_controller;
 	JScrollPane clienTable_scrollPane;
 	private ClientTable tclients;
 	private JTextField search_textField;
 	private SearchParameters search_params;
+	@SuppressWarnings("rawtypes")
 	private JComboBox drop_down;
 	private String[] dd_input = { " ", "ID", "Name", "Firstname", "Birthdate",
 			"E-Mail", "Place", "ZipCode", "Gender" };
-	ClientDetailMainPanel clientDetailsPane;
-
+	private ClientDetailMainPanel clientDetailsPane;
+	private JTree leftMenuTree;
+	
 	private UserViewModel user_model;
 	private UserController user_controller;
 
 	private static AMOSMainUI instance;
-
-	public static AMOSMainUI getInstance(UserController user_controller,
-			UserViewModel u_model) {
-		if (instance == null) {
+	
+	public static AMOSMainUI getInstance(UserController user_controller, UserViewModel u_model){
+		if(instance == null){
 			try {
 				instance = new AMOSMainUI(user_controller, u_model);
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (UnsupportedLookAndFeelException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
+		
+		instance.user_controller = user_controller;
+		instance.user_model = u_model;
 		return instance;
 	}
-
-	public JFrame getMainFrame() {
+	
+	public JFrame getMainFrame(){
 		return frame;
 	}
 
@@ -111,15 +109,14 @@ public class AMOSMainUI {
 	public AMOSMainUI() throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException {
 		initialize();
+		
 	}
 
-	public AMOSMainUI(UserController user_controller, UserViewModel u_model)
-			throws ClassNotFoundException, InstantiationException,
-			IllegalAccessException, UnsupportedLookAndFeelException {
+	public AMOSMainUI(UserController user_controller, UserViewModel u_model) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		this();
 		this.user_controller = user_controller;
 		this.user_model = u_model;
-
+		
 	}
 
 	/**
@@ -146,14 +143,10 @@ public class AMOSMainUI {
 
 		// Initialise the Frame
 		frame = new JFrame();
-		frame.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				"C:\\Users\\Lili\\Desktop\\Facebook.ico"));
 		frame.setBounds(100, 100, 820, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-
-		// set the system look and feel
-		// UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 
 		// Initialise The menus
 		initMenus();
@@ -240,7 +233,7 @@ public class AMOSMainUI {
 
 	private JScrollPane initLeftpanel() {
 		JScrollPane left_scroll_pane = new JScrollPane();
-		left_scroll_pane.setPreferredSize(new Dimension(150, 0));
+		left_scroll_pane.setPreferredSize(new Dimension(200, 0));
 
 		JPanel panel_left = new JPanel();
 		panel_left.setPreferredSize(new Dimension(150, 0));
@@ -260,8 +253,8 @@ public class AMOSMainUI {
 				"Settings", new String[] { "General Settings" });
 
 		// Initialize the user menu short cut
-		Vector<String> usersMenu_vec = new TreeNodeVector<String>("Users",
-				new String[] { "Profile", "Change password" });
+//		Vector<String> usersMenu_vec = new TreeNodeVector<String>("Users",
+//				new String[] { "Profile", "Change password" });
 
 		// Initialize the Social media menus short cut
 		Vector<String> socialsMenu_vec = new TreeNodeVector<String>("Social",
@@ -269,91 +262,42 @@ public class AMOSMainUI {
 
 		// Initialize the Social media menus short cut
 		Vector<String> exitsMenu_vec = new TreeNodeVector<String>("Exit",
-				new String[] { "Logout", "Exit" });
+				new String[] { "Logout", "Exit application" });
 
 		// Initialize the categories
-		Object rootNodes[] = new Object[] { socialsMenu_vec, usersMenu_vec,
+		Object rootNodes[] = new Object[] { socialsMenu_vec, // usersMenu_vec,
 				settingsMenu_vec, exitsMenu_vec };
 
 		Vector<Object> root_vec = new TreeNodeVector<Object>("Menu Root",
 				rootNodes);
-		JTree leftMenuTree = new JTree(root_vec);
+		leftMenuTree = new JTree(root_vec);
 		leftMenuTree.getSelectionModel().setSelectionMode(
 				TreeSelectionModel.SINGLE_TREE_SELECTION);
 
 		// Put horizontal line to separe the categories
 		UIManager.put("Tree.line", Color.GREEN);
 		leftMenuTree.putClientProperty("JTree.lineStyle", "Horizontal");
-
-		// expand all
+		
+		//add a mouse adapter for double click listening
+		leftMenuTree.addMouseListener(new MenuSelectionMouseAdapter());
+		
+		// Customize the Selection listener
+		leftMenuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		
+		// Expand All
 		int row = 0;
 		while (row < leftMenuTree.getRowCount()) {
 			leftMenuTree.expandRow(row);
 			row++;
 		}
-
+	    
 		return leftMenuTree;
 
 	}
 
-	// private JPanel initRightTopPanel() {
-	// JPanel panel_right_top = new JPanel();
-	// panel_right_top.setPreferredSize(new Dimension(10, 350));
-	//
-	// SpringLayout sl_panel_right_top = new SpringLayout();
-	// panel_right_top.setLayout(sl_panel_right_top);
-	//
-	// JButton btnCheckSocialMedia = new JButton("Check Social Media");
-	//
-	// sl_panel_right_top.putConstraint(SpringLayout.NORTH,
-	// btnCheckSocialMedia, 10, SpringLayout.NORTH, panel_right_top);
-	// sl_panel_right_top.putConstraint(SpringLayout.EAST,
-	// btnCheckSocialMedia, -5, SpringLayout.EAST, panel_right_top);
-	// btnCheckSocialMedia.setPreferredSize(new Dimension(150, 25));
-	// panel_right_top.add(btnCheckSocialMedia);
-	//
-	// JButton btnFilter = new JButton("Filter");
-	// SpringLayout.NORTH, btnCheckSocialMedia);
-	// sl_panel_right_top.putConstraint(SpringLayout.EAST, btnFilter, -5,
-	// SpringLayout.WEST, btnCheckSocialMedia);
-	// panel_right_top.add(btnFilter);
-	// btnFilter.setPreferredSize(new Dimension(70, 25));
-	//
-	// JButton btnSearch = new JButton("Search");
-	// btnSearch.addActionListener(new searchAction());
-	//
-	// sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnSearch, 0,
-	// SpringLayout.NORTH, btnFilter);
-	// sl_panel_right_top.putConstraint(SpringLayout.EAST, btnSearch, -5,
-	// SpringLayout.WEST, btnFilter);
-	// panel_right_top.add(btnSearch);
-	// btnSearch.setPreferredSize(new Dimension(75, 25));
-	//
-	// search_textField = new JTextField();
-	// sl_panel_right_top.putConstraint(SpringLayout.WEST, search_textField,
-	// 5, SpringLayout.WEST, panel_right_top);
-	// sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField,
-	// 0, SpringLayout.NORTH, btnSearch);
-	// sl_panel_right_top.putConstraint(SpringLayout.EAST, search_textField,
-	// -5, SpringLayout.WEST, btnSearch);
-	// panel_right_top.add(search_textField);
-	// search_textField.setColumns(20);
-	//
-	// JPanel client_result_panel = InitClientTablePanel();
-	// sl_panel_right_top.putConstraint(SpringLayout.NORTH,
-	// client_result_panel, 10, SpringLayout.SOUTH,
-	// btnCheckSocialMedia);
-	// sl_panel_right_top.putConstraint(SpringLayout.WEST,
-	// client_result_panel, 0, SpringLayout.WEST, panel_right_top);
-	// sl_panel_right_top.putConstraint(SpringLayout.SOUTH,
-	// client_result_panel, -10, SpringLayout.SOUTH, panel_right_top);
-	// sl_panel_right_top.putConstraint(SpringLayout.EAST,
-	// client_result_panel, 0, SpringLayout.EAST, btnCheckSocialMedia);
-	// panel_right_top.add(client_result_panel);
-	//
-	// return panel_right_top;
-	// }
+	
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JPanel initRightTopPanel() {
 		JPanel panel_right_top = new JPanel();
 		panel_right_top.setPreferredSize(new Dimension(10, 350));
@@ -363,7 +307,6 @@ public class AMOSMainUI {
 
 		JButton btnCheckSocialMedia = new JButton("Check Social Media");
 		btnCheckSocialMedia.addActionListener(new SocialMediaScanAction());
-
 		sl_panel_right_top.putConstraint(SpringLayout.NORTH,
 				btnCheckSocialMedia, 10, SpringLayout.NORTH, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.EAST,
@@ -371,13 +314,6 @@ public class AMOSMainUI {
 		btnCheckSocialMedia.setPreferredSize(new Dimension(150, 25));
 		panel_right_top.add(btnCheckSocialMedia);
 
-		// JButton btnFilter = new JButton("Filter");
-		// sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnFilter, 0,
-		// SpringLayout.NORTH, btnCheckSocialMedia);
-		// sl_panel_right_top.putConstraint(SpringLayout.EAST, btnFilter, -5,
-		// SpringLayout.WEST, btnCheckSocialMedia);
-		// panel_right_top.add(btnFilter);
-		// btnFilter.setPreferredSize(new Dimension(70, 25));
 
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new searchAction());
@@ -390,6 +326,7 @@ public class AMOSMainUI {
 		btnSearch.setPreferredSize(new Dimension(75, 25));
 
 		search_textField = new JTextField();
+		search_textField.addActionListener(new searchAction());
 		sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField,
 				10, SpringLayout.NORTH, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.WEST, search_textField,
@@ -494,11 +431,15 @@ public class AMOSMainUI {
 
 		JMenuItem mntmUpdateDatabase = new JMenuItem("Update Database");
 		mnFile.add(mntmUpdateDatabase);
+		
+		JMenuItem mntmLogout = new JMenuItem("Logout");
+		mntmLogout.addActionListener(new LogoutAction());
+		mnFile.add(mntmLogout);
 
 		JMenuItem mntmExit = new JMenuItem("Exit");
-		mntmExit.setAction(action);
+		mntmExit.addActionListener(new ExitAction());
 		mnFile.add(mntmExit);
-
+		
 		JMenu mnSettings = new JMenu("Settings");
 		menuBar.add(mnSettings);
 
@@ -512,64 +453,113 @@ public class AMOSMainUI {
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
 	}
-
-	@SuppressWarnings("serial")
-	private class ExitAction extends AbstractAction {
-		public ExitAction() {
-			putValue(NAME, "Exit");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-
-		public void actionPerformed(ActionEvent e) {
-
+	
+	public ClientTable getTclients() {
+		return tclients;
+	}
+	
+	private void exit(){
+		int dialogResult = JOptionPane.showConfirmDialog (frame, 
+				"Exit the application ?","Exit confirmation",JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.dispose();
 			System.exit(0);
 		}
 	}
-
-	private class GeneralsettingsAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			GeneralSettingsDialog dialog = new GeneralSettingsDialog(
-					user_controller, user_model);
+	
+	private void showGeneralsettingDialog(){
+		GeneralSettingsDialog dialog = new GeneralSettingsDialog(user_controller, user_model);
+		dialog.setVisible(true);
+	}
+	
+	private void logout(){
+		int dialogResult = JOptionPane.showConfirmDialog (frame, 
+				"Are you sure you want to logout from the application ?","Logout confirmation",JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
+			frame.dispose();
+			Login dialog = new Login();
 			dialog.setVisible(true);
 		}
-
+	}
+	
+	private void makeSimpleSearch(){
+		search_params.setSearchCat(drop_down.getSelectedIndex());
+		search_params.setSearchText(search_textField.getText());
+		tclients.getModel().fireTableDataChanged();
+		clienTable_scrollPane.invalidate();
+		clienTable_scrollPane.revalidate();
+		frame.repaint();
+	}
+	
+	private void makeSearchWithCat(){
+		search_params.setSearchCat(drop_down.getSelectedIndex());
+		tclients.getModel().fireTableDataChanged();
+		clienTable_scrollPane.invalidate();
+		clienTable_scrollPane.revalidate();
+		frame.repaint();
+	}
+	
+	// Action listeners implementations
+	private class MenuSelectionMouseAdapter extends MouseAdapter {
+		
+		public void mouseClicked(MouseEvent me) {
+			if (me.getClickCount() <= 1) {
+				return;
+			}
+			TreePath tp = leftMenuTree.getPathForLocation(me.getX(), me.getY());
+			Object obj = tp.getLastPathComponent();
+			String item = obj.toString();
+			if (item.equalsIgnoreCase("Logout")) {
+				logout();
+			} else if (item.equalsIgnoreCase("Exit application")) {
+				exit();
+			} else if (item.equalsIgnoreCase("General Settings")) {
+				showGeneralsettingDialog();
+			} else {
+				System.out.println("" + obj.toString());
+			}
+		}
 	}
 
-	public class SocialMediaScanAction implements ActionListener {
-
+	private class ExitAction implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			exit();
+		}
+	}
+	
+	private class GeneralsettingsAction implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SocialMediaScanDialog dialog = new SocialMediaScanDialog();
-			dialog.setVisible(true);
-
-		}
-
+			showGeneralsettingDialog();
+		}		
+	}
+	
+	private class LogoutAction implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			logout();
+		}		
 	}
 
 	private class searchAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			search_params.setSearchCat(drop_down.getSelectedIndex());
-			search_params.setSearchText(search_textField.getText());
-			tclients.getModel().fireTableDataChanged();
-			clienTable_scrollPane.invalidate();
-			clienTable_scrollPane.revalidate();
-			frame.repaint();
+			makeSimpleSearch();
 		}
 	}
 
 	private class SearchCatListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			search_params.setSearchCat(drop_down.getSelectedIndex());
-			tclients.getModel().fireTableDataChanged();
-			clienTable_scrollPane.invalidate();
-			clienTable_scrollPane.revalidate();
-			frame.repaint();
+			makeSearchWithCat();
+		}
+	}
+	
+	public class SocialMediaScanAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			SocialMediaScanDialog dialog = new SocialMediaScanDialog();
+			dialog.setVisible(true);
 		}
 	}
 
-	public ClientTable getTclients() {
-		return tclients;
-	}
 }

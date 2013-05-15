@@ -1,3 +1,22 @@
+/*
+ *
+ * This file is part of the Datev and Social Media project.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 package com.amos.project4.views;
 
 import java.awt.BorderLayout;
@@ -23,8 +42,14 @@ import javax.swing.JPasswordField;
 import com.amos.project4.controllers.UserController;
 import com.amos.project4.models.User;
 
+/**
+ * 
+ * @author Jupiter BAKAKEU
+ *
+ */
 public class GeneralSettingsDialog extends JDialog implements AbstractControlledView{
 
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField f_usernameTextField;
 	private JPasswordField f_passwordField;
@@ -40,7 +65,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	private JLabel l_lbl_username;
 	private JPasswordField l_passwordField;
 	private JLabel l_lbl_password;
-	private JButton btnConnect;
+	//private JButton btnConnect;
 	
 	private UserViewModel viewModel;
 	private UserController user_controller;
@@ -55,6 +80,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 		this.viewModel = viewModel;
 		this.user_controller.addView(this);
 		this.updateView(this.user_controller.getCurrent_user());
+		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
@@ -202,11 +228,11 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				btnConnect = new JButton("Connect");
-				buttonPane.add(btnConnect);
+//				btnConnect = new JButton("Connect");
+//				buttonPane.add(btnConnect);
 			}
 			{
-				JButton okButton = new JButton("OK");
+				JButton okButton = new JButton("Save");
 				okButton.setActionCommand("OK");
 				okButton.addActionListener( new OKAction());
 				buttonPane.add(okButton);

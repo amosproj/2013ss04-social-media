@@ -1,25 +1,36 @@
+/*
+ *
+ setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
 package com.amos.project4.views;
 
-import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JSplitPane;
 import javax.swing.SpringLayout;
-import javax.swing.JLabel;
-import javax.swing.JCheckBox;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Observable;
-
 import javax.swing.border.TitledBorder;
 
 public class SocialMediaScanDialog extends JDialog {
+
+	private static final long serialVersionUID = 1L;
 	private JPanel facebookPanel;
 	private JPanel buttonPane;
 	private JPanel twitterPanel;
@@ -33,6 +44,8 @@ public class SocialMediaScanDialog extends JDialog {
 		setTitle("AMOS Project 4 - Social Media Scan");
 		setBounds(100, 100, 550, 300);
 		SpringLayout springLayout = new SpringLayout();
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(springLayout);
 		{
 			facebookPanel = new JPanel();
