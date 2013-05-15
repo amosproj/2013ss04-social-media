@@ -82,21 +82,12 @@ public class SocialMediaScanDialog extends JDialog {
 	 */
 	public SocialMediaScanDialog() {
 		setTitle("AMOS Project 4 - Social Media Scan");
-<<<<<<< HEAD
+
 		setBounds(100, 100, 658, 500);
-=======
+
 		setBounds(100, 100, 550, 500);
 		setLocationRelativeTo(null);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> ac7d6c5c2eb14dcd2e1897f2bbcd2aa311380f24
-=======
->>>>>>> ac7d6c5c2eb14dcd2e1897f2bbcd2aa311380f24
-=======
->>>>>>> ac7d6c5c2eb14dcd2e1897f2bbcd2aa311380f24
-=======
->>>>>>> ac7d6c5c2eb14dcd2e1897f2bbcd2aa311380f24
+
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
 		{
@@ -113,7 +104,8 @@ public class SocialMediaScanDialog extends JDialog {
 		}
 		{
 			twitterPanel = new JPanel();
-			springLayout.putConstraint(SpringLayout.WEST, twitterPanel, 5, SpringLayout.EAST, facebookPanel);
+			springLayout.putConstraint(SpringLayout.WEST, twitterPanel, 5,
+					SpringLayout.EAST, facebookPanel);
 			springLayout.putConstraint(SpringLayout.SOUTH, twitterPanel, -39,
 					SpringLayout.SOUTH, getContentPane());
 			twitterPanel.setBorder(new TitledBorder(null, "Twitter",
@@ -124,42 +116,56 @@ public class SocialMediaScanDialog extends JDialog {
 		}
 		{
 			xingPanel = new JPanel();
-			springLayout.putConstraint(SpringLayout.EAST, twitterPanel, -3, SpringLayout.WEST, xingPanel);
-			springLayout.putConstraint(SpringLayout.WEST, xingPanel, 318, SpringLayout.WEST, getContentPane());
-			springLayout.putConstraint(SpringLayout.NORTH, xingPanel, 10, SpringLayout.NORTH, getContentPane());
-			springLayout.putConstraint(SpringLayout.EAST, xingPanel, -174, SpringLayout.EAST, getContentPane());
+			springLayout.putConstraint(SpringLayout.EAST, twitterPanel, -3,
+					SpringLayout.WEST, xingPanel);
+			springLayout.putConstraint(SpringLayout.WEST, xingPanel, 318,
+					SpringLayout.WEST, getContentPane());
+			springLayout.putConstraint(SpringLayout.NORTH, xingPanel, 10,
+					SpringLayout.NORTH, getContentPane());
+			springLayout.putConstraint(SpringLayout.EAST, xingPanel, -174,
+					SpringLayout.EAST, getContentPane());
 			xingPanel.setBorder(new TitledBorder(null, "Xing",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			SpringLayout sl_twitterPanel = new SpringLayout();
 			twitterPanel.setLayout(sl_twitterPanel);
 			{
 				chckbxTwitterName = new JCheckBox("Twitter name");
-				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxTwitterName, 10, SpringLayout.WEST, twitterPanel);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST,
+						chckbxTwitterName, 10, SpringLayout.WEST, twitterPanel);
 				twitterPanel.add(chckbxTwitterName);
 			}
 			{
 				chckbxId = new JCheckBox("ID");
-				sl_twitterPanel.putConstraint(SpringLayout.SOUTH, chckbxTwitterName, -6, SpringLayout.NORTH, chckbxId);
-				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxId, 0, SpringLayout.WEST, chckbxTwitterName);
+				sl_twitterPanel.putConstraint(SpringLayout.SOUTH,
+						chckbxTwitterName, -6, SpringLayout.NORTH, chckbxId);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxId, 0,
+						SpringLayout.WEST, chckbxTwitterName);
 				twitterPanel.add(chckbxId);
 			}
 			{
 				chckbxTweets = new JCheckBox("Tweets");
-				sl_twitterPanel.putConstraint(SpringLayout.SOUTH, chckbxTweets, -299, SpringLayout.SOUTH, twitterPanel);
-				sl_twitterPanel.putConstraint(SpringLayout.SOUTH, chckbxId, -6, SpringLayout.NORTH, chckbxTweets);
-				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxTweets, 0, SpringLayout.WEST, chckbxTwitterName);
+				sl_twitterPanel.putConstraint(SpringLayout.SOUTH, chckbxTweets,
+						-299, SpringLayout.SOUTH, twitterPanel);
+				sl_twitterPanel.putConstraint(SpringLayout.SOUTH, chckbxId, -6,
+						SpringLayout.NORTH, chckbxTweets);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxTweets,
+						0, SpringLayout.WEST, chckbxTwitterName);
 				twitterPanel.add(chckbxTweets);
 			}
 			{
 				checkBox = new JCheckBox("Friends");
-				sl_twitterPanel.putConstraint(SpringLayout.NORTH, checkBox, 6, SpringLayout.SOUTH, chckbxTweets);
-				sl_twitterPanel.putConstraint(SpringLayout.WEST, checkBox, 0, SpringLayout.WEST, chckbxTwitterName);
+				sl_twitterPanel.putConstraint(SpringLayout.NORTH, checkBox, 6,
+						SpringLayout.SOUTH, chckbxTweets);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST, checkBox, 0,
+						SpringLayout.WEST, chckbxTwitterName);
 				twitterPanel.add(checkBox);
 			}
 			{
 				chckbxTrends = new JCheckBox("Trends");
-				sl_twitterPanel.putConstraint(SpringLayout.NORTH, chckbxTrends, 6, SpringLayout.SOUTH, checkBox);
-				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxTrends, 0, SpringLayout.WEST, chckbxTwitterName);
+				sl_twitterPanel.putConstraint(SpringLayout.NORTH, chckbxTrends,
+						6, SpringLayout.SOUTH, checkBox);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxTrends,
+						0, SpringLayout.WEST, chckbxTwitterName);
 				twitterPanel.add(chckbxTrends);
 			}
 			getContentPane().add(xingPanel);
@@ -167,9 +173,12 @@ public class SocialMediaScanDialog extends JDialog {
 
 		{
 			linkedInPanel = new JPanel();
-			springLayout.putConstraint(SpringLayout.NORTH, linkedInPanel, 10, SpringLayout.NORTH, getContentPane());
-			springLayout.putConstraint(SpringLayout.WEST, linkedInPanel, 5, SpringLayout.EAST, xingPanel);
-			springLayout.putConstraint(SpringLayout.EAST, linkedInPanel, -19, SpringLayout.EAST, getContentPane());
+			springLayout.putConstraint(SpringLayout.NORTH, linkedInPanel, 10,
+					SpringLayout.NORTH, getContentPane());
+			springLayout.putConstraint(SpringLayout.WEST, linkedInPanel, 5,
+					SpringLayout.EAST, xingPanel);
+			springLayout.putConstraint(SpringLayout.EAST, linkedInPanel, -19,
+					SpringLayout.EAST, getContentPane());
 			linkedInPanel.setBorder(new TitledBorder(null, "LinkedIn",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			sl_xingPanel = new SpringLayout();
@@ -180,181 +189,277 @@ public class SocialMediaScanDialog extends JDialog {
 		}
 		{
 			buttonPane = new JPanel();
-			springLayout.putConstraint(SpringLayout.SOUTH, linkedInPanel, -6, SpringLayout.NORTH, buttonPane);
+			springLayout.putConstraint(SpringLayout.SOUTH, linkedInPanel, -6,
+					SpringLayout.NORTH, buttonPane);
 			{
 				chckbxContacts_1 = new JCheckBox("Contacts");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxContacts_1, 10, SpringLayout.NORTH, linkedInPanel);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxContacts_1, 10, SpringLayout.WEST, linkedInPanel);
+				sl_linkedInPanel
+						.putConstraint(SpringLayout.NORTH, chckbxContacts_1,
+								10, SpringLayout.NORTH, linkedInPanel);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
+						chckbxContacts_1, 10, SpringLayout.WEST, linkedInPanel);
 				linkedInPanel.add(chckbxContacts_1);
 			}
 			{
 				chckbxSpecialties = new JCheckBox("Current job");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxSpecialties, 126, SpringLayout.NORTH, linkedInPanel);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxSpecialties, 10, SpringLayout.WEST, linkedInPanel);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
+						chckbxSpecialties, 126, SpringLayout.NORTH,
+						linkedInPanel);
+				sl_linkedInPanel
+						.putConstraint(SpringLayout.WEST, chckbxSpecialties,
+								10, SpringLayout.WEST, linkedInPanel);
 				linkedInPanel.add(chckbxSpecialties);
 			}
 			{
 				chckbxCompany = new JCheckBox("Company");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxCompany, 68, SpringLayout.NORTH, linkedInPanel);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxCompany, 10, SpringLayout.WEST, linkedInPanel);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
+						chckbxCompany, 68, SpringLayout.NORTH, linkedInPanel);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
+						chckbxCompany, 10, SpringLayout.WEST, linkedInPanel);
 				linkedInPanel.add(chckbxCompany);
 			}
 			{
 				chckbxJobTitle = new JCheckBox("Headline");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxJobTitle, 39, SpringLayout.NORTH, linkedInPanel);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxJobTitle, 10, SpringLayout.WEST, linkedInPanel);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
+						chckbxJobTitle, 39, SpringLayout.NORTH, linkedInPanel);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
+						chckbxJobTitle, 10, SpringLayout.WEST, linkedInPanel);
 				linkedInPanel.add(chckbxJobTitle);
 			}
 			{
 				chckbxStatus = new JCheckBox("Status");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxStatus, 97, SpringLayout.NORTH, linkedInPanel);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxStatus, 10, SpringLayout.WEST, linkedInPanel);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
+						chckbxStatus, 97, SpringLayout.NORTH, linkedInPanel);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxStatus,
+						10, SpringLayout.WEST, linkedInPanel);
 				linkedInPanel.add(chckbxStatus);
 			}
 			{
 				chckbxPositions = new JCheckBox("Positions");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxPositions, 6, SpringLayout.SOUTH, chckbxSpecialties);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxPositions, 0, SpringLayout.WEST, chckbxContacts_1);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
+						chckbxPositions, 6, SpringLayout.SOUTH,
+						chckbxSpecialties);
+				sl_linkedInPanel
+						.putConstraint(SpringLayout.WEST, chckbxPositions, 0,
+								SpringLayout.WEST, chckbxContacts_1);
 				linkedInPanel.add(chckbxPositions);
 			}
 			{
 				chckbxInterests_1 = new JCheckBox("Interests");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxInterests_1, 6, SpringLayout.SOUTH, chckbxPositions);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxInterests_1, 0, SpringLayout.WEST, chckbxContacts_1);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
+						chckbxInterests_1, 6, SpringLayout.SOUTH,
+						chckbxPositions);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
+						chckbxInterests_1, 0, SpringLayout.WEST,
+						chckbxContacts_1);
 				linkedInPanel.add(chckbxInterests_1);
 			}
 			{
 				chckbxEducation_1 = new JCheckBox("Education");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxEducation_1, 6, SpringLayout.SOUTH, chckbxInterests_1);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxEducation_1, 0, SpringLayout.WEST, chckbxContacts_1);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
+						chckbxEducation_1, 6, SpringLayout.SOUTH,
+						chckbxInterests_1);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
+						chckbxEducation_1, 0, SpringLayout.WEST,
+						chckbxContacts_1);
 				linkedInPanel.add(chckbxEducation_1);
 			}
 			{
 				chckbxProfileViews = new JCheckBox("Profile views");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxProfileViews, 6, SpringLayout.SOUTH, chckbxEducation_1);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxProfileViews, 0, SpringLayout.WEST, chckbxContacts_1);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
+						chckbxProfileViews, 6, SpringLayout.SOUTH,
+						chckbxEducation_1);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
+						chckbxProfileViews, 0, SpringLayout.WEST,
+						chckbxContacts_1);
 				linkedInPanel.add(chckbxProfileViews);
 			}
 			{
 				chckbxPhoneNumber = new JCheckBox("Phone number");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxPhoneNumber, 6, SpringLayout.SOUTH, chckbxProfileViews);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxPhoneNumber, 0, SpringLayout.WEST, chckbxContacts_1);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
+						chckbxPhoneNumber, 6, SpringLayout.SOUTH,
+						chckbxProfileViews);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
+						chckbxPhoneNumber, 0, SpringLayout.WEST,
+						chckbxContacts_1);
 				linkedInPanel.add(chckbxPhoneNumber);
 			}
 			{
 				chckbxTwitterAccount = new JCheckBox("Twitter Account");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, chckbxTwitterAccount, 6, SpringLayout.SOUTH, chckbxPhoneNumber);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxTwitterAccount, 0, SpringLayout.WEST, chckbxContacts_1);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
+						chckbxTwitterAccount, 6, SpringLayout.SOUTH,
+						chckbxPhoneNumber);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
+						chckbxTwitterAccount, 0, SpringLayout.WEST,
+						chckbxContacts_1);
 				linkedInPanel.add(chckbxTwitterAccount);
 			}
-			springLayout.putConstraint(SpringLayout.SOUTH, xingPanel, -6, SpringLayout.NORTH, buttonPane);
+			springLayout.putConstraint(SpringLayout.SOUTH, xingPanel, -6,
+					SpringLayout.NORTH, buttonPane);
 			{
 				chckbxBirthday_1 = new JCheckBox("Birthday");
-				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxBirthday_1, 10, SpringLayout.WEST, xingPanel);
+				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxBirthday_1,
+						10, SpringLayout.WEST, xingPanel);
 				xingPanel.add(chckbxBirthday_1);
 			}
 			{
 				chckbxContacts = new JCheckBox("Contacts");
-				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxContacts, 0, SpringLayout.WEST, chckbxBirthday_1);
+				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxContacts,
+						0, SpringLayout.WEST, chckbxBirthday_1);
 				xingPanel.add(chckbxContacts);
 			}
 			{
 				chckbxProfileMessage = new JCheckBox("ProfileMessage");
-				sl_xingPanel.putConstraint(SpringLayout.NORTH, chckbxProfileMessage, 6, SpringLayout.SOUTH, chckbxContacts);
-				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxProfileMessage, 0, SpringLayout.WEST, chckbxBirthday_1);
+				sl_xingPanel.putConstraint(SpringLayout.NORTH,
+						chckbxProfileMessage, 6, SpringLayout.SOUTH,
+						chckbxContacts);
+				sl_xingPanel.putConstraint(SpringLayout.WEST,
+						chckbxProfileMessage, 0, SpringLayout.WEST,
+						chckbxBirthday_1);
 				xingPanel.add(chckbxProfileMessage);
 			}
 			{
 				chckbxCompan = new JCheckBox("Company");
-				sl_xingPanel.putConstraint(SpringLayout.SOUTH, chckbxCompan, -328, SpringLayout.SOUTH, xingPanel);
-				sl_xingPanel.putConstraint(SpringLayout.NORTH, chckbxContacts, 6, SpringLayout.SOUTH, chckbxCompan);
-				sl_xingPanel.putConstraint(SpringLayout.SOUTH, chckbxBirthday_1, -6, SpringLayout.NORTH, chckbxCompan);
-				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxCompan, 0, SpringLayout.WEST, chckbxBirthday_1);
+				sl_xingPanel.putConstraint(SpringLayout.SOUTH, chckbxCompan,
+						-328, SpringLayout.SOUTH, xingPanel);
+				sl_xingPanel.putConstraint(SpringLayout.NORTH, chckbxContacts,
+						6, SpringLayout.SOUTH, chckbxCompan);
+				sl_xingPanel.putConstraint(SpringLayout.SOUTH,
+						chckbxBirthday_1, -6, SpringLayout.NORTH, chckbxCompan);
+				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxCompan, 0,
+						SpringLayout.WEST, chckbxBirthday_1);
 				xingPanel.add(chckbxCompan);
 			}
 			{
 				chckbxProfileVisits = new JCheckBox("Profile visits");
-				sl_xingPanel.putConstraint(SpringLayout.NORTH, chckbxProfileVisits, 6, SpringLayout.SOUTH, chckbxProfileMessage);
-				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxProfileVisits, 0, SpringLayout.WEST, chckbxBirthday_1);
+				sl_xingPanel.putConstraint(SpringLayout.NORTH,
+						chckbxProfileVisits, 6, SpringLayout.SOUTH,
+						chckbxProfileMessage);
+				sl_xingPanel.putConstraint(SpringLayout.WEST,
+						chckbxProfileVisits, 0, SpringLayout.WEST,
+						chckbxBirthday_1);
 				xingPanel.add(chckbxProfileVisits);
 			}
-			springLayout.putConstraint(SpringLayout.SOUTH, buttonPane, 0, SpringLayout.SOUTH, getContentPane());
+			springLayout.putConstraint(SpringLayout.SOUTH, buttonPane, 0,
+					SpringLayout.SOUTH, getContentPane());
 			springLayout.putConstraint(SpringLayout.EAST, buttonPane, 0,
 					SpringLayout.EAST, getContentPane());
 			springLayout.putConstraint(SpringLayout.SOUTH, facebookPanel, -6,
 					SpringLayout.NORTH, buttonPane);
 			SpringLayout sl_facebookPanel = new SpringLayout();
 			facebookPanel.setLayout(sl_facebookPanel);
-			
+
 			JCheckBox chckbxRelationship = new JCheckBox("Relationship");
-			sl_facebookPanel.putConstraint(SpringLayout.NORTH, chckbxRelationship, 97, SpringLayout.NORTH, facebookPanel);
-			sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxRelationship, 10, SpringLayout.WEST, facebookPanel);
+			sl_facebookPanel.putConstraint(SpringLayout.NORTH,
+					chckbxRelationship, 97, SpringLayout.NORTH, facebookPanel);
+			sl_facebookPanel.putConstraint(SpringLayout.WEST,
+					chckbxRelationship, 10, SpringLayout.WEST, facebookPanel);
 			facebookPanel.add(chckbxRelationship);
 			{
 				chckbxBirthday = new JCheckBox("Birthday");
-				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxBirthday, 0, SpringLayout.WEST, chckbxRelationship);
+				sl_facebookPanel.putConstraint(SpringLayout.WEST,
+						chckbxBirthday, 0, SpringLayout.WEST,
+						chckbxRelationship);
 				facebookPanel.add(chckbxBirthday);
 			}
-			
+
 			JCheckBox chckbxNewCheckBox = new JCheckBox("Last post");
-			sl_facebookPanel.putConstraint(SpringLayout.SOUTH, chckbxBirthday, -6, SpringLayout.NORTH, chckbxNewCheckBox);
-			sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxNewCheckBox, 0, SpringLayout.WEST, chckbxRelationship);
-			sl_facebookPanel.putConstraint(SpringLayout.SOUTH, chckbxNewCheckBox, -6, SpringLayout.NORTH, chckbxRelationship);
+			sl_facebookPanel.putConstraint(SpringLayout.SOUTH, chckbxBirthday,
+					-6, SpringLayout.NORTH, chckbxNewCheckBox);
+			sl_facebookPanel
+					.putConstraint(SpringLayout.WEST, chckbxNewCheckBox, 0,
+							SpringLayout.WEST, chckbxRelationship);
+			sl_facebookPanel.putConstraint(SpringLayout.SOUTH,
+					chckbxNewCheckBox, -6, SpringLayout.NORTH,
+					chckbxRelationship);
 			facebookPanel.add(chckbxNewCheckBox);
-			
+
 			JCheckBox chckbxNewCheckBox_1 = new JCheckBox("Biography");
-			sl_facebookPanel.putConstraint(SpringLayout.SOUTH, chckbxNewCheckBox_1, -357, SpringLayout.SOUTH, facebookPanel);
-			sl_facebookPanel.putConstraint(SpringLayout.NORTH, chckbxNewCheckBox_1, 10, SpringLayout.NORTH, facebookPanel);
-			sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxNewCheckBox_1, 10, SpringLayout.WEST, facebookPanel);
+			sl_facebookPanel.putConstraint(SpringLayout.SOUTH,
+					chckbxNewCheckBox_1, -357, SpringLayout.SOUTH,
+					facebookPanel);
+			sl_facebookPanel.putConstraint(SpringLayout.NORTH,
+					chckbxNewCheckBox_1, 10, SpringLayout.NORTH, facebookPanel);
+			sl_facebookPanel.putConstraint(SpringLayout.WEST,
+					chckbxNewCheckBox_1, 10, SpringLayout.WEST, facebookPanel);
 			facebookPanel.add(chckbxNewCheckBox_1);
 			{
 				chckbxEducation = new JCheckBox("Education");
-				sl_facebookPanel.putConstraint(SpringLayout.NORTH, chckbxEducation, 126, SpringLayout.NORTH, facebookPanel);
-				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxEducation, 10, SpringLayout.WEST, facebookPanel);
-				sl_facebookPanel.putConstraint(SpringLayout.SOUTH, chckbxRelationship, -6, SpringLayout.NORTH, chckbxEducation);
+				sl_facebookPanel
+						.putConstraint(SpringLayout.NORTH, chckbxEducation,
+								126, SpringLayout.NORTH, facebookPanel);
+				sl_facebookPanel.putConstraint(SpringLayout.WEST,
+						chckbxEducation, 10, SpringLayout.WEST, facebookPanel);
+				sl_facebookPanel.putConstraint(SpringLayout.SOUTH,
+						chckbxRelationship, -6, SpringLayout.NORTH,
+						chckbxEducation);
 				facebookPanel.add(chckbxEducation);
 			}
 			{
 				chckbxNewCheckBox_2 = new JCheckBox("Work");
-				sl_facebookPanel.putConstraint(SpringLayout.NORTH, chckbxNewCheckBox_2, 155, SpringLayout.NORTH, facebookPanel);
-				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxNewCheckBox_2, 10, SpringLayout.WEST, facebookPanel);
-				sl_facebookPanel.putConstraint(SpringLayout.SOUTH, chckbxEducation, -6, SpringLayout.NORTH, chckbxNewCheckBox_2);
+				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
+						chckbxNewCheckBox_2, 155, SpringLayout.NORTH,
+						facebookPanel);
+				sl_facebookPanel.putConstraint(SpringLayout.WEST,
+						chckbxNewCheckBox_2, 10, SpringLayout.WEST,
+						facebookPanel);
+				sl_facebookPanel.putConstraint(SpringLayout.SOUTH,
+						chckbxEducation, -6, SpringLayout.NORTH,
+						chckbxNewCheckBox_2);
 				facebookPanel.add(chckbxNewCheckBox_2);
 			}
 			{
 				chckbxEvents = new JCheckBox("Events");
-				sl_facebookPanel.putConstraint(SpringLayout.NORTH, chckbxEvents, 6, SpringLayout.SOUTH, chckbxNewCheckBox_2);
-				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxEvents, 10, SpringLayout.WEST, facebookPanel);
+				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
+						chckbxEvents, 6, SpringLayout.SOUTH,
+						chckbxNewCheckBox_2);
+				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxEvents,
+						10, SpringLayout.WEST, facebookPanel);
 				facebookPanel.add(chckbxEvents);
 			}
 			{
 				chckbxInterests = new JCheckBox("Interests");
-				sl_facebookPanel.putConstraint(SpringLayout.NORTH, chckbxInterests, 6, SpringLayout.SOUTH, chckbxEvents);
-				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxInterests, 10, SpringLayout.WEST, facebookPanel);
+				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
+						chckbxInterests, 6, SpringLayout.SOUTH, chckbxEvents);
+				sl_facebookPanel.putConstraint(SpringLayout.WEST,
+						chckbxInterests, 10, SpringLayout.WEST, facebookPanel);
 				facebookPanel.add(chckbxInterests);
 			}
 			{
 				chckbxFriends = new JCheckBox("Friends");
-				sl_facebookPanel.putConstraint(SpringLayout.NORTH, chckbxFriends, 6, SpringLayout.SOUTH, chckbxInterests);
-				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxFriends, 10, SpringLayout.WEST, facebookPanel);
+				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
+						chckbxFriends, 6, SpringLayout.SOUTH, chckbxInterests);
+				sl_facebookPanel.putConstraint(SpringLayout.WEST,
+						chckbxFriends, 10, SpringLayout.WEST, facebookPanel);
 				facebookPanel.add(chckbxFriends);
 			}
 			{
 				chckbxMutualFriends = new JCheckBox("Mutual Friends");
-				sl_facebookPanel.putConstraint(SpringLayout.NORTH, chckbxMutualFriends, 6, SpringLayout.SOUTH, chckbxFriends);
-				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxMutualFriends, 10, SpringLayout.WEST, facebookPanel);
+				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
+						chckbxMutualFriends, 6, SpringLayout.SOUTH,
+						chckbxFriends);
+				sl_facebookPanel.putConstraint(SpringLayout.WEST,
+						chckbxMutualFriends, 10, SpringLayout.WEST,
+						facebookPanel);
 				facebookPanel.add(chckbxMutualFriends);
 			}
 			{
 				chckbxProfilePicture = new JCheckBox("Profile picture");
-				sl_facebookPanel.putConstraint(SpringLayout.NORTH, chckbxProfilePicture, 6, SpringLayout.SOUTH, chckbxMutualFriends);
-				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxProfilePicture, 10, SpringLayout.WEST, facebookPanel);
+				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
+						chckbxProfilePicture, 6, SpringLayout.SOUTH,
+						chckbxMutualFriends);
+				sl_facebookPanel.putConstraint(SpringLayout.WEST,
+						chckbxProfilePicture, 10, SpringLayout.WEST,
+						facebookPanel);
 				facebookPanel.add(chckbxProfilePicture);
 			}
 			{
 				chckbxUsername = new JCheckBox("Username");
-				sl_facebookPanel.putConstraint(SpringLayout.NORTH, chckbxUsername, 6, SpringLayout.SOUTH, chckbxProfilePicture);
-				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxUsername, 10, SpringLayout.WEST, facebookPanel);
+				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
+						chckbxUsername, 6, SpringLayout.SOUTH,
+						chckbxProfilePicture);
+				sl_facebookPanel.putConstraint(SpringLayout.WEST,
+						chckbxUsername, 10, SpringLayout.WEST, facebookPanel);
 				facebookPanel.add(chckbxUsername);
 			}
 			springLayout.putConstraint(SpringLayout.WEST, buttonPane, 0,
