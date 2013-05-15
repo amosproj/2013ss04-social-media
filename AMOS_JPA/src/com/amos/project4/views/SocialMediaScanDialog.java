@@ -85,7 +85,6 @@ public class SocialMediaScanDialog extends JDialog {
 
 		setBounds(100, 100, 658, 500);
 
-		setBounds(100, 100, 550, 500);
 		setLocationRelativeTo(null);
 
 		SpringLayout springLayout = new SpringLayout();
@@ -104,10 +103,10 @@ public class SocialMediaScanDialog extends JDialog {
 		}
 		{
 			twitterPanel = new JPanel();
-			springLayout.putConstraint(SpringLayout.WEST, twitterPanel, 5,
-					SpringLayout.EAST, facebookPanel);
+			springLayout.putConstraint(SpringLayout.WEST, twitterPanel, 5, SpringLayout.EAST, facebookPanel);
 			springLayout.putConstraint(SpringLayout.SOUTH, twitterPanel, -39,
 					SpringLayout.SOUTH, getContentPane());
+			springLayout.putConstraint(SpringLayout.EAST, twitterPanel, -327, SpringLayout.EAST, getContentPane());
 			twitterPanel.setBorder(new TitledBorder(null, "Twitter",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			springLayout.putConstraint(SpringLayout.NORTH, twitterPanel, 10,
@@ -116,14 +115,10 @@ public class SocialMediaScanDialog extends JDialog {
 		}
 		{
 			xingPanel = new JPanel();
-			springLayout.putConstraint(SpringLayout.EAST, twitterPanel, -3,
-					SpringLayout.WEST, xingPanel);
-			springLayout.putConstraint(SpringLayout.WEST, xingPanel, 318,
-					SpringLayout.WEST, getContentPane());
 			springLayout.putConstraint(SpringLayout.NORTH, xingPanel, 10,
 					SpringLayout.NORTH, getContentPane());
-			springLayout.putConstraint(SpringLayout.EAST, xingPanel, -174,
-					SpringLayout.EAST, getContentPane());
+			springLayout.putConstraint(SpringLayout.WEST, xingPanel, 5, SpringLayout.EAST, twitterPanel);
+			springLayout.putConstraint(SpringLayout.EAST, xingPanel, -172, SpringLayout.EAST, getContentPane());
 			xingPanel.setBorder(new TitledBorder(null, "Xing",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			SpringLayout sl_twitterPanel = new SpringLayout();
@@ -173,12 +168,10 @@ public class SocialMediaScanDialog extends JDialog {
 
 		{
 			linkedInPanel = new JPanel();
+			springLayout.putConstraint(SpringLayout.WEST, linkedInPanel, 5, SpringLayout.EAST, xingPanel);
+			springLayout.putConstraint(SpringLayout.EAST, linkedInPanel, -17, SpringLayout.EAST, getContentPane());
 			springLayout.putConstraint(SpringLayout.NORTH, linkedInPanel, 10,
 					SpringLayout.NORTH, getContentPane());
-			springLayout.putConstraint(SpringLayout.WEST, linkedInPanel, 5,
-					SpringLayout.EAST, xingPanel);
-			springLayout.putConstraint(SpringLayout.EAST, linkedInPanel, -19,
-					SpringLayout.EAST, getContentPane());
 			linkedInPanel.setBorder(new TitledBorder(null, "LinkedIn",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			sl_xingPanel = new SpringLayout();
