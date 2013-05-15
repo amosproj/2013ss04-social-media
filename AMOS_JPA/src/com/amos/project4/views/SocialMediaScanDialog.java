@@ -59,6 +59,7 @@ public class SocialMediaScanDialog extends JDialog {
 	public SocialMediaScanDialog() {
 		setTitle("AMOS Project 4 - Social Media Scan");
 		setBounds(100, 100, 550, 500);
+		setLocationRelativeTo(null);
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
 		{
