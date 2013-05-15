@@ -15,7 +15,8 @@ public class AMOSUtils {
         /* Ausgabe */
         StringBuffer hexString = new StringBuffer();
         for (int i=0; i<result.length; i++) {
-            hexString.append(Integer.toHexString(0xFF & result[i]));
+        	hexString.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+            //hexString.append(Integer.toHexString(0xFF & result[i]));
         }
         return hexString.toString();
     }

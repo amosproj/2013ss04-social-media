@@ -25,11 +25,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-/**
- * 
- * @author Jupiter BAKAKEU
- * 
- */
 public class UserDAO {
 	private static final String PERSISTENCE_UNIT_NAME = "AMOS_JPA";
 	private static EntityManagerFactory factory;
