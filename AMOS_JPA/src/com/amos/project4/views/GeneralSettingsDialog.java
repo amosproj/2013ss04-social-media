@@ -20,6 +20,7 @@
 package com.amos.project4.views;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -33,6 +34,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
@@ -53,10 +55,10 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	private final JPanel contentPanel = new JPanel();
 	private JTextField f_usernameTextField;
 	private JPasswordField f_passwordField;
-	private JTextField t_usernameTextField;
-	private JPasswordField t_passwordField;
-	private JLabel t_lbl_username;
-	private JLabel t_lbl_password;
+	private JTextField t_accestokenTextField;
+	private JTextField t_accessTokenSecretField;
+	private JLabel t_lbl_access_token;
+	private JLabel t_lbl_accesstoken_secret;
 	private JTextField x_usernameTextField;
 	private JLabel x_lbl_username;
 	private JPasswordField x_passwordField;
@@ -69,9 +71,8 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	
 	private UserViewModel viewModel;
 	private UserController user_controller;
-	
-	
-
+	private JLabel t_lblStatus;
+	private JButton t_btnGenerateToken;
 	
 	public GeneralSettingsDialog(UserController user_controller,UserViewModel viewModel) {
 		super();
@@ -87,7 +88,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	
 	private void init(){
 		setTitle("AMOS Project 4 General settings");
-		setBounds(100, 100, 600, 260);
+		setBounds(100, 100, 650, 400);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -129,31 +130,90 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			SpringLayout sl_TwitterPanel = new SpringLayout();
 			TwitterPanel.setLayout(sl_TwitterPanel);
 			{
-				t_lbl_username = new JLabel("Username :");
-				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_lbl_username, 10, SpringLayout.NORTH, TwitterPanel);
-				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_lbl_username, 10, SpringLayout.WEST, TwitterPanel);
-				TwitterPanel.add(t_lbl_username);
+				t_lbl_access_token = new JLabel("Acces token :");
+				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_lbl_access_token, 10, SpringLayout.NORTH, TwitterPanel);
+				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_lbl_access_token, 10, SpringLayout.WEST, TwitterPanel);
+				TwitterPanel.add(t_lbl_access_token);
 			}
 			{
-				t_usernameTextField = new JTextField();
-				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_usernameTextField, 20, SpringLayout.EAST, t_lbl_username);
-				sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_usernameTextField, 0, SpringLayout.SOUTH, t_lbl_username);
-				t_usernameTextField.setColumns(15);
-				TwitterPanel.add(t_usernameTextField);
+				t_accestokenTextField = new JTextField();
+				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_accestokenTextField, 20, SpringLayout.EAST, t_lbl_access_token);
+				sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_accestokenTextField, 0, SpringLayout.SOUTH, t_lbl_access_token);
+				t_accestokenTextField.setColumns(15);
+				TwitterPanel.add(t_accestokenTextField);
 			}
 			{
-				t_lbl_password = new JLabel("Password :");
-				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_lbl_password, 12, SpringLayout.SOUTH, t_lbl_username);
-				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_lbl_password, 0, SpringLayout.WEST, t_lbl_username);
-				TwitterPanel.add(t_lbl_password);
+				t_lbl_accesstoken_secret = new JLabel("Access token secret :");
+				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_lbl_accesstoken_secret, 12, SpringLayout.SOUTH, t_lbl_access_token);
+				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_lbl_accesstoken_secret, 0, SpringLayout.WEST, t_lbl_access_token);
+				TwitterPanel.add(t_lbl_accesstoken_secret);
 			}
 			{
-				t_passwordField = new JPasswordField();
-				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_passwordField, 0, SpringLayout.WEST, t_usernameTextField);
-				sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_passwordField, 0, SpringLayout.SOUTH, t_lbl_password);
-				sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_passwordField, 0, SpringLayout.EAST, t_usernameTextField);
-				TwitterPanel.add(t_passwordField);
+				t_accessTokenSecretField = new JTextField();
+				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_accessTokenSecretField, 0, SpringLayout.WEST, t_accestokenTextField);
+				sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_accessTokenSecretField, 0, SpringLayout.SOUTH, t_lbl_accesstoken_secret);
+				sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_accessTokenSecretField, 0, SpringLayout.EAST, t_accestokenTextField);
+				TwitterPanel.add(t_accessTokenSecretField);
 			}
+			/*
+			{
+				t_url_lbl = new JLabel("Url :");
+				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_url_lbl, 12, SpringLayout.SOUTH, t_lbl_accesstoken_secret);
+				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_url_lbl, 0, SpringLayout.WEST, t_lbl_accesstoken_secret);
+				sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_url_lbl, 0, SpringLayout.EAST, t_lbl_access_token);
+				TwitterPanel.add(t_url_lbl);
+			}
+			{
+				t_url_textField = new JTextField();
+				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_url_textField, 6, SpringLayout.SOUTH, t_lbl_accesstoken_secret);
+				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_url_textField, 0, SpringLayout.WEST, t_accessTokenSecretField);
+				sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_url_textField, 0, SpringLayout.SOUTH, t_url_lbl);
+				sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_url_textField, 0, SpringLayout.EAST, t_accestokenTextField);
+				t_url_textField.setText((String) null);
+				t_url_textField.setColumns(15);
+				TwitterPanel.add(t_url_textField);
+			}
+			{
+				textField_1 = new JTextField();
+				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, textField_1, 6, SpringLayout.SOUTH, t_lbl_accesstoken_secret);
+				sl_TwitterPanel.putConstraint(SpringLayout.EAST, textField_1, 0, SpringLayout.EAST, t_accestokenTextField);
+				textField_1.setText((String) null);
+				textField_1.setColumns(15);
+				TwitterPanel.add(textField_1);
+			}
+			{
+				t_pin_lbl = new JLabel("Pin :");
+				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_pin_lbl, 12, SpringLayout.SOUTH, t_url_lbl);
+				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_pin_lbl, 0, SpringLayout.WEST, t_url_lbl);
+				sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_pin_lbl, 0, SpringLayout.EAST, t_lbl_access_token);
+				TwitterPanel.add(t_pin_lbl);
+			}
+			{
+				t_pin_textField = new JTextField();
+				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_pin_textField, 0, SpringLayout.WEST, t_url_textField);
+				sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_pin_textField, 0, SpringLayout.SOUTH, t_pin_lbl);
+				sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_pin_textField, 0, SpringLayout.EAST, t_url_textField);
+				t_pin_textField.setText((String) null);
+				t_pin_textField.setColumns(15);
+				TwitterPanel.add(t_pin_textField);
+			}
+			*/			
+			
+			t_btnGenerateToken = new JButton("Generate");
+			sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_btnGenerateToken, -6, SpringLayout.SOUTH, TwitterPanel);
+			sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_btnGenerateToken, -6, SpringLayout.EAST, TwitterPanel);
+			t_btnGenerateToken.addActionListener(new T_GenereateAction());
+			TwitterPanel.add(t_btnGenerateToken);
+			
+			t_lblStatus = new JLabel("Status:");
+			sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_lblStatus, 6, SpringLayout.SOUTH, t_lbl_accesstoken_secret);
+			sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_lblStatus, 0, SpringLayout.WEST, t_lbl_access_token);
+			sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_lblStatus, 0, SpringLayout.EAST, t_btnGenerateToken);
+			TwitterPanel.add(t_lblStatus);
+			
+			
+			
+			
 		}
 		{
 			JPanel XingPanel = new JPanel();
@@ -257,12 +317,18 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	private void updateView(User user){
 		this.f_usernameTextField.setText(user.getF_username());
 		this.f_passwordField.setText(user.getF_userpass());
-		this.t_usernameTextField.setText(user.getT_username());
-		this.t_passwordField.setText(user.getT_userpass());
+		this.t_accestokenTextField.setText(user.getT_token());
+		this.t_accessTokenSecretField.setText(user.getT_token_secret());
 		this.x_usernameTextField.setText(user.getX_username());
 		this.x_passwordField.setText(user.getX_userpass());
 		this.l_usernameTextField.setText(user.getL_username());
 		this.l_passwordField.setText(user.getL_userpass());
+		if(user_controller.checkToken(user.getT_token(),user.getT_token_secret())){
+			this.makeConnectionStatus(2, "Valid Token", 0);
+		}else{
+			this.makeConnectionStatus(2, "Invalid Valid Token", 1);			
+		}	
+		
 	}
 	
 	private class OKAction implements ActionListener{
@@ -271,8 +337,8 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			viewModel.setSocialMediaDatas(
 					f_usernameTextField.getText(), 
 					new String(f_passwordField.getPassword()),
-					t_usernameTextField.getText(), 
-					new String(t_passwordField.getPassword()),
+					t_accestokenTextField.getText(), 
+					new String(t_accessTokenSecretField.getText()),
 					x_usernameTextField.getText(), 
 					new String(x_passwordField.getPassword()),
 					l_usernameTextField.getText(), 
@@ -288,4 +354,47 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			dispose();		
 		}		
 	}
+	
+	
+	private class T_GenereateAction implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel);
+			URLDialog.setVisible(true);
+		}		
+	}
+	
+	private void makeConnectionStatus(int mediaType, String message, int severity){
+		switch (mediaType) {
+		case 1:
+			//
+			break;
+		case 2:
+			setMessage(message,severity,this.t_lblStatus);
+			break;
+
+		default:
+			break;
+		}
+	}
+	
+	private void setMessage(String msg, int severity,JLabel component) {
+		switch (severity) {
+		case 0:
+			component.setText(msg);
+			component.setForeground(Color.GREEN);
+			break;
+		case 1:
+			component.setText(msg);
+			component.setForeground(Color.RED);
+			break;
+		default:
+			component.setText(msg);
+			component.setForeground(Color.BLACK);
+			break;
+		}
+	}
+	
+	
 }

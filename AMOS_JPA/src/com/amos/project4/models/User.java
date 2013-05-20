@@ -72,18 +72,30 @@ public class User implements Serializable {
 	@Column(name = "\"f_userpass\"",columnDefinition="VARCHAR(50)")
 	private String f_userpass;
 	
-	/**
-	 * Unique identifier of the user on twitter
-	 */
-	@Column(name = "\"t_username\"",columnDefinition="VARCHAR(50)")
-	private String t_username;
+//	/**
+//	 * Unique identifier of the user on twitter
+//	 */
+//	@Column(name = "\"t_username\"",columnDefinition="VARCHAR(50)")
+//	private String t_username;
+//	
+//	/**
+//	 * User twitter password to log on twitter
+//	 */
+//	@Column(name = "\"t_userpass\"",columnDefinition="VARCHAR(50)")
+//	private String t_userpass;
 	
 	/**
-	 * User twitter password to log on twitter
+	 * URL to get the access token
 	 */
-	@Column(name = "\"t_userpass\"",columnDefinition="VARCHAR(50)")
-	private String t_userpass;
+	@Column(name = "\"t_token_secret\"",columnDefinition="VARCHAR(250)")
+	private String t_token_secret;
 	
+	/**
+	 * twitter Access Token
+	 */
+	@Column(name = "\"t_token\"",columnDefinition="VARCHAR(250)")
+	private String t_token;
+
 	/**
 	 * Unique identifier of the user on Xing
 	 */
@@ -148,21 +160,21 @@ public class User implements Serializable {
 		this.f_userpass = f_userpass;
 	}
 
-	public String getT_username() {
-		return t_username;
-	}
-
-	public void setT_username(String t_username) {
-		this.t_username = t_username;
-	}
-
-	public String getT_userpass() {
-		return t_userpass;
-	}
-
-	public void setT_userpass(String t_userpass) {
-		this.t_userpass = t_userpass;
-	}
+//	public String getT_username() {
+//		return t_username;
+//	}
+//
+//	public void setT_username(String t_username) {
+//		this.t_username = t_username;
+//	}
+//
+//	public String getT_userpass() {
+//		return t_userpass;
+//	}
+//
+//	public void setT_userpass(String t_userpass) {
+//		this.t_userpass = t_userpass;
+//	}
 
 	public String getX_username() {
 		return x_username;
@@ -199,110 +211,23 @@ public class User implements Serializable {
 	public Integer getID() {
 		return ID;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((ID == null) ? 0 : ID.hashCode());
-		result = prime * result
-				+ ((f_username == null) ? 0 : f_username.hashCode());
-		result = prime * result
-				+ ((f_userpass == null) ? 0 : f_userpass.hashCode());
-		result = prime * result
-				+ ((l_username == null) ? 0 : l_username.hashCode());
-		result = prime * result
-				+ ((l_userpass == null) ? 0 : l_userpass.hashCode());
-		result = prime * result
-				+ ((t_username == null) ? 0 : t_username.hashCode());
-		result = prime * result
-				+ ((t_userpass == null) ? 0 : t_userpass.hashCode());
-		result = prime * result
-				+ ((usermail == null) ? 0 : usermail.hashCode());
-		result = prime * result
-				+ ((username == null) ? 0 : username.hashCode());
-		result = prime * result
-				+ ((userpass == null) ? 0 : userpass.hashCode());
-		result = prime * result
-				+ ((x_username == null) ? 0 : x_username.hashCode());
-		result = prime * result
-				+ ((x_userpass == null) ? 0 : x_userpass.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (ID == null) {
-			if (other.ID != null)
-				return false;
-		} else if (!ID.equals(other.ID))
-			return false;
-		if (f_username == null) {
-			if (other.f_username != null)
-				return false;
-		} else if (!f_username.equals(other.f_username))
-			return false;
-		if (f_userpass == null) {
-			if (other.f_userpass != null)
-				return false;
-		} else if (!f_userpass.equals(other.f_userpass))
-			return false;
-		if (l_username == null) {
-			if (other.l_username != null)
-				return false;
-		} else if (!l_username.equals(other.l_username))
-			return false;
-		if (l_userpass == null) {
-			if (other.l_userpass != null)
-				return false;
-		} else if (!l_userpass.equals(other.l_userpass))
-			return false;
-		if (t_username == null) {
-			if (other.t_username != null)
-				return false;
-		} else if (!t_username.equals(other.t_username))
-			return false;
-		if (t_userpass == null) {
-			if (other.t_userpass != null)
-				return false;
-		} else if (!t_userpass.equals(other.t_userpass))
-			return false;
-		if (usermail == null) {
-			if (other.usermail != null)
-				return false;
-		} else if (!usermail.equals(other.usermail))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		if (userpass == null) {
-			if (other.userpass != null)
-				return false;
-		} else if (!userpass.equalsIgnoreCase(other.userpass))
-			return false;
-		if (x_username == null) {
-			if (other.x_username != null)
-				return false;
-		} else if (!x_username.equals(other.x_username))
-			return false;
-		if (x_userpass == null) {
-			if (other.x_userpass != null)
-				return false;
-		} else if (!x_userpass.equals(other.x_userpass))
-			return false;
-		return true;
-	}
-
 	
+	public String getT_token_secret() {
+		return t_token_secret;
+	}
+
+	public void setT_token_secret(String t_token_secret) {
+		this.t_token_secret = t_token_secret;
+	}
+
+	public String getT_token() {
+		return t_token;
+	}
+
+	public void setT_token(String t_token) {
+		this.t_token = t_token;
+	}
+
 	
 	
 	

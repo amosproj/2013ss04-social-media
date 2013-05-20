@@ -141,14 +141,19 @@ public class UserDAO {
 		_user.setF_username(user.getF_username());
 		_user.setF_userpass(user.getF_userpass());
 		// Twitter
-		_user.setT_username(user.getT_username());
-		_user.setT_userpass(user.getT_userpass());
+		_user.setT_token(user.getT_token());
+		_user.setT_token_secret(user.getT_token_secret());
 		// linkedIn
 		_user.setL_username(user.getL_username());
 		_user.setL_userpass(user.getL_userpass());
 		// Xing
 		_user.setX_username(user.getX_username());
-		_user.setX_userpass(user.getX_userpass());		
+		_user.setX_userpass(user.getX_userpass());	
+		
+		_user.setT_token_secret(user.getT_token_secret());
+		_user.setT_token(user.getT_token());
+		
+		
 		em.persist(_user);
 		em.getTransaction().commit();
 		em.close();

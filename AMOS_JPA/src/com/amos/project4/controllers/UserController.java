@@ -22,6 +22,8 @@ import java.util.Observable;
 
 import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
+import com.amos.project4.socialMedia.MediaConnectInterface;
+import com.amos.project4.socialMedia.twitter.twitterConnect;
 import com.amos.project4.views.UserViewModel;
 
 /**
@@ -33,11 +35,13 @@ public class UserController extends AbstractController implements UserContollerI
 
 	User current_user;
 	UserDAO uDAO;	
+	MediaConnectInterface t_connect;
 	
 	public UserController() {
 		super();
 		current_user = null;
 		uDAO = UserDAO.getUserDAOInstance();
+		t_connect = twitterConnect.getInstance();
 	}
 
 	@Override
@@ -51,20 +55,25 @@ public class UserController extends AbstractController implements UserContollerI
 	}
 	
 	private void setCurrentUser(String username){
-		this.current_user = uDAO.getUserByUsername(username);		
+		this.current_user = uDAO.getUserByUsername(username);
 	}
 	
 	private void updateUser(UserViewModel user){
 		this.current_user.setF_username(user.getF_username());
 		this.current_user.setF_userpass(user.getF_userpass());
-		this.current_user.setT_username(user.getT_username());
-		this.current_user.setT_userpass(user.getT_userpass());
+		this.current_user.setT_token(user.getT_token());
+		this.current_user.setT_token_secret(user.getT_token_secret());
 		this.current_user.setX_username(user.getX_username());
 		this.current_user.setX_userpass(user.getX_userpass());
 		this.current_user.setL_username(user.getL_username());
 		this.current_user.setL_userpass(user.getL_userpass());
+		
 		uDAO.updateUser(this.current_user);
 		setCurrentUser(this.current_user.getUsername());
+	}
+	
+	public boolean checkToken(String token, String secret){
+		return t_connect.login(token, secret);
 	}
 
 	/**
@@ -73,5 +82,17 @@ public class UserController extends AbstractController implements UserContollerI
 	@Override
 	public User getCurrent_user() {
 		return current_user;
+	}
+	
+	public String getAccessTokenRequestURL(){
+		return t_connect.getAccessUrl();
+	}
+	
+	public boolean checkAndSetAccessToken(String url,String pin){
+		return t_connect.checkAndSetAccessToken(pin);
+	}
+	
+	public String[] getAccessToken(){
+		return t_connect.getAccessToken();
 	}
 }

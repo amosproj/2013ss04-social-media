@@ -1,0 +1,7 @@
+Consumer_key = dqIwqUcMOiASiPND31CMvg
+Consumer secret 	vaKBsbAGSDjMu54f150kNL9UH9dhjIGwYMx5aiUtc
+Request token URL 	https://api.twitter.com/oauth/request_token
+Authorize URL 	https://api.twitter.com/oauth/authorize
+Access token URL 	https://api.twitter.com/oauth/access_token
+Access token 	1392245641-ZrerD6ClCwGZANUZA2n1z86vSArMYfuBAjHDajz
+Access token secret 	cYKG9nJz4dpjoX41zE5xApNpI0YEswojMJg9qRutM

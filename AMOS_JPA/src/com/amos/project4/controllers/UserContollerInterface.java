@@ -23,6 +23,8 @@ import com.amos.project4.models.User;
 
 public interface UserContollerInterface {
 
-	public abstract User getCurrent_user();
+	public User getCurrent_user();
+	
+	public String getAccessTokenRequestURL();
 
 }
