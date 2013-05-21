@@ -46,9 +46,9 @@ public class TwitterConnect implements MediaConnectInterface {
 	private TwitterFactory tf;
 	
 	
-	private static MediaConnectInterface instance;
+	private static TwitterConnect  instance;
 	
-	public static MediaConnectInterface getInstance(){
+	public static TwitterConnect  getInstance(){
 		if(instance == null){
 			instance = new TwitterConnect();
 		}

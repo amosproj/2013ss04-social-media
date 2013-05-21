@@ -23,19 +23,19 @@ import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
 import com.amos.project4.controllers.UserController;
+import com.amos.project4.models.SocialMediaType;
 
 public class GenerateURLDialog extends JDialog {
 	
@@ -46,14 +46,18 @@ public class GenerateURLDialog extends JDialog {
 	private UserController user_controller;
 	private String url;
 	private UserViewModel viewModel;
+	private SocialMediaType sType;
+	
+	private GenerateURLDialog me;
 
 	/**
 	 * Create the dialog.
 	 */
-	public  GenerateURLDialog(UserController user,UserViewModel viewModel) {
+	public  GenerateURLDialog(UserController user,UserViewModel viewModel,SocialMediaType sType) {
+		this.sType = sType;
 		this.user_controller = user;
 		this.viewModel = viewModel;
-		this.url = user_controller.getAccessTokenRequestURL();
+		this.url = user_controller.getAccessTokenRequestURL(sType);
 		setTitle("Url window");
 		setBounds(100, 100, 600, 200);
 		getContentPane().setLayout(new BorderLayout());
@@ -62,7 +66,7 @@ public class GenerateURLDialog extends JDialog {
 		SpringLayout sl_contentPanel = new SpringLayout();
 		contentPanel.setLayout(sl_contentPanel);
 		
-		JLabel lblTitel = new JLabel("Please go to the following url and login");
+		JLabel lblTitel = new JLabel("Please go to the following url, login and copy the generated Token");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblTitel, 5, SpringLayout.NORTH, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, lblTitel, 5, SpringLayout.WEST, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblTitel, 0, SpringLayout.EAST, contentPanel);
@@ -113,10 +117,13 @@ public class GenerateURLDialog extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new CancelActionListener());
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
+		
+		me = this;
 	}
 	
 	public String getPin(){
@@ -131,33 +138,38 @@ public class GenerateURLDialog extends JDialog {
 			{
 			  try {
 				Desktop.getDesktop().browse(new URI(url));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (URISyntaxException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(me, "Could not open the URL. Please copy it manually !", "Error launching the browser", JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			}			
 		}		
 	}
 	
 	private class OKActionListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			
-			if(!user_controller.checkAndSetAccessToken(url, pin_textField.getText())){
-				
+		public void actionPerformed(ActionEvent e) {			
+			if(!user_controller.checkAndSetAccessToken(url, pin_textField.getText(),sType)){
+				JOptionPane.showMessageDialog(me, "The token: " + pin_textField.getText() + " is ivalid !", "Invalid token", JOptionPane.ERROR_MESSAGE);
 			}else{
-				String[]  access_tokens = user_controller.getAccessToken();
-				viewModel.setSocialMediaDatas(viewModel.getF_username(), viewModel.getF_userpass(),
-						access_tokens[0], access_tokens[1], 
-						viewModel.getX_username(), viewModel.getX_userpass(),
-						viewModel.getL_username(), viewModel.getL_userpass());
+				String[]  access_tokens = user_controller.getAccessToken(sType);
+				viewModel.setSocialMediaDatas(
+						sType == SocialMediaType.FACEBOOK?access_tokens[0]:viewModel.getF_token(), 
+						sType == SocialMediaType.FACEBOOK?access_tokens[1]:viewModel.getF_token_secret(),
+						sType == SocialMediaType.TWITTER?access_tokens[0]:viewModel.getT_token(), 
+						sType == SocialMediaType.TWITTER?access_tokens[1]:viewModel.getT_token_secret(), 
+						sType == SocialMediaType.XING?access_tokens[0]:viewModel.getX_token(),
+						sType == SocialMediaType.XING?access_tokens[1]:viewModel.getX_token_secret(),
+						sType == SocialMediaType.LINKEDIN?access_tokens[0]:viewModel.getL_token(),
+						sType == SocialMediaType.LINKEDIN?access_tokens[1]:viewModel.getL_token_secret());
 				
-			}	
-			
+			}			
 			dispose();		
-		}
-		
+		}		
+	}
+	
+	private class CancelActionListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			dispose();			
+		}		
 	}
 }

@@ -24,8 +24,9 @@ import com.restfb.types.User;
 
 public class FacebookConnect implements MediaConnectInterface {
 	
-	private static String ACCESS_TOKEN = "CAACEdEose0cBAP6kQuLHEaOg7vXkDlMsAm8OWoBGnPvsmmxk88b31iQm3iW2HPjZByTXdUwupyEr7AEJ1XfevuDNf0IGjJuDHhp6ng4PycRsWuLckOBiYkoR80NRaJufsOK90JZCXCCFOF5arSeQAeI311Vd8SGUZBZAltm4qQZDZD";
-
+	private static String ACCESS_TOKEN = "CAACEdEose0cBAJzhp6gQhNksXJHQSoPb3WVhWtEly4TSwuw99Pd1ZAm513V8tk30OvpGjk2378oKPpI9F0Haz6ZCimFrZBDG3NYMQMae3qzOfVNOq6GdBLtyCrfJZCdFXuHN2XpbLcSCUIKapy4o0Xbdlcy6n8JdmUO6YpGNiKqXpaO1QA37qGuZAPCPMJQ4VRSTo8d7NAgZDZD";
+	private static String ACCESS_TOKEN_URL = "http://developers.facebook.com/tools/explorer";
+	
 	private DefaultFacebookClient facebookClient;
 	private static FacebookConnect instance;
 	
@@ -47,26 +48,50 @@ public class FacebookConnect implements MediaConnectInterface {
 
 	@Override
 	public boolean login(String token, String secret_token) {
-		User user = facebookClient.fetchObject("me", User.class);
-		return user != null && user.getId().length() > 0;
+		try{
+			if(token == null || token.isEmpty()) return false;
+			DefaultFacebookClient facebookClient_ = new DefaultFacebookClient(token);
+			User user = facebookClient_.fetchObject("me", User.class);
+			if(user != null && user.getId().length() > 0){
+				ACCESS_TOKEN = token;
+				this.facebookClient = facebookClient_;
+				return true;
+			}else{
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public String getAccessUrl() {
-		// TODO Auto-generated method stub
-		return null;
+		return ACCESS_TOKEN_URL;
 	}
 
 	@Override
 	public boolean checkAndSetAccessToken(String token) {
-		// TODO Auto-generated method stub
-		return false;
+		try{
+			DefaultFacebookClient facebookClient_ = new DefaultFacebookClient(token);
+			User user = facebookClient_.fetchObject("me", User.class);
+			if(user != null && user.getId().length() > 0){
+				ACCESS_TOKEN = token;
+				this.facebookClient = facebookClient_;
+				return true;
+			}else{
+				return false;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	@Override
 	public String[] getAccessToken() {
-		// TODO Auto-generated method stub
-		return null;
+		String[] rslt = {ACCESS_TOKEN,ACCESS_TOKEN};
+		return rslt;
 	}
 
 }

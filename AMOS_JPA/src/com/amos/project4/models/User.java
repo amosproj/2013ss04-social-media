@@ -20,12 +20,14 @@
 package com.amos.project4.models;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -108,6 +110,14 @@ public class User implements Serializable {
 	 */
 	@Column(name = "\"l_token_secret\"",columnDefinition="VARCHAR(250)")
 	private String l_token_secret;
+	
+	@OneToMany(mappedBy="owner")
+	private Collection<TwitterData> twitter_datas;
+
+	/*-------------------------------------------------------------------------------------------------------*/
+	/*	Getter and Setter for the fields
+	/*-------------------------------------------------------------------------------------------------------*/
+	
 
 	public String getUsername() {
 		return username;
@@ -201,6 +211,13 @@ public class User implements Serializable {
 		this.t_token = t_token;
 	}
 	
+	public Collection<TwitterData> getTwitter_datas() {
+		return twitter_datas;
+	}
+
+	/*-------------------------------------------------------------------------------------------------------*/
+	/*	Delegated methods
+	/*-------------------------------------------------------------------------------------------------------*/
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", usermail="
@@ -211,4 +228,115 @@ public class User implements Serializable {
 				+ l_token + ", l_token_secret=" + l_token_secret + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((ID == null) ? 0 : ID.hashCode());
+		result = prime * result + ((f_token == null) ? 0 : f_token.hashCode());
+		result = prime * result
+				+ ((f_token_secret == null) ? 0 : f_token_secret.hashCode());
+		result = prime * result + ((l_token == null) ? 0 : l_token.hashCode());
+		result = prime * result
+				+ ((l_token_secret == null) ? 0 : l_token_secret.hashCode());
+		result = prime * result + ((t_token == null) ? 0 : t_token.hashCode());
+		result = prime * result
+				+ ((t_token_secret == null) ? 0 : t_token_secret.hashCode());
+		result = prime * result
+				+ ((usermail == null) ? 0 : usermail.hashCode());
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
+		result = prime * result
+				+ ((userpass == null) ? 0 : userpass.hashCode());
+		result = prime * result + ((x_token == null) ? 0 : x_token.hashCode());
+		result = prime * result
+				+ ((x_token_secret == null) ? 0 : x_token_secret.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		User other = (User) obj;
+		if (ID == null) {
+			if (other.ID != null)
+				return false;
+		} else if (!ID.equals(other.ID))
+			return false;
+		if (f_token == null) {
+			if (other.f_token != null)
+				return false;
+		} else if (!f_token.equals(other.f_token))
+			return false;
+		if (f_token_secret == null) {
+			if (other.f_token_secret != null)
+				return false;
+		} else if (!f_token_secret.equals(other.f_token_secret))
+			return false;
+		if (l_token == null) {
+			if (other.l_token != null)
+				return false;
+		} else if (!l_token.equals(other.l_token))
+			return false;
+		if (l_token_secret == null) {
+			if (other.l_token_secret != null)
+				return false;
+		} else if (!l_token_secret.equals(other.l_token_secret))
+			return false;
+		if (t_token == null) {
+			if (other.t_token != null)
+				return false;
+		} else if (!t_token.equals(other.t_token))
+			return false;
+		if (t_token_secret == null) {
+			if (other.t_token_secret != null)
+				return false;
+		} else if (!t_token_secret.equals(other.t_token_secret))
+			return false;
+		if (usermail == null) {
+			if (other.usermail != null)
+				return false;
+		} else if (!usermail.equals(other.usermail))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		if (userpass == null) {
+			if (other.userpass != null)
+				return false;
+		} else if (!userpass.equals(other.userpass))
+			return false;
+		if (x_token == null) {
+			if (other.x_token != null)
+				return false;
+		} else if (!x_token.equals(other.x_token))
+			return false;
+		if (x_token_secret == null) {
+			if (other.x_token_secret != null)
+				return false;
+		} else if (!x_token_secret.equals(other.x_token_secret))
+			return false;
+		return true;
+	}
+	
+	/*-------------------------------------------------------------------------------------------------------*/
+	/*	Methods to map One to many relations
+	/*-------------------------------------------------------------------------------------------------------*/
+	
+	public void addTwitterData(TwitterData data){
+		if(getTwitter_datas().contains(data)){
+			getTwitter_datas().add(data);
+			if(data.getOwner() != null){
+				data.getOwner().getTwitter_datas().remove(data);
+			}
+			data.setOwner(this);
+		}
+	}
 }
