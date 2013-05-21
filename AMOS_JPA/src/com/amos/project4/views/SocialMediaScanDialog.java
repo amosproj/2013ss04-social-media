@@ -1,5 +1,8 @@
 /*
+<<<<<<< HEAD
  *
+=======
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
  * This file is part of the Datev and Social Media project.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -19,6 +22,7 @@
 
 package com.amos.project4.views;
 
+<<<<<<< HEAD
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -39,6 +43,22 @@ import java.util.Observable;
 import javax.swing.border.TitledBorder;
 
 public class SocialMediaScanDialog extends JDialog {
+=======
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
+import javax.swing.JPanel;
+import javax.swing.SpringLayout;
+import javax.swing.border.TitledBorder;
+
+public class SocialMediaScanDialog extends JDialog {
+	
+	private static final long serialVersionUID = 1L;
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	private JPanel facebookPanel;
 	private JPanel buttonPane;
 	private JPanel twitterPanel;

@@ -20,10 +20,12 @@ package com.amos.project4.controllers;
 
 import java.util.Observable;
 
+import com.amos.project4.models.SocialMediaType;
 import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
 import com.amos.project4.socialMedia.MediaConnectInterface;
-import com.amos.project4.socialMedia.twitter.twitterConnect;
+import com.amos.project4.socialMedia.facebook.FacebookConnect;
+import com.amos.project4.socialMedia.twitter.TwitterConnect;
 import com.amos.project4.views.UserViewModel;
 
 /**
@@ -36,12 +38,14 @@ public class UserController extends AbstractController implements UserContollerI
 	User current_user;
 	UserDAO uDAO;	
 	MediaConnectInterface t_connect;
+	MediaConnectInterface f_connect;
 	
 	public UserController() {
 		super();
 		current_user = null;
 		uDAO = UserDAO.getUserDAOInstance();
-		t_connect = twitterConnect.getInstance();
+		t_connect = TwitterConnect.getInstance();
+		f_connect = FacebookConnect.getInstance();
 	}
 
 	@Override
@@ -59,40 +63,72 @@ public class UserController extends AbstractController implements UserContollerI
 	}
 	
 	private void updateUser(UserViewModel user){
-		this.current_user.setF_username(user.getF_username());
-		this.current_user.setF_userpass(user.getF_userpass());
+		this.current_user.setF_token(user.getF_token());
+		this.current_user.setF_token_secret(user.getF_token_secret());
 		this.current_user.setT_token(user.getT_token());
 		this.current_user.setT_token_secret(user.getT_token_secret());
-		this.current_user.setX_username(user.getX_username());
-		this.current_user.setX_userpass(user.getX_userpass());
-		this.current_user.setL_username(user.getL_username());
-		this.current_user.setL_userpass(user.getL_userpass());
+		this.current_user.setX_token(user.getX_token());
+		this.current_user.setX_token_secret(user.getX_token_secret());
+		this.current_user.setL_token(user.getL_token());
+		this.current_user.setL_token_secret(user.getL_token_secret());
 		
 		uDAO.updateUser(this.current_user);
 		setCurrentUser(this.current_user.getUsername());
 	}
 	
-	public boolean checkToken(String token, String secret){
-		return t_connect.login(token, secret);
-	}
-
 	/**
 	 * get the current logged User
+	 * 
 	 */
 	@Override
 	public User getCurrent_user() {
 		return current_user;
 	}
 	
-	public String getAccessTokenRequestURL(){
-		return t_connect.getAccessUrl();
+	public boolean checkToken(String token, String secret, SocialMediaType sType){
+		switch (sType) {
+			case TWITTER:
+				return t_connect.login(token, secret);
+			case FACEBOOK:
+				return f_connect.login(token, secret);
+			default:
+				return true;
+		}
+		
 	}
 	
-	public boolean checkAndSetAccessToken(String url,String pin){
-		return t_connect.checkAndSetAccessToken(pin);
+	public String getAccessTokenRequestURL(SocialMediaType sType){
+		switch (sType) {
+			case TWITTER:
+				return t_connect.getAccessUrl();
+			case FACEBOOK:
+				return f_connect.getAccessUrl();
+			default:
+				return "DEFAULT ACCESS TOKEN URL";
+		}
 	}
 	
-	public String[] getAccessToken(){
-		return t_connect.getAccessToken();
+	public boolean checkAndSetAccessToken(String url,String pin, SocialMediaType sType){		
+		switch (sType) {
+			case TWITTER:
+				return t_connect.checkAndSetAccessToken(pin);
+			case FACEBOOK:
+				return f_connect.checkAndSetAccessToken(pin);
+			default:
+				return true;
+		}
+	}
+	
+	public String[] getAccessToken(SocialMediaType sType){
+		switch (sType) {
+		case TWITTER:
+			return t_connect.getAccessToken();
+		case FACEBOOK:
+			return f_connect.getAccessToken();
+		default:
+			String [] rslt = {"DEFAULT ACCESS TOKEN","DEFAULT ACCESS TOKEN"};
+			return rslt;
+		}
+		
 	}
 }

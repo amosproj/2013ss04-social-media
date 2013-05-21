@@ -20,6 +20,7 @@
 package com.amos.project4.views;
 
 import java.awt.BorderLayout;
+<<<<<<< HEAD
 import java.awt.Component;
 import java.awt.FlowLayout;
 
@@ -30,10 +31,16 @@ import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import javax.swing.border.TitledBorder;
 import java.awt.Color;
+=======
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
+<<<<<<< HEAD
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.SpringLayout;
@@ -42,6 +49,20 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 
 import com.amos.project4.controllers.UserController;
+=======
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.TitledBorder;
+
+import com.amos.project4.controllers.UserController;
+import com.amos.project4.models.SocialMediaType;
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 import com.amos.project4.models.User;
 
 /**
@@ -53,12 +74,18 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+<<<<<<< HEAD
 	private JTextField f_usernameTextField;
 	private JPasswordField f_passwordField;
+=======
+	private JTextField f_tokenTextField;
+	private JTextField f_token_secretTextField;
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	private JTextField t_accestokenTextField;
 	private JTextField t_accessTokenSecretField;
 	private JLabel t_lbl_access_token;
 	private JLabel t_lbl_accesstoken_secret;
+<<<<<<< HEAD
 	private JTextField x_usernameTextField;
 	private JLabel x_lbl_username;
 	private JPasswordField x_passwordField;
@@ -67,12 +94,31 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	private JLabel l_lbl_username;
 	private JPasswordField l_passwordField;
 	private JLabel l_lbl_password;
+=======
+	private JTextField x_access_tokenTextField;
+	private JLabel x_lbl_access_token;
+	private JTextField x_access_token_secretTextField;
+	private JLabel x_lbl_access_token_secret;
+	private JTextField l_access_tokenTextField;
+	private JLabel l_lbl_access_token;
+	private JTextField l_access_token_TextField;
+	private JLabel l_lbl_access_token_secret;
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	//private JButton btnConnect;
 	
 	private UserViewModel viewModel;
 	private UserController user_controller;
 	private JLabel t_lblStatus;
 	private JButton t_btnGenerateToken;
+<<<<<<< HEAD
+=======
+	private JButton f_btnGenerateToken;
+	private JLabel f_lblStatus;
+	private JButton x_btnGenerateToken;
+	private JLabel x_lblStatus;
+	private JButton l_btnGenerateToken;
+	private JLabel l_lblStatus;
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	
 	public GeneralSettingsDialog(UserController user_controller,UserViewModel viewModel) {
 		super();
@@ -88,7 +134,11 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	
 	private void init(){
 		setTitle("AMOS Project 4 General settings");
+<<<<<<< HEAD
 		setBounds(100, 100, 650, 400);
+=======
+		setBounds(100, 100, 800, 400);
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -100,6 +150,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			SpringLayout sl_FacebookPanel = new SpringLayout();
 			FacebookPanel.setLayout(sl_FacebookPanel);
 			
+<<<<<<< HEAD
 			JLabel lblUsername = new JLabel("Username :");
 			sl_FacebookPanel.putConstraint(SpringLayout.NORTH, lblUsername, 10, SpringLayout.NORTH, FacebookPanel);
 			sl_FacebookPanel.putConstraint(SpringLayout.WEST, lblUsername, 10, SpringLayout.WEST, FacebookPanel);
@@ -122,6 +173,42 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			sl_FacebookPanel.putConstraint(SpringLayout.SOUTH, f_passwordField, 0, SpringLayout.SOUTH, lblPassword);
 			sl_FacebookPanel.putConstraint(SpringLayout.EAST, f_passwordField, 0, SpringLayout.EAST, f_usernameTextField);
 			FacebookPanel.add(f_passwordField);
+=======
+			JLabel f_lbl_access_token = new JLabel("Access Token :");
+			sl_FacebookPanel.putConstraint(SpringLayout.NORTH, f_lbl_access_token, 10, SpringLayout.NORTH, FacebookPanel);
+			sl_FacebookPanel.putConstraint(SpringLayout.WEST, f_lbl_access_token, 10, SpringLayout.WEST, FacebookPanel);
+			FacebookPanel.add(f_lbl_access_token);
+			
+			f_tokenTextField = new JTextField();
+			sl_FacebookPanel.putConstraint(SpringLayout.WEST, f_tokenTextField, 20, SpringLayout.EAST, f_lbl_access_token);
+			sl_FacebookPanel.putConstraint(SpringLayout.EAST, f_tokenTextField, -6, SpringLayout.EAST, FacebookPanel);
+			sl_FacebookPanel.putConstraint(SpringLayout.SOUTH, f_tokenTextField, 0, SpringLayout.SOUTH, f_lbl_access_token);
+			FacebookPanel.add(f_tokenTextField);
+			
+			JLabel f_lbl_access_token_secret = new JLabel("A. T. secret :");
+			sl_FacebookPanel.putConstraint(SpringLayout.NORTH, f_lbl_access_token_secret, 12, SpringLayout.SOUTH, f_lbl_access_token);
+			sl_FacebookPanel.putConstraint(SpringLayout.WEST, f_lbl_access_token_secret, 0, SpringLayout.WEST, f_lbl_access_token);
+			sl_FacebookPanel.putConstraint(SpringLayout.EAST, f_lbl_access_token_secret, 0, SpringLayout.EAST, f_lbl_access_token);
+			FacebookPanel.add(f_lbl_access_token_secret);
+			
+			f_token_secretTextField = new JTextField();
+			sl_FacebookPanel.putConstraint(SpringLayout.WEST, f_token_secretTextField, 0, SpringLayout.WEST, f_tokenTextField);
+			sl_FacebookPanel.putConstraint(SpringLayout.SOUTH, f_token_secretTextField, 0, SpringLayout.SOUTH, f_lbl_access_token_secret);
+			sl_FacebookPanel.putConstraint(SpringLayout.EAST, f_token_secretTextField, 0, SpringLayout.EAST, f_tokenTextField);
+			FacebookPanel.add(f_token_secretTextField);
+			
+			f_btnGenerateToken = new JButton("Generate");
+			sl_FacebookPanel.putConstraint(SpringLayout.SOUTH, f_btnGenerateToken, -6, SpringLayout.SOUTH, FacebookPanel);
+			sl_FacebookPanel.putConstraint(SpringLayout.EAST, f_btnGenerateToken, -6, SpringLayout.EAST, FacebookPanel);
+			f_btnGenerateToken.addActionListener(new F_GenereateAction());
+			FacebookPanel.add(f_btnGenerateToken);
+			
+			f_lblStatus = new JLabel("Status:");
+			sl_FacebookPanel.putConstraint(SpringLayout.NORTH, f_lblStatus, 6, SpringLayout.SOUTH, f_token_secretTextField);
+			sl_FacebookPanel.putConstraint(SpringLayout.WEST, f_lblStatus, 0, SpringLayout.WEST, f_lbl_access_token);
+			sl_FacebookPanel.putConstraint(SpringLayout.EAST, f_lblStatus, 0, SpringLayout.EAST, f_btnGenerateToken);
+			FacebookPanel.add(f_lblStatus);
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		}
 		{
 			JPanel TwitterPanel = new JPanel();
@@ -137,6 +224,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			}
 			{
 				t_accestokenTextField = new JTextField();
+<<<<<<< HEAD
 				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_accestokenTextField, 20, SpringLayout.EAST, t_lbl_access_token);
 				sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_accestokenTextField, 0, SpringLayout.SOUTH, t_lbl_access_token);
 				t_accestokenTextField.setColumns(15);
@@ -144,16 +232,31 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			}
 			{
 				t_lbl_accesstoken_secret = new JLabel("Access token secret :");
+=======
+				t_accestokenTextField.setEditable(false);
+				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_accestokenTextField, 20, SpringLayout.EAST, t_lbl_access_token);
+				sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_accestokenTextField, 0, SpringLayout.SOUTH, t_lbl_access_token);
+				sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_accestokenTextField, -6, SpringLayout.EAST, TwitterPanel);
+				TwitterPanel.add(t_accestokenTextField);
+			}
+			{
+				t_lbl_accesstoken_secret = new JLabel("A. T. secret :");
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_lbl_accesstoken_secret, 12, SpringLayout.SOUTH, t_lbl_access_token);
 				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_lbl_accesstoken_secret, 0, SpringLayout.WEST, t_lbl_access_token);
 				TwitterPanel.add(t_lbl_accesstoken_secret);
 			}
 			{
 				t_accessTokenSecretField = new JTextField();
+<<<<<<< HEAD
+=======
+				t_accessTokenSecretField.setEditable(false);
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_accessTokenSecretField, 0, SpringLayout.WEST, t_accestokenTextField);
 				sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_accessTokenSecretField, 0, SpringLayout.SOUTH, t_lbl_accesstoken_secret);
 				sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_accessTokenSecretField, 0, SpringLayout.EAST, t_accestokenTextField);
 				TwitterPanel.add(t_accessTokenSecretField);
+<<<<<<< HEAD
 			}
 			/*
 			{
@@ -198,6 +301,9 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 				TwitterPanel.add(t_pin_textField);
 			}
 			*/			
+=======
+			}		
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 			
 			t_btnGenerateToken = new JButton("Generate");
 			sl_TwitterPanel.putConstraint(SpringLayout.SOUTH, t_btnGenerateToken, -6, SpringLayout.SOUTH, TwitterPanel);
@@ -210,10 +316,13 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_lblStatus, 0, SpringLayout.WEST, t_lbl_access_token);
 			sl_TwitterPanel.putConstraint(SpringLayout.EAST, t_lblStatus, 0, SpringLayout.EAST, t_btnGenerateToken);
 			TwitterPanel.add(t_lblStatus);
+<<<<<<< HEAD
 			
 			
 			
 			
+=======
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		}
 		{
 			JPanel XingPanel = new JPanel();
@@ -222,6 +331,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			SpringLayout sl_XingPanel = new SpringLayout();
 			XingPanel.setLayout(sl_XingPanel);
 			{
+<<<<<<< HEAD
 				x_lbl_username = new JLabel("Username :");
 				sl_XingPanel.putConstraint(SpringLayout.NORTH, x_lbl_username, 10, SpringLayout.NORTH, XingPanel);
 				sl_XingPanel.putConstraint(SpringLayout.WEST, x_lbl_username, 10, SpringLayout.WEST, XingPanel);
@@ -248,6 +358,46 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 				sl_XingPanel.putConstraint(SpringLayout.EAST, x_passwordField, 0, SpringLayout.EAST, x_usernameTextField);
 				XingPanel.add(x_passwordField);
 			}
+=======
+				x_lbl_access_token = new JLabel("Access Token :");
+				sl_XingPanel.putConstraint(SpringLayout.NORTH, x_lbl_access_token, 10, SpringLayout.NORTH, XingPanel);
+				sl_XingPanel.putConstraint(SpringLayout.WEST, x_lbl_access_token, 10, SpringLayout.WEST, XingPanel);
+				XingPanel.add(x_lbl_access_token);
+			}
+			{
+				x_access_tokenTextField = new JTextField();
+				sl_XingPanel.putConstraint(SpringLayout.WEST, x_access_tokenTextField, 20, SpringLayout.EAST, x_lbl_access_token);
+				sl_XingPanel.putConstraint(SpringLayout.SOUTH, x_access_tokenTextField, 0, SpringLayout.SOUTH, x_lbl_access_token);
+				sl_XingPanel.putConstraint(SpringLayout.EAST, x_access_tokenTextField, -6, SpringLayout.EAST,XingPanel);
+				XingPanel.add(x_access_tokenTextField);
+			}
+			{
+				x_lbl_access_token_secret = new JLabel("A. T. secret :");
+				sl_XingPanel.putConstraint(SpringLayout.NORTH, x_lbl_access_token_secret, 12, SpringLayout.SOUTH, x_lbl_access_token);
+				sl_XingPanel.putConstraint(SpringLayout.WEST, x_lbl_access_token_secret, 0, SpringLayout.WEST, x_lbl_access_token);
+				sl_XingPanel.putConstraint(SpringLayout.EAST, x_lbl_access_token_secret, 0, SpringLayout.EAST, x_lbl_access_token);
+				XingPanel.add(x_lbl_access_token_secret);
+			}
+			{
+				x_access_token_secretTextField = new JTextField();
+				sl_XingPanel.putConstraint(SpringLayout.WEST, x_access_token_secretTextField, 0, SpringLayout.WEST, x_access_tokenTextField);
+				sl_XingPanel.putConstraint(SpringLayout.SOUTH, x_access_token_secretTextField, 0, SpringLayout.SOUTH, x_lbl_access_token_secret);
+				sl_XingPanel.putConstraint(SpringLayout.EAST, x_access_token_secretTextField, 0, SpringLayout.EAST, x_access_tokenTextField);
+				XingPanel.add(x_access_token_secretTextField);
+			}
+			
+			x_btnGenerateToken = new JButton("Generate");
+			sl_XingPanel.putConstraint(SpringLayout.SOUTH, x_btnGenerateToken, -6, SpringLayout.SOUTH, XingPanel);
+			sl_XingPanel.putConstraint(SpringLayout.EAST, x_btnGenerateToken, -6, SpringLayout.EAST, XingPanel);
+			x_btnGenerateToken.addActionListener(new X_GenereateAction());
+			XingPanel.add(x_btnGenerateToken);
+			
+			x_lblStatus = new JLabel("Status:");
+			sl_XingPanel.putConstraint(SpringLayout.NORTH, x_lblStatus, 6, SpringLayout.SOUTH, x_lbl_access_token_secret);
+			sl_XingPanel.putConstraint(SpringLayout.WEST, x_lblStatus, 0, SpringLayout.WEST, x_lbl_access_token);
+			sl_XingPanel.putConstraint(SpringLayout.EAST, x_lblStatus, 0, SpringLayout.EAST, x_btnGenerateToken);
+			XingPanel.add(x_lblStatus);
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		}
 		{
 			JPanel LinkedInPanel = new JPanel();
@@ -256,6 +406,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			SpringLayout sl_LinkedInPanel = new SpringLayout();
 			LinkedInPanel.setLayout(sl_LinkedInPanel);
 			{
+<<<<<<< HEAD
 				l_lbl_username = new JLabel("Username :");
 				sl_LinkedInPanel.putConstraint(SpringLayout.NORTH, l_lbl_username, 10, SpringLayout.NORTH, LinkedInPanel);
 				sl_LinkedInPanel.putConstraint(SpringLayout.WEST, l_lbl_username, 10, SpringLayout.WEST, LinkedInPanel);
@@ -282,6 +433,47 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 				sl_LinkedInPanel.putConstraint(SpringLayout.EAST, l_passwordField, 0, SpringLayout.EAST, l_usernameTextField);
 				LinkedInPanel.add(l_passwordField);
 			}
+=======
+				l_lbl_access_token = new JLabel("Access Token :");
+				sl_LinkedInPanel.putConstraint(SpringLayout.NORTH, l_lbl_access_token, 10, SpringLayout.NORTH, LinkedInPanel);
+				sl_LinkedInPanel.putConstraint(SpringLayout.WEST, l_lbl_access_token, 10, SpringLayout.WEST, LinkedInPanel);
+				LinkedInPanel.add(l_lbl_access_token);
+			}
+			{
+				l_access_tokenTextField = new JTextField();
+				sl_LinkedInPanel.putConstraint(SpringLayout.WEST, l_access_tokenTextField, 20, SpringLayout.EAST, l_lbl_access_token);
+				sl_LinkedInPanel.putConstraint(SpringLayout.SOUTH, l_access_tokenTextField, 0, SpringLayout.SOUTH, l_lbl_access_token);
+				sl_LinkedInPanel.putConstraint(SpringLayout.EAST, l_access_tokenTextField, -6, SpringLayout.EAST, LinkedInPanel);
+				l_access_tokenTextField.setColumns(15);
+				LinkedInPanel.add(l_access_tokenTextField);
+			}
+			{
+				l_lbl_access_token_secret = new JLabel("A. T. secret :");
+				sl_LinkedInPanel.putConstraint(SpringLayout.NORTH, l_lbl_access_token_secret, 12, SpringLayout.SOUTH, l_lbl_access_token);
+				sl_LinkedInPanel.putConstraint(SpringLayout.WEST, l_lbl_access_token_secret, 0, SpringLayout.WEST, l_lbl_access_token);
+				sl_LinkedInPanel.putConstraint(SpringLayout.EAST, l_lbl_access_token_secret, 0, SpringLayout.EAST, l_lbl_access_token);
+				LinkedInPanel.add(l_lbl_access_token_secret);
+			}
+			{
+				l_access_token_TextField = new JTextField();
+				sl_LinkedInPanel.putConstraint(SpringLayout.WEST, l_access_token_TextField, 0, SpringLayout.WEST, l_access_tokenTextField);
+				sl_LinkedInPanel.putConstraint(SpringLayout.SOUTH, l_access_token_TextField, 0, SpringLayout.SOUTH, l_lbl_access_token_secret);
+				sl_LinkedInPanel.putConstraint(SpringLayout.EAST, l_access_token_TextField, 0, SpringLayout.EAST, l_access_tokenTextField);
+				LinkedInPanel.add(l_access_token_TextField);
+			}
+			
+			l_btnGenerateToken = new JButton("Generate");
+			sl_LinkedInPanel.putConstraint(SpringLayout.SOUTH, l_btnGenerateToken, -6, SpringLayout.SOUTH, LinkedInPanel);
+			sl_LinkedInPanel.putConstraint(SpringLayout.EAST, l_btnGenerateToken, -6, SpringLayout.EAST, LinkedInPanel);
+			l_btnGenerateToken.addActionListener(new L_GenereateAction());
+			LinkedInPanel.add(l_btnGenerateToken);
+			
+			l_lblStatus = new JLabel("Status:");
+			sl_LinkedInPanel.putConstraint(SpringLayout.NORTH, l_lblStatus, 6, SpringLayout.SOUTH, l_lbl_access_token_secret);
+			sl_LinkedInPanel.putConstraint(SpringLayout.WEST, l_lblStatus, 0, SpringLayout.WEST, l_lbl_access_token);
+			sl_LinkedInPanel.putConstraint(SpringLayout.EAST, l_lblStatus, 0, SpringLayout.EAST, l_btnGenerateToken);
+			LinkedInPanel.add(l_lblStatus);
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -315,6 +507,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	}
 	
 	private void updateView(User user){
+<<<<<<< HEAD
 		this.f_usernameTextField.setText(user.getF_username());
 		this.f_passwordField.setText(user.getF_userpass());
 		this.t_accestokenTextField.setText(user.getT_token());
@@ -328,6 +521,44 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 		}else{
 			this.makeConnectionStatus(2, "Invalid Valid Token", 1);			
 		}	
+=======
+		this.f_tokenTextField.setText(user.getF_token());
+		this.f_token_secretTextField.setText(user.getF_token_secret());
+		this.t_accestokenTextField.setText(user.getT_token());
+		this.t_accessTokenSecretField.setText(user.getT_token_secret());
+		this.x_access_tokenTextField.setText(user.getX_token());
+		this.x_access_token_secretTextField.setText(user.getX_token_secret());
+		this.l_access_tokenTextField.setText(user.getL_token());
+		this.l_access_token_TextField.setText(user.getL_token_secret());
+		
+		// For Twitter
+		if(user_controller.checkToken(user.getT_token(),user.getT_token_secret(),SocialMediaType.TWITTER)){
+			this.makeConnectionStatus(SocialMediaType.TWITTER, "Valid Token", 0);
+		}else{
+			this.makeConnectionStatus(SocialMediaType.TWITTER, "Invalid Token", 1);			
+		}
+		
+		// For Facebook
+		if(user_controller.checkToken(user.getF_token(),user.getF_token_secret(),SocialMediaType.FACEBOOK)){
+			this.makeConnectionStatus(SocialMediaType.FACEBOOK, "Valid Token", 0);
+		}else{
+			this.makeConnectionStatus(SocialMediaType.FACEBOOK, "Invalid Token", 1);			
+		}
+		
+		// For Xing
+		if(user_controller.checkToken(user.getX_token(),user.getX_token_secret(),SocialMediaType.XING)){
+			this.makeConnectionStatus(SocialMediaType.XING, "Valid Token", 0);
+		}else{
+			this.makeConnectionStatus(SocialMediaType.XING, "Invalid Token", 1);			
+		}
+		
+		// For LinedIn
+		if(user_controller.checkToken(user.getL_token(),user.getL_token_secret(),SocialMediaType.LINKEDIN)){
+			this.makeConnectionStatus(SocialMediaType.LINKEDIN, "Valid Token", 0);
+		}else{
+			this.makeConnectionStatus(SocialMediaType.LINKEDIN, "Invalid Token", 1);			
+		}
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		
 	}
 	
@@ -335,6 +566,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			viewModel.setSocialMediaDatas(
+<<<<<<< HEAD
 					f_usernameTextField.getText(), 
 					new String(f_passwordField.getPassword()),
 					t_accestokenTextField.getText(), 
@@ -343,6 +575,16 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 					new String(x_passwordField.getPassword()),
 					l_usernameTextField.getText(), 
 					new String(l_passwordField.getPassword()));
+=======
+					f_tokenTextField.getText(), 
+					f_token_secretTextField.getText(),
+					t_accestokenTextField.getText(), 
+					t_accessTokenSecretField.getText(),
+					x_access_tokenTextField.getText(), 
+					x_access_token_secretTextField.getText(),
+					l_access_tokenTextField.getText(), 
+					l_access_token_TextField.getText());
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 			dispose();
 		}
 		
@@ -360,11 +602,16 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+<<<<<<< HEAD
 			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel);
+=======
+			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.TWITTER);
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 			URLDialog.setVisible(true);
 		}		
 	}
 	
+<<<<<<< HEAD
 	private void makeConnectionStatus(int mediaType, String message, int severity){
 		switch (mediaType) {
 		case 1:
@@ -374,6 +621,49 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			setMessage(message,severity,this.t_lblStatus);
 			break;
 
+=======
+	private class F_GenereateAction implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.FACEBOOK);
+			URLDialog.setVisible(true);
+		}		
+	}
+	
+	private class X_GenereateAction implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.XING);
+			URLDialog.setVisible(true);
+		}		
+	}
+	
+	private class L_GenereateAction implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.LINKEDIN);
+			URLDialog.setVisible(true);
+		}		
+	}
+	
+	private void makeConnectionStatus(SocialMediaType sType, String message, int severity){
+		switch (sType) {
+		case TWITTER:
+			setMessage(message,severity,this.t_lblStatus);
+			break;
+		case FACEBOOK:
+			setMessage(message,severity,this.f_lblStatus);
+			break;
+		case XING:
+			setMessage(message,severity,this.x_lblStatus);
+			break;
+		case LINKEDIN:
+			setMessage(message,severity,this.l_lblStatus);
+			break;
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		default:
 			break;
 		}

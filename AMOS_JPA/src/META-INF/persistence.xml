@@ -3,6 +3,7 @@
 	<persistence-unit name="AMOS_JPA" transaction-type="RESOURCE_LOCAL">
 		<class>com.amos.project4.models.Client</class>
 		<class>com.amos.project4.models.User</class>
+		<class>com.amos.project4.models.TwitterData</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://faui2o2j.informatik.uni-erlangen.de:5432/ss13-proj4"/>
 			<property name="javax.persistence.jdbc.user" value="ss13-proj4"/>

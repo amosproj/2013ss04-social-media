@@ -1,3 +1,24 @@
+<<<<<<< HEAD
+=======
+/*
+ *
+ * This file is part of the Datev and Social Media project.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 package com.amos.project4.socialMedia.twitter;
 
 import com.amos.project4.socialMedia.MediaConnectInterface;
@@ -10,12 +31,22 @@ import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
 
+<<<<<<< HEAD
 public class twitterConnect implements MediaConnectInterface {
 	
 	private static final String ACCESS_TOKEN = "1392245641-ZrerD6ClCwGZANUZA2n1z86vSArMYfuBAjHDajz";
 	private static final String ACCESS_TOKEN_SECRET = "cYKG9nJz4dpjoX41zE5xApNpI0YEswojMJg9qRutM";
 	private static final String ACCESS_TOKEN_URL = "https://api.twitter.com/oauth/access_token";
 	private static final String AUTHENTIFICATION_URL = "";
+=======
+public class TwitterConnect implements MediaConnectInterface {
+	
+	private static final String ACCESS_TOKEN = "1392245641-ZrerD6ClCwGZANUZA2n1z86vSArMYfuBAjHDajz";
+	private static final String ACCESS_TOKEN_SECRET = "cYKG9nJz4dpjoX41zE5xApNpI0YEswojMJg9qRutM";
+	private static final String AUTHENTIFICATION_URL = "";
+	
+	private static final String ACCESS_TOKEN_URL = "https://api.twitter.com/oauth/access_token";
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	private static final String AUTORIZATION_URL = "https://api.twitter.com/oauth/authorize";
 	private static final String CONSUMER_KEY = "dqIwqUcMOiASiPND31CMvg";
 	private static final String CONSUMER_SECRET = "vaKBsbAGSDjMu54f150kNL9UH9dhjIGwYMx5aiUtc";
@@ -27,16 +58,28 @@ public class twitterConnect implements MediaConnectInterface {
 	private TwitterFactory tf;
 	
 	
+<<<<<<< HEAD
 	private static MediaConnectInterface instance;
 	
 	public static MediaConnectInterface getInstance(){
 		if(instance == null){
 			instance = new twitterConnect();
+=======
+	private static TwitterConnect  instance;
+	
+	public static TwitterConnect  getInstance(){
+		if(instance == null){
+			instance = new TwitterConnect();
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		}
 		return instance;
 	}	
 
+<<<<<<< HEAD
 	private twitterConnect() {
+=======
+	private TwitterConnect() {
+>>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		super();
 		try {
 			init();

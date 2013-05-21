@@ -138,17 +138,17 @@ public class UserDAO {
 		_user.setUserpass(user.getUserpass());
 		_user.setUsermail(user.getUsermail());
 		// Facebook
-		_user.setF_username(user.getF_username());
-		_user.setF_userpass(user.getF_userpass());
+		_user.setF_token(user.getF_token());
+		_user.setF_token_secret(user.getF_token_secret());
 		// Twitter
 		_user.setT_token(user.getT_token());
 		_user.setT_token_secret(user.getT_token_secret());
 		// linkedIn
-		_user.setL_username(user.getL_username());
-		_user.setL_userpass(user.getL_userpass());
+		_user.setL_token(user.getL_token());
+		_user.setL_token_secret(user.getL_token_secret());
 		// Xing
-		_user.setX_username(user.getX_username());
-		_user.setX_userpass(user.getX_userpass());	
+		_user.setX_token(user.getX_token());
+		_user.setX_token_secret(user.getX_token_secret());	
 		
 		_user.setT_token_secret(user.getT_token_secret());
 		_user.setT_token(user.getT_token());
