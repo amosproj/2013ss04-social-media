@@ -23,7 +23,7 @@ import java.util.Observable;
 import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
 import com.amos.project4.socialMedia.MediaConnectInterface;
-import com.amos.project4.socialMedia.twitter.twitterConnect;
+import com.amos.project4.socialMedia.twitter.TwitterConnect;
 import com.amos.project4.views.UserViewModel;
 
 /**
@@ -41,7 +41,7 @@ public class UserController extends AbstractController implements UserContollerI
 		super();
 		current_user = null;
 		uDAO = UserDAO.getUserDAOInstance();
-		t_connect = twitterConnect.getInstance();
+		t_connect = TwitterConnect.getInstance();
 	}
 
 	@Override

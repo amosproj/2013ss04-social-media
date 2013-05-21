@@ -1,7 +1,5 @@
 /*
  *
- setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
- *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -24,8 +22,6 @@ import static org.junit.Assert.fail;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JDialog;
 
 import org.junit.After;
 import org.junit.Before;
