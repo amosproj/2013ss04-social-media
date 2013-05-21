@@ -19,6 +19,8 @@
 
 package com.amos.project4.views;
 
+import com.amos.project4.models.User;
+
 /**
  * 
  * @author Jupiter BAKAKEU
@@ -28,16 +30,17 @@ public class UserViewModel extends AbstractViewModel {
 
 	private String name;
 	private String password;
+	private String mail;
 
 	/**
 	 * Unique identifier of the user on facebook
 	 */
-	private String f_username;
+	private String f_token;
 
 	/**
 	 * User facebook password to log on facebook
 	 */
-	private String f_userpass;
+	private String f_token_secret;
 
 	/**
 	 * Unique identifier of the user on twitter
@@ -52,22 +55,22 @@ public class UserViewModel extends AbstractViewModel {
 	/**
 	 * Unique identifier of the user on Xing
 	 */
-	private String x_username;
+	private String x_token;
 
 	/**
 	 * User Xing password to log on Xing
 	 */
-	private String x_userpass;
+	private String x_token_secret;
 
 	/**
 	 * Unique identifier of the user on LinkedIn
 	 */
-	private String l_username;
+	private String l_token;
 
 	/**
 	 * User Xing password to log on LinkedIn
 	 */
-	private String l_userpass;
+	private String l_token_secret;
 
 
 	public String getName() {
@@ -85,27 +88,28 @@ public class UserViewModel extends AbstractViewModel {
 		return password;
 	}
 
-	public void setSocialMediaDatas(String f_user, String f_pass,
-			String t_token, String t_token_secret, String x_user, String x_pass,
-			String l_user, String l_pass) {
-		this.f_username = f_user;
-		this.f_userpass = f_pass;
+	public void setSocialMediaDatas(String f_token, String f_token_secret,
+			String t_token, String t_token_secret, String x_token, String x_token_secret,
+			String l_token, String l_token_secret) {
+		
+		this.f_token = f_token;
+		this.f_token_secret = f_token_secret;
 		this.t_token = t_token;
 		this.t_token_secret = t_token_secret;
-		this.x_username = x_user;
-		this.x_userpass = x_pass;
-		this.l_username = l_user;
-		this.l_userpass = l_pass;
+		this.x_token = x_token;
+		this.x_token_secret = x_token_secret;
+		this.l_token = l_token;
+		this.l_token_secret = l_token_secret;
 		this.setChanged();
 		this.notifyObservers("Settings");
 	}
 
-	public String getF_username() {
-		return f_username;
+	public String getF_token() {
+		return f_token;
 	}
 
-	public String getF_userpass() {
-		return f_userpass;
+	public String getF_token_secret() {
+		return f_token_secret;
 	}
 
 	public String getT_token() {
@@ -116,19 +120,50 @@ public class UserViewModel extends AbstractViewModel {
 		return t_token_secret;
 	}
 
-	public String getX_username() {
-		return x_username;
+	public String getX_token() {
+		return x_token;
 	}
 
-	public String getX_userpass() {
-		return x_userpass;
+	public String getX_token_secret() {
+		return x_token_secret;
 	}
 
-	public String getL_username() {
-		return l_username;
+	public String getL_token() {
+		return l_token;
 	}
 
-	public String getL_userpass() {
-		return l_userpass;
+	public String getL_token_secret() {
+		return l_token_secret;
 	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void updateModel(User _user) {
+		this.name = _user.getUsername();
+		this.password = _user.getUserpass();
+		this.mail = _user.getUsermail();
+		this.f_token = _user.getF_token();
+		this.f_token_secret = _user.getF_token_secret();
+		this.t_token = _user.getT_token();
+		this.t_token_secret = _user.getT_token_secret();
+		this.x_token = _user.getX_token();
+		this.x_token_secret = _user.getX_token_secret();
+		this.l_token = _user.getL_token();
+		this.l_token_secret = _user.getL_token_secret();
+	}
+
+	@Override
+	public String toString() {
+		return "UserViewModel [name=" + name + ", password=" + password
+				+ ", mail=" + mail + ", f_token=" + f_token
+				+ ", f_token_secret=" + f_token_secret + ", t_token=" + t_token
+				+ ", t_token_secret=" + t_token_secret + ", x_token=" + x_token
+				+ ", x_token_secret=" + x_token_secret + ", l_token=" + l_token
+				+ ", l_token_secret=" + l_token_secret + "]";
+	}
+	
+	
+	
 }

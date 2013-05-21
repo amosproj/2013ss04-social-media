@@ -19,12 +19,13 @@
 
 package com.amos.project4.controllers;
 
+import com.amos.project4.models.SocialMediaType;
 import com.amos.project4.models.User;
 
 public interface UserContollerInterface {
 
 	public User getCurrent_user();
 	
-	public String getAccessTokenRequestURL();
+	public String getAccessTokenRequestURL(SocialMediaType type);
 
 }
