@@ -111,9 +111,9 @@ public class UserController extends AbstractController implements UserContollerI
 	public boolean checkAndSetAccessToken(String url,String pin, SocialMediaType sType){		
 		switch (sType) {
 			case TWITTER:
-				return t_connect.checkAndSetAccessToken(pin);
+				return t_connect.checkAndSetRequestTokenPin(pin);
 			case FACEBOOK:
-				return f_connect.checkAndSetAccessToken(pin);
+				return f_connect.checkAndSetRequestTokenPin(pin);
 			default:
 				return true;
 		}

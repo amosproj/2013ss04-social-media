@@ -11,8 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "\"TwitterDatas\"")
-public class TwitterData {
+@Table(name = "\"FacebookDatas\"")
+public class FacebookData {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "\"ID\"",nullable = false, length=50)
@@ -80,7 +80,7 @@ public class TwitterData {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		TwitterData other = (TwitterData) obj;
+		FacebookData other = (FacebookData) obj;
 		if (ID == null) {
 			if (other.ID != null)
 				return false;
@@ -106,11 +106,8 @@ public class TwitterData {
 
 	@Override
 	public String toString() {
-		return "TwitterData [ID=" + ID + ", type=" + type + ", dataString="
-				+ dataString + "]";
+		return "FacebookData [ID=" + ID + ", owner=" + owner + ", type=" + type
+				+ ", dataString=" + dataString + "]";
 	}
-	
-	
-	
 
 }
