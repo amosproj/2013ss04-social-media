@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  *
  * This file is part of the Datev and Social Media project.
@@ -18,7 +16,6 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 package com.amos.project4.socialMedia;
 
 public interface MediaConnectInterface {

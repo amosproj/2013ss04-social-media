@@ -24,10 +24,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
-=======
 import java.security.NoSuchAlgorithmException;
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 import java.util.Observable;
 
 import javax.swing.JButton;
@@ -187,11 +184,8 @@ public class Login extends JDialog implements AbstractControlledView {
 					return;
 				}
 				//this.user_controller.removeView(this);
-<<<<<<< HEAD
-=======
 				// Update UserViewModel
 				u_model.updateModel(_user);
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 				AMOSMainUI window = AMOSMainUI.getInstance((UserController)user_controller,u_model);
 				window.getMainFrame().setVisible(true);
 				setVisible(false);
@@ -208,15 +202,11 @@ public class Login extends JDialog implements AbstractControlledView {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(u_model != null){
-<<<<<<< HEAD
-				u_model.setUserData(usernametextField.getText(), new String(passwordField.getPassword()));
-=======
 				try {
 					u_model.setUserData(usernametextField.getText(), AMOSUtils.makeMD5(new String(passwordField.getPassword())));
 				} catch (NoSuchAlgorithmException e1) {
 					setloginMessage("Error while Hashing your pwd. Please try again !", 1);
 				}
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 			}
 		}		
 	}

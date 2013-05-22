@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-package com.amos.project4.socialMedia.facebook;
-
-import com.amos.project4.socialMedia.MediaConnectInterface;
-
-public class FacebookConnect implements MediaConnectInterface {
-
-	@Override
-	public boolean login(String token, String secret_token) {
-		// TODO Auto-generated method stub
-		return false;
-=======
 /*
  *
  * This file is part of the Datev and Social Media project.
@@ -75,25 +63,15 @@ public class FacebookConnect implements MediaConnectInterface {
 			e.printStackTrace();
 			return false;
 		}
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	}
 
 	@Override
 	public String getAccessUrl() {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-		return null;
-=======
 		return ACCESS_TOKEN_URL;
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	}
 
 	@Override
 	public boolean checkAndSetAccessToken(String token) {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-		return false;
-=======
 		try{
 			DefaultFacebookClient facebookClient_ = new DefaultFacebookClient(token);
 			User user = facebookClient_.fetchObject("me", User.class);
@@ -108,18 +86,12 @@ public class FacebookConnect implements MediaConnectInterface {
 			e.printStackTrace();
 			return false;
 		}
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	}
 
 	@Override
 	public String[] getAccessToken() {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-		return null;
-=======
 		String[] rslt = {ACCESS_TOKEN,ACCESS_TOKEN};
 		return rslt;
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	}
 
 }

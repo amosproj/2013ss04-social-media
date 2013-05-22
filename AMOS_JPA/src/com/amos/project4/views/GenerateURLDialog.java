@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  *
  * This file is part of the Datev and Social Media project.
@@ -18,37 +16,10 @@
  * License along with this program. If not, see
  * <http://www.gnu.org/licenses/>.
  */
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 package com.amos.project4.views;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
-<<<<<<< HEAD
-import java.awt.Dialog;
-import java.awt.FlowLayout;
-import java.awt.Frame;
-import java.awt.GraphicsConfiguration;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.SpringLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
-import com.amos.project4.controllers.UserContollerInterface;
-import com.amos.project4.controllers.UserController;
-
-public class GenerateURLDialog extends JDialog {
-
-=======
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -69,35 +40,24 @@ import com.amos.project4.models.SocialMediaType;
 public class GenerateURLDialog extends JDialog {
 	
 	private static final long serialVersionUID = 1L;
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	private final JPanel contentPanel = new JPanel();
 	private JTextField pin_textField;
 	private JTextField url_textField;
 	private UserController user_controller;
 	private String url;
 	private UserViewModel viewModel;
-<<<<<<< HEAD
-=======
 	private SocialMediaType sType;
 	
 	private GenerateURLDialog me;
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 
 	/**
 	 * Create the dialog.
 	 */
-<<<<<<< HEAD
-	public  GenerateURLDialog(UserController user,UserViewModel viewModel) {
-		this.user_controller = user;
-		this.viewModel = viewModel;
-		this.url = user_controller.getAccessTokenRequestURL();
-=======
 	public  GenerateURLDialog(UserController user,UserViewModel viewModel,SocialMediaType sType) {
 		this.sType = sType;
 		this.user_controller = user;
 		this.viewModel = viewModel;
 		this.url = user_controller.getAccessTokenRequestURL(sType);
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		setTitle("Url window");
 		setBounds(100, 100, 600, 200);
 		getContentPane().setLayout(new BorderLayout());
@@ -106,11 +66,7 @@ public class GenerateURLDialog extends JDialog {
 		SpringLayout sl_contentPanel = new SpringLayout();
 		contentPanel.setLayout(sl_contentPanel);
 		
-<<<<<<< HEAD
-		JLabel lblTitel = new JLabel("Please go to the following url and login");
-=======
 		JLabel lblTitel = new JLabel("Please go to the following url, login and copy the generated Token");
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblTitel, 5, SpringLayout.NORTH, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, lblTitel, 5, SpringLayout.WEST, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblTitel, 0, SpringLayout.EAST, contentPanel);
@@ -161,19 +117,13 @@ public class GenerateURLDialog extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
-<<<<<<< HEAD
-=======
 				cancelButton.addActionListener(new CancelActionListener());
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
-<<<<<<< HEAD
-=======
 		
 		me = this;
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	}
 	
 	public String getPin(){
@@ -188,43 +138,14 @@ public class GenerateURLDialog extends JDialog {
 			{
 			  try {
 				Desktop.getDesktop().browse(new URI(url));
-<<<<<<< HEAD
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (URISyntaxException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			}			
-=======
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(me, "Could not open the URL. Please copy it manually !", "Error launching the browser", JOptionPane.ERROR_MESSAGE);
 				}
 			}
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 		}		
 	}
 	
 	private class OKActionListener implements ActionListener{
-<<<<<<< HEAD
-		public void actionPerformed(ActionEvent e) {
-			
-			if(!user_controller.checkAndSetAccessToken(url, pin_textField.getText())){
-				
-			}else{
-				String[]  access_tokens = user_controller.getAccessToken();
-				viewModel.setSocialMediaDatas(viewModel.getF_username(), viewModel.getF_userpass(),
-						access_tokens[0], access_tokens[1], 
-						viewModel.getX_username(), viewModel.getX_userpass(),
-						viewModel.getL_username(), viewModel.getL_userpass());
-				
-			}	
-			
-			dispose();		
-		}
-		
-=======
 		public void actionPerformed(ActionEvent e) {			
 			if(!user_controller.checkAndSetAccessToken(url, pin_textField.getText(),sType)){
 				JOptionPane.showMessageDialog(me, "The token: " + pin_textField.getText() + " is ivalid !", "Invalid token", JOptionPane.ERROR_MESSAGE);
@@ -250,6 +171,5 @@ public class GenerateURLDialog extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			dispose();			
 		}		
->>>>>>> 4e0e1ec6bcb32dac60099c4f3a3907a74f5582a7
 	}
 }

@@ -1,2 +1,4 @@
+ALTER TABLE "TwitterDatas" DROP CONSTRAINT "FK_TwitterDatas_UserID"
 DROP TABLE "Kundendaten"
 DROP TABLE "Userdatas"
+DROP TABLE "TwitterDatas"
