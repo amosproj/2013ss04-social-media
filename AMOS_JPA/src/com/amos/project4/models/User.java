@@ -111,7 +111,8 @@ public class User implements Serializable {
 	@Column(name = "\"l_token_secret\"",columnDefinition="VARCHAR(250)")
 	private String l_token_secret;
 	
-	
+	@OneToMany(mappedBy="owner")
+	private Collection<TwitterData> twitter_datas;
 
 	/*-------------------------------------------------------------------------------------------------------*/
 	/*	Getter and Setter for the fields
@@ -210,12 +211,13 @@ public class User implements Serializable {
 		this.t_token = t_token;
 	}
 	
-	
+	public Collection<TwitterData> getTwitter_datas() {
+		return twitter_datas;
+	}
+
 	/*-------------------------------------------------------------------------------------------------------*/
 	/*	Delegated methods
 	/*-------------------------------------------------------------------------------------------------------*/
-	
-
 	@Override
 	public String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", usermail="
@@ -322,5 +324,19 @@ public class User implements Serializable {
 		} else if (!x_token_secret.equals(other.x_token_secret))
 			return false;
 		return true;
-	}	
+	}
+	
+	/*-------------------------------------------------------------------------------------------------------*/
+	/*	Methods to map One to many relations
+	/*-------------------------------------------------------------------------------------------------------*/
+	
+	public void addTwitterData(TwitterData data){
+		if(getTwitter_datas().contains(data)){
+			getTwitter_datas().add(data);
+			if(data.getOwner() != null){
+				data.getOwner().getTwitter_datas().remove(data);
+			}
+			data.setOwner(this);
+		}
+	}
 }

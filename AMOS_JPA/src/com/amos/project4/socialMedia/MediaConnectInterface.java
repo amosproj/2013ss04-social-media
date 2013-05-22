@@ -31,7 +31,7 @@ public interface MediaConnectInterface {
 
 	public abstract String getAccessUrl();
 	
-	public boolean checkAndSetRequestTokenPin(String token);
+	public boolean checkAndSetAccessToken(String token);
 	
 	public String[] getAccessToken();
 

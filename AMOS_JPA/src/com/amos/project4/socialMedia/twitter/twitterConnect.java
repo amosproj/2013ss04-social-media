@@ -29,7 +29,7 @@ import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterConnect implements MediaConnectInterface {
-
+	
 	private static final String ACCESS_TOKEN = "1392245641-ZrerD6ClCwGZANUZA2n1z86vSArMYfuBAjHDajz";
 	private static final String ACCESS_TOKEN_SECRET = "cYKG9nJz4dpjoX41zE5xApNpI0YEswojMJg9qRutM";
 	private static final String AUTHENTIFICATION_URL = "";
@@ -94,10 +94,10 @@ public class TwitterConnect implements MediaConnectInterface {
 		return this.requestToken.getAuthenticationURL();
 	}
 	
-	public boolean checkAndSetRequestTokenPin(String pin){
+	public boolean checkAndSetAccessToken(String token){
 		try{
-	         if(pin!= null && pin.length() > 0){
-	           accessToken = twitter.getOAuthAccessToken(requestToken, pin);	           
+	         if(token!= null && token.length() > 0){
+	           accessToken = twitter.getOAuthAccessToken(requestToken, token);	           
 	         }else{
 	           return false;
 	         }
@@ -138,10 +138,7 @@ public class TwitterConnect implements MediaConnectInterface {
 		} catch (IllegalStateException | TwitterException e) {
 			e.printStackTrace();
 			return false;
-		}		
-	}
-	
-	public Twitter getTwitter() {
-		return twitter;
+		}
+		
 	}
 }

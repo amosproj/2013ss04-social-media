@@ -36,7 +36,7 @@ public class ClientsController extends AbstractController implements
 
 	public ClientsController() {
 		super();
-		clientDAO = ClientDAO.getInstance();
+		clientDAO = ClientDAO.getClientDAOInstance();
 		clientlist = new ArrayList<Client>(clientDAO.getAllClients());
 	}
 

@@ -42,7 +42,7 @@ public class ClientDAO {
 
 	private static ClientDAO instance;
 
-	public static ClientDAO getInstance() {
+	public static ClientDAO getClientDAOInstance() {
 		if (instance == null) {
 			instance = new ClientDAO();
 		}

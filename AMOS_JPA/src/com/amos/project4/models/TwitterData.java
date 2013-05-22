@@ -19,8 +19,8 @@ public class TwitterData {
 	private Integer ID;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="ClientID")
-	private Client owner;
+	@JoinColumn(name="UserID")
+	private User owner;
 	
 	@Column(name = "\"type\"",columnDefinition="VARCHAR(25)",nullable = false, length=25)
 	String type;
@@ -36,11 +36,11 @@ public class TwitterData {
 		ID = iD;
 	}
 
-	public Client getOwner() {
+	public User getOwner() {
 		return owner;
 	}
 
-	public void setOwner(Client owner) {
+	public void setOwner(User owner) {
 		this.owner = owner;
 	}
 

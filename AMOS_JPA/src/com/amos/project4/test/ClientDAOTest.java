@@ -40,7 +40,7 @@ public class ClientDAOTest {
 
 	@Before
 	public void setUp() throws Exception {
-		cDAO = ClientDAO.getInstance();
+		cDAO = ClientDAO.getClientDAOInstance();
 		List<Client> clients;
 		clients = cDAO.getAllClients();
 		// Do we have entries?
