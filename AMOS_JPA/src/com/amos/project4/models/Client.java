@@ -20,6 +20,8 @@
 package com.amos.project4.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -27,6 +29,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -73,6 +76,12 @@ public class Client implements Serializable {
 
 	@Column(name = "\"Gender\"")
 	private String gender;
+	
+	@OneToMany(mappedBy="owner")
+	private List<TwitterData> twitter_datas;
+	
+	@OneToMany(mappedBy="owner")
+	private List<FacebookData> facebook_datas;
 
 	public Client() {
 		super();
@@ -88,129 +97,107 @@ public class Client implements Serializable {
 		this.place = place;
 		this.zipCode = zipCode;
 		this.gender = gender;
+		this.twitter_datas = new ArrayList<TwitterData>();
+		this.facebook_datas = new ArrayList<FacebookData>();
 	}
 
-	public Integer getID() {
+	public synchronized Integer getID() {
 		return ID;
 	}
 
-	public void setID(Integer iD) {
+	public synchronized void setID(Integer iD) {
 		ID = iD;
 	}
 
-	public String getName() {
+	public synchronized String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public synchronized void setName(String name) {
 		this.name = name;
 	}
 
-	public String getFirstname() {
+	public synchronized String getFirstname() {
 		return firstname;
 	}
 
-	public void setFirstname(String firstname) {
+	public synchronized void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
 
-	public Date getBirthdate() {
+	public synchronized Date getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(Date birthdate) {
+	public synchronized void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
 
-	public String getMail() {
+	public synchronized String getMail() {
 		return mail;
 	}
 
-	public void setMail(String mail) {
+	public synchronized void setMail(String mail) {
 		this.mail = mail;
 	}
 
-	public String getPlace() {
+	public synchronized String getPlace() {
 		return place;
 	}
 
-	public void setPlace(String place) {
+	public synchronized void setPlace(String place) {
 		this.place = place;
 	}
 
-	public void setZipCode(String zipCode) {
+	public synchronized void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
 
-	public String getZipCode() {
+	public synchronized String getZipCode() {
 		return zipCode;
 	}
 
-	public void setGender(String gender) {
+	public synchronized void setGender(String gender) {
 		this.gender = gender;
 	}
 
-	public String getGender() {
+	public synchronized String getGender() {
 		return gender;
 	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((ID == null) ? 0 : ID.hashCode());
-		result = prime * result
-				+ ((birthdate == null) ? 0 : birthdate.hashCode());
-		result = prime * result
-				+ ((firstname == null) ? 0 : firstname.hashCode());
-		result = prime * result + ((mail == null) ? 0 : mail.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((place == null) ? 0 : place.hashCode());
-		result = prime * result + ((zipCode == null) ? 0 : zipCode.hashCode());
-		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		return result;
+	
+	public synchronized List<TwitterData> getTwitter_datas() {
+		return twitter_datas;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Client other = (Client) obj;
-		if (ID == null) {
-			if (other.ID != null)
-				return false;
-		} else if (!ID.equals(other.ID))
-			return false;
-		if (birthdate == null) {
-			if (other.birthdate != null)
-				return false;
-		} else if (!birthdate.equals(other.birthdate))
-			return false;
-		if (firstname == null) {
-			if (other.firstname != null)
-				return false;
-		} else if (!firstname.equals(other.firstname))
-			return false;
-		if (mail == null) {
-			if (other.mail != null)
-				return false;
-		} else if (!mail.equals(other.mail))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (place == null) {
-			if (other.place != null)
-				return false;
-		} else if (!place.equals(other.place))
-			return false;
-		return true;
+	public synchronized List<FacebookData> getFacebook_datas() {
+		return facebook_datas;
+	}
+
+	/*-------------------------------------------------------------------------------------------------------*/
+	/*	Methods to map One to many relations
+	/*-------------------------------------------------------------------------------------------------------*/
+	
+
+	public synchronized void addTwitterData(TwitterData data){
+		if(getTwitter_datas().contains(data)){
+			getTwitter_datas().remove(data);
+			if(data.getOwner() != null){
+				data.getOwner().getTwitter_datas().remove(data);
+			}
+		}
+		data.setOwner(this);
+		getTwitter_datas().add(data);
+	}
+	
+	public synchronized void addFacebookData(FacebookData data){
+		if(getFacebook_datas().contains(data)){
+			getFacebook_datas().remove(data);
+			if(data.getOwner() != null){
+				data.getOwner().getTwitter_datas().remove(data);
+			}
+		}
+		data.setOwner(this);
+		getFacebook_datas().add(data);
 	}
 
 }

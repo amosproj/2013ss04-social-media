@@ -20,14 +20,12 @@
 package com.amos.project4.models;
 
 import java.io.Serializable;
-import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -111,115 +109,113 @@ public class User implements Serializable {
 	@Column(name = "\"l_token_secret\"",columnDefinition="VARCHAR(250)")
 	private String l_token_secret;
 	
-	@OneToMany(mappedBy="owner")
-	private Collection<TwitterData> twitter_datas;
+	
 
 	/*-------------------------------------------------------------------------------------------------------*/
 	/*	Getter and Setter for the fields
 	/*-------------------------------------------------------------------------------------------------------*/
 	
 
-	public String getUsername() {
+	public synchronized String getUsername() {
 		return username;
 	}
 
-	public void setUsername(String username) {
+	public synchronized void setUsername(String username) {
 		this.username = username;
 	}
 
-	public String getUsermail() {
+	public synchronized String getUsermail() {
 		return usermail;
 	}
 
-	public void setUsermail(String usermail) {
+	public synchronized void setUsermail(String usermail) {
 		this.usermail = usermail;
 	}
 
-	public String getUserpass() {
+	public synchronized String getUserpass() {
 		return userpass;
 	}
 
-	public void setUserpass(String userpass) {
+	public synchronized void setUserpass(String userpass) {
 		this.userpass = userpass;
 	}
 
-	public String getF_token() {
+	public synchronized String getF_token() {
 		return f_token;
 	}
 
-	public void setF_token(String f_username) {
+	public synchronized void setF_token(String f_username) {
 		this.f_token = f_username;
 	}
 
-	public String getF_token_secret() {
+	public synchronized String getF_token_secret() {
 		return f_token_secret;
 	}
 
-	public void setF_token_secret(String f_userpass) {
+	public synchronized void setF_token_secret(String f_userpass) {
 		this.f_token_secret = f_userpass;
 	}
 
-	public String getX_token() {
+	public synchronized String getX_token() {
 		return x_token;
 	}
 
-	public void setX_token(String x_username) {
+	public synchronized void setX_token(String x_username) {
 		this.x_token = x_username;
 	}
 
-	public String getX_token_secret() {
+	public synchronized String getX_token_secret() {
 		return x_token_secret;
 	}
 
-	public void setX_token_secret(String x_userpass) {
+	public synchronized void setX_token_secret(String x_userpass) {
 		this.x_token_secret = x_userpass;
 	}
 
-	public String getL_token() {
+	public synchronized String getL_token() {
 		return l_token;
 	}
 
-	public void setL_token(String l_username) {
+	public synchronized void setL_token(String l_username) {
 		this.l_token = l_username;
 	}
 
-	public String getL_token_secret() {
+	public synchronized String getL_token_secret() {
 		return l_token_secret;
 	}
 
-	public void setL_token_secret(String l_userpass) {
+	public synchronized void setL_token_secret(String l_userpass) {
 		this.l_token_secret = l_userpass;
 	}
 
-	public Integer getID() {
+	public synchronized Integer getID() {
 		return ID;
 	}
 	
-	public String getT_token_secret() {
+	public synchronized String getT_token_secret() {
 		return t_token_secret;
 	}
 
-	public void setT_token_secret(String t_token_secret) {
+	public synchronized void setT_token_secret(String t_token_secret) {
 		this.t_token_secret = t_token_secret;
 	}
 
-	public String getT_token() {
+	public synchronized String getT_token() {
 		return t_token;
 	}
 
-	public void setT_token(String t_token) {
+	public synchronized void setT_token(String t_token) {
 		this.t_token = t_token;
 	}
 	
-	public Collection<TwitterData> getTwitter_datas() {
-		return twitter_datas;
-	}
-
+	
 	/*-------------------------------------------------------------------------------------------------------*/
 	/*	Delegated methods
 	/*-------------------------------------------------------------------------------------------------------*/
+	
+
 	@Override
-	public String toString() {
+	public synchronized String toString() {
 		return "User [ID=" + ID + ", username=" + username + ", usermail="
 				+ usermail + ", userpass=" + userpass + ", f_token=" + f_token
 				+ ", f_token_secret=" + f_token_secret + ", t_token_secret="
@@ -229,7 +225,7 @@ public class User implements Serializable {
 	}
 
 	@Override
-	public int hashCode() {
+	public synchronized int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((ID == null) ? 0 : ID.hashCode());
@@ -255,7 +251,7 @@ public class User implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public synchronized boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -324,19 +320,5 @@ public class User implements Serializable {
 		} else if (!x_token_secret.equals(other.x_token_secret))
 			return false;
 		return true;
-	}
-	
-	/*-------------------------------------------------------------------------------------------------------*/
-	/*	Methods to map One to many relations
-	/*-------------------------------------------------------------------------------------------------------*/
-	
-	public void addTwitterData(TwitterData data){
-		if(getTwitter_datas().contains(data)){
-			getTwitter_datas().add(data);
-			if(data.getOwner() != null){
-				data.getOwner().getTwitter_datas().remove(data);
-			}
-			data.setOwner(this);
-		}
-	}
+	}	
 }

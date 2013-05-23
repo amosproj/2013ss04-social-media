@@ -18,7 +18,7 @@ public class TwitterDataRetriever {
 	private static TwitterDataRetriever instance;
 	
 	private TwitterDataRetriever() {
-		twitter_dao = TwitterDataDAO.getTwitterDataDAOInstance();
+		twitter_dao = TwitterDataDAO.getInstance();
 		connector = TwitterConnect.getInstance();
 		userDAO = UserDAO.getUserDAOInstance();
 	}

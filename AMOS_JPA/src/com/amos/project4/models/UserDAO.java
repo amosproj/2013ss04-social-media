@@ -46,7 +46,7 @@ public class UserDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<User> getAllUsers() {
+	public synchronized List<User> getAllUsers() {
 		em = factory.createEntityManager();
 		Query q = em.createQuery("select u from User u ORDER BY u.ID");		
 		List<User> users = q.getResultList();
@@ -60,7 +60,7 @@ public class UserDAO {
 	 * @param ID of the User
 	 * @return
 	 */
-	public User getUserByID(Integer ID) {
+	public synchronized User getUserByID(Integer ID) {
 		if(ID == 0) return null;
 		em = factory.createEntityManager();
 		User _user = em.find(User.class, ID);
@@ -73,7 +73,7 @@ public class UserDAO {
 	 * @param username
 	 * @return
 	 */
-	public User getUserByUsername(String username) {
+	public synchronized User getUserByUsername(String username) {
 		if(username == null || username.isEmpty()) return null;
 		em = factory.createEntityManager();
 		Query q = em.createQuery("SELECT u FROM User u WHERE u.username = :param  ORDER BY u.ID");
@@ -91,7 +91,7 @@ public class UserDAO {
 	 * @param usermail
 	 * @return
 	 */	
-	public User getUserByMail(String usermail) {
+	public synchronized User getUserByMail(String usermail) {
 		if(usermail == null || usermail.isEmpty()) return null;
 		em = factory.createEntityManager();
 		Query q = em.createQuery("SELECT u FROM User u WHERE u.usermail = :param  ORDER BY u.ID");
@@ -109,7 +109,7 @@ public class UserDAO {
 	 * @param user
 	 * @return
 	 */
-	public boolean addUser(User user){
+	public synchronized boolean addUser(User user){
 		if(user == null ){
 			return false;
 		}
@@ -126,7 +126,7 @@ public class UserDAO {
 	 * @param user
 	 * @return
 	 */
-	public boolean updateUser(User user){
+	public synchronized boolean updateUser(User user){
 		if(user == null || user.getID() == 0){
 			return false;
 		}
@@ -166,7 +166,7 @@ public class UserDAO {
 	 * @param user
 	 * @return
 	 */
-	public boolean deleteUser(User user){
+	public synchronized boolean deleteUser(User user){
 		if(user == null || user.getID() == 0){
 			return false;
 		}

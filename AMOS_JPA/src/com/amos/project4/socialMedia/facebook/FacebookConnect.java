@@ -43,7 +43,11 @@ public class FacebookConnect implements MediaConnectInterface {
 	}
 	
 	public void init(){
-		facebookClient = new DefaultFacebookClient(ACCESS_TOKEN);
+		try {
+			facebookClient = new DefaultFacebookClient(ACCESS_TOKEN);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -71,7 +75,7 @@ public class FacebookConnect implements MediaConnectInterface {
 	}
 
 	@Override
-	public boolean checkAndSetAccessToken(String token) {
+	public boolean checkAndSetRequestTokenPin(String token) {
 		try{
 			DefaultFacebookClient facebookClient_ = new DefaultFacebookClient(token);
 			User user = facebookClient_.fetchObject("me", User.class);
@@ -94,4 +98,7 @@ public class FacebookConnect implements MediaConnectInterface {
 		return rslt;
 	}
 
+	public DefaultFacebookClient getFacebookClient() {
+		return facebookClient;
+	}
 }

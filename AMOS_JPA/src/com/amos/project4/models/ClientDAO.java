@@ -42,7 +42,7 @@ public class ClientDAO {
 
 	private static ClientDAO instance;
 
-	public static ClientDAO getClientDAOInstance() {
+	public static ClientDAO getInstance() {
 		if (instance == null) {
 			instance = new ClientDAO();
 		}
@@ -56,7 +56,7 @@ public class ClientDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Client> getAllClients() {
+	public synchronized List<Client> getAllClients() {
 		em = factory.createEntityManager();
 		Query q = em.createQuery("select c from Client c ORDER BY c.ID");
 		List<Client> clients = q.getResultList();
@@ -66,7 +66,7 @@ public class ClientDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Client> getAllFilteredClients(SearchParameters search) {
+	public synchronized List<Client> getAllFilteredClients(SearchParameters search) {
 		if (search == null || search.getSearch_text() == ""
 				|| search.getSearch_text().equalsIgnoreCase("%")) {
 			return this.getAllClients();
@@ -220,20 +220,20 @@ public class ClientDAO {
 		return clients;
 	}
 
-	private void addClientToMap(HashMap<String, Client> map, List<Client> list) {
+	private synchronized void addClientToMap(HashMap<String, Client> map, List<Client> list) {
 		for (Client c : list) {
 			map.put("" + c.getID(), c);
 		}
 	}
 
-	public Client getclient(Integer ID) {
+	public synchronized Client getclient(Integer ID) {
 		em = factory.createEntityManager();
 		Client _client = em.find(Client.class, ID);
 		em.close();
 		return _client;
 	}
 
-	public boolean addClient(Client client) {
+	public synchronized boolean addClient(Client client) {
 		em = factory.createEntityManager();
 		em.getTransaction().begin();
 		em.persist(client);
@@ -242,7 +242,7 @@ public class ClientDAO {
 		return true;
 	}
 
-	public boolean updateClient(Client client) {
+	public synchronized boolean updateClient(Client client) {
 		// Create an entity manager
 		em = factory.createEntityManager();
 		// Query q = em.createQuery("SELECT p FROM Person p WHERE p.ID = :id ");
@@ -263,7 +263,7 @@ public class ClientDAO {
 		return true;
 	}
 
-	public boolean deleteClient(Client client) {
+	public synchronized boolean deleteClient(Client client) {
 		em = factory.createEntityManager();
 		Client _client = em.find(Client.class, client.getID());
 		if (_client == null || _client.getID() == 0)

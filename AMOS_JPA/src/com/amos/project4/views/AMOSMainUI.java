@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -52,25 +53,31 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.amos.project4.controllers.ClientsController;
+import com.amos.project4.controllers.TwitterDataController;
 import com.amos.project4.controllers.UserController;
+import com.amos.project4.models.Client;
 
 public class AMOSMainUI {
 
 	private JFrame frame;
-	ClientsController client_controller;
 	JScrollPane clienTable_scrollPane;
 	private ClientTable tclients;
 	private JTextField search_textField;
-	private SearchParameters search_params;
+	
 	@SuppressWarnings("rawtypes")
 	private JComboBox drop_down;
 	private String[] dd_input = { " ", "ID", "Name", "Firstname", "Birthdate",
 			"E-Mail", "Place", "ZipCode", "Gender" };
 	private ClientDetailMainPanel clientDetailsPane;
+	private TwitterDetailPanel_2 twitterDetailPane;
 	private JTree leftMenuTree;
 	
+	private SearchParameters search_params;
 	private UserViewModel user_model;
-	private UserController user_controller;
+	
+	private UserController user_controller;	
+	private ClientsController client_controller;
+	private TwitterDataController twitterData_controller;
 
 	private static AMOSMainUI instance;
 	
@@ -136,17 +143,27 @@ public class AMOSMainUI {
 		// Initialise and register the search view Model
 		search_params = new SearchParameters();
 		client_controller.addModel(search_params);
+		
+		// Initialize and register the TwitterData controller
+		twitterData_controller = new TwitterDataController();
+		twitterDetailPane = new TwitterDetailPanel_2(twitterData_controller);
+		this.client_controller.addView(twitterDetailPane);
+		this.twitterData_controller.addView(twitterDetailPane);
+		
 
 		// Initialise and register the selected client ViewModel
 		clientDetailsPane = new ClientDetailMainPanel();
 		this.client_controller.addView(clientDetailsPane);
+		
+		
 
 		// Initialise the Frame
 		frame = new JFrame();
-		frame.setBounds(100, 100, 820, 700);
+		frame.setSize(820, 700);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+		frame.setLocationByPlatform(true);
 
 		// Initialise The menus
 		initMenus();
@@ -402,6 +419,7 @@ public class AMOSMainUI {
 		JTabbedPane mediaPanes = new JTabbedPane(JTabbedPane.TOP);
 		panel_right_bottom.add(mediaPanes, BorderLayout.CENTER);
 
+		// Initialise Client Detail Panel
 		clientDetailsPane = new ClientDetailMainPanel();
 		this.client_controller.addView(clientDetailsPane);
 		mediaPanes.addTab("Client' details", null, clientDetailsPane, null);
@@ -416,8 +434,11 @@ public class AMOSMainUI {
 		JPanel linkedInPane = new JPanel();
 		mediaPanes.addTab("LinkedIn", null, linkedInPane, null);
 
-		JPanel twitterPane = new JPanel();
-		mediaPanes.addTab("Twitter", null, twitterPane, null);
+		// Initialise the Twitter detail Pane
+		twitterDetailPane = new TwitterDetailPanel_2(twitterData_controller);
+		this.client_controller.addView(twitterDetailPane);
+		this.twitterData_controller.addView(twitterDetailPane);
+		mediaPanes.addTab("Twitter", null, twitterDetailPane, null);
 
 		return panel_right_bottom;
 	}
@@ -469,7 +490,7 @@ public class AMOSMainUI {
 	}
 	
 	private void showGeneralsettingDialog(){
-		GeneralSettingsDialog dialog = new GeneralSettingsDialog(user_controller, user_model);
+		GeneralSettingsDialog dialog = new GeneralSettingsDialog(user_controller, user_model,frame);
 		dialog.setVisible(true);
 	}
 	
@@ -500,9 +521,20 @@ public class AMOSMainUI {
 		frame.repaint();
 	}
 	
+	private void openSocialMediaScanDialog(){
+		ArrayList<Client> c_list = new ArrayList<Client>();
+		Client selected_client = client_controller.getSelectedClient();
+		if(selected_client == null){
+			c_list.addAll(client_controller.getAllClients());
+		}else{
+			c_list.add(selected_client);
+		}
+		SocialMediaScanDialog dialog = new SocialMediaScanDialog(user_controller.getCurrent_user(),c_list,frame);
+		dialog.setVisible(true);
+	}
+	
 	// Action listeners implementations
 	private class MenuSelectionMouseAdapter extends MouseAdapter {
-		
 		public void mouseClicked(MouseEvent me) {
 			if (me.getClickCount() <= 1) {
 				return;
@@ -557,8 +589,7 @@ public class AMOSMainUI {
 	public class SocialMediaScanAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			SocialMediaScanDialog dialog = new SocialMediaScanDialog();
-			dialog.setVisible(true);
+			openSocialMediaScanDialog();
 		}
 	}
 

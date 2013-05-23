@@ -29,6 +29,7 @@ import java.util.Observable;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -77,14 +78,17 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	private JButton l_btnGenerateToken;
 	private JLabel l_lblStatus;
 	
-	public GeneralSettingsDialog(UserController user_controller,UserViewModel viewModel) {
+	private JFrame frame;
+	
+	public GeneralSettingsDialog(UserController user_controller,UserViewModel viewModel, JFrame frame) {
 		super();
+		this.frame = frame;
 		init();
 		this.user_controller = user_controller;
 		this.viewModel = viewModel;
 		this.user_controller.addView(this);
 		this.updateView(this.user_controller.getCurrent_user());
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(frame);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
@@ -378,7 +382,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.TWITTER);
+			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.TWITTER,frame);
 			URLDialog.setVisible(true);
 		}		
 	}
@@ -387,7 +391,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.FACEBOOK);
+			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.FACEBOOK,frame);
 			URLDialog.setVisible(true);
 		}		
 	}
@@ -396,7 +400,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.XING);
+			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.XING,frame);
 			URLDialog.setVisible(true);
 		}		
 	}
@@ -405,7 +409,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.LINKEDIN);
+			JDialog URLDialog = new GenerateURLDialog(user_controller, viewModel,SocialMediaType.LINKEDIN,frame);
 			URLDialog.setVisible(true);
 		}		
 	}

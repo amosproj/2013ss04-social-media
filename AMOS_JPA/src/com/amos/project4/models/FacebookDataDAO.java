@@ -8,62 +8,63 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
-import com.amos.project4.socialMedia.twitter.TwitterDataType;
+import com.amos.project4.socialMedia.facebook.FacebookDataType;
 
-public class TwitterDataDAO {
+
+public class FacebookDataDAO {
 	
 	private static final String PERSISTENCE_UNIT_NAME = "AMOS_JPA";
 	private static EntityManagerFactory factory;
 	private static EntityManager em;
 
-	private static TwitterDataDAO instance;
+	private static FacebookDataDAO instance;
 
-	public static TwitterDataDAO getInstance() {
+	public static FacebookDataDAO getInstance() {
 		if (instance == null) {
-			instance = new TwitterDataDAO();
+			instance = new FacebookDataDAO();
 		}
 		return instance;
 	}
 	
-	private TwitterDataDAO() {
+	private FacebookDataDAO() {
 		super();
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
 		em = factory.createEntityManager();
 	}
 	
-	public synchronized TwitterData getTwitterData(Integer data_id){
+	public synchronized FacebookData getFacebookData(Integer data_id){
 		if(data_id == null || data_id == 0) return null;
-		TwitterData rslt = em.find(TwitterData.class, data_id);
+		FacebookData rslt = em.find(FacebookData.class, data_id);
 		return rslt;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public synchronized List<TwitterData> getAllTwitterDataOfClient(Integer owner_id){
-		if(owner_id == null || owner_id == 0) return new ArrayList<TwitterData>();
-		Client owner = em.find(Client.class, owner_id);
-		Query q = em.createQuery("SELECT d FROM TwitterData d WHERE d.owner = :paramid ORDER BY d.ID");
+	public synchronized List<FacebookData> getAllFacebookDataOfClient(Integer client_id){
+		if(client_id == null || client_id == 0) return new ArrayList<FacebookData>();
+
+		Client owner = em.find(Client.class, client_id);
+		Query q = em.createQuery("SELECT d FROM FacebookData d WHERE d.owner = :paramid  ORDER BY d.ID");
 		q.setParameter("paramid", owner);
-		List<TwitterData> rslt = q.getResultList();
+		List<FacebookData> rslt = q.getResultList();
 		return rslt;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public synchronized List<TwitterData> getAllTwitterDataOfClientByType(Integer owner_id, TwitterDataType type){
-		if(owner_id == null || owner_id == 0) return new ArrayList<TwitterData>();
+	public synchronized List<FacebookData> getAllFacebookDataOfClientBytype(Integer owner_id, FacebookDataType type){
 		Client owner = em.find(Client.class, owner_id);
-		Query q = em.createQuery("SELECT d FROM TwitterData d WHERE d.owner = :paramid and d.type = :paramtype ORDER BY d.ID");
+		Query q = em.createQuery("SELECT d FROM FacebookData d WHERE d.owner = :paramid and d.type = :paramtype  ORDER BY d.ID");
 		q.setParameter("paramid", owner);
 		q.setParameter("paramtype", type.toString());
-		List<TwitterData> rslt = q.getResultList();
+		List<FacebookData> rslt = q.getResultList();
 		return rslt;
 	}
 	
-	public synchronized boolean persistTwitterData(TwitterData data) {
+	public synchronized boolean persistFacebookData(FacebookData data) {
 		if(data == null) return false;
 		try {
 			em.getTransaction().begin();
-			
 			em.persist(data);
+			
 			em.getTransaction().commit();
 			return true;
 		} catch (Exception e) {
@@ -71,12 +72,11 @@ public class TwitterDataDAO {
 			em.getTransaction().rollback();
 			return false;
 		}finally{
+			
 		}
-		
-		
 	}
 	
-	public synchronized boolean updateTwitterData(TwitterData data){
+	public synchronized boolean updateFacebookData(FacebookData data){
 		if(data == null) return false;
 		try{
 			em.getTransaction().begin();
@@ -91,11 +91,12 @@ public class TwitterDataDAO {
 		}
 	}
 	
-	public synchronized boolean deleteTwitterData(TwitterData data){
+	public synchronized boolean deleteFacebookData(FacebookData data){
 		if(data == null) return false;
 		try{
 			em.getTransaction().begin();
-			TwitterData tmp = em.find(TwitterData.class,data.getID() );
+			
+			FacebookData tmp = em.find(FacebookData.class,data.getID() );
 			em.merge(tmp);
 			em.remove(tmp);
 			em.getTransaction().commit();
@@ -104,18 +105,19 @@ public class TwitterDataDAO {
 			em.getTransaction().rollback();
 			return false;
 		}finally{
+
 		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public synchronized boolean deleteAllTwitterData(Integer owner_id){
+	public synchronized boolean deleteAllFacebookData(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return false;
 		Client owner = em.find(Client.class, owner_id);
-		Query q = em.createQuery("SELECT d FROM TwitterData d WHERE d.owner = :paramid ORDER BY d.ID");
+		Query q = em.createQuery("SELECT d FROM FacebookData d WHERE d.owner = :paramid  ORDER BY d.ID");
 		q.setParameter("paramid", owner);
-		List<TwitterData> rslt = q.getResultList();
-		for (TwitterData data : rslt) {
-			if(! deleteTwitterData(data)) return false;
+		List<FacebookData> rslt = q.getResultList();
+		for (FacebookData data : rslt) {
+			if(! deleteFacebookData(data)) return false;
 		}
 		return true;
 	}

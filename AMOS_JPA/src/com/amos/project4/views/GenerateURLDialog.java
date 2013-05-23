@@ -27,6 +27,7 @@ import java.net.URI;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -53,13 +54,14 @@ public class GenerateURLDialog extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public  GenerateURLDialog(UserController user,UserViewModel viewModel,SocialMediaType sType) {
+	public  GenerateURLDialog(UserController user,UserViewModel viewModel,SocialMediaType sType, JFrame parent) {
 		this.sType = sType;
 		this.user_controller = user;
 		this.viewModel = viewModel;
 		this.url = user_controller.getAccessTokenRequestURL(sType);
 		setTitle("Url window");
-		setBounds(100, 100, 600, 200);
+		setSize(600, 200);
+		setLocationRelativeTo(parent);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
