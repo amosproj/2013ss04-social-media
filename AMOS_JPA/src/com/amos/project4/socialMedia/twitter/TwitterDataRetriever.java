@@ -72,25 +72,29 @@ public class TwitterDataRetriever {
 		case FRIENDS:
 			ResponseList<twitter4j.User> friends = twitter.getFriendsList(client_twitter_name, -1);
 			for(twitter4j.User t_user : friends){
-				saveTwitterData(client,t_user.getScreenName(),TwitterDataType.FRIENDS);
+				saveTwitterData(client,t_user.getId()+ "#" +t_user.getScreenName(),TwitterDataType.FRIENDS);
 			}
 			return;
 		case ID:
 			twitter4j.User t_user = twitter.showUser(client_twitter_name);
 			saveTwitterData(client,"" + t_user.getId(), TwitterDataType.ID);
 			return;
+		case USER_PICTURE:
+			twitter4j.User p_user = twitter.showUser(client_twitter_name);
+			saveTwitterData(client,"" + p_user.getProfileImageURL(), TwitterDataType.USER_PICTURE);
+			return;
 		case TWITTER_NAME:
 			return;
 		case TRENDS:
 			ResponseList<twitter4j.Location> trends = twitter.getAvailableTrends();
 			for(twitter4j.Location trend : trends){
-				saveTwitterData(client,trend.getName(),TwitterDataType.TRENDS);				
+				saveTwitterData(client,trend.getName()  + "#" + trend.getCountryName() + "#" + trend.getURL(),TwitterDataType.TRENDS);				
 			}
 			return;
 		case TWEETS:
 			ResponseList<twitter4j.Status> tweets = twitter.getUserTimeline(client_twitter_name);
 			for(twitter4j.Status tweet : tweets){
-				saveTwitterData(client,tweet.getText(),TwitterDataType.TWEETS);				
+				saveTwitterData(client,tweet.getCreatedAt() + "#" + tweet.getText() ,TwitterDataType.TWEETS);				
 			}
 		default:
 			break;

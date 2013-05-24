@@ -190,6 +190,7 @@ public class Login extends JDialog implements AbstractControlledView {
 				window.getMainFrame().setVisible(true);
 				setVisible(false);
 			} catch (Exception e) {
+				e.printStackTrace();
 				setloginMessage("Something went wrong. Please try again !", 1);
 				return;
 			}

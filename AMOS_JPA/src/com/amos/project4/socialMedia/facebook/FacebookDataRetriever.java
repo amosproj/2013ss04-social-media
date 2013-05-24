@@ -100,7 +100,7 @@ public class FacebookDataRetriever {
 				List<com.restfb.types.User.Education> educations = user_.getEducation();
 				if(educations != null){
 					for(com.restfb.types.User.Education edu : educations){
-						saveFacebookData(client, edu.getYear()+"|"+edu.getSchool()+"|"+edu.getDegree(), type);
+						saveFacebookData(client, edu.getYear()+"#"+edu.getSchool()+"#"+edu.getDegree(), type);
 					}
 				}				
 			}
@@ -129,7 +129,7 @@ public class FacebookDataRetriever {
 				List<com.restfb.types.User.Work> works = user_.getWork();
 				if(works != null){
 					for(com.restfb.types.User.Work work : works){
-						saveFacebookData(client, work.getPosition() + "|" +work.getEmployer(), type);
+						saveFacebookData(client, work.getPosition() + "#" +work.getEmployer(), type);
 					}
 				}				
 			}
@@ -140,7 +140,7 @@ public class FacebookDataRetriever {
 			if(events != null && events.size() > 0){
 				for (FqlObject ev : events) {
 					com.restfb.types.Event tmp = facebook.fetchObject(ev.eid, com.restfb.types.Event.class);
-					saveFacebookData(client, tmp.getId()+"|"+tmp.getName()+"|"+tmp.getStartTime()+"|"+tmp.getEndTime()+"|"+tmp.getLocation()+"|"+tmp.getOwner()+"|"+tmp.getDescription(), type);
+					saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getStartTime()+"#"+tmp.getEndTime()+"#"+tmp.getLocation()+"#"+tmp.getOwner()+"#"+tmp.getDescription(), type);
 				}
 				
 			}			
@@ -160,7 +160,7 @@ public class FacebookDataRetriever {
 			if(rslts != null && rslts.size() > 0){
 				for (FqlObject ev : rslts) {
 					com.restfb.types.StatusMessage tmp = facebook.fetchObject(ev.status_id, com.restfb.types.StatusMessage.class);
-					saveFacebookData(client, tmp.getId()+"|"+tmp.getUpdatedTime()+"|"+tmp.getMessage(), type);
+					saveFacebookData(client, tmp.getId()+"#"+tmp.getUpdatedTime()+"#"+tmp.getMessage(), type);
 				}				
 			}
 			String query_p2 = "SELECT post_id, actor_id, target_id, message, comments  FROM stream  WHERE source_id = "+ client_facebook_ID +" and actor_id =" + client_facebook_ID +
@@ -170,7 +170,7 @@ public class FacebookDataRetriever {
 				System.out.println("Count = " + rslts.size() );
 				for (FqlObject ev : rslts) {
 					com.restfb.types.Post tmp = facebook.fetchObject(ev.post_id, com.restfb.types.Post.class);
-					saveFacebookData(client, tmp.getId()+"|"+tmp.getCreatedTime()+"|"+tmp.getMessage(), type);
+					saveFacebookData(client, tmp.getId()+"#"+tmp.getCreatedTime()+"#"+tmp.getMessage(), type);
 				}
 				
 			}

@@ -56,6 +56,7 @@ import com.amos.project4.controllers.ClientsController;
 import com.amos.project4.controllers.TwitterDataController;
 import com.amos.project4.controllers.UserController;
 import com.amos.project4.models.Client;
+import com.amos.project4.views.twitter.TwitterDetailPanel_2;
 
 public class AMOSMainUI {
 

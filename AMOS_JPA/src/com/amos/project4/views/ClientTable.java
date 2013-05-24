@@ -46,6 +46,10 @@ public class ClientTable extends JTable implements AbstractControlledView {
 		this.setAutoCreateRowSorter(true);
 		this.getSelectionModel().addListSelectionListener(
 				new ClientSelectionListener());
+		// set the WIDTH
+		getColumnModel().getColumn(0).setMaxWidth(100);		
+		getColumnModel().getColumn(6).setMinWidth(100);
+		getColumnModel().getColumn(7).setMinWidth(50);
 	}
 
 	@Override

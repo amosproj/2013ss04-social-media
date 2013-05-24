@@ -146,33 +146,10 @@ public class ClientTableModel extends AbstractTableModel {
 	}
 
 	@Override
-	public void setValueAt(Object val, int i, int j) {
-
-		/*
-		 * Client old_client =
-		 * ((ClientController)(this.getController())).getAllClients().get(i);
-		 * 
-		 * switch (j) { case 0: firePropertyChange("ID", old_client.getID(),
-		 * val); break; case 1: firePropertyChange("Name", old_client.getName(),
-		 * val); break; case 2: firePropertyChange("ID", old_client.getID(),
-		 * val); break; case 3: firePropertyChange("ID", old_client.getID(),
-		 * val); break; case 4: firePropertyChange("ID", old_client.getID(),
-		 * val); break; default: return ; }
-		 */
-	}
-
-	@Override
 	public boolean isCellEditable(int arg0, int arg1) {
 		return false;
 	}
 
-	@Override
-	public void removeTableModelListener(TableModelListener arg0) {
-	}
-
-	@Override
-	public void addTableModelListener(TableModelListener l) {
-	}
 
 	public Client getClientAt(int i) {
 		return ((ClientsController) (this.getController())).getAllClients()

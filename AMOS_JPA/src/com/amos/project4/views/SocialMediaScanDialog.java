@@ -79,6 +79,7 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 	private JCheckBox chckbxTwitterAccount;
 	private JCheckBox chckbxUsername;
 	private JCheckBox chckbxTrends;
+	private JCheckBox chckbxPicture;
 	
 	private SocialMediaScanModel model;
 	private SocialMediaScanController controller;
@@ -230,6 +231,24 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 						0, SpringLayout.WEST, chckbxTwitterName);
 				twitterPanel.add(chckbxTrends);
 			}
+			
+			{
+				chckbxPicture = new JCheckBox("User photo");
+				chckbxPicture.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxPicture.isSelected())
+							model.addSelectedTwitterDataType(TwitterDataType.USER_PICTURE);
+						else
+							model.removeSelectedTwitterDataType(TwitterDataType.USER_PICTURE);						
+					}
+				});
+				sl_twitterPanel.putConstraint(SpringLayout.NORTH, chckbxPicture, 6, SpringLayout.SOUTH, chckbxTrends);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxPicture,0, SpringLayout.WEST, chckbxTwitterName);
+				twitterPanel.add(chckbxPicture);
+			}
+			
+			
+			
 			getContentPane().add(xingPanel);
 		}
 
