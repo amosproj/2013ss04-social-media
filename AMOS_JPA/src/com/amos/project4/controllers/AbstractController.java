@@ -57,7 +57,7 @@ public abstract class AbstractController implements Observer {
 	// Use this to observe property changes from registered models
 	// and propagate them on to all the views.
 	@Override
-	public void update(Observable o, Object arg) {
+	public  void update(Observable o, Object arg) {
 		updateInternally(arg, o);
 		for (AbstractControlledView view : registeredViews) {
 			if(view != null)

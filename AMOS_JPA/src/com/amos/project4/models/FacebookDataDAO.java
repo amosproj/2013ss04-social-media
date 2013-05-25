@@ -50,7 +50,7 @@ public class FacebookDataDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public synchronized List<FacebookData> getAllFacebookDataOfClientBytype(Integer owner_id, FacebookDataType type){
+	public synchronized List<FacebookData> getAllFacebookDataOfClientByType(Integer owner_id, FacebookDataType type){
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM FacebookData d WHERE d.owner = :paramid and d.type = :paramtype  ORDER BY d.ID");
 		q.setParameter("paramid", owner);

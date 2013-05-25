@@ -62,7 +62,7 @@ public class FacebookDataRetriever {
 		DefaultFacebookClient facebook = connector.getFacebookClient();
 		
 		//Check if account of client exist and get it
-		List<FacebookData> account = facebook_dao.getAllFacebookDataOfClientBytype(client.getID(), FacebookDataType.UID);
+		List<FacebookData> account = facebook_dao.getAllFacebookDataOfClientByType(client.getID(), FacebookDataType.UID);
 		if(account == null || account.size() == 0 ) 
 			return; // the client doesn't have an account yet
 		String client_facebook_ID = account.get(0).getDataString();
@@ -100,7 +100,7 @@ public class FacebookDataRetriever {
 				List<com.restfb.types.User.Education> educations = user_.getEducation();
 				if(educations != null){
 					for(com.restfb.types.User.Education edu : educations){
-						saveFacebookData(client, edu.getYear()+"#"+edu.getSchool()+"#"+edu.getDegree(), type);
+						saveFacebookData(client, edu.getDegree() +"#"+ edu.getYear()+"#"+edu.getSchool(), type);
 					}
 				}				
 			}
@@ -129,18 +129,24 @@ public class FacebookDataRetriever {
 				List<com.restfb.types.User.Work> works = user_.getWork();
 				if(works != null){
 					for(com.restfb.types.User.Work work : works){
-						saveFacebookData(client, work.getPosition() + "#" +work.getEmployer(), type);
+						saveFacebookData(client, work.getPosition() + "#" +work.getEmployer() + "#" + work.getDescription(), type);
 					}
 				}				
 			}
 			return;
 		case EVENTS:
-			String query_e = "SELECT eid FROM event WHERE eid IN (SELECT eid from event_member where uid = 1482612290)";
+			String query_e = "SELECT eid FROM event WHERE eid IN (SELECT eid from event_member where uid = " + client_facebook_ID + ")";
 			List<FqlObject> events = facebook.executeFqlQuery(query_e, FqlObject.class);
 			if(events != null && events.size() > 0){
 				for (FqlObject ev : events) {
-					com.restfb.types.Event tmp = facebook.fetchObject(ev.eid, com.restfb.types.Event.class);
-					saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getStartTime()+"#"+tmp.getEndTime()+"#"+tmp.getLocation()+"#"+tmp.getOwner()+"#"+tmp.getDescription(), type);
+					try {
+						com.restfb.types.Event tmp = facebook.fetchObject(ev.eid, com.restfb.types.Event.class);
+						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getStartTime()+"#"+tmp.getEndTime()+"#"+tmp.getLocation()+"#"+tmp.getOwner()+"#"+tmp.getDescription(), type);
+						
+					} catch (Exception e) {
+						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + ev.eid );
+					}
+					
 				}
 				
 			}			
@@ -150,7 +156,13 @@ public class FacebookDataRetriever {
 			List<FqlObject> friends = facebook.executeFqlQuery(queryf, FqlObject.class);
 			if(friends != null && friends.size() > 0){
 				for (FqlObject friend : friends) {
-					saveFacebookData(client, friend.uid2, type);
+					try{
+						com.restfb.types.User tmp = facebook.fetchObject(friend.uid2, com.restfb.types.User.class);
+						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getGender()+"#"+tmp.getLocation()+"#"+tmp.getAbout(), type);
+						
+					} catch (Exception e) {
+						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + friend.uid2 );
+					}
 				}				
 			}
 			return;
@@ -159,8 +171,12 @@ public class FacebookDataRetriever {
 			List<FqlObject> rslts = facebook.executeFqlQuery(query_p, FqlObject.class);
 			if(rslts != null && rslts.size() > 0){
 				for (FqlObject ev : rslts) {
-					com.restfb.types.StatusMessage tmp = facebook.fetchObject(ev.status_id, com.restfb.types.StatusMessage.class);
-					saveFacebookData(client, tmp.getId()+"#"+tmp.getUpdatedTime()+"#"+tmp.getMessage(), type);
+					try{
+						com.restfb.types.StatusMessage tmp = facebook.fetchObject(ev.status_id, com.restfb.types.StatusMessage.class);
+						saveFacebookData(client, tmp.getId()+"#"+tmp.getUpdatedTime()+"#"+tmp.getMessage(), type);
+					} catch (Exception e) {
+						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + ev.status_id );
+					}
 				}				
 			}
 			String query_p2 = "SELECT post_id, actor_id, target_id, message, comments  FROM stream  WHERE source_id = "+ client_facebook_ID +" and actor_id =" + client_facebook_ID +
@@ -169,8 +185,12 @@ public class FacebookDataRetriever {
 			if(rslts != null && rslts.size() > 0){
 				System.out.println("Count = " + rslts.size() );
 				for (FqlObject ev : rslts) {
-					com.restfb.types.Post tmp = facebook.fetchObject(ev.post_id, com.restfb.types.Post.class);
-					saveFacebookData(client, tmp.getId()+"#"+tmp.getCreatedTime()+"#"+tmp.getMessage(), type);
+					try{
+						com.restfb.types.Post tmp = facebook.fetchObject(ev.post_id, com.restfb.types.Post.class);
+						saveFacebookData(client, tmp.getId()+"#"+tmp.getCreatedTime()+"#"+tmp.getMessage(), type);
+					} catch (Exception e) {
+						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + ev.post_id );
+					}
 				}
 				
 			}
@@ -181,7 +201,12 @@ public class FacebookDataRetriever {
 			friends = facebook.executeFqlQuery(queryf, FqlObject.class);
 			if(friends != null && friends.size() > 0){
 				for (FqlObject friend : friends) {
-					saveFacebookData(client, friend.uid, type);
+					try{
+						com.restfb.types.User tmp = facebook.fetchObject(friend.uid, com.restfb.types.User.class);
+						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getGender()+"#"+tmp.getLocation()+"#"+tmp.getAbout(), type);
+					} catch (Exception e) {
+						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + friend.uid );
+					}					
 				}				
 			}
 			return;

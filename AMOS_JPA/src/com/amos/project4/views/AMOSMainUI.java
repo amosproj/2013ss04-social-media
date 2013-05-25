@@ -53,10 +53,12 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.amos.project4.controllers.ClientsController;
+import com.amos.project4.controllers.FacebookDataController;
 import com.amos.project4.controllers.TwitterDataController;
 import com.amos.project4.controllers.UserController;
 import com.amos.project4.models.Client;
-import com.amos.project4.views.twitter.TwitterDetailPanel_2;
+import com.amos.project4.views.facebook.FacebookDetailPanel;
+import com.amos.project4.views.twitter.TwitterDetailPanel;
 
 public class AMOSMainUI {
 
@@ -70,7 +72,8 @@ public class AMOSMainUI {
 	private String[] dd_input = { " ", "ID", "Name", "Firstname", "Birthdate",
 			"E-Mail", "Place", "ZipCode", "Gender" };
 	private ClientDetailMainPanel clientDetailsPane;
-	private TwitterDetailPanel_2 twitterDetailPane;
+	private TwitterDetailPanel twitterDetailPane;
+	private FacebookDetailPanel facebookDetailPane;
 	private JTree leftMenuTree;
 	
 	private SearchParameters search_params;
@@ -79,6 +82,7 @@ public class AMOSMainUI {
 	private UserController user_controller;	
 	private ClientsController client_controller;
 	private TwitterDataController twitterData_controller;
+	private FacebookDataController facebookData_controller;
 
 	private static AMOSMainUI instance;
 	
@@ -116,15 +120,14 @@ public class AMOSMainUI {
 	 */
 	public AMOSMainUI() throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException {
-		initialize();
-		
+		initialize();		
 	}
 
 	public AMOSMainUI(UserController user_controller, UserViewModel u_model) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
-		this();
+		super();
 		this.user_controller = user_controller;
 		this.user_model = u_model;
-		
+		initialize();		
 	}
 
 	/**
@@ -147,16 +150,7 @@ public class AMOSMainUI {
 		
 		// Initialize and register the TwitterData controller
 		twitterData_controller = new TwitterDataController();
-		twitterDetailPane = new TwitterDetailPanel_2(twitterData_controller);
-		this.client_controller.addView(twitterDetailPane);
-		this.twitterData_controller.addView(twitterDetailPane);
-		
-
-		// Initialise and register the selected client ViewModel
-		clientDetailsPane = new ClientDetailMainPanel();
-		this.client_controller.addView(clientDetailsPane);
-		
-		
+		facebookData_controller = new FacebookDataController();
 
 		// Initialise the Frame
 		frame = new JFrame();
@@ -426,9 +420,10 @@ public class AMOSMainUI {
 		mediaPanes.addTab("Client' details", null, clientDetailsPane, null);
 		mediaPanes.setEnabledAt(0, true);
 
-		JPanel facebookPane = new JPanel();
-		mediaPanes.addTab("Facebook", null, facebookPane, null);
-
+		facebookDetailPane = new FacebookDetailPanel(facebookData_controller,client_controller);
+		mediaPanes.addTab("Facebook", null, facebookDetailPane, null);
+		
+		
 		JPanel xingPane = new JPanel();
 		mediaPanes.addTab("Xing", null, xingPane, null);
 
@@ -436,10 +431,12 @@ public class AMOSMainUI {
 		mediaPanes.addTab("LinkedIn", null, linkedInPane, null);
 
 		// Initialise the Twitter detail Pane
-		twitterDetailPane = new TwitterDetailPanel_2(twitterData_controller);
+		twitterDetailPane = new TwitterDetailPanel(twitterData_controller,client_controller);
 		this.client_controller.addView(twitterDetailPane);
 		this.twitterData_controller.addView(twitterDetailPane);
 		mediaPanes.addTab("Twitter", null, twitterDetailPane, null);
+		
+		
 
 		return panel_right_bottom;
 	}

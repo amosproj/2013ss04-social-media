@@ -62,7 +62,7 @@ public class ClientDetailMainPanel extends JPanel implements
 		springLayout.putConstraint(SpringLayout.SOUTH,
 				personalInformationsPanel, 130, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.EAST,
-				personalInformationsPanel, -4, SpringLayout.EAST, this);
+				personalInformationsPanel, 1, SpringLayout.EAST, this);
 		personalInformationsPanel.setBorder(new TitledBorder(new LineBorder(
 				new Color(0, 0, 0)), "Personal informations",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));

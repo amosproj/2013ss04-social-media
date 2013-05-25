@@ -77,18 +77,18 @@ public class UserViewModel extends AbstractViewModel {
 		return name;
 	}
 
-	public void setUserData(String name, String password) {
+	public synchronized void setUserData(String name, String password) {
 		this.name = name;
 		this.password = password;
 		this.setChanged();
 		this.notifyObservers("Login");
 	}
 
-	public String getPassword() {
+	public synchronized String getPassword() {
 		return password;
 	}
 
-	public void setSocialMediaDatas(String f_token, String f_token_secret,
+	public synchronized void setSocialMediaDatas(String f_token, String f_token_secret,
 			String t_token, String t_token_secret, String x_token, String x_token_secret,
 			String l_token, String l_token_secret) {
 		
@@ -140,7 +140,7 @@ public class UserViewModel extends AbstractViewModel {
 		return mail;
 	}
 
-	public void updateModel(User _user) {
+	public synchronized void updateModel(User _user) {
 		this.name = _user.getUsername();
 		this.password = _user.getUserpass();
 		this.mail = _user.getUsermail();
