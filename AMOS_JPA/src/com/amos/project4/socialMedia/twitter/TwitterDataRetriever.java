@@ -81,7 +81,7 @@ public class TwitterDataRetriever {
 			return;
 		case USER_PICTURE:
 			twitter4j.User p_user = twitter.showUser(client_twitter_name);
-			saveTwitterData(client,"" + p_user.getProfileImageURL(), TwitterDataType.USER_PICTURE);
+			saveTwitterData(client,"" + p_user.getBiggerProfileImageURL(), TwitterDataType.USER_PICTURE);
 			return;
 		case TWITTER_NAME:
 			return;

@@ -21,7 +21,6 @@ package com.amos.project4.views;
 
 import java.util.Date;
 
-import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
 
 import com.amos.project4.controllers.ClientsController;

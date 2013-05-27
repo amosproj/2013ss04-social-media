@@ -13,7 +13,7 @@ public class SocialMediaScanController extends AbstractController{
 	public SocialMediaScanController() {
 		super();
 		this.f_retriever = FacebookDataRetriever.getInstance();
-		this.t_retriever = TwitterDataRetriever.getInstance();
+		this.t_retriever = TwitterDataRetriever.getInstance();		
 	}
 
 	@Override

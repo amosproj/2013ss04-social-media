@@ -1,4 +1,6 @@
-ALTER TABLE "TwitterDatas" DROP CONSTRAINT "FK_TwitterDatas_UserID"
+ALTER TABLE "TwitterDatas" DROP CONSTRAINT "FK_TwitterDatas_ClientID"
+ALTER TABLE "FacebookDatas" DROP CONSTRAINT "FK_FacebookDatas_ClientID"
 DROP TABLE "Kundendaten"
 DROP TABLE "Userdatas"
 DROP TABLE "TwitterDatas"
+DROP TABLE "FacebookDatas"

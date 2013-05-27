@@ -1,7 +1,6 @@
 package com.amos.project4.views.twitter;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
@@ -15,25 +14,19 @@ import javax.swing.border.LineBorder;
 import com.amos.project4.controllers.TwitterDataController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.TwitterData;
-import com.amos.project4.models.TwitterDataDAO;
 import com.amos.project4.socialMedia.twitter.TwitterDataType;
 import com.amos.project4.views.AbstractControlledView;
 
 public class TwitterPicturePanel extends JPanel implements AbstractControlledView {
 
 	private static final long serialVersionUID = 1L;
-	private TwitterDataController controller;
 	Image img ;
 	Image default_img ;
 	public TwitterPicturePanel(TwitterDataController controller) {
 		super();
-		
 		setBorder(new LineBorder(new Color(0, 0, 0)));
-		this.controller = controller;
-		
 		
 		URL url = this.getClass().getResource("/com/amos/project4/images/no_images.jpg");
-		System.out.println(url.getPath());
 		try {
 			 Image imgFondo = javax.imageio.ImageIO.read(new java.io.File(url.getPath()));
 			 default_img = imgFondo.getScaledInstance(150, 150, Image.SCALE_DEFAULT);
@@ -67,8 +60,7 @@ public class TwitterPicturePanel extends JPanel implements AbstractControlledVie
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
-			TwitterDataDAO dao = controller.getTwitter_DAO();
-			List<TwitterData> urls = dao.getAllTwitterDataOfClientByType(c.getID(), TwitterDataType.USER_PICTURE);
+			List<TwitterData> urls = c.getTwitterDatasByType(TwitterDataType.USER_PICTURE);
 			try{
 				if(urls != null && !urls.isEmpty()){				
 					repaintProfileImage(urls.get(0).getDataString());

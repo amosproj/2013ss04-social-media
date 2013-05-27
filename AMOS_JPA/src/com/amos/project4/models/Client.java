@@ -35,6 +35,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.amos.project4.socialMedia.facebook.FacebookDataType;
+import com.amos.project4.socialMedia.twitter.TwitterDataType;
 
 /**
  * Simple POJO Class to represent a client data entry
@@ -207,6 +208,16 @@ public class Client implements Serializable {
 		for (FacebookData facebookData : this.facebook_datas) {
 			if(facebookData.getType().equalsIgnoreCase(type.toString())){
 				rslts.add(facebookData);
+			}
+		}
+		return rslts;
+	}
+	
+	public synchronized List<TwitterData> getTwitterDatasByType(TwitterDataType type) {
+		ArrayList<TwitterData> rslts = new ArrayList<TwitterData>();
+		for (TwitterData data : this.twitter_datas) {
+			if(data.getType().equalsIgnoreCase(type.toString())){
+				rslts.add(data);
 			}
 		}
 		return rslts;

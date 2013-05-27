@@ -60,8 +60,8 @@ public class TwitterConnect implements MediaConnectInterface {
 		try {
 			init();
 		} catch (TwitterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("Could not initialize the dafault Twitter client api.");
+			//e.printStackTrace();
 		}
 	}
 	
@@ -89,7 +89,7 @@ public class TwitterConnect implements MediaConnectInterface {
 			if(requestToken == null)
 				requestToken = twitter.getOAuthRequestToken();
 		} catch (TwitterException e) {
-			return "Error !";
+			return "";
 		}
 		return this.requestToken.getAuthenticationURL();
 	}
@@ -105,6 +105,7 @@ public class TwitterConnect implements MediaConnectInterface {
 	        if(401 == te.getStatusCode()){
 	          return false;
 	        }else{
+	        	System.err.println("Wrong Twitter access token or access token secret.");
 	          te.printStackTrace();
 	        }
 	      }
@@ -132,10 +133,10 @@ public class TwitterConnect implements MediaConnectInterface {
 			twitter = tf.getInstance();	
 			//twitter.setOAuthConsumer(access_token, secret_token);
 			User user = twitter.verifyCredentials();
-			System.out.println(user.getName());
 			
 			return (user.getId() > 0);
 		} catch (IllegalStateException | TwitterException e) {
+			System.err.println("Could not login to twitter api");
 			e.printStackTrace();
 			return false;
 		}		

@@ -49,5 +49,4 @@ public class FacebookDataController extends AbstractController {
 		}
 		return rslts;
 	}
-
 }

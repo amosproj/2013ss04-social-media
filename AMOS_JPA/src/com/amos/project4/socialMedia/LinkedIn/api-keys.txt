@@ -3,3 +3,26 @@ https://www.linkedin.com/uas/oauth2/authorization?response_type=code
                                            &scope=r_fullprofile%20r_emailaddress%20r_network
                                            &state=DCEEFWF45453sdffef424
                                            &redirect_uri=http://localhost/
+                                           
+                                           
+Détails de l'application
+
+    Entreprise :
+
+    AMOS Project 4
+    Nom de l'application :
+
+    AMOS Project 4
+    Clé API :
+
+    55z5wlqvr1lb
+    Clé secrète :
+
+    5RVgdcwrNcjbtiDZ
+    Token utilisateur OAuth :
+
+    40d6f0c2-4bc2-4827-a610-7ccb6f11e9b3
+    Secret utilisateur OAuth :
+
+    2f714f4a-ed24-4c16-92da-3b9efc95d2d2
+ 

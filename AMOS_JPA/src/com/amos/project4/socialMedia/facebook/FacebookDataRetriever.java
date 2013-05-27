@@ -109,7 +109,7 @@ public class FacebookDataRetriever {
 			String query = "SELECT uid, pic FROM user WHERE uid="+client_facebook_ID;
 			List<FqlObject> pics = facebook.executeFqlQuery(query, FqlObject.class);
 			if(pics != null && pics.size() > 0){
-				saveFacebookData(client, pics.get(0).pic, type);
+				saveFacebookData(client, pics.get(0).pic_big, type);
 			}
 			return;
 		case INTERESTS:
@@ -230,7 +230,7 @@ public class FacebookDataRetriever {
 		String uid;
 
 		@Facebook
-		String pic;
+		String pic_big;
 
 		@Facebook
 		String uid2;

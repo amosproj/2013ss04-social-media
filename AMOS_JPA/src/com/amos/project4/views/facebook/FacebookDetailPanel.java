@@ -42,11 +42,12 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 	private FInterestTable interest_table;
 	private FEventsTable events_table;
 	
-	public FacebookDetailPanel(FacebookDataController controller,ClientsController u_controller) {
+	public FacebookDetailPanel(ClientsController c_controller) {
 		super();
-		this.controller = controller;
-		this.c_controller = u_controller;
+		this.c_controller = c_controller;
 		this.c_controller.addView(this);
+		this.controller = new FacebookDataController();
+		this.controller.addView(this);
 		init();
 		
 	}
@@ -176,7 +177,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		sl_Trends_Panel.putConstraint(SpringLayout.EAST, educations_scrollPane, -0, SpringLayout.EAST, Educations_Panel);
 		Educations_Panel.add(educations_scrollPane);
 		
-		educations_table = new FEducationTable(this.controller);
+		educations_table = new FEducationTable();
 		this.c_controller.addView(educations_table);
 		educations_scrollPane.setViewportView(educations_table);
 		
@@ -205,7 +206,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		JScrollPane mutual_friends_scrollPane = new JScrollPane();
 		Mutal_friends.add(mutual_friends_scrollPane);
 		
-		mutual_friends_table = new FMutualFriendsTable(controller);
+		mutual_friends_table = new FMutualFriendsTable();
 		this.c_controller.addView(mutual_friends_table);
 		mutual_friends_scrollPane.setViewportView(mutual_friends_table);
 		

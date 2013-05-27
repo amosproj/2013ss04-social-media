@@ -51,4 +51,6 @@ public interface ClientsControllerInterface {
 	public boolean deleteClient(Client client);
 
 	public Client getSelectedClient();
+
+	void refresh();
 }

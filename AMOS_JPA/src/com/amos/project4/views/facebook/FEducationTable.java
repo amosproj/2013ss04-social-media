@@ -8,7 +8,6 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import com.amos.project4.controllers.FacebookDataController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.FacebookData;
 import com.amos.project4.socialMedia.facebook.FacebookDataType;
@@ -18,13 +17,11 @@ public class FEducationTable extends JTable implements AbstractControlledView{
 	
 	private static final long serialVersionUID = 1L;
 	private FEducationTableModel model;
-	private FacebookDataController controller;
 	
-	public FEducationTable(FacebookDataController controller) {
+	public FEducationTable() {
 		super();
 		this.model = new FEducationTableModel(new ArrayList<FacebookData>());
 		setModel(model);
-		this.controller = controller;
 		getTableHeader().getColumnModel().getColumn(0).setMaxWidth(300);
 		getTableHeader().getColumnModel().getColumn(0).setMinWidth(200);
 		getTableHeader().getColumnModel().getColumn(1).setMaxWidth(300);
@@ -34,8 +31,8 @@ public class FEducationTable extends JTable implements AbstractControlledView{
 	@Override
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
-			// Get the last Tweets
-			List<FacebookData>  tmp_educations =  controller.getFacebookDatas(FacebookDataType.EDUCATION);			
+			Client c = (Client) arg;
+			List<FacebookData>  tmp_educations =  c.getFacebookDatasByType(FacebookDataType.EDUCATION);			
 			if(tmp_educations != null && !tmp_educations.isEmpty()){
 				this.setModel((TableModel) new FEducationTableModel(tmp_educations));
 			}else{

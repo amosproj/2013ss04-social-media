@@ -30,6 +30,7 @@ import javax.swing.SpringLayout;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import com.amos.project4.controllers.ClientsController;
 import com.amos.project4.models.Client;
 
 public class ClientDetailMainPanel extends JPanel implements
@@ -44,9 +45,12 @@ public class ClientDetailMainPanel extends JPanel implements
 	private JTextField birthdateTextField;
 	private JTextField PlaceTextField;
 	private JTextField emailTextField;
-
-	public ClientDetailMainPanel() {
+	private ClientsController client_controller;
+	
+	public ClientDetailMainPanel(ClientsController client_controller) {
 		super();
+		this.client_controller = client_controller;
+		this.client_controller.addView(this);
 		init();
 	}
 

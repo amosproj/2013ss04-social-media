@@ -53,8 +53,6 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import com.amos.project4.controllers.ClientsController;
-import com.amos.project4.controllers.FacebookDataController;
-import com.amos.project4.controllers.TwitterDataController;
 import com.amos.project4.controllers.UserController;
 import com.amos.project4.models.Client;
 import com.amos.project4.views.facebook.FacebookDetailPanel;
@@ -81,8 +79,8 @@ public class AMOSMainUI {
 	
 	private UserController user_controller;	
 	private ClientsController client_controller;
-	private TwitterDataController twitterData_controller;
-	private FacebookDataController facebookData_controller;
+	//private TwitterDataController twitterData_controller;
+	//private FacebookDataController facebookData_controller;
 
 	private static AMOSMainUI instance;
 	
@@ -149,8 +147,8 @@ public class AMOSMainUI {
 		client_controller.addModel(search_params);
 		
 		// Initialize and register the TwitterData controller
-		twitterData_controller = new TwitterDataController();
-		facebookData_controller = new FacebookDataController();
+//		twitterData_controller = new TwitterDataController();
+//		facebookData_controller = new FacebookDataController();
 
 		// Initialise the Frame
 		frame = new JFrame();
@@ -415,28 +413,22 @@ public class AMOSMainUI {
 		panel_right_bottom.add(mediaPanes, BorderLayout.CENTER);
 
 		// Initialise Client Detail Panel
-		clientDetailsPane = new ClientDetailMainPanel();
-		this.client_controller.addView(clientDetailsPane);
+		clientDetailsPane = new ClientDetailMainPanel(client_controller);
 		mediaPanes.addTab("Client' details", null, clientDetailsPane, null);
 		mediaPanes.setEnabledAt(0, true);
 
-		facebookDetailPane = new FacebookDetailPanel(facebookData_controller,client_controller);
+		facebookDetailPane = new FacebookDetailPanel(client_controller);
 		mediaPanes.addTab("Facebook", null, facebookDetailPane, null);
-		
+
+		// Initialise the Twitter detail Pane
+		twitterDetailPane = new TwitterDetailPanel(client_controller);
+		mediaPanes.addTab("Twitter", null, twitterDetailPane, null);
 		
 		JPanel xingPane = new JPanel();
 		mediaPanes.addTab("Xing", null, xingPane, null);
 
 		JPanel linkedInPane = new JPanel();
 		mediaPanes.addTab("LinkedIn", null, linkedInPane, null);
-
-		// Initialise the Twitter detail Pane
-		twitterDetailPane = new TwitterDetailPanel(twitterData_controller,client_controller);
-		this.client_controller.addView(twitterDetailPane);
-		this.twitterData_controller.addView(twitterDetailPane);
-		mediaPanes.addTab("Twitter", null, twitterDetailPane, null);
-		
-		
 
 		return panel_right_bottom;
 	}

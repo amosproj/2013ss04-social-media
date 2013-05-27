@@ -1,13 +1,12 @@
 package com.amos.project4.views.twitter;
 
-import java.awt.Color;
-import java.awt.GridLayout;
 import java.util.List;
 import java.util.Observable;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.TitledBorder;
@@ -16,10 +15,8 @@ import com.amos.project4.controllers.ClientsController;
 import com.amos.project4.controllers.TwitterDataController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.TwitterData;
-import com.amos.project4.models.TwitterDataDAO;
 import com.amos.project4.socialMedia.twitter.TwitterDataType;
 import com.amos.project4.views.AbstractControlledView;
-import javax.swing.JTabbedPane;
 
 public class TwitterDetailPanel extends JPanel implements AbstractControlledView {
 	
@@ -34,12 +31,11 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 	private TFriendsTable friends_table;
 	private TrendTable trends_table;
 	
-	public TwitterDetailPanel(TwitterDataController controller,ClientsController u_controller) {
+	public TwitterDetailPanel(ClientsController c_controller) {
 		super();
-		this.controller = controller;
-		this.c_controller = u_controller;
-		init();
-		
+		this.c_controller = c_controller;
+		this.c_controller.addView(this);
+		init();		
 	}
 
 	private void init() {
@@ -110,7 +106,7 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 		sl_tweets_Panel.putConstraint(SpringLayout.EAST, tweets_scrollPane, -0, SpringLayout.EAST, tweets_Panel);
 		tweets_Panel.add(tweets_scrollPane);
 		
-		tweets_table = new TweetsTable(this.controller);
+		tweets_table = new TweetsTable();
 		this.c_controller.addView(tweets_table);
 		tweets_scrollPane.add(tweets_table);
 		tweets_scrollPane.setViewportView(tweets_table);
@@ -128,7 +124,7 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 		sl_Friends_Panels.putConstraint(SpringLayout.EAST, friends_scrollPane, -0, SpringLayout.EAST, Friends_Panels);
 		Friends_Panels.add(friends_scrollPane);
 		
-		friends_table = new TFriendsTable(this.controller);
+		friends_table = new TFriendsTable();
 		this.c_controller.addView(friends_table);
 		friends_scrollPane.setViewportView(friends_table);
 		
@@ -145,7 +141,7 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 		sl_Trends_Panel.putConstraint(SpringLayout.EAST, trends_scrollPane, -0, SpringLayout.EAST, Trends_Panel);
 		Trends_Panel.add(trends_scrollPane);
 		
-		trends_table = new TrendTable(this.controller);
+		trends_table = new TrendTable();
 		this.c_controller.addView(trends_table);
 		trends_scrollPane.setViewportView(trends_table);
 		
@@ -155,10 +151,9 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
-			TwitterDataDAO dao = controller.getTwitter_DAO();
 			
 			// Get the ID from Database
-			List<TwitterData> tmp = dao.getAllTwitterDataOfClientByType(c.getID(), TwitterDataType.ID);
+			List<TwitterData> tmp = c.getTwitterDatasByType(TwitterDataType.ID);
 			if(tmp != null && !tmp.isEmpty()){
 				this.ID_textField.setText(tmp.get(0).getDataString());
 			}else{
@@ -166,7 +161,7 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 			}
 			
 			// Get the user Name
-			tmp = dao.getAllTwitterDataOfClientByType(c.getID(), TwitterDataType.TWITTER_NAME);
+			tmp = c.getTwitterDatasByType(TwitterDataType.TWITTER_NAME);
 			if(tmp != null && !tmp.isEmpty()){
 				this.twitterName_textField.setText(tmp.get(0).getDataString());
 			}else{

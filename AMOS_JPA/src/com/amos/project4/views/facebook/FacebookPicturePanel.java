@@ -27,7 +27,6 @@ public class FacebookPicturePanel extends JPanel implements AbstractControlledVi
 		setBorder(new LineBorder(new Color(0, 0, 0)));		
 		
 		URL url = this.getClass().getResource("/com/amos/project4/images/no_images.jpg");
-		System.out.println(url.getPath());
 		try {
 			 Image imgFondo = javax.imageio.ImageIO.read(new java.io.File(url.getPath()));
 			 default_img = imgFondo.getScaledInstance(150, 150, Image.SCALE_DEFAULT);

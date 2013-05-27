@@ -8,7 +8,6 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import com.amos.project4.controllers.FacebookDataController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.FacebookData;
 import com.amos.project4.socialMedia.facebook.FacebookDataType;
@@ -19,7 +18,7 @@ public class FMutualFriendsTable extends JTable implements AbstractControlledVie
 	private static final long serialVersionUID = 1L;
 	private FMutualFriendsTableModel model;
 	
-	public FMutualFriendsTable(FacebookDataController controller) {
+	public FMutualFriendsTable() {
 		super();
 		this.model = new FMutualFriendsTableModel(new ArrayList<FacebookData>());
 		setModel(model);

@@ -35,9 +35,11 @@ public class ClientTable extends JTable implements AbstractControlledView {
 	private static final long serialVersionUID = -9143258101609845500L;
 	private ClientTableModel model;
 	private SelectedClientViewModel selectedClient;
-
+	private ClientsController controller;
+	
 	public ClientTable(ClientsController controller) {
 		super();
+		this.controller = controller;
 		this.model = new ClientTableModel(controller);
 		this.setModel(model);
 		// Initialise and register the Model
@@ -66,6 +68,7 @@ public class ClientTable extends JTable implements AbstractControlledView {
 		@Override
 		public void valueChanged(ListSelectionEvent e) {
 			if(getSelectedRows() != null && getSelectedRows().length > 0){
+				//controller.refresh();
 				selectedClient.setSelectedClient(getModel().getClientAt(getSelectedRows()[0]));
 			}
 		}

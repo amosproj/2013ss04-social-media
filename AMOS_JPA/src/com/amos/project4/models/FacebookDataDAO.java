@@ -109,6 +109,7 @@ public class FacebookDataDAO {
 		}
 	}
 	
+	
 	@SuppressWarnings("unchecked")
 	public synchronized boolean deleteAllFacebookData(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return false;
