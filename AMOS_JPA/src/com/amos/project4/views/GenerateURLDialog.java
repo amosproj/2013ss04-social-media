@@ -68,13 +68,13 @@ public class GenerateURLDialog extends JDialog {
 		SpringLayout sl_contentPanel = new SpringLayout();
 		contentPanel.setLayout(sl_contentPanel);
 		
-		JLabel lblTitel = new JLabel("Please go to the following URL, log in and copy the generated Token");
+		JLabel lblTitel = new JLabel("Please go to the following url, login and copy the generated Token");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblTitel, 5, SpringLayout.NORTH, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, lblTitel, 5, SpringLayout.WEST, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.EAST, lblTitel, 0, SpringLayout.EAST, contentPanel);
 		contentPanel.add(lblTitel);
 		
-		JLabel lblGeneratedPin = new JLabel("Generated PIN*:");
+		JLabel lblGeneratedPin = new JLabel("Generated PIN* :");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblGeneratedPin, 20, SpringLayout.SOUTH, lblTitel);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, lblGeneratedPin, 0, SpringLayout.WEST, lblTitel);
 		contentPanel.add(lblGeneratedPin);
@@ -141,7 +141,7 @@ public class GenerateURLDialog extends JDialog {
 			  try {
 				Desktop.getDesktop().browse(new URI(url));
 				} catch (Exception e1) {
-					JOptionPane.showMessageDialog(me, "Could not open the URL. Please copy it manually!", "Error launching the browser", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(me, "Could not open the URL. Please copy it manually !", "Error launching the browser", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}		
@@ -150,7 +150,7 @@ public class GenerateURLDialog extends JDialog {
 	private class OKActionListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {			
 			if(!user_controller.checkAndSetAccessToken(url, pin_textField.getText(),sType)){
-				JOptionPane.showMessageDialog(me, "The token: " + pin_textField.getText() + " is invalid !", "Invalid token", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(me, "The token: " + pin_textField.getText() + " is ivalid !", "Invalid token", JOptionPane.ERROR_MESSAGE);
 			}else{
 				String[]  access_tokens = user_controller.getAccessToken(sType);
 				viewModel.setSocialMediaDatas(

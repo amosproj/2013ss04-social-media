@@ -38,7 +38,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 	private FFriendsTable friends_table;
 	private FEducationTable educations_table;
 	private FMutualFriendsTable mutual_friends_table;
-	private FWorkTable work_table;
+	private FWorksTable work_table;
 	private FInterestTable interest_table;
 	private FEventsTable events_table;
 	
@@ -74,12 +74,12 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		c_controller.addView(Picture_panel);
 
 		
-		JLabel lblId = new JLabel("ID:");
+		JLabel lblId = new JLabel("ID :");
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, lblId, 10, SpringLayout.NORTH, Picture_panel);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, lblId, 6, SpringLayout.EAST, Picture_panel);
 		accountDetails_Panel.add(lblId);
 		
-		JLabel lblFacebookName = new JLabel("Facebook  name:");
+		JLabel lblFacebookName = new JLabel("Facebook  name :");
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, lblFacebookName, 12, SpringLayout.SOUTH, lblId);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, lblFacebookName, 6, SpringLayout.EAST, Picture_panel);
 		accountDetails_Panel.add(lblFacebookName);
@@ -103,7 +103,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		JTabbedPane facebook_tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		springLayout.putConstraint(SpringLayout.NORTH, facebook_tabbedPane, 10, SpringLayout.SOUTH, accountDetails_Panel);
 		
-		JLabel lblBirthday = new JLabel("Birthday:");
+		JLabel lblBirthday = new JLabel("Birthday :");
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, lblBirthday, 12, SpringLayout.SOUTH, lblFacebookName);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, lblBirthday, 6, SpringLayout.EAST, Picture_panel);
 		accountDetails_Panel.add(lblBirthday);
@@ -116,7 +116,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		accountDetails_Panel.add(birthday_textField);
 		birthday_textField.setColumns(10);
 		
-		JLabel lblRelationship = new JLabel("Relationship:");
+		JLabel lblRelationship = new JLabel("Relationship :");
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, lblRelationship, 12, SpringLayout.SOUTH, lblBirthday);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, lblRelationship, 6, SpringLayout.EAST, Picture_panel);
 		accountDetails_Panel.add(lblRelationship);
@@ -129,7 +129,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		accountDetails_Panel.add(relationship_textField);
 		relationship_textField.setColumns(10);
 		
-		JLabel lblBiography = new JLabel("Biography:");
+		JLabel lblBiography = new JLabel("Biography :");
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, lblBiography, 12, SpringLayout.SOUTH, lblRelationship);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, lblBiography, 6, SpringLayout.EAST, Picture_panel);
 		accountDetails_Panel.add(lblBiography);
@@ -165,8 +165,8 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		posts_scrollPane.setViewportView(posts_table);
 		
 		JPanel Educations_Panel = new JPanel();
-		facebook_tabbedPane.addTab("Education", null, Educations_Panel, null);
-		Educations_Panel.setBorder(new TitledBorder(null, "Education", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		facebook_tabbedPane.addTab("Educations", null, Educations_Panel, null);
+		Educations_Panel.setBorder(new TitledBorder(null, "Educations", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		SpringLayout sl_Trends_Panel = new SpringLayout();
 		Educations_Panel.setLayout(sl_Trends_Panel);
 		
@@ -211,14 +211,14 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		mutual_friends_scrollPane.setViewportView(mutual_friends_table);
 		
 		JPanel works_panel = new JPanel();
-		works_panel.setBorder(new TitledBorder(null, "Work", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		facebook_tabbedPane.addTab("Work", null, works_panel, null);
+		works_panel.setBorder(new TitledBorder(null, "Works", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		facebook_tabbedPane.addTab("Works", null, works_panel, null);
 		works_panel.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane work_scrollPane = new JScrollPane();
 		works_panel.add(work_scrollPane, BorderLayout.CENTER);
 		
-		work_table = new FWorkTable();
+		work_table = new FWorksTable();
 		this.c_controller.addView(work_table);
 		work_scrollPane.setViewportView(work_table);
 		

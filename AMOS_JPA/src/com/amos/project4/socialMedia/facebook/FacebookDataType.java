@@ -6,7 +6,7 @@ public enum FacebookDataType {
 	LAST_POST,
 	RELATIONSHIP,
 	EDUCATION,
-	WORK,
+	WORKS,
 	EVENTS,
 	INTERESTS,
 	FRIENDS,

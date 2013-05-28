@@ -519,9 +519,9 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 				chckbxNewCheckBox_2.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(chckbxNewCheckBox_2.isSelected())
-							model.addSelectedFacebookDataType(FacebookDataType.WORK);
+							model.addSelectedFacebookDataType(FacebookDataType.WORKS);
 						else
-							model.removeSelectedFacebookDataType(FacebookDataType.WORK);					
+							model.removeSelectedFacebookDataType(FacebookDataType.WORKS);					
 					}
 				});
 				sl_facebookPanel.putConstraint(SpringLayout.NORTH,

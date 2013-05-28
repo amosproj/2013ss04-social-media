@@ -48,19 +48,19 @@ public class FFriendsTable extends JTable implements AbstractControlledView{
 	class FFriendsTableModel extends AbstractTableModel{
 
 		private static final long serialVersionUID = 1L;
-		private List<FacebookData> data = new ArrayList<FacebookData>();
+		private List<FacebookData> datas = new ArrayList<FacebookData>();
 
-		public List<FacebookData> getData() {
-			return data;
+		public List<FacebookData> getDatas() {
+			return datas;
 		}
 
-		public void setDatas(List<FacebookData> data) {
-			this.data = data;
+		public void setDatas(List<FacebookData> datas) {
+			this.datas = datas;
 		}
 
-		public FFriendsTableModel(List<FacebookData> data) {
+		public FFriendsTableModel(List<FacebookData> datas) {
 			super();
-			this.data = data;
+			this.datas = datas;
 		}
 		
 		@Override
@@ -88,7 +88,7 @@ public class FFriendsTable extends JTable implements AbstractControlledView{
 
 		@Override
 		public int getRowCount() {
-			return data.size();
+			return datas.size();
 		}
 
 		@Override
@@ -98,7 +98,7 @@ public class FFriendsTable extends JTable implements AbstractControlledView{
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			String row_data = data.get(rowIndex).getDataString();
+			String row_data = datas.get(rowIndex).getDataString();
 			if(row_data.contains("#")){
 				String rslt = (row_data.split("#"))[columnIndex];
 				return rslt;

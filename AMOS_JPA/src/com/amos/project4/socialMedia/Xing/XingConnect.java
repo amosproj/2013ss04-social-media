@@ -59,7 +59,7 @@ public class XingConnect implements MediaConnectInterface {
 		try {
 			init();
 		} catch (Exception e) {
-			System.err.println("Could not initialize the default Xing client API.");
+			System.err.println("Could not initialize the dafault Xing client api.");
 			e.printStackTrace();
 		}
 	}
@@ -80,7 +80,7 @@ public class XingConnect implements MediaConnectInterface {
 			requestToken = service.getRequestToken();
 			return service.getAuthorizationUrl(requestToken);			
 		}catch (Exception e) {
-			System.err.println("Could not get Xing OAuth 1.0 request token.");
+			System.err.println("Could not get Xing Oauth 1.0 request token.");
 			return "";
 		}			
 	}

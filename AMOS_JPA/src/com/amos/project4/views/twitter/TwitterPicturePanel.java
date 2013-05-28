@@ -60,7 +60,7 @@ public class TwitterPicturePanel extends JPanel implements AbstractControlledVie
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
-			List<TwitterData> urls = c.getTwitterDataByType(TwitterDataType.USER_PICTURE);
+			List<TwitterData> urls = c.getTwitterDatasByType(TwitterDataType.USER_PICTURE);
 			try{
 				if(urls != null && !urls.isEmpty()){				
 					repaintProfileImage(urls.get(0).getDataString());

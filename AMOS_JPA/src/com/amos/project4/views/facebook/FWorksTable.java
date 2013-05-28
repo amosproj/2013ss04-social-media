@@ -13,14 +13,14 @@ import com.amos.project4.models.FacebookData;
 import com.amos.project4.socialMedia.facebook.FacebookDataType;
 import com.amos.project4.views.AbstractControlledView;
 
-public class FWorkTable extends JTable implements AbstractControlledView{
+public class FWorksTable extends JTable implements AbstractControlledView{
 	
 	private static final long serialVersionUID = 1L;
-	private FFWorkTableModel model;
+	private FFWorksTableModel model;
 	
-	public FWorkTable() {
+	public FWorksTable() {
 		super();
-		this.model = new FFWorkTableModel(new ArrayList<FacebookData>());
+		this.model = new FFWorksTableModel(new ArrayList<FacebookData>());
 		setModel(model);
 		getTableHeader().getColumnModel().getColumn(0).setMaxWidth(300);
 		getTableHeader().getColumnModel().getColumn(0).setMinWidth(200);
@@ -32,11 +32,11 @@ public class FWorkTable extends JTable implements AbstractControlledView{
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
-			List<FacebookData>  tmp_works =  c.getFacebookDatasByType( FacebookDataType.WORK);			
+			List<FacebookData>  tmp_works =  c.getFacebookDatasByType( FacebookDataType.WORKS);			
 			if(tmp_works != null && !tmp_works.isEmpty()){
-				this.setModel((TableModel) new FFWorkTableModel(tmp_works));
+				this.setModel((TableModel) new FFWorksTableModel(tmp_works));
 			}else{
-				this.setModel((TableModel) new FFWorkTableModel(new ArrayList<FacebookData>()));
+				this.setModel((TableModel) new FFWorksTableModel(new ArrayList<FacebookData>()));
 			}			
 			getTableHeader().getColumnModel().getColumn(0).setMaxWidth(300);
 			getTableHeader().getColumnModel().getColumn(0).setMinWidth(200);
@@ -45,22 +45,22 @@ public class FWorkTable extends JTable implements AbstractControlledView{
 		}		
 	}
 	
-	class FFWorkTableModel extends AbstractTableModel{
+	class FFWorksTableModel extends AbstractTableModel{
 
 		private static final long serialVersionUID = 1L;
-		private List<FacebookData> data = new ArrayList<FacebookData>();
+		private List<FacebookData> datas = new ArrayList<FacebookData>();
 
-		public List<FacebookData> getData() {
-			return data;
+		public List<FacebookData> getDatas() {
+			return datas;
 		}
 
-		public void setDatas(List<FacebookData> data) {
-			this.data = data;
+		public void setDatas(List<FacebookData> datas) {
+			this.datas = datas;
 		}
 
-		public FFWorkTableModel(List<FacebookData> data) {
+		public FFWorksTableModel(List<FacebookData> datas) {
 			super();
-			this.data = data;
+			this.datas = datas;
 		}
 		
 		@Override
@@ -84,7 +84,7 @@ public class FWorkTable extends JTable implements AbstractControlledView{
 
 		@Override
 		public int getRowCount() {
-			return data.size();
+			return datas.size();
 		}
 
 		@Override
@@ -94,7 +94,7 @@ public class FWorkTable extends JTable implements AbstractControlledView{
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			String row_data = data.get(rowIndex).getDataString();
+			String row_data = datas.get(rowIndex).getDataString();
 			if(row_data.contains("#")){
 				String rslt = (row_data.split("#"))[columnIndex];
 				return rslt;

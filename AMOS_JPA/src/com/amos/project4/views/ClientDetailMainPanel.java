@@ -40,10 +40,10 @@ public class ClientDetailMainPanel extends JPanel implements
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JTextField nameTextField;
+	private JTextField name_textField;
 	private JTextField firstnameTextField;
 	private JTextField birthdateTextField;
-	private JTextField placeTextField;
+	private JTextField PlaceTextField;
 	private JTextField emailTextField;
 	private ClientsController client_controller;
 	
@@ -68,7 +68,7 @@ public class ClientDetailMainPanel extends JPanel implements
 		springLayout.putConstraint(SpringLayout.EAST,
 				personalInformationsPanel, 1, SpringLayout.EAST, this);
 		personalInformationsPanel.setBorder(new TitledBorder(new LineBorder(
-				new Color(0, 0, 0)), "Personal information",
+				new Color(0, 0, 0)), "Personal informations",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
 		this.add(personalInformationsPanel);
 		SpringLayout sl_personalInformationsPanel = new SpringLayout();
@@ -82,23 +82,23 @@ public class ClientDetailMainPanel extends JPanel implements
 				10, SpringLayout.WEST, personalInformationsPanel);
 		personalInformationsPanel.add(lblName);
 
-		nameTextField = new JTextField();
-		nameTextField.setEditable(false);
+		name_textField = new JTextField();
+		name_textField.setEditable(false);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				nameTextField, 0, SpringLayout.NORTH, lblName);
+				name_textField, 0, SpringLayout.NORTH, lblName);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
-				nameTextField, 10, SpringLayout.EAST, lblName);
+				name_textField, 10, SpringLayout.EAST, lblName);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,
-				nameTextField, 350, SpringLayout.WEST, lblName);
-		personalInformationsPanel.add(nameTextField);
-		nameTextField.setColumns(50);
+				name_textField, 350, SpringLayout.WEST, lblName);
+		personalInformationsPanel.add(name_textField);
+		name_textField.setColumns(50);
 
 		JLabel lblFirstname = new JLabel("Firstname :");
 		lblFirstname.setPreferredSize(new Dimension(70, 20));
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
 				lblFirstname, 0, SpringLayout.NORTH, lblName);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
-				lblFirstname, 10, SpringLayout.EAST, nameTextField);
+				lblFirstname, 10, SpringLayout.EAST, name_textField);
 		personalInformationsPanel.add(lblFirstname);
 
 		firstnameTextField = new JTextField();
@@ -112,10 +112,10 @@ public class ClientDetailMainPanel extends JPanel implements
 		personalInformationsPanel.add(firstnameTextField);
 		firstnameTextField.setColumns(50);
 
-		JLabel lblBirthdate = new JLabel("Birthdate:");
+		JLabel lblBirthdate = new JLabel("Birthdate :");
 		lblBirthdate.setPreferredSize(new Dimension(70, 20));
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				lblBirthdate, 10, SpringLayout.SOUTH, nameTextField);
+				lblBirthdate, 10, SpringLayout.SOUTH, name_textField);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
 				lblBirthdate, 0, SpringLayout.WEST, lblName);
 		personalInformationsPanel.add(lblBirthdate);
@@ -123,11 +123,11 @@ public class ClientDetailMainPanel extends JPanel implements
 		birthdateTextField = new JTextField();
 		birthdateTextField.setEditable(false);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				birthdateTextField, 10, SpringLayout.SOUTH, nameTextField);
+				birthdateTextField, 10, SpringLayout.SOUTH, name_textField);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
 				birthdateTextField, 10, SpringLayout.EAST, lblBirthdate);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,
-				birthdateTextField, 0, SpringLayout.EAST, nameTextField);
+				birthdateTextField, 0, SpringLayout.EAST, name_textField);
 		personalInformationsPanel.add(birthdateTextField);
 		birthdateTextField.setColumns(50);
 
@@ -139,21 +139,21 @@ public class ClientDetailMainPanel extends JPanel implements
 				0, SpringLayout.WEST, lblFirstname);
 		personalInformationsPanel.add(lblPlace);
 
-		placeTextField = new JTextField();
-		placeTextField.setEditable(false);
+		PlaceTextField = new JTextField();
+		PlaceTextField.setEditable(false);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				placeTextField, 0, SpringLayout.NORTH, lblBirthdate);
+				PlaceTextField, 0, SpringLayout.NORTH, lblBirthdate);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
-				placeTextField, 10, SpringLayout.EAST, lblPlace);
+				PlaceTextField, 10, SpringLayout.EAST, lblPlace);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,
-				placeTextField, 280, SpringLayout.EAST, lblPlace);
-		personalInformationsPanel.add(placeTextField);
-		placeTextField.setColumns(50);
+				PlaceTextField, 280, SpringLayout.EAST, lblPlace);
+		personalInformationsPanel.add(PlaceTextField);
+		PlaceTextField.setColumns(50);
 
-		JLabel lblEmail = new JLabel("E-Mail:");
+		JLabel lblEmail = new JLabel("E-Mail :");
 		lblEmail.setPreferredSize(new Dimension(70, 20));
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				lblEmail, 10, SpringLayout.SOUTH, placeTextField);
+				lblEmail, 10, SpringLayout.SOUTH, PlaceTextField);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST, lblEmail,
 				0, SpringLayout.WEST, lblName);
 		personalInformationsPanel.add(lblEmail);
@@ -161,7 +161,7 @@ public class ClientDetailMainPanel extends JPanel implements
 		emailTextField = new JTextField();
 		emailTextField.setEditable(false);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				emailTextField, 10, SpringLayout.SOUTH, placeTextField);
+				emailTextField, 10, SpringLayout.SOUTH, PlaceTextField);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
 				emailTextField, 10, SpringLayout.EAST, lblEmail);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,
@@ -174,10 +174,10 @@ public class ClientDetailMainPanel extends JPanel implements
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
-			nameTextField.setText(c.getName());
+			name_textField.setText(c.getName());
 			firstnameTextField.setText(c.getFirstname());
 			birthdateTextField.setText("" + c.getBirthdate());
-			placeTextField.setText(c.getPlace());
+			PlaceTextField.setText(c.getPlace());
 			emailTextField.setText(c.getMail());
 		}
 	}

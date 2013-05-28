@@ -27,12 +27,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -61,7 +59,6 @@ import com.amos.project4.views.facebook.FacebookDetailPanel;
 import com.amos.project4.views.twitter.TwitterDetailPanel;
 
 public class AMOSMainUI {
-	
 
 	private JFrame frame;
 	JScrollPane clienTable_scrollPane;
@@ -70,7 +67,7 @@ public class AMOSMainUI {
 	
 	@SuppressWarnings("rawtypes")
 	private JComboBox drop_down;
-	private String[] dd_input = { " ", "ID", "Name", "First name", "Birthdate",
+	private String[] dd_input = { " ", "ID", "Name", "Firstname", "Birthdate",
 			"E-Mail", "Place", "ZipCode", "Gender" };
 	private ClientDetailMainPanel clientDetailsPane;
 	private TwitterDetailPanel twitterDetailPane;
@@ -87,13 +84,7 @@ public class AMOSMainUI {
 
 	private static AMOSMainUI instance;
 	
-	
 	public static AMOSMainUI getInstance(UserController user_controller, UserViewModel u_model){
-		
-		JFileChooser chooser = new JFileChooser(); 
-		chooser.setDefaultLocale(Locale.ENGLISH); 
-		chooser.setLocale(Locale.ENGLISH);
-		
 		if(instance == null){
 			try {
 				instance = new AMOSMainUI(user_controller, u_model);
@@ -480,7 +471,7 @@ public class AMOSMainUI {
 	
 	private void exit(){
 		int dialogResult = JOptionPane.showConfirmDialog (frame, 
-				"Exit the application?","Exit confirmation",JOptionPane.YES_NO_OPTION);
+				"Exit the application ?","Exit confirmation",JOptionPane.YES_NO_OPTION);
 		if(dialogResult == JOptionPane.YES_OPTION){
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.dispose();
@@ -495,7 +486,7 @@ public class AMOSMainUI {
 	
 	private void logout(){
 		int dialogResult = JOptionPane.showConfirmDialog (frame, 
-				"Are you sure you want to log out from the application?","Logout confirmation",JOptionPane.YES_NO_OPTION);
+				"Are you sure you want to logout from the application ?","Logout confirmation",JOptionPane.YES_NO_OPTION);
 		if(dialogResult == JOptionPane.YES_OPTION){
 			frame.dispose();
 			Login dialog = new Login();

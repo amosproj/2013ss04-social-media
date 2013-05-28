@@ -81,10 +81,10 @@ public class Client implements Serializable {
 	private String gender;
 	
 	@OneToMany(mappedBy="owner")
-	private List<TwitterData> twitter_data;
+	private List<TwitterData> twitter_datas;
 	
 	@OneToMany(mappedBy="owner")
-	private List<FacebookData> facebook_data;
+	private List<FacebookData> facebook_datas;
 
 	public Client() {
 		super();
@@ -100,8 +100,8 @@ public class Client implements Serializable {
 		this.place = place;
 		this.zipCode = zipCode;
 		this.gender = gender;
-		this.twitter_data = new ArrayList<TwitterData>();
-		this.facebook_data = new ArrayList<FacebookData>();
+		this.twitter_datas = new ArrayList<TwitterData>();
+		this.facebook_datas = new ArrayList<FacebookData>();
 	}
 
 	public synchronized Integer getID() {
@@ -169,11 +169,11 @@ public class Client implements Serializable {
 	}
 	
 	public synchronized List<TwitterData> getTwitter_datas() {
-		return twitter_data;
+		return twitter_datas;
 	}
 
 	public synchronized List<FacebookData> getFacebook_datas() {
-		return facebook_data;
+		return facebook_datas;
 	}
 
 	/*-------------------------------------------------------------------------------------------------------*/
@@ -205,7 +205,7 @@ public class Client implements Serializable {
 	
 	public synchronized List<FacebookData> getFacebookDatasByType(FacebookDataType type) {
 		ArrayList<FacebookData> rslts = new ArrayList<FacebookData>();
-		for (FacebookData facebookData : this.facebook_data) {
+		for (FacebookData facebookData : this.facebook_datas) {
 			if(facebookData.getType().equalsIgnoreCase(type.toString())){
 				rslts.add(facebookData);
 			}
@@ -213,9 +213,9 @@ public class Client implements Serializable {
 		return rslts;
 	}
 	
-	public synchronized List<TwitterData> getTwitterDataByType(TwitterDataType type) {
+	public synchronized List<TwitterData> getTwitterDatasByType(TwitterDataType type) {
 		ArrayList<TwitterData> rslts = new ArrayList<TwitterData>();
-		for (TwitterData data : this.twitter_data) {
+		for (TwitterData data : this.twitter_datas) {
 			if(data.getType().equalsIgnoreCase(type.toString())){
 				rslts.add(data);
 			}

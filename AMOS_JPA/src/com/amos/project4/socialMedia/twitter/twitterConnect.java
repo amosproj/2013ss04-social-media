@@ -60,7 +60,7 @@ public class TwitterConnect implements MediaConnectInterface {
 		try {
 			init();
 		} catch (TwitterException e) {
-			System.err.println("Could not initialize the default Twitter client API.");
+			System.err.println("Could not initialize the dafault Twitter client api.");
 			//e.printStackTrace();
 		}
 	}
@@ -136,7 +136,7 @@ public class TwitterConnect implements MediaConnectInterface {
 			
 			return (user.getId() > 0);
 		} catch (IllegalStateException | TwitterException e) {
-			System.err.println("Could not login to twitter API.");
+			System.err.println("Could not login to twitter api");
 			//e.printStackTrace();
 			return false;
 		}		

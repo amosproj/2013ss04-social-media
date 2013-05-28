@@ -30,7 +30,7 @@ public class TFriendsTable extends JTable implements AbstractControlledView{
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
 			
-			List<TwitterData> tmp_friends = c.getTwitterDataByType(TwitterDataType.FRIENDS);			
+			List<TwitterData> tmp_friends = c.getTwitterDatasByType(TwitterDataType.FRIENDS);			
 			if(tmp_friends != null && !tmp_friends.isEmpty()){
 				this.setModel((TableModel) new TFriendsTableModel(tmp_friends));
 			}else{
