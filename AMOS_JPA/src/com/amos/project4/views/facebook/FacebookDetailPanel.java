@@ -93,8 +93,8 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		ID_textField.setColumns(10);
 		
 		facebookName_textField = new JTextField();
+		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, facebookName_textField, 6, SpringLayout.EAST, lblFacebookName);
 		facebookName_textField.setEditable(false);
-		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, facebookName_textField, 0, SpringLayout.WEST, ID_textField);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.SOUTH, facebookName_textField, 0, SpringLayout.SOUTH, lblFacebookName);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, facebookName_textField, 0, SpringLayout.EAST, ID_textField);
 		accountDetails_Panel.add(facebookName_textField);
@@ -109,10 +109,10 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		accountDetails_Panel.add(lblBirthday);
 		
 		birthday_textField = new JTextField();
+		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, birthday_textField, 6, SpringLayout.EAST, lblFacebookName);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, birthday_textField, 0, SpringLayout.EAST, ID_textField);
 		birthday_textField.setEditable(false);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, birthday_textField, 6, SpringLayout.SOUTH, facebookName_textField);
-		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, birthday_textField, 44, SpringLayout.EAST, lblBirthday);
-		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, birthday_textField, 438, SpringLayout.EAST, lblBirthday);
 		accountDetails_Panel.add(birthday_textField);
 		birthday_textField.setColumns(10);
 		
@@ -122,10 +122,10 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		accountDetails_Panel.add(lblRelationship);
 		
 		relationship_textField = new JTextField();
+		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, relationship_textField, 6, SpringLayout.EAST, lblFacebookName);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, relationship_textField, 0, SpringLayout.EAST, ID_textField);
 		relationship_textField.setEditable(false);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, relationship_textField, 6, SpringLayout.SOUTH, birthday_textField);
-		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, relationship_textField, 0, SpringLayout.WEST, ID_textField);
-		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, relationship_textField, 394, SpringLayout.WEST, ID_textField);
 		accountDetails_Panel.add(relationship_textField);
 		relationship_textField.setColumns(10);
 		
@@ -135,10 +135,10 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		accountDetails_Panel.add(lblBiography);
 		
 		biography_textField = new JTextField();
+		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, biography_textField, 6, SpringLayout.EAST, lblFacebookName);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, biography_textField, 0, SpringLayout.EAST, ID_textField);
 		biography_textField.setEditable(false);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, biography_textField, 6, SpringLayout.SOUTH, relationship_textField);
-		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, biography_textField, 36, SpringLayout.EAST, lblBiography);
-		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, biography_textField, 430, SpringLayout.EAST, lblBiography);
 		accountDetails_Panel.add(biography_textField);
 		biography_textField.setColumns(10);
 		springLayout.putConstraint(SpringLayout.WEST, facebook_tabbedPane, 0, SpringLayout.WEST, this);
