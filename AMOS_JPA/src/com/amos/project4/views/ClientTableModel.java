@@ -90,7 +90,7 @@ public class ClientTableModel extends AbstractTableModel {
 		case 1:
 			return "Name";
 		case 2:
-			return "Firstname";
+			return "First name";
 		case 3:
 			return "Birthdate";
 		case 4:

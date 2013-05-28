@@ -46,7 +46,7 @@ public class FacebookConnect implements MediaConnectInterface {
 		try {
 			facebookClient = new DefaultFacebookClient(ACCESS_TOKEN);
 		} catch (Exception e) {
-			System.err.println("Could not initialize the default facebook client api.");
+			System.err.println("Could not initialize the default facebook client API.");
 			//e.printStackTrace();
 		}
 	}
@@ -65,7 +65,7 @@ public class FacebookConnect implements MediaConnectInterface {
 				return false;
 			}
 		} catch (Exception e) {
-			System.err.println("Wrong facebook acces token.");
+			System.err.println("Wrong facebook access token.");
 //			e.printStackTrace();
 			return false;
 		}
@@ -89,7 +89,7 @@ public class FacebookConnect implements MediaConnectInterface {
 				return false;
 			}
 		} catch (Exception e) {
-			System.err.println("Wrong facebook acces token.");
+			System.err.println("Wrong facebook access token.");
 			//e.printStackTrace();
 			return false;
 		}

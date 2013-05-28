@@ -26,7 +26,7 @@ public class SocialMediaScanTask extends SwingWorker<Void, Void> {
     	int c_count = clients.size();
     	int total_count = t_count * c_count;
     	if(t_count == 0 || c_count == 0 || this.user == null){
-    		JOptionPane.showMessageDialog(null, "Nothing to scan !", "Social Media Scan Error", JOptionPane.ERROR);
+    		JOptionPane.showMessageDialog(null, "Nothing to scan!", "Social Media Scan Error", JOptionPane.ERROR);
     		return null;
     	}
     	
@@ -37,7 +37,7 @@ public class SocialMediaScanTask extends SwingWorker<Void, Void> {
 	    	for (int j = 0; j < clients.size(); j++) {
 	    		Client client = clients.get(j);
 	    		if(!this.controller.getF_retriever().init(user)){
-	    			JOptionPane.showMessageDialog(null, "Unable to make a connection with facebook. \nPlease verify your settings in the General Setting menu",
+	    			JOptionPane.showMessageDialog(null, "Unable to make a connection with Facebook. \nPlease verify your settings in the General Setting menu.",
 	    					"Social Media Scan Error", JOptionPane.ERROR);
 	    		}
 	    		
@@ -59,7 +59,7 @@ public class SocialMediaScanTask extends SwingWorker<Void, Void> {
 	    	for (int j = 0; j < clients.size(); j++) {
 	    		Client client = clients.get(j);
 	    		if(!this.controller.getT_retriever().init(user)){
-	    			JOptionPane.showMessageDialog(null, "Unable to make a connection with twitter. \nPlease verify your settings in the General Setting menu",
+	    			JOptionPane.showMessageDialog(null, "Unable to make a connection with Twitter. \nPlease verify your settings in the General Setting menu.",
 	    					"Social Media Scan Error", JOptionPane.ERROR);
 	    		}
 	    		
@@ -77,7 +77,7 @@ public class SocialMediaScanTask extends SwingWorker<Void, Void> {
     	}catch (Exception e) {
     		e.printStackTrace();
     		
-    		JOptionPane.showMessageDialog(null, "An Error occurs while scanning the Social media Sites !\nPleas try later.", "Social Media Scan Error", JOptionPane.ERROR);
+    		JOptionPane.showMessageDialog(null, "An Error occured while scanning the Social Media sites !\nPlease try again later.", "Social Media Scan Error", JOptionPane.ERROR);
     		return null;
 		}
     }

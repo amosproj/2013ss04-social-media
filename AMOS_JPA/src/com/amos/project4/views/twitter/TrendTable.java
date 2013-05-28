@@ -32,7 +32,7 @@ public class TrendTable extends JTable implements AbstractControlledView{
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
 			// Get the last Tweets
-			List<TwitterData>  tmp_trebds = c.getTwitterDatasByType(TwitterDataType.TRENDS);			
+			List<TwitterData>  tmp_trebds = c.getTwitterDataByType(TwitterDataType.TRENDS);			
 			if(tmp_trebds != null && !tmp_trebds.isEmpty()){
 				this.setModel((TableModel) new TrendTableModel(tmp_trebds));
 			}else{

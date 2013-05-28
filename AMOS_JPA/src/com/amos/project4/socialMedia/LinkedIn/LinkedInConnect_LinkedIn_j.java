@@ -57,7 +57,7 @@ public class LinkedInConnect_LinkedIn_j implements MediaConnectInterface {
 		try {
 			init();
 		} catch (Exception e) {
-			System.err.println("Could not initialize the dafault Twitter client api.");
+			System.err.println("Could not initialize the default Twitter client API.");
 			//e.printStackTrace();
 		}
 	}
@@ -83,7 +83,7 @@ public class LinkedInConnect_LinkedIn_j implements MediaConnectInterface {
 				return "";
 			}
 		}catch (Exception e) {
-			System.err.println("Could not get LinkedIn Oauth 1.0 request token.");
+			System.err.println("Could not get LinkedIn OAuth 1.0 request token.");
 			return "";
 		}			
 	}

@@ -78,7 +78,7 @@ public class Login extends JDialog implements AbstractControlledView {
 		SpringLayout sl_contentPanel = new SpringLayout();
 		contentPanel.setLayout(sl_contentPanel);
 
-		JLabel lblUsername = new JLabel("Username :");
+		JLabel lblUsername = new JLabel("Username:");
 		sl_contentPanel.putConstraint(SpringLayout.NORTH, lblUsername, 10,
 				SpringLayout.NORTH, contentPanel);
 		sl_contentPanel.putConstraint(SpringLayout.WEST, lblUsername, 10,
@@ -94,7 +94,7 @@ public class Login extends JDialog implements AbstractControlledView {
 		contentPanel.add(usernametextField);
 		usernametextField.setColumns(25);
 		{
-			lblPassword = new JLabel("Password :");
+			lblPassword = new JLabel("Password:");
 			sl_contentPanel.putConstraint(SpringLayout.NORTH, lblPassword, 10,
 					SpringLayout.SOUTH, lblUsername);
 			sl_contentPanel.putConstraint(SpringLayout.WEST, lblPassword, 0,
@@ -131,7 +131,7 @@ public class Login extends JDialog implements AbstractControlledView {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton okButton = new JButton("login");
+				JButton okButton = new JButton("Login");
 				okButton.setActionCommand("OK");
 				okButton.addActionListener(new LoginAction());
 				buttonPane.add(okButton);
@@ -174,13 +174,13 @@ public class Login extends JDialog implements AbstractControlledView {
 				User _user = ((UserContollerInterface) user_controller)
 						.getCurrent_user();
 				if (_user == null) {
-					setloginMessage("Username doesn't exist !", 1);
+					setloginMessage("Username doesn't exist!", 1);
 					return;
 				}
 				char[] input = passwordField.getPassword();
 				String hasched_pass = AMOSUtils.makeMD5(new String(input));
 				if (!hasched_pass.equalsIgnoreCase(_user.getUserpass())) {
-					setloginMessage("Wrong password !", 1);
+					setloginMessage("Wrong password!", 1);
 					return;
 				}
 				//this.user_controller.removeView(this);
@@ -191,7 +191,7 @@ public class Login extends JDialog implements AbstractControlledView {
 				setVisible(false);
 			} catch (Exception e) {
 				e.printStackTrace();
-				setloginMessage("Something went wrong. Please try again !", 1);
+				setloginMessage("Something went wrong. Please try again!", 1);
 				return;
 			}
 		}
@@ -206,7 +206,7 @@ public class Login extends JDialog implements AbstractControlledView {
 				try {
 					u_model.setUserData(usernametextField.getText(), AMOSUtils.makeMD5(new String(passwordField.getPassword())));
 				} catch (NoSuchAlgorithmException e1) {
-					setloginMessage("Error while Hashing your pwd. Please try again !", 1);
+					setloginMessage("Error while hashing your pwd. Please try again!", 1);
 				}
 			}
 		}		

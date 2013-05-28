@@ -123,7 +123,7 @@ public class FacebookDataRetriever {
 				}				
 			}
 			return;
-		case WORKS:
+		case WORK:
 			user_ = facebook.fetchObject(client_facebook_ID, com.restfb.types.User.class);
 			if(user_ != null && user_.getId().length() > 0){
 				List<com.restfb.types.User.Work> works = user_.getWork();
@@ -144,7 +144,7 @@ public class FacebookDataRetriever {
 						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getStartTime()+"#"+tmp.getEndTime()+"#"+tmp.getLocation()+"#"+tmp.getOwner()+"#"+tmp.getDescription(), type);
 						
 					} catch (Exception e) {
-						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + ev.eid );
+						System.err.println("Could not get data from Facebook: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + ev.eid );
 					}
 					
 				}
@@ -161,7 +161,7 @@ public class FacebookDataRetriever {
 						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getGender()+"#"+tmp.getLocation()+"#"+tmp.getAbout(), type);
 						
 					} catch (Exception e) {
-						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + friend.uid2 );
+						System.err.println("Could not get data from Facebook: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + friend.uid2 );
 					}
 				}				
 			}
@@ -175,7 +175,7 @@ public class FacebookDataRetriever {
 						com.restfb.types.StatusMessage tmp = facebook.fetchObject(ev.status_id, com.restfb.types.StatusMessage.class);
 						saveFacebookData(client, tmp.getId()+"#"+tmp.getUpdatedTime()+"#"+tmp.getMessage(), type);
 					} catch (Exception e) {
-						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + ev.status_id );
+						System.err.println("Could not get data from Facebook: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + ev.status_id );
 					}
 				}				
 			}
@@ -189,7 +189,7 @@ public class FacebookDataRetriever {
 						com.restfb.types.Post tmp = facebook.fetchObject(ev.post_id, com.restfb.types.Post.class);
 						saveFacebookData(client, tmp.getId()+"#"+tmp.getCreatedTime()+"#"+tmp.getMessage(), type);
 					} catch (Exception e) {
-						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + ev.post_id );
+						System.err.println("Could not get data from Facebook: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + ev.post_id );
 					}
 				}
 				
@@ -205,7 +205,7 @@ public class FacebookDataRetriever {
 						com.restfb.types.User tmp = facebook.fetchObject(friend.uid, com.restfb.types.User.class);
 						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getGender()+"#"+tmp.getLocation()+"#"+tmp.getAbout(), type);
 					} catch (Exception e) {
-						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + friend.uid );
+						System.err.println("Could not get data from Facebook: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + friend.uid );
 					}					
 				}				
 			}

@@ -61,7 +61,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
 		{
-			title_lbl = new JLabel("Scaning Social Media Data. Please wait ...");
+			title_lbl = new JLabel("Scanning Social Media Data. Please wait ...");
 			springLayout.putConstraint(SpringLayout.EAST, title_lbl, -10,SpringLayout.EAST, getContentPane());
 			springLayout.putConstraint(SpringLayout.WEST, title_lbl, 10,SpringLayout.WEST, getContentPane());
 			springLayout.putConstraint(SpringLayout.NORTH, title_lbl, 20, SpringLayout.NORTH, getContentPane());			
@@ -104,7 +104,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 		// we create new instances as needed.
 		task = new SocialMediaScanTask();
 		task.addPropertyChangeListener(this);
-		title_lbl.setText("Start Scanning !");
+		title_lbl.setText("Start Scanning!");
 		task.execute();
 	}
 
@@ -147,7 +147,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    	List<FacebookDataType> f_types = model.getF_selectedDataTypes();
 	    	List<TwitterDataType> t_types = model.getT_selectedDataTypes();
 	    	if(f_types == null || t_types == null || user == null){
-	    		makeMessage("Nothing to scan !",1);
+	    		makeMessage("Nothing to scan!",1);
 	    		return null;
 	    	}
 	    	
@@ -157,18 +157,18 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    	final int TOTAL  = ((F_COUNT + T_COUNT) * C_COUNT) + 2 * C_COUNT;
 	    	double step = 0;
 	    	if(TOTAL == 0 || user == null){
-	    		makeMessage("Nothing to scan !",1);
+	    		makeMessage("Nothing to scan!",1);
 	    		return null;
 	    	}
 	    	
 	    	
 		    	// Import Social Media Data
-	    		makeMessage("Scanning social medias ...",0);
+	    		makeMessage("Scanning social media ...",0);
 		    	setProgress(0);
 		    	// Import facebook Datas
-		    	makeMessage("Scanning facebook ...",0);
+		    	makeMessage("Scanning Facebook ...",0);
 		    	if(!controller.getF_retriever().init(user)){
-		    		makeMessage( "Unable to make a connection with facebook. \nPlease verify your settings in the General Setting menu",1);
+		    		makeMessage( "Unable to make a connection with Facebook. \nPlease verify your settings in the General Setting menu.",1);
 	    		}		    	
 		    	for (int j = 0; j < clients.size(); j++) {
 		    		Client client = clients.get(j);
@@ -184,14 +184,14 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 		    		// Scan relatives Datas
 		    		try{
 			    		for (int i = 0; i < f_types.size(); i++) {
-			    			makeMessage("Scanning Facebook : "+client.getFirstname() + " " + client.getName() +"...",0);
+			    			makeMessage("Scanning Facebook: "+client.getFirstname() + " " + client.getName() +"...",0);
 			    			controller.getF_retriever().importFacebookData(user, client, f_types.get(i));
 			    			step += 1;
 			    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
 						}
 		    		}catch (Exception e) {
 	    	    		e.printStackTrace();
-	    	    		makeMessage("An Error occurs while scanning facebook: "+client.getFirstname() + " " + client.getName() , 1);
+	    	    		makeMessage("An Error occured while scanning Facebook: "+client.getFirstname() + " " + client.getName() , 1);
 	    	    		return null;
 	    			}
 		    	}
@@ -201,7 +201,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 		    	// Import Twitter Datas
 		    	title_lbl.setText("Scanning Twitter ...");
 		    	if(!controller.getT_retriever().init(user)){
-		    		makeMessage("Unable to make a connection with twitter. \nPlease verify your settings in the General Setting menu",1);
+		    		makeMessage("Unable to make a connection with Twitter. \nPlease verify your settings in the General Setting menu.",1);
 	    		}
 		    	for (int j = 0; j < clients.size(); j++) {
 		    		Client client = clients.get(j);		    		
@@ -217,14 +217,14 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 		    		// Scan relatives Datas
 		    		try{
 			    		for (int i = 0; i < t_types.size(); i++) {
-			    			makeMessage("Scanning Twitter : "+client.getFirstname() + " " + client.getName() +"...",0);
+			    			makeMessage("Scanning Twitter: "+client.getFirstname() + " " + client.getName() +"...",0);
 				    		controller.getT_retriever().importTwitterData(user, client, t_types.get(i));
 				    		step += 1;
 				    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));
 						}
 		    		}catch (Exception e) {
 			    		e.printStackTrace();
-			    		makeMessage("An Error occurs while scanning Twitter data:"+client.getFirstname() + " " + client.getName() , 1);
+			    		makeMessage("An Error occured while scanning Twitter data:"+client.getFirstname() + " " + client.getName() , 1);
 			    		return null;
 					}
 		    	}
@@ -235,7 +235,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    @Override
 	    public void done() {
 	      Toolkit.getDefaultToolkit().beep();
-	      title_lbl.setText("Done !");
+	      title_lbl.setText("Done!");
 	      setCursor(null); // turn off the wait cursor
 	      dispose();
 	    }

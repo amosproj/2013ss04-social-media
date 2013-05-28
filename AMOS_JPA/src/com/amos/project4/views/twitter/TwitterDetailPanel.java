@@ -60,12 +60,12 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 		c_controller.addView(Picture_panel);
 
 		
-		JLabel lblId = new JLabel("ID :");
+		JLabel lblId = new JLabel("ID:");
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, lblId, 10, SpringLayout.NORTH, Picture_panel);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, lblId, 6, SpringLayout.EAST, Picture_panel);
 		accountDetails_Panel.add(lblId);
 		
-		JLabel lblTwitterName = new JLabel("Twitter  name :");
+		JLabel lblTwitterName = new JLabel("Twitter name:");
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, lblTwitterName, 12, SpringLayout.SOUTH, lblId);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, lblTwitterName, 6, SpringLayout.EAST, Picture_panel);
 		accountDetails_Panel.add(lblTwitterName);
@@ -153,7 +153,7 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 			Client c = (Client) arg;
 			
 			// Get the ID from Database
-			List<TwitterData> tmp = c.getTwitterDatasByType(TwitterDataType.ID);
+			List<TwitterData> tmp = c.getTwitterDataByType(TwitterDataType.ID);
 			if(tmp != null && !tmp.isEmpty()){
 				this.ID_textField.setText(tmp.get(0).getDataString());
 			}else{
@@ -161,7 +161,7 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 			}
 			
 			// Get the user Name
-			tmp = c.getTwitterDatasByType(TwitterDataType.TWITTER_NAME);
+			tmp = c.getTwitterDataByType(TwitterDataType.TWITTER_NAME);
 			if(tmp != null && !tmp.isEmpty()){
 				this.twitterName_textField.setText(tmp.get(0).getDataString());
 			}else{

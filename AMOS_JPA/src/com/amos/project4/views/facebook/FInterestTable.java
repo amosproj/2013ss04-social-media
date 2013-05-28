@@ -40,19 +40,19 @@ public class FInterestTable extends JTable implements AbstractControlledView{
 	class FInterestTableModel extends AbstractTableModel{
 
 		private static final long serialVersionUID = 1L;
-		private List<FacebookData> datas = new ArrayList<FacebookData>();
+		private List<FacebookData> data = new ArrayList<FacebookData>();
 
-		public List<FacebookData> getDatas() {
-			return datas;
+		public List<FacebookData> getData() {
+			return data;
 		}
 
-		public void setDatas(List<FacebookData> datas) {
-			this.datas = datas;
+		public void setDatas(List<FacebookData> data) {
+			this.data = data;
 		}
 
-		public FInterestTableModel(List<FacebookData> datas) {
+		public FInterestTableModel(List<FacebookData> data) {
 			super();
-			this.datas = datas;
+			this.data = data;
 		}
 		
 		@Override
@@ -72,7 +72,7 @@ public class FInterestTable extends JTable implements AbstractControlledView{
 
 		@Override
 		public int getRowCount() {
-			return datas.size();
+			return data.size();
 		}
 
 		@Override
@@ -82,7 +82,7 @@ public class FInterestTable extends JTable implements AbstractControlledView{
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			String row_data = datas.get(rowIndex).getDataString();
+			String row_data = data.get(rowIndex).getDataString();
 			return row_data;
 		}
 		

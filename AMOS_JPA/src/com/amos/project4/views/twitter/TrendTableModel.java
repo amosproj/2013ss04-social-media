@@ -10,19 +10,19 @@ import com.amos.project4.models.TwitterData;
 public class TrendTableModel extends AbstractTableModel{
 
 	private static final long serialVersionUID = 1L;
-	private List<TwitterData> datas = new ArrayList<TwitterData>();
+	private List<TwitterData> data = new ArrayList<TwitterData>();
 
-	public List<TwitterData> getDatas() {
-		return datas;
+	public List<TwitterData> getData() {
+		return data;
 	}
 
-	public void setDatas(List<TwitterData> datas) {
-		this.datas = datas;
+	public void setData(List<TwitterData> data) {
+		this.data = data;
 	}
 
-	public TrendTableModel(List<TwitterData> datas) {
+	public TrendTableModel(List<TwitterData> data) {
 		super();
-		this.datas = datas;
+		this.data = data;
 	}
 	
 	@Override
@@ -46,7 +46,7 @@ public class TrendTableModel extends AbstractTableModel{
 
 	@Override
 	public int getRowCount() {
-		return datas.size();
+		return data.size();
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class TrendTableModel extends AbstractTableModel{
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		String row_data = datas.get(rowIndex).getDataString();
+		String row_data = data.get(rowIndex).getDataString();
 		if(row_data.contains("#")){
 			String rslt = (row_data.split("#"))[columnIndex];
 			return rslt;

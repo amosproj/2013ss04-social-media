@@ -30,7 +30,7 @@ public class TweetsTable extends JTable implements AbstractControlledView{
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;		
 			// Get the last Tweets
-			List<TwitterData> tmp_name = c.getTwitterDatasByType(TwitterDataType.TWEETS);			
+			List<TwitterData> tmp_name = c.getTwitterDataByType(TwitterDataType.TWEETS);			
 			if(tmp_name != null && !tmp_name.isEmpty()){
 				this.setModel((TableModel) new TweetsTableModel(tmp_name));
 			}else{

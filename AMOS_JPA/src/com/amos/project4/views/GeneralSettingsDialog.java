@@ -108,7 +108,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			SpringLayout sl_FacebookPanel = new SpringLayout();
 			FacebookPanel.setLayout(sl_FacebookPanel);
 			
-			JLabel f_lbl_access_token = new JLabel("Access Token :");
+			JLabel f_lbl_access_token = new JLabel("Access Token:");
 			sl_FacebookPanel.putConstraint(SpringLayout.NORTH, f_lbl_access_token, 10, SpringLayout.NORTH, FacebookPanel);
 			sl_FacebookPanel.putConstraint(SpringLayout.WEST, f_lbl_access_token, 10, SpringLayout.WEST, FacebookPanel);
 			FacebookPanel.add(f_lbl_access_token);
@@ -120,7 +120,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			sl_FacebookPanel.putConstraint(SpringLayout.SOUTH, f_tokenTextField, 0, SpringLayout.SOUTH, f_lbl_access_token);
 			FacebookPanel.add(f_tokenTextField);
 			
-			JLabel f_lbl_access_token_secret = new JLabel("A. T. secret :");
+			JLabel f_lbl_access_token_secret = new JLabel("A. T. secret:");
 			sl_FacebookPanel.putConstraint(SpringLayout.NORTH, f_lbl_access_token_secret, 12, SpringLayout.SOUTH, f_lbl_access_token);
 			sl_FacebookPanel.putConstraint(SpringLayout.WEST, f_lbl_access_token_secret, 0, SpringLayout.WEST, f_lbl_access_token);
 			sl_FacebookPanel.putConstraint(SpringLayout.EAST, f_lbl_access_token_secret, 0, SpringLayout.EAST, f_lbl_access_token);
@@ -152,7 +152,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			SpringLayout sl_TwitterPanel = new SpringLayout();
 			TwitterPanel.setLayout(sl_TwitterPanel);
 			{
-				t_lbl_access_token = new JLabel("Acces token :");
+				t_lbl_access_token = new JLabel("Access token:");
 				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_lbl_access_token, 10, SpringLayout.NORTH, TwitterPanel);
 				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_lbl_access_token, 10, SpringLayout.WEST, TwitterPanel);
 				TwitterPanel.add(t_lbl_access_token);
@@ -166,7 +166,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 				TwitterPanel.add(t_accestokenTextField);
 			}
 			{
-				t_lbl_accesstoken_secret = new JLabel("A. T. secret :");
+				t_lbl_accesstoken_secret = new JLabel("A. T. secret:");
 				sl_TwitterPanel.putConstraint(SpringLayout.NORTH, t_lbl_accesstoken_secret, 12, SpringLayout.SOUTH, t_lbl_access_token);
 				sl_TwitterPanel.putConstraint(SpringLayout.WEST, t_lbl_accesstoken_secret, 0, SpringLayout.WEST, t_lbl_access_token);
 				TwitterPanel.add(t_lbl_accesstoken_secret);
@@ -199,7 +199,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			SpringLayout sl_XingPanel = new SpringLayout();
 			XingPanel.setLayout(sl_XingPanel);
 			{
-				x_lbl_access_token = new JLabel("Access Token :");
+				x_lbl_access_token = new JLabel("Access Token:");
 				sl_XingPanel.putConstraint(SpringLayout.NORTH, x_lbl_access_token, 10, SpringLayout.NORTH, XingPanel);
 				sl_XingPanel.putConstraint(SpringLayout.WEST, x_lbl_access_token, 10, SpringLayout.WEST, XingPanel);
 				XingPanel.add(x_lbl_access_token);
@@ -213,7 +213,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 				XingPanel.add(x_access_tokenTextField);
 			}
 			{
-				x_lbl_access_token_secret = new JLabel("A. T. secret :");
+				x_lbl_access_token_secret = new JLabel("A. T. secret:");
 				sl_XingPanel.putConstraint(SpringLayout.NORTH, x_lbl_access_token_secret, 12, SpringLayout.SOUTH, x_lbl_access_token);
 				sl_XingPanel.putConstraint(SpringLayout.WEST, x_lbl_access_token_secret, 0, SpringLayout.WEST, x_lbl_access_token);
 				sl_XingPanel.putConstraint(SpringLayout.EAST, x_lbl_access_token_secret, 0, SpringLayout.EAST, x_lbl_access_token);
@@ -247,7 +247,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			SpringLayout sl_LinkedInPanel = new SpringLayout();
 			LinkedInPanel.setLayout(sl_LinkedInPanel);
 			{
-				l_lbl_access_token = new JLabel("Access Token :");
+				l_lbl_access_token = new JLabel("Access Token:");
 				sl_LinkedInPanel.putConstraint(SpringLayout.NORTH, l_lbl_access_token, 10, SpringLayout.NORTH, LinkedInPanel);
 				sl_LinkedInPanel.putConstraint(SpringLayout.WEST, l_lbl_access_token, 10, SpringLayout.WEST, LinkedInPanel);
 				LinkedInPanel.add(l_lbl_access_token);
@@ -262,7 +262,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 				LinkedInPanel.add(l_access_tokenTextField);
 			}
 			{
-				l_lbl_access_token_secret = new JLabel("A. T. secret :");
+				l_lbl_access_token_secret = new JLabel("A. T. secret:");
 				sl_LinkedInPanel.putConstraint(SpringLayout.NORTH, l_lbl_access_token_secret, 12, SpringLayout.SOUTH, l_lbl_access_token);
 				sl_LinkedInPanel.putConstraint(SpringLayout.WEST, l_lbl_access_token_secret, 0, SpringLayout.WEST, l_lbl_access_token);
 				sl_LinkedInPanel.putConstraint(SpringLayout.EAST, l_lbl_access_token_secret, 0, SpringLayout.EAST, l_lbl_access_token);
@@ -305,9 +305,9 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Close");
 				cancelButton.addActionListener(new CancelAction());
-				cancelButton.setActionCommand("Cancel");
+				cancelButton.setActionCommand("Close");
 				buttonPane.add(cancelButton);
 			}
 		}

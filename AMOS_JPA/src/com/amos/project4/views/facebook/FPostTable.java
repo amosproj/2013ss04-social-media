@@ -48,19 +48,19 @@ public class FPostTable extends JTable implements AbstractControlledView{
 	class FPostTableModel extends AbstractTableModel{
 
 		private static final long serialVersionUID = 1L;
-		private List<FacebookData> datas = new ArrayList<FacebookData>();
+		private List<FacebookData> data = new ArrayList<FacebookData>();
 
-		public List<FacebookData> getDatas() {
-			return datas;
+		public List<FacebookData> getData() {
+			return data;
 		}
 
-		public void setDatas(List<FacebookData> datas) {
-			this.datas = datas;
+		public void setDatas(List<FacebookData> data) {
+			this.data = data;
 		}
 
-		public FPostTableModel(List<FacebookData> datas) {
+		public FPostTableModel(List<FacebookData> data) {
 			super();
-			this.datas = datas;
+			this.data = data;
 		}
 		
 		@Override
@@ -84,7 +84,7 @@ public class FPostTable extends JTable implements AbstractControlledView{
 
 		@Override
 		public int getRowCount() {
-			return datas.size();
+			return data.size();
 		}
 
 		@Override
@@ -94,7 +94,7 @@ public class FPostTable extends JTable implements AbstractControlledView{
 
 		@Override
 		public Object getValueAt(int rowIndex, int columnIndex) {
-			String row_data = datas.get(rowIndex).getDataString();
+			String row_data = data.get(rowIndex).getDataString();
 			if(row_data.contains("#")){
 				String rslt = (row_data.split("#"))[columnIndex];
 				return rslt;

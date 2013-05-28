@@ -60,7 +60,7 @@ public class LinkedInConnect implements MediaConnectInterface {
 		try {
 			init();
 		} catch (Exception e) {
-			System.err.println("Could not initialize the dafault Xing client api.");
+			System.err.println("Could not initialize the default LinkedIn client API.");
 			e.printStackTrace();
 		}
 	}
@@ -81,7 +81,7 @@ public class LinkedInConnect implements MediaConnectInterface {
 			requestToken = service.getRequestToken();
 			return service.getAuthorizationUrl(requestToken);			
 		}catch (Exception e) {
-			System.err.println("Could not get Xing Oauth 1.0 request token.");
+			System.err.println("Could not get Xing OAuth 1.0 request token.");
 			return "";
 		}			
 	}
