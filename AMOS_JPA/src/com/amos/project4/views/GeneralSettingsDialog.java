@@ -114,6 +114,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			FacebookPanel.add(f_lbl_access_token);
 			
 			f_tokenTextField = new JTextField();
+			f_tokenTextField.setEditable(false);
 			sl_FacebookPanel.putConstraint(SpringLayout.WEST, f_tokenTextField, 20, SpringLayout.EAST, f_lbl_access_token);
 			sl_FacebookPanel.putConstraint(SpringLayout.EAST, f_tokenTextField, -6, SpringLayout.EAST, FacebookPanel);
 			sl_FacebookPanel.putConstraint(SpringLayout.SOUTH, f_tokenTextField, 0, SpringLayout.SOUTH, f_lbl_access_token);
@@ -126,6 +127,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			FacebookPanel.add(f_lbl_access_token_secret);
 			
 			f_token_secretTextField = new JTextField();
+			f_token_secretTextField.setEditable(false);
 			sl_FacebookPanel.putConstraint(SpringLayout.WEST, f_token_secretTextField, 0, SpringLayout.WEST, f_tokenTextField);
 			sl_FacebookPanel.putConstraint(SpringLayout.SOUTH, f_token_secretTextField, 0, SpringLayout.SOUTH, f_lbl_access_token_secret);
 			sl_FacebookPanel.putConstraint(SpringLayout.EAST, f_token_secretTextField, 0, SpringLayout.EAST, f_tokenTextField);
@@ -204,6 +206,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			}
 			{
 				x_access_tokenTextField = new JTextField();
+				x_access_tokenTextField.setEditable(false);
 				sl_XingPanel.putConstraint(SpringLayout.WEST, x_access_tokenTextField, 20, SpringLayout.EAST, x_lbl_access_token);
 				sl_XingPanel.putConstraint(SpringLayout.SOUTH, x_access_tokenTextField, 0, SpringLayout.SOUTH, x_lbl_access_token);
 				sl_XingPanel.putConstraint(SpringLayout.EAST, x_access_tokenTextField, -6, SpringLayout.EAST,XingPanel);
@@ -218,6 +221,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			}
 			{
 				x_access_token_secretTextField = new JTextField();
+				x_access_token_secretTextField.setEditable(false);
 				sl_XingPanel.putConstraint(SpringLayout.WEST, x_access_token_secretTextField, 0, SpringLayout.WEST, x_access_tokenTextField);
 				sl_XingPanel.putConstraint(SpringLayout.SOUTH, x_access_token_secretTextField, 0, SpringLayout.SOUTH, x_lbl_access_token_secret);
 				sl_XingPanel.putConstraint(SpringLayout.EAST, x_access_token_secretTextField, 0, SpringLayout.EAST, x_access_tokenTextField);
@@ -250,6 +254,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			}
 			{
 				l_access_tokenTextField = new JTextField();
+				l_access_tokenTextField.setEditable(false);
 				sl_LinkedInPanel.putConstraint(SpringLayout.WEST, l_access_tokenTextField, 20, SpringLayout.EAST, l_lbl_access_token);
 				sl_LinkedInPanel.putConstraint(SpringLayout.SOUTH, l_access_tokenTextField, 0, SpringLayout.SOUTH, l_lbl_access_token);
 				sl_LinkedInPanel.putConstraint(SpringLayout.EAST, l_access_tokenTextField, -6, SpringLayout.EAST, LinkedInPanel);
@@ -265,6 +270,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 			}
 			{
 				l_access_token_TextField = new JTextField();
+				l_access_token_TextField.setEditable(false);
 				sl_LinkedInPanel.putConstraint(SpringLayout.WEST, l_access_token_TextField, 0, SpringLayout.WEST, l_access_tokenTextField);
 				sl_LinkedInPanel.putConstraint(SpringLayout.SOUTH, l_access_token_TextField, 0, SpringLayout.SOUTH, l_lbl_access_token_secret);
 				sl_LinkedInPanel.putConstraint(SpringLayout.EAST, l_access_token_TextField, 0, SpringLayout.EAST, l_access_tokenTextField);

@@ -106,7 +106,7 @@ public class TwitterConnect implements MediaConnectInterface {
 	          return false;
 	        }else{
 	        	System.err.println("Wrong Twitter access token or access token secret.");
-	          te.printStackTrace();
+	          //te.printStackTrace();
 	        }
 	      }
 		return true;
@@ -137,7 +137,7 @@ public class TwitterConnect implements MediaConnectInterface {
 			return (user.getId() > 0);
 		} catch (IllegalStateException | TwitterException e) {
 			System.err.println("Could not login to twitter api");
-			e.printStackTrace();
+			//e.printStackTrace();
 			return false;
 		}		
 	}

@@ -25,6 +25,7 @@ import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
 import com.amos.project4.socialMedia.MediaConnectInterface;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInConnect;
+import com.amos.project4.socialMedia.Xing.XingConnect;
 import com.amos.project4.socialMedia.facebook.FacebookConnect;
 import com.amos.project4.socialMedia.twitter.TwitterConnect;
 import com.amos.project4.views.UserViewModel;
@@ -41,6 +42,7 @@ public class UserController extends AbstractController implements UserContollerI
 	private  MediaConnectInterface t_connect;
 	private  MediaConnectInterface f_connect;
 	private  MediaConnectInterface l_connect;
+	private  MediaConnectInterface x_connect;
 	
 	public UserController() {
 		super();
@@ -52,6 +54,7 @@ public class UserController extends AbstractController implements UserContollerI
 		t_connect = TwitterConnect.getInstance();
 		f_connect = FacebookConnect.getInstance();
 		l_connect = LinkedInConnect.getInstance();
+		x_connect = XingConnect.getInstance();
 	}
 
 	@Override
@@ -99,6 +102,8 @@ public class UserController extends AbstractController implements UserContollerI
 				return f_connect.login(token, secret);
 			case LINKEDIN:
 				return l_connect.login(token, secret);
+			case XING:
+				return x_connect.login(token, secret);
 			default:
 				return true;
 		}
@@ -113,6 +118,8 @@ public class UserController extends AbstractController implements UserContollerI
 				return f_connect.getAccessUrl();
 			case LINKEDIN:
 				return l_connect.getAccessUrl();
+			case XING:
+				return x_connect.getAccessUrl();
 			default:
 				return "DEFAULT ACCESS TOKEN URL";
 		}
@@ -126,6 +133,8 @@ public class UserController extends AbstractController implements UserContollerI
 				return f_connect.checkAndSetRequestTokenPin(pin);
 			case LINKEDIN:
 				return l_connect.checkAndSetRequestTokenPin(pin);
+			case XING:
+				return x_connect.checkAndSetRequestTokenPin(pin);
 			default:
 				return true;
 		}
@@ -139,8 +148,10 @@ public class UserController extends AbstractController implements UserContollerI
 			return f_connect.getAccessToken();
 		case LINKEDIN:
 			return l_connect.getAccessToken();
+		case XING:
+			return x_connect.getAccessToken();
 		default:
-			String [] rslt = {"DEFAULT ACCESS TOKEN","DEFAULT ACCESS TOKEN"};
+			String [] rslt = {"DEFAULT_ACCESS_TOKEN","DEFAULT_ACCESS_TOKEN"};
 			return rslt;
 		}
 		

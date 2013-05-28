@@ -1,26 +1,25 @@
 /*
-*
-* This file is part of the Datev and Social Media project.
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Affero General Public License as
-* published by the Free Software Foundation, either version 3 of the
-* License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU Affero General Public License for more details.
-*
-* You should have received a copy of the GNU Affero General Public
-* License along with this program. If not, see
-* <http://www.gnu.org/licenses/>.
-*/
-package com.amos.project4.socialMedia.LinkedIn;
-
+ *
+ * This file is part of the Datev and Social Media project.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+package com.amos.project4.socialMedia.Xing;
 
 import org.scribe.builder.ServiceBuilder;
-import org.scribe.builder.api.LinkedInApi;
+import org.scribe.builder.api.XingApi;
 import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
@@ -31,31 +30,31 @@ import org.scribe.oauth.OAuthService;
 import com.amos.project4.socialMedia.MediaConnectInterface;
 
 
-public class LinkedInConnect implements MediaConnectInterface {
+public class XingConnect implements MediaConnectInterface {
 
-	private static final String ACCESS_TOKEN = "40d6f0c2-4bc2-4827-a610-7ccb6f11e9b3";
-	private static final String ACCESS_TOKEN_SECRET = "2f714f4a-ed24-4c16-92da-3b9efc95d2d2<";
+	private static final String ACCESS_TOKEN = "57ff1f73c8e7e107a2f0";
+	private static final String ACCESS_TOKEN_SECRET = "c441f3a48a6758ad1945";
 	
-	private static final String CONSUMER_KEY = "55z5wlqvr1lb";
-	private static final String CONSUMER_SECRET = "5RVgdcwrNcjbtiDZ";
+	private static final String CONSUMER_KEY = "50e448c0dbc8fb2ea1f9";
+	private static final String CONSUMER_SECRET = "76d2a34ddd8edb4fcbb0e8f7ebc8868b97d35055";
 	
-	private static final String PROTECTED_RESOURCE_URL = "http://api.linkedin.com/v1/people/~/connections:(id,last-name)";
+	private static final String PROTECTED_RESOURCE_URL = "https://api.xing.com/v1/users/me";
 
 
 	private OAuthService service;
 	private Token requestToken;
 	private Token accessToken;
 	
-	private static LinkedInConnect  instance;
+	private static XingConnect  instance;
 	
-	public static LinkedInConnect  getInstance(){
+	public static XingConnect  getInstance(){
 		if(instance == null){
-			instance = new LinkedInConnect();
+			instance = new XingConnect();
 		}
 		return instance;
 	}	
 
-	private LinkedInConnect() {
+	private XingConnect() {
 		super();
 		try {
 			init();
@@ -67,10 +66,10 @@ public class LinkedInConnect implements MediaConnectInterface {
 	
 	private void init() throws Exception{
 		service = new ServiceBuilder()
-       .provider(LinkedInApi.class)
-       .apiKey(CONSUMER_KEY)
-       .apiSecret(CONSUMER_SECRET)
-       .build();
+        .provider(XingApi.class)
+        .apiKey(CONSUMER_KEY)
+        .apiSecret(CONSUMER_SECRET)
+        .build();
 		requestToken = service.getRequestToken();
 		accessToken = null;
 	}
@@ -89,14 +88,14 @@ public class LinkedInConnect implements MediaConnectInterface {
 	public boolean checkAndSetRequestTokenPin(String pin){
 		if(pin == null || pin.isEmpty()) return false;
 		try{
-			 Verifier verifier = new Verifier(pin);
+			Verifier verifier = new Verifier(pin);
 			 Token accessToken_ = service.getAccessToken(requestToken, verifier);
 			 if(!accessToken_.getToken().isEmpty()){
 				 this.accessToken =  accessToken_;
 			 }
 			 return !accessToken_.getToken().isEmpty();
 		}catch (Exception e) {
-			System.err.println("Wrong LinkedIn pin.");
+			System.err.println("Wrong Xing pin.");
 			//e.printStackTrace();
 			return false;
 		}
@@ -120,11 +119,10 @@ public class LinkedInConnect implements MediaConnectInterface {
 		    Response response = request.send();
 		    return response.isSuccessful();
 		}catch (Exception e) {
-			System.err.println("Wrong LinkedIn access token.");
+			System.err.println("Wrong Xing access token.");
 			//e.printStackTrace();
 			return false;
 		}
 	}
 	
 }
-
