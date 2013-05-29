@@ -257,7 +257,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 			// Get the ID from Database
 			List<FacebookData> tmp = c.getFacebookDatasByType(FacebookDataType.UID);
 			if(tmp != null && !tmp.isEmpty()){
-				this.ID_textField.setText(tmp.get(0).getDataString());
+				this.ID_textField.setText("" + tmp.get(0).getDataString());
 			}else{
 				this.ID_textField.setText("");
 			}
@@ -265,7 +265,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 			// Get the user Name
 			tmp =  c.getFacebookDatasByType(FacebookDataType.USERNAME);
 			if(tmp != null && !tmp.isEmpty()){
-				this.facebookName_textField.setText(tmp.get(0).getDataString());
+				this.facebookName_textField.setText("" + tmp.get(0).getDataString());
 			}else{
 				this.facebookName_textField.setText("");
 			}
@@ -273,7 +273,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 			// Get Birthday
 			tmp =  c.getFacebookDatasByType(FacebookDataType.BIRTHDAY);
 			if(tmp != null && !tmp.isEmpty()){
-				this.birthday_textField.setText(tmp.get(0).getDataString());
+				this.birthday_textField.setText("" + tmp.get(0).getDataString());
 			}else{
 				this.birthday_textField.setText("");
 			}
@@ -281,7 +281,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 			// Get Biography
 			tmp =  c.getFacebookDatasByType(FacebookDataType.BIOGRAPHY);
 			if(tmp != null && !tmp.isEmpty()){
-				this.biography_textField.setText(tmp.get(0).getDataString());
+				this.biography_textField.setText("" + tmp.get(0).getDataString());
 			}else{
 				this.biography_textField.setText("");
 			}
@@ -289,7 +289,7 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 			// Get Relationship
 			tmp =  c.getFacebookDatasByType(FacebookDataType.RELATIONSHIP);
 			if(tmp != null && !tmp.isEmpty()){
-				this.relationship_textField.setText(tmp.get(0).getDataString());
+				this.relationship_textField.setText("" +tmp.get(0).getDataString());
 			}else{
 				this.relationship_textField.setText("");
 			}

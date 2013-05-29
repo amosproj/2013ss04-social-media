@@ -20,7 +20,9 @@
 package com.amos.project4.views;
 
 import java.awt.EventQueue;
+import java.util.Locale;
 
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 public class Launcher {
@@ -36,6 +38,7 @@ public class Launcher {
 					if(args != null && args.length>0 && args[0] != null){
 						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 					}
+					JOptionPane.setDefaultLocale(Locale.US);
 					Login dialog = new Login();
 					dialog.setVisible(true);
 				} catch (Exception e) {

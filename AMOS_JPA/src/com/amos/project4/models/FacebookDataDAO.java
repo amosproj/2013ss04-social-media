@@ -109,6 +109,22 @@ public class FacebookDataDAO {
 		}
 	}
 	
+	public synchronized boolean deleteFacebookDatas(Client client,FacebookDataType type){
+		if(client == null  || type == null) return false;
+		try{
+			List<FacebookData> datas = this.getAllFacebookDataOfClientByType(client.getID(), type);
+			for(FacebookData data : datas){
+				this.deleteFacebookData(data);
+			}
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}finally{
+
+		}
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	public synchronized boolean deleteAllFacebookData(Integer owner_id){

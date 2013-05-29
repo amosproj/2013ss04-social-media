@@ -33,7 +33,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -317,10 +316,8 @@ public class AMOSMainUI {
 
 		JButton btnCheckSocialMedia = new JButton("Check Social Media");
 		btnCheckSocialMedia.addActionListener(new SocialMediaScanAction());
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH,
-				btnCheckSocialMedia, 10, SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST,
-				btnCheckSocialMedia, -5, SpringLayout.EAST, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH,	btnCheckSocialMedia, 10, SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST,		btnCheckSocialMedia, -5, SpringLayout.EAST, panel_right_top);
 		btnCheckSocialMedia.setPreferredSize(new Dimension(150, 25));
 		panel_right_top.add(btnCheckSocialMedia);
 
@@ -328,21 +325,24 @@ public class AMOSMainUI {
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new searchAction());
 
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnSearch, 0,
-				SpringLayout.NORTH, btnCheckSocialMedia);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, btnSearch, -5,
-				SpringLayout.WEST, btnCheckSocialMedia);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnSearch, 0,	SpringLayout.NORTH, btnCheckSocialMedia);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, btnSearch, -5,	SpringLayout.WEST, btnCheckSocialMedia);
 		panel_right_top.add(btnSearch);
 		btnSearch.setPreferredSize(new Dimension(75, 25));
+		
+		drop_down = new JComboBox(dd_input);
+		drop_down.addActionListener(new SearchCatListener());
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, drop_down, 0,	SpringLayout.NORTH, btnCheckSocialMedia);
+		sl_panel_right_top.putConstraint(SpringLayout.WEST, drop_down, 10,	SpringLayout.WEST, panel_right_top);
+		//sl_panel_right_top.putConstraint(SpringLayout.SOUTH, drop_down, 30,	SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, drop_down, 150,	SpringLayout.WEST, panel_right_top);
+		panel_right_top.add(drop_down);
 
 		search_textField = new JTextField();
 		search_textField.addActionListener(new searchAction());
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField,
-				10, SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.WEST, search_textField,
-				313, SpringLayout.WEST, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, search_textField,
-				-5, SpringLayout.WEST, btnSearch);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField,0, SpringLayout.NORTH, btnCheckSocialMedia);
+		sl_panel_right_top.putConstraint(SpringLayout.WEST, search_textField, 5, SpringLayout.EAST, drop_down);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, search_textField,-5, SpringLayout.WEST, btnSearch);
 		panel_right_top.add(search_textField);
 		search_textField.setColumns(20);
 
@@ -358,33 +358,23 @@ public class AMOSMainUI {
 				client_result_panel, 0, SpringLayout.EAST, btnCheckSocialMedia);
 		panel_right_top.add(client_result_panel);
 
-		JList list = new JList();
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list, 22,
-				SpringLayout.NORTH, panel_right_top);
-		panel_right_top.add(list);
+//		JList list = new JList();
+//		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list, 22,
+//				SpringLayout.NORTH, panel_right_top);
+//		panel_right_top.add(list);
+//
+//		JList list_1 = new JList();
+//		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list_1, 10,
+//				SpringLayout.NORTH, panel_right_top);
+//		sl_panel_right_top.putConstraint(SpringLayout.WEST, list_1, -7,
+//				SpringLayout.WEST, search_textField);
+//		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, list_1, 30,
+//				SpringLayout.NORTH, panel_right_top);
+//		sl_panel_right_top.putConstraint(SpringLayout.EAST, list_1, -166,
+//				SpringLayout.WEST, search_textField);
+//		panel_right_top.add(list_1);
 
-		JList list_1 = new JList();
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list_1, 10,
-				SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.WEST, list_1, -7,
-				SpringLayout.WEST, search_textField);
-		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, list_1, 30,
-				SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, list_1, -166,
-				SpringLayout.WEST, search_textField);
-		panel_right_top.add(list_1);
-
-		drop_down = new JComboBox(dd_input);
-		drop_down.addActionListener(new SearchCatListener());
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, drop_down, 10,
-				SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.WEST, drop_down, 10,
-				SpringLayout.EAST, list);
-		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, drop_down, 30,
-				SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, drop_down, 303,
-				SpringLayout.EAST, list);
-		panel_right_top.add(drop_down);
+		
 
 		return panel_right_top;
 	}

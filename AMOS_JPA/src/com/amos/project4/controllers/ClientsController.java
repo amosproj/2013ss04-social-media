@@ -24,6 +24,7 @@ import java.util.Observable;
 
 import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
+import com.amos.project4.views.AbstractControlledView;
 import com.amos.project4.views.SearchParameters;
 
 public class ClientsController extends AbstractController implements
@@ -41,12 +42,26 @@ public class ClientsController extends AbstractController implements
 	}
 
 	@Override
+	public  void update(Observable o, Object arg) {
+		updateInternally(arg, o);
+		for (AbstractControlledView view : registeredViews) {
+			if(view != null){
+				if (arg != null && arg.getClass().equals(SearchParameters.class)) {
+					view.modelPropertyChange(o, arg);
+				} else if (arg != null && arg.getClass().equals(Client.class)) {
+					view.modelPropertyChange(o, this.getSelectedClient());
+				}
+			}
+		}		
+	}
+	
+	@Override
 	public void updateInternally(Object arg, Observable o) {
 		if (arg != null && arg.getClass().equals(SearchParameters.class)) {
 			clientlist = new ArrayList<Client>(
 					clientDAO.getAllFilteredClients((SearchParameters) arg));
 		} else if (arg != null && arg.getClass().equals(Client.class)) {
-			selectedClient = (Client) arg;
+			selectedClient = clientDAO.getclient(((Client) arg).getID());
 		}
 	}
 

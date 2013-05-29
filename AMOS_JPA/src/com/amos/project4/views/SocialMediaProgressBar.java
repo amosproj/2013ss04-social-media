@@ -154,7 +154,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    	final int F_COUNT = f_types.size();
 	    	final int T_COUNT = t_types.size();
 	    	final int C_COUNT = clients.size();
-	    	final int TOTAL  = ((F_COUNT + T_COUNT) * C_COUNT) + 2 * C_COUNT;
+	    	final int TOTAL  = (2 * (F_COUNT + T_COUNT) * C_COUNT);
 	    	double step = 0;
 	    	if(TOTAL == 0 || user == null){
 	    		makeMessage("Nothing to scan !",1);
@@ -162,74 +162,71 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    	}
 	    	
 	    	
-		    	// Import Social Media Data
-	    		makeMessage("Scanning social medias ...",0);
-		    	setProgress(0);
-		    	// Import facebook Datas
-		    	makeMessage("Scanning facebook ...",0);
-		    	if(!controller.getF_retriever().init(user)){
-		    		makeMessage( "Unable to make a connection with facebook. \nPlease verify your settings in the General Setting menu",1);
-	    		}		    	
-		    	for (int j = 0; j < clients.size(); j++) {
-		    		Client client = clients.get(j);
-		    		
-		    		// delete the clients relatives data
-		    		if( f_types.size()>0){
-		    			makeMessage("Deleting Facebook: "+client.getFirstname() + " " + client.getName() +"...",0);
-			    		controller.getF_retriever().deleteUserFacebookData(client);
-			    		step += 1;
-		    		}
-	    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
-		    		
-		    		// Scan relatives Datas
-		    		try{
-			    		for (int i = 0; i < f_types.size(); i++) {
-			    			makeMessage("Scanning Facebook : "+client.getFirstname() + " " + client.getName() +"...",0);
-			    			controller.getF_retriever().importFacebookData(user, client, f_types.get(i));
-			    			step += 1;
-			    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
-						}
-		    		}catch (Exception e) {
+	    	// Import Social Media Data
+    		makeMessage("Scanning social medias ...",0);
+	    	setProgress(0);
+	    	// Import facebook Datas
+	    	makeMessage("Scanning facebook ...",0);
+	    	if(!controller.getF_retriever().init(user)){
+	    		makeMessage( "Unable to make a connection with facebook. \nPlease verify your settings in the General Setting menu",1);
+    		}		    	
+	    	for (int j = 0; j < clients.size() && F_COUNT > 0; j++) {
+	    		Client client = clients.get(j);
+	    		
+    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    		
+	    		// Scan relatives Datas
+	    		for (int i = 0; i < f_types.size(); i++) {
+	    			try{
+		    			makeMessage("Deleting Facebook " + f_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
+			    		controller.getF_retriever().deleteUserFacebookData(client,f_types.get(i));
+			    		step += 1;			    		
+			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));    			
+		    			
+		    			makeMessage("Scanning Facebook " + f_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
+		    			controller.getF_retriever().importFacebookData(user, client, f_types.get(i));
+		    			step += 1;
+		    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    			}catch (Exception e) {
 	    	    		e.printStackTrace();
 	    	    		makeMessage("An Error occurs while scanning facebook: "+client.getFirstname() + " " + client.getName() , 1);
-	    	    		return null;
+	    	    		continue;
 	    			}
-		    	}
-		    	
-		    	setProgress((int)Math.min(100 * (step/ TOTAL), 100));
-		    	
-		    	// Import Twitter Datas
-		    	title_lbl.setText("Scanning Twitter ...");
-		    	if(!controller.getT_retriever().init(user)){
-		    		makeMessage("Unable to make a connection with twitter. \nPlease verify your settings in the General Setting menu",1);
-	    		}
-		    	for (int j = 0; j < clients.size(); j++) {
-		    		Client client = clients.get(j);		    		
-		    		
-		    		// delete the clients relatives data
-		    		if(t_types.size() > 0){
-		    			makeMessage("Deleting Twitter: "+client.getFirstname() + " " + client.getName() +"...",0);
-			    		controller.getT_retriever().deleteUserTwitterData(client);
+				}
+	    	}
+	    	
+	    	setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    	
+	    	// Import Twitter Datas
+	    	title_lbl.setText("Scanning Twitter ...");
+	    	if(!controller.getT_retriever().init(user)){
+	    		makeMessage("Unable to make a connection with twitter. \nPlease verify your settings in the General Setting menu",1);
+    		}
+	    	for (int j = 0; j < clients.size() && T_COUNT > 0; j++) {
+	    		Client client = clients.get(j);
+	 
+	    		// Scan relatives Datas		    		
+	    		for (int i = 0; i < t_types.size(); i++) {
+	    			try{
+		    			makeMessage("Deleting Twitter " + t_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
+			    		controller.getT_retriever().deleteUserTwitterData(client,t_types.get(i));
 			    		step += 1;
-		    		}
-		    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));
 		    		
-		    		// Scan relatives Datas
-		    		try{
-			    		for (int i = 0; i < t_types.size(); i++) {
-			    			makeMessage("Scanning Twitter : "+client.getFirstname() + " " + client.getName() +"...",0);
-				    		controller.getT_retriever().importTwitterData(user, client, t_types.get(i));
-				    		step += 1;
-				    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));
-						}
-		    		}catch (Exception e) {
+			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));			    		
+		    		
+		    			makeMessage("Scanning Twitter " + t_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
+			    		controller.getT_retriever().importTwitterData(user, client, t_types.get(i));
+			    		step += 1;
+			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    			}catch (Exception e) {
 			    		e.printStackTrace();
 			    		makeMessage("An Error occurs while scanning Twitter data:"+client.getFirstname() + " " + client.getName() , 1);
-			    		return null;
+			    		continue;
 					}
-		    	}
-		    	setProgress(100);
-		    	return null;	    	
+				}
+	    	}
+	    	setProgress(100);
+	    	return null;	    	
 	    }
 
 	    @Override

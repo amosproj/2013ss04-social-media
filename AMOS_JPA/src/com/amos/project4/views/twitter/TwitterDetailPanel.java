@@ -155,7 +155,7 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 			// Get the ID from Database
 			List<TwitterData> tmp = c.getTwitterDatasByType(TwitterDataType.ID);
 			if(tmp != null && !tmp.isEmpty()){
-				this.ID_textField.setText(tmp.get(0).getDataString());
+				this.ID_textField.setText("" + tmp.get(0).getDataString());
 			}else{
 				this.ID_textField.setText("");
 			}
@@ -163,7 +163,7 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 			// Get the user Name
 			tmp = c.getTwitterDatasByType(TwitterDataType.TWITTER_NAME);
 			if(tmp != null && !tmp.isEmpty()){
-				this.twitterName_textField.setText(tmp.get(0).getDataString());
+				this.twitterName_textField.setText("@" + tmp.get(0).getDataString());
 			}else{
 				this.twitterName_textField.setText("");
 			}			

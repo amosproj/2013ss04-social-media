@@ -107,6 +107,39 @@ public class TwitterDataDAO {
 		}
 	}
 	
+	public synchronized boolean deleteTwitterDatas(Client client,TwitterDataType type){
+		if(client == null  || type == null) return false;
+		try{
+			List<TwitterData> datas = this.getAllTwitterDataOfClientByType(client.getID(), type);
+			for(TwitterData data : datas){
+				this.deleteTwitterData(data);
+			}
+			return true;
+		}catch(Exception e){
+			e.printStackTrace();
+			return false;
+		}finally{
+
+		}
+		
+//		if(client == null  || type == null) return false;
+//		try{
+//			em.getTransaction().begin();
+//			Client owner = em.find(Client.class, client.getID());
+//			Query q = em.createQuery("DELETE  FROM TwitterData d WHERE d.owner = :paramid and d.type = :paramtype");
+//			q.setParameter("paramid", owner);
+//			q.setParameter("paramtype", type.toString());
+//			int deleted = q.executeUpdate();
+//			em.getTransaction().commit();
+//			return true;
+//		}catch(Exception e){
+//			em.getTransaction().rollback();
+//			return false;
+//		}finally{
+//
+//		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	public synchronized boolean deleteAllTwitterData(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return false;

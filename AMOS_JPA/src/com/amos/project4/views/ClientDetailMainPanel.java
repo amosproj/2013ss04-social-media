@@ -174,11 +174,11 @@ public class ClientDetailMainPanel extends JPanel implements
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
-			name_textField.setText(c.getName());
-			firstnameTextField.setText(c.getFirstname());
+			name_textField.setText("" +c.getName());
+			firstnameTextField.setText("" + c.getFirstname());
 			birthdateTextField.setText("" + c.getBirthdate());
-			PlaceTextField.setText(c.getPlace());
-			emailTextField.setText(c.getMail());
+			PlaceTextField.setText("" +c.getPlace());
+			emailTextField.setText("" +c.getMail());
 		}
 	}
 

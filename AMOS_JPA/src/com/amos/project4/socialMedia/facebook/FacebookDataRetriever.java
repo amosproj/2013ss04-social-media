@@ -44,15 +44,11 @@ public class FacebookDataRetriever {
 		}
 	}
 	
-	public synchronized void deleteUserFacebookData(Client client){
-		if(client == null ) return;
-		List<FacebookData> datas = this.facebook_dao.getAllFacebookDataOfClient(client.getID());
-		for(FacebookData data : datas){
-			if(!data.getType().equalsIgnoreCase(FacebookDataType.UID.toString())){
-				this.facebook_dao.deleteFacebookData(data);
-			}
+	public synchronized void deleteUserFacebookData(Client client,FacebookDataType type){
+		if(client == null ) return;		
+		if(!type.toString().equalsIgnoreCase(FacebookDataType.UID.toString())){
+			this.facebook_dao.deleteFacebookDatas(client, type);
 		}
-		
 	}
 	
 	public synchronized void importFacebookData(User user,Client client, FacebookDataType type) {
@@ -100,13 +96,16 @@ public class FacebookDataRetriever {
 				List<com.restfb.types.User.Education> educations = user_.getEducation();
 				if(educations != null){
 					for(com.restfb.types.User.Education edu : educations){
-						saveFacebookData(client, edu.getDegree() +"#"+ edu.getYear()+"#"+edu.getSchool(), type);
+						String year = (edu.getYear() != null) ?edu.getYear().getName():" ";
+						String school = (edu.getSchool() != null) ? edu.getSchool().getName():" ";
+						String degree =  (edu.getDegree() != null) ? edu.getDegree().getName():" ";
+						saveFacebookData(client, degree +"#"+ year+"#"+school, type);
 					}
 				}				
 			}
 			return;
 		case PROFILE_PICTURE:
-			String query = "SELECT uid, pic FROM user WHERE uid="+client_facebook_ID;
+			String query = "SELECT uid, pic_big FROM user WHERE uid="+client_facebook_ID;
 			List<FqlObject> pics = facebook.executeFqlQuery(query, FqlObject.class);
 			if(pics != null && pics.size() > 0){
 				saveFacebookData(client, pics.get(0).pic_big, type);
@@ -129,7 +128,10 @@ public class FacebookDataRetriever {
 				List<com.restfb.types.User.Work> works = user_.getWork();
 				if(works != null){
 					for(com.restfb.types.User.Work work : works){
-						saveFacebookData(client, work.getPosition() + "#" +work.getEmployer() + "#" + work.getDescription(), type);
+						String position = work.getPosition()!= null?work.getPosition().getName():" ";
+						String employer = work.getEmployer() != null?work.getEmployer().getName():" ";
+						String description = work.getDescription() != null?work.getDescription():" ";
+						saveFacebookData(client, position + "#" +employer + "#" + description, type);
 					}
 				}				
 			}
@@ -141,7 +143,9 @@ public class FacebookDataRetriever {
 				for (FqlObject ev : events) {
 					try {
 						com.restfb.types.Event tmp = facebook.fetchObject(ev.eid, com.restfb.types.Event.class);
-						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getStartTime()+"#"+tmp.getEndTime()+"#"+tmp.getLocation()+"#"+tmp.getOwner()+"#"+tmp.getDescription(), type);
+						String location = tmp.getLocation() != null ? tmp.getLocation():" ";
+						String owner = tmp.getOwner() != null?tmp.getOwner().getName():" ";
+						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getStartTime()+"#"+tmp.getEndTime()+"#"+location+"#"+owner+"#"+tmp.getDescription(), type);
 						
 					} catch (Exception e) {
 						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + ev.eid );
@@ -152,13 +156,22 @@ public class FacebookDataRetriever {
 			}			
 			return;
 		case FRIENDS:
+			List<FqlObject> friends = null;
 			String queryf = "SELECT uid2 FROM friend WHERE uid1="+ client_facebook_ID;
-			List<FqlObject> friends = facebook.executeFqlQuery(queryf, FqlObject.class);
+			try{
+				friends = facebook.executeFqlQuery(queryf, FqlObject.class);
+			} catch (Exception e) {
+				System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() );
+				return;
+			}
+				
 			if(friends != null && friends.size() > 0){
 				for (FqlObject friend : friends) {
 					try{
 						com.restfb.types.User tmp = facebook.fetchObject(friend.uid2, com.restfb.types.User.class);
-						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getGender()+"#"+tmp.getLocation()+"#"+tmp.getAbout(), type);
+						String location = tmp.getLocation() != null ? tmp.getLocation().getName():" ";
+						String about = tmp.getAbout() != null ? tmp.getAbout():" ";
+						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getGender()+"#"+location+"#"+about, type);
 						
 					} catch (Exception e) {
 						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + friend.uid2 );
@@ -198,12 +211,20 @@ public class FacebookDataRetriever {
 		case MUTUAL_FRIENDS:
 			queryf = "SELECT uid, first_name, last_name, pic_small FROM user WHERE uid IN (     SELECT uid2     FROM friend     WHERE uid1 = me() ) " +
 							" AND uid IN (     SELECT uid2     FROM friend     WHERE uid1 = " + client_facebook_ID + " )";
-			friends = facebook.executeFqlQuery(queryf, FqlObject.class);
+			try{
+				friends = facebook.executeFqlQuery(queryf, FqlObject.class);
+			} catch (Exception e) {
+				System.err.println("Could not get Data from Facebook: Client ID = "+client_facebook_ID + " - Type : " + type.toString()  );
+				return;
+			}
+			
 			if(friends != null && friends.size() > 0){
 				for (FqlObject friend : friends) {
 					try{
 						com.restfb.types.User tmp = facebook.fetchObject(friend.uid, com.restfb.types.User.class);
-						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getGender()+"#"+tmp.getLocation()+"#"+tmp.getAbout(), type);
+						String location = tmp.getLocation() != null ? tmp.getLocation().getName():" ";
+						String about = tmp.getAbout() != null ? tmp.getAbout():" ";
+						saveFacebookData(client, tmp.getId()+"#"+tmp.getName()+"#"+tmp.getGender()+"#"+location+"#"+about, type);
 					} catch (Exception e) {
 						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + type.toString() + " ObjectID = " + friend.uid );
 					}					

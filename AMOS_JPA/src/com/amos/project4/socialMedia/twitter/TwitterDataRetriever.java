@@ -45,16 +45,17 @@ public class TwitterDataRetriever {
 		}
 	}
 	
-	public synchronized  void deleteUserTwitterData(Client client){
-		if(client == null ) return;
-		//this.twitter_dao.deleteAllTwitterData(client.getID());
-		List<TwitterData> datas = this.twitter_dao.getAllTwitterDataOfClient(client.getID());
-		for(TwitterData data : datas){
-			if(!data.getType().equalsIgnoreCase(TwitterDataType.TWITTER_NAME.toString())){
-				this.twitter_dao.deleteTwitterData(data);
-			}
+	public synchronized  void deleteUserTwitterData(Client client, TwitterDataType type){
+		if(client == null || type == null) return;		
+		if(!type.toString().equalsIgnoreCase(TwitterDataType.TWITTER_NAME.toString())){
+			this.twitter_dao.deleteTwitterDatas(client, type);
 		}
-		
+//		if(client == null || type == null) return;
+//		for(TwitterData data : client.getTwitter_datas()){
+//			if(data.getType().toString().equalsIgnoreCase(type.toString()) && !type.toString().equalsIgnoreCase(TwitterDataType.TWITTER_NAME.toString())){
+//				this.twitter_dao.deleteTwitterData(data);
+//			}
+//		}
 	}
 	
 	public synchronized  void importTwitterData(User user,Client client, TwitterDataType type) throws TwitterException{
@@ -70,7 +71,13 @@ public class TwitterDataRetriever {
 		
 		switch (type) {
 		case FRIENDS:
-			ResponseList<twitter4j.User> friends = twitter.getFriendsList(client_twitter_name, -1);
+			ResponseList<twitter4j.User> friends = null;
+			try{
+				friends = twitter.getFriendsList(client_twitter_name, -1);
+			}catch (Exception e) {
+				System.err.println("Access denied to get Friends: " + client_twitter_name);
+				return;
+			}
 			for(twitter4j.User t_user : friends){
 				saveTwitterData(client,t_user.getId()+ "#" +t_user.getScreenName(),TwitterDataType.FRIENDS);
 			}
@@ -92,7 +99,13 @@ public class TwitterDataRetriever {
 			}
 			return;
 		case TWEETS:
-			ResponseList<twitter4j.Status> tweets = twitter.getUserTimeline(client_twitter_name);
+			ResponseList<twitter4j.Status> tweets = null;
+			try{
+				tweets = twitter.getUserTimeline(client_twitter_name);
+			}catch (Exception e) {
+				System.err.println("Access denied to get Tweets : " + client_twitter_name);
+				return;
+			}
 			for(twitter4j.Status tweet : tweets){
 				saveTwitterData(client,tweet.getCreatedAt() + "#" + tweet.getText() ,TwitterDataType.TWEETS);				
 			}
