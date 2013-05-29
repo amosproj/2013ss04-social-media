@@ -26,9 +26,13 @@ public class TwitterPicturePanel extends JPanel implements AbstractControlledVie
 		super();
 		setBorder(new LineBorder(new Color(0, 0, 0)));
 		
-		URL url = this.getClass().getResource("/com/amos/project4/images/no_images.jpg");
+		//URL url = this.getClass().getResource("/com/amos/project4/images/no_images.jpg");
 		try {
-			 Image imgFondo = javax.imageio.ImageIO.read(new java.io.File(url.getPath()));
+			java.net.URL url = new URL("http://www.designofsignage.com/application/symbol/building/image/600x600/no-photo.jpg");//this.getClass().getResource("/com/amos/project4/images/no_images.jpg");
+			// Image imgFondo = javax.imageio.ImageIO.read(new java.io.File(url.getPath()));
+			 Image imgFondo = javax.imageio.ImageIO.read(url);
+//			java.net.URL url = new URL("http://static4.fjcdn.com/thumbnails/comments/3941921+_d4fa7c4a41bb29904ce79e8d1e201100.jpg");//this.getClass().getResource("/com/amos/project4/images/no_images.jpg");
+//			 Image imgFondo = javax.imageio.ImageIO.read(new java.io.File(url.getPath()));
 			 default_img = imgFondo.getScaledInstance(150, 150, Image.SCALE_DEFAULT);
 		} catch (IOException e) {
 			e.printStackTrace();

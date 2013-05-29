@@ -26,9 +26,10 @@ public class FacebookPicturePanel extends JPanel implements AbstractControlledVi
 		
 		setBorder(new LineBorder(new Color(0, 0, 0)));		
 		
-		URL url = this.getClass().getResource("/com/amos/project4/images/no_images.jpg");
 		try {
-			 Image imgFondo = javax.imageio.ImageIO.read(new java.io.File(url.getPath()));
+			java.net.URL url = new URL("http://www.designofsignage.com/application/symbol/building/image/600x600/no-photo.jpg");//this.getClass().getResource("/com/amos/project4/images/no_images.jpg");
+			// Image imgFondo = javax.imageio.ImageIO.read(new java.io.File(url.getPath()));
+			 Image imgFondo = javax.imageio.ImageIO.read(url);
 			 default_img = imgFondo.getScaledInstance(150, 150, Image.SCALE_DEFAULT);
 		} catch (IOException e) {
 			e.printStackTrace();
