@@ -34,7 +34,7 @@ import com.amos.project4.socialMedia.MediaConnectInterface;
 public class LinkedInConnect implements MediaConnectInterface {
 
 	private static final String ACCESS_TOKEN = "40d6f0c2-4bc2-4827-a610-7ccb6f11e9b3";
-	private static final String ACCESS_TOKEN_SECRET = "2f714f4a-ed24-4c16-92da-3b9efc95d2d2<";
+	private static final String ACCESS_TOKEN_SECRET = "2f714f4a-ed24-4c16-92da-3b9efc95d2d2";
 	
 	private static final String CONSUMER_KEY = "55z5wlqvr1lb";
 	private static final String CONSUMER_SECRET = "5RVgdcwrNcjbtiDZ";
@@ -72,7 +72,7 @@ public class LinkedInConnect implements MediaConnectInterface {
        .apiSecret(CONSUMER_SECRET)
        .build();
 		requestToken = service.getRequestToken();
-		accessToken = null;
+		accessToken = new Token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
 	}
 	
 	@Override
@@ -124,6 +124,19 @@ public class LinkedInConnect implements MediaConnectInterface {
 			//e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public Response makeRequest(String url, Boolean json){
+		OAuthRequest request = new OAuthRequest(Verb.GET, url);
+		if(json)
+			request.addHeader("x-li-format", "json");
+	    service.signRequest(accessToken, request);
+	    Response response = request.send();
+	    if(response.isSuccessful()){
+	    	return response;
+	    }else{
+	    	return null;
+	    }
 	}
 	
 }

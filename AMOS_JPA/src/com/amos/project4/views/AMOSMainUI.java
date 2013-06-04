@@ -56,6 +56,7 @@ import com.amos.project4.controllers.UserController;
 import com.amos.project4.models.Client;
 import com.amos.project4.views.facebook.FacebookDetailPanel;
 import com.amos.project4.views.twitter.TwitterDetailPanel;
+import com.amos.project4.views.xing.XingDetailPanel;
 
 public class AMOSMainUI {
 
@@ -414,7 +415,7 @@ public class AMOSMainUI {
 		twitterDetailPane = new TwitterDetailPanel(client_controller);
 		mediaPanes.addTab("Twitter", null, twitterDetailPane, null);
 		
-		JPanel xingPane = new JPanel();
+		JPanel xingPane = new XingDetailPanel(client_controller);
 		mediaPanes.addTab("Xing", null, xingPane, null);
 
 		JPanel linkedInPane = new JPanel();

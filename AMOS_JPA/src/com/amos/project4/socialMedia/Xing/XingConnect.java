@@ -71,7 +71,7 @@ public class XingConnect implements MediaConnectInterface {
         .apiSecret(CONSUMER_SECRET)
         .build();
 		requestToken = service.getRequestToken();
-		accessToken = null;
+		accessToken =  new Token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
 	}
 	
 	@Override
@@ -117,6 +117,9 @@ public class XingConnect implements MediaConnectInterface {
 			OAuthRequest request = new OAuthRequest(Verb.GET, PROTECTED_RESOURCE_URL);
 		    service.signRequest(aToken, request);
 		    Response response = request.send();
+		    if(response.isSuccessful()){
+		    	accessToken = aToken;
+		    }
 		    return response.isSuccessful();
 		}catch (Exception e) {
 			System.err.println("Wrong Xing access token.");
@@ -125,4 +128,14 @@ public class XingConnect implements MediaConnectInterface {
 		}
 	}
 	
+	public Response makeRequest(String url){
+		OAuthRequest request = new OAuthRequest(Verb.GET, url);
+	    service.signRequest(accessToken, request);
+	    Response response = request.send();
+	    if(response.isSuccessful()){
+	    	return response;
+	    }else{
+	    	return null;
+	    }
+	}
 }

@@ -5,6 +5,8 @@
 		<class>com.amos.project4.models.User</class>
 		<class>com.amos.project4.models.TwitterData</class>
 		<class>com.amos.project4.models.FacebookData</class>
+		<class>com.amos.project4.models.XingData</class>
+		<class>com.amos.project4.models.LinkedInData</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://faui2o2j.informatik.uni-erlangen.de:5432/ss13-proj4"/>
 			<property name="javax.persistence.jdbc.user" value="ss13-proj4"/>

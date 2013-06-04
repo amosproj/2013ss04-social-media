@@ -34,6 +34,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.amos.project4.socialMedia.LinkedIn.LinkedInDataType;
+import com.amos.project4.socialMedia.Xing.XingDataType;
 import com.amos.project4.socialMedia.facebook.FacebookDataType;
 import com.amos.project4.socialMedia.twitter.TwitterDataType;
 
@@ -85,6 +87,12 @@ public class Client implements Serializable {
 	
 	@OneToMany(mappedBy="owner")
 	private List<FacebookData> facebook_datas;
+	
+	@OneToMany(mappedBy="owner")
+	private List<XingData> xing_datas;
+	
+	@OneToMany(mappedBy="owner")
+	private List<LinkedInData> linkedin_datas;
 
 	public Client() {
 		super();
@@ -102,6 +110,8 @@ public class Client implements Serializable {
 		this.gender = gender;
 		this.twitter_datas = new ArrayList<TwitterData>();
 		this.facebook_datas = new ArrayList<FacebookData>();
+		this.xing_datas = new ArrayList<XingData>();
+		this.linkedin_datas = new ArrayList<LinkedInData>();
 	}
 
 	public synchronized Integer getID() {
@@ -175,11 +185,18 @@ public class Client implements Serializable {
 	public synchronized List<FacebookData> getFacebook_datas() {
 		return facebook_datas;
 	}
+	
+	public List<XingData> getXing_datas() {
+		return xing_datas;
+	}
+
+	public List<LinkedInData> getLinkedin_datas() {
+		return linkedin_datas;
+	}
 
 	/*-------------------------------------------------------------------------------------------------------*/
 	/*	Methods to map One to many relations
 	/*-------------------------------------------------------------------------------------------------------*/
-	
 
 	public synchronized void addTwitterData(TwitterData data){
 		if(getTwitter_datas().contains(data)){
@@ -203,6 +220,28 @@ public class Client implements Serializable {
 		getFacebook_datas().add(data);
 	}
 	
+	public synchronized void addXingData(XingData data){
+		if(getXing_datas().contains(data)){
+			getXing_datas().remove(data);
+			if(data.getOwner() != null){
+				data.getOwner().getTwitter_datas().remove(data);
+			}
+		}
+		data.setOwner(this);
+		getXing_datas().add(data);
+	}
+	
+	public synchronized void addLinkedInData(LinkedInData data){
+		if(getLinkedin_datas().contains(data)){
+			getLinkedin_datas().remove(data);
+			if(data.getOwner() != null){
+				data.getOwner().getTwitter_datas().remove(data);
+			}
+		}
+		data.setOwner(this);
+		getLinkedin_datas().add(data);
+	}
+	
 	public synchronized List<FacebookData> getFacebookDatasByType(FacebookDataType type) {
 		ArrayList<FacebookData> rslts = new ArrayList<FacebookData>();
 		for (FacebookData facebookData : this.facebook_datas) {
@@ -222,5 +261,26 @@ public class Client implements Serializable {
 		}
 		return rslts;
 	}
-
+	
+	public synchronized List<XingData> getXingDatasByType(XingDataType type) {
+		ArrayList<XingData> rslts = new ArrayList<XingData>();
+		for (XingData data : this.xing_datas) {
+			if(data.getType().equalsIgnoreCase(type.toString())){
+				rslts.add(data);
+			}
+		}
+		return rslts;
+	}
+	
+	public synchronized List<LinkedInData> getLinkedInDatasByType(LinkedInDataType type) {
+		ArrayList<LinkedInData> rslts = new ArrayList<LinkedInData>();
+		for (LinkedInData data : this.linkedin_datas) {
+			if(data.getType().equalsIgnoreCase(type.toString())){
+				rslts.add(data);
+			}
+		}
+		return rslts;
+	}
+	
+	
 }

@@ -36,6 +36,8 @@ import javax.swing.border.TitledBorder;
 import com.amos.project4.controllers.SocialMediaScanController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.User;
+import com.amos.project4.socialMedia.LinkedIn.LinkedInDataType;
+import com.amos.project4.socialMedia.Xing.XingDataType;
 import com.amos.project4.socialMedia.facebook.FacebookDataType;
 import com.amos.project4.socialMedia.twitter.TwitterDataType;
 
@@ -272,6 +274,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 					SpringLayout.NORTH, buttonPane);
 			{
 				chckbxContacts_1 = new JCheckBox("Contacts");
+				chckbxContacts_1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxContacts_1.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.CONTACTS);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.CONTACTS);		
+					}
+				});
 				sl_linkedInPanel
 						.putConstraint(SpringLayout.NORTH, chckbxContacts_1,
 								10, SpringLayout.NORTH, linkedInPanel);
@@ -281,6 +291,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxSpecialties = new JCheckBox("Current job");
+				chckbxSpecialties.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxSpecialties.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.CURRENT_JOB);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.CURRENT_JOB);		
+					}
+				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
 						chckbxSpecialties, 126, SpringLayout.NORTH,
 						linkedInPanel);
@@ -291,6 +309,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxCompany = new JCheckBox("Company");
+				chckbxCompany.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxCompany.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.COMPANY);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.COMPANY);		
+					}
+				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
 						chckbxCompany, 68, SpringLayout.NORTH, linkedInPanel);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
@@ -299,6 +325,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxJobTitle = new JCheckBox("Headline");
+				chckbxJobTitle.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxJobTitle.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.HEADLINES);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.HEADLINES);		
+					}
+				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
 						chckbxJobTitle, 39, SpringLayout.NORTH, linkedInPanel);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
@@ -307,6 +341,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxStatus = new JCheckBox("Status");
+				chckbxStatus.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxStatus.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.STATUS);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.STATUS);		
+					}
+				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
 						chckbxStatus, 97, SpringLayout.NORTH, linkedInPanel);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxStatus,
@@ -315,6 +357,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxPositions = new JCheckBox("Positions");
+				chckbxPositions.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxPositions.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.POSITIONS);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.POSITIONS);		
+					}
+				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
 						chckbxPositions, 6, SpringLayout.SOUTH,
 						chckbxSpecialties);
@@ -325,6 +375,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxInterests_1 = new JCheckBox("Interests");
+				chckbxInterests_1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxInterests_1.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.INTERESTS);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.INTERESTS);		
+					}
+				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
 						chckbxInterests_1, 6, SpringLayout.SOUTH,
 						chckbxPositions);
@@ -335,6 +393,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxEducation_1 = new JCheckBox("Education");
+				chckbxEducation_1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxEducation_1.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.EDUCATIONS);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.EDUCATIONS);		
+					}
+				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
 						chckbxEducation_1, 6, SpringLayout.SOUTH,
 						chckbxInterests_1);
@@ -345,6 +411,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxProfileViews = new JCheckBox("Profile views");
+				chckbxProfileViews.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxProfileViews.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.PROFILE_VIEWS);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.PROFILE_VIEWS);		
+					}
+				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
 						chckbxProfileViews, 6, SpringLayout.SOUTH,
 						chckbxEducation_1);
@@ -355,6 +429,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxPhoneNumber = new JCheckBox("Phone number");
+				chckbxPhoneNumber.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxPhoneNumber.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.PHONES_NUMBER);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.PHONES_NUMBER);		
+					}
+				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
 						chckbxPhoneNumber, 6, SpringLayout.SOUTH,
 						chckbxProfileViews);
@@ -365,6 +447,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxTwitterAccount = new JCheckBox("Twitter Account");
+				chckbxTwitterAccount.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxTwitterAccount.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.TWITTER_ACCOUNT);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.TWITTER_ACCOUNT);		
+					}
+				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
 						chckbxTwitterAccount, 6, SpringLayout.SOUTH,
 						chckbxPhoneNumber);
@@ -377,18 +467,42 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 					SpringLayout.NORTH, buttonPane);
 			{
 				chckbxBirthday_1 = new JCheckBox("Birthday");
+				chckbxBirthday_1.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxBirthday_1.isSelected())
+							model.addSelectedXingDataType(XingDataType.BIRTHDAY);
+						else
+							model.removeSelectedXingDataType(XingDataType.BIRTHDAY);	
+					}
+				});
 				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxBirthday_1,
 						10, SpringLayout.WEST, xingPanel);
 				xingPanel.add(chckbxBirthday_1);
 			}
 			{
 				chckbxContacts = new JCheckBox("Contacts");
+				chckbxContacts.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxContacts.isSelected())
+							model.addSelectedXingDataType(XingDataType.CONTACTS);
+						else
+							model.removeSelectedXingDataType(XingDataType.CONTACTS);	
+					}
+				});
 				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxContacts,
 						0, SpringLayout.WEST, chckbxBirthday_1);
 				xingPanel.add(chckbxContacts);
 			}
 			{
 				chckbxProfileMessage = new JCheckBox("ProfileMessage");
+				chckbxProfileMessage.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxProfileMessage.isSelected())
+							model.addSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
+						else
+							model.removeSelectedXingDataType(XingDataType.PROFILE_MESSAGE);	
+					}
+				});
 				sl_xingPanel.putConstraint(SpringLayout.NORTH,
 						chckbxProfileMessage, 6, SpringLayout.SOUTH,
 						chckbxContacts);
@@ -399,6 +513,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxCompan = new JCheckBox("Company");
+				chckbxCompan.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxCompan.isSelected())
+							model.addSelectedXingDataType(XingDataType.COMPANY);
+						else
+							model.removeSelectedXingDataType(XingDataType.COMPANY);	
+					}
+				});
 				sl_xingPanel.putConstraint(SpringLayout.SOUTH, chckbxCompan,
 						-328, SpringLayout.SOUTH, xingPanel);
 				sl_xingPanel.putConstraint(SpringLayout.NORTH, chckbxContacts,
@@ -411,6 +533,14 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			}
 			{
 				chckbxProfileVisits = new JCheckBox("Profile visits");
+				chckbxProfileVisits.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if(chckbxCompan.isSelected())
+							model.addSelectedXingDataType(XingDataType.PROFILE_VISITS);
+						else
+							model.removeSelectedXingDataType(XingDataType.PROFILE_VISITS);	
+					}
+				});
 				sl_xingPanel.putConstraint(SpringLayout.NORTH,
 						chckbxProfileVisits, 6, SpringLayout.SOUTH,
 						chckbxProfileMessage);
@@ -644,15 +774,13 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			{
 				JButton okButton = new JButton("Start");
 				okButton.addActionListener(new StartAction());
-				//okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 
 			{
-				JButton cancelButton = new JButton("Cancel");
+				JButton cancelButton = new JButton("Close");
 				cancelButton.addActionListener(new CancelAction());
-				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
 		}
