@@ -263,7 +263,7 @@ public class AMOSMainUI {
 
 		// Initialize the settings short cut
 		Vector<String> settingsMenu_vec = new TreeNodeVector<String>(
-				"Settings", new String[] { "Connection Settings" });
+				"Settings", new String[] { "Connection Settings", "Twitter Sentiment Settings" });
 
 		// Initialize the user menu short cut
 //		Vector<String> usersMenu_vec = new TreeNodeVector<String>("Users",
@@ -271,7 +271,7 @@ public class AMOSMainUI {
 
 		// Initialize the Social media menus short cut
 		Vector<String> socialsMenu_vec = new TreeNodeVector<String>("Social",
-				new String[] { "Search account", "Listen", "React" });
+				new String[] { "Twitter Social" });
 
 		// Initialize the Social media menus short cut
 		Vector<String> exitsMenu_vec = new TreeNodeVector<String>("Exit",
