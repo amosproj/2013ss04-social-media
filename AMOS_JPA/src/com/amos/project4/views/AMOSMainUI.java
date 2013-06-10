@@ -61,6 +61,8 @@ import com.amos.project4.views.xing.XingDetailPanel;
 
 public class AMOSMainUI {
 
+	//standard settings
+	
 	private JFrame frame;
 	JScrollPane clienTable_scrollPane;
 	private ClientTable tclients;
