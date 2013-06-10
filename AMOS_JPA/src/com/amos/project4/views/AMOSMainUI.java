@@ -263,7 +263,7 @@ public class AMOSMainUI {
 
 		// Initialize the settings short cut
 		Vector<String> settingsMenu_vec = new TreeNodeVector<String>(
-				"Settings", new String[] { "General Settings" });
+				"Settings", new String[] { "Connection Settings" });
 
 		// Initialize the user menu short cut
 //		Vector<String> usersMenu_vec = new TreeNodeVector<String>("Users",
