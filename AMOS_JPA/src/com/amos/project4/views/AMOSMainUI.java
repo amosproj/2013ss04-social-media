@@ -454,7 +454,7 @@ public class AMOSMainUI {
 		JMenu mnSettings = new JMenu("Settings");
 		menuBar.add(mnSettings);
 
-		JMenuItem mntmGenSetting = new JMenuItem("General Settings");
+		JMenuItem mntmGenSetting = new JMenuItem("Connection Settings");
 		mntmGenSetting.addActionListener(new GeneralsettingsAction());
 		mnSettings.add(mntmGenSetting);
 
