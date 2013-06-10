@@ -31,7 +31,6 @@ import javax.swing.border.TitledBorder;
 
 import com.amos.project4.controllers.ClientsController;
 import com.amos.project4.controllers.TwitterDataController;
-import com.amos.project4.controllers.XingDataController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.TwitterData;
 import com.amos.project4.socialMedia.twitter.TwitterDataType;

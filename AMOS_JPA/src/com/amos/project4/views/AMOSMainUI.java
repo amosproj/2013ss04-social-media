@@ -314,11 +314,18 @@ public class AMOSMainUI {
 
 		SpringLayout sl_panel_right_top = new SpringLayout();
 		panel_right_top.setLayout(sl_panel_right_top);
+		
+		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.addActionListener(new refreshchAction());
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH,	btnRefresh, 10, SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST,		btnRefresh, -5, SpringLayout.EAST, panel_right_top);
+		btnRefresh.setPreferredSize(new Dimension(75, 25));
+		panel_right_top.add(btnRefresh);
 
 		JButton btnCheckSocialMedia = new JButton("Check Social Media");
 		btnCheckSocialMedia.addActionListener(new SocialMediaScanAction());
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH,	btnCheckSocialMedia, 10, SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST,		btnCheckSocialMedia, -5, SpringLayout.EAST, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH,	btnCheckSocialMedia, 0, SpringLayout.NORTH, btnRefresh);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST,		btnCheckSocialMedia, -5, SpringLayout.WEST, btnRefresh);
 		btnCheckSocialMedia.setPreferredSize(new Dimension(150, 25));
 		panel_right_top.add(btnCheckSocialMedia);
 
@@ -333,7 +340,7 @@ public class AMOSMainUI {
 		
 		drop_down = new JComboBox(dd_input);
 		drop_down.addActionListener(new SearchCatListener());
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, drop_down, 0,	SpringLayout.NORTH, btnCheckSocialMedia);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, drop_down, 10, SpringLayout.NORTH, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.WEST, drop_down, 10,	SpringLayout.WEST, panel_right_top);
 		//sl_panel_right_top.putConstraint(SpringLayout.SOUTH, drop_down, 30,	SpringLayout.NORTH, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.EAST, drop_down, 150,	SpringLayout.WEST, panel_right_top);
@@ -355,8 +362,7 @@ public class AMOSMainUI {
 				client_result_panel, 0, SpringLayout.WEST, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.SOUTH,
 				client_result_panel, -10, SpringLayout.SOUTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST,
-				client_result_panel, 0, SpringLayout.EAST, btnCheckSocialMedia);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST,	client_result_panel, -5, SpringLayout.EAST, panel_right_top);
 		panel_right_top.add(client_result_panel);
 
 //		JList list = new JList();
@@ -488,6 +494,16 @@ public class AMOSMainUI {
 	private void makeSimpleSearch(){
 		search_params.setSearchCat(drop_down.getSelectedIndex());
 		search_params.setSearchText(search_textField.getText());
+		tclients.clearSelection();
+		tclients.getModel().fireTableDataChanged();
+		clienTable_scrollPane.invalidate();
+		clienTable_scrollPane.revalidate();
+		frame.repaint();
+	}
+	
+	private void makeRefresh(){
+		search_params.refresh();
+		tclients.clearSelection();
 		tclients.getModel().fireTableDataChanged();
 		clienTable_scrollPane.invalidate();
 		clienTable_scrollPane.revalidate();
@@ -497,6 +513,7 @@ public class AMOSMainUI {
 	private void makeSearchWithCat(){
 		search_params.setSearchCat(drop_down.getSelectedIndex());
 		tclients.getModel().fireTableDataChanged();
+		tclients.clearSelection();
 		clienTable_scrollPane.invalidate();
 		clienTable_scrollPane.revalidate();
 		frame.repaint();
@@ -558,6 +575,12 @@ public class AMOSMainUI {
 	private class searchAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			makeSimpleSearch();
+		}
+	}
+	
+	private class refreshchAction implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			makeRefresh();
 		}
 	}
 

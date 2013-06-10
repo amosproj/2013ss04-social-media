@@ -43,6 +43,7 @@ import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInConnect;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInDataRetriever;
+import com.amos.project4.socialMedia.LinkedIn.LinkedInDataType;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInPositions;
 import com.google.gson.Gson;
 
@@ -57,6 +58,8 @@ public class LinkedInTest {
 	InputSource is;
 	DocumentBuilder db;
 	
+	String linkedIn_id = "";
+	
 	@Before
 	public void setUp() throws Exception {
 		connect = LinkedInConnect.getInstance();
@@ -69,6 +72,7 @@ public class LinkedInTest {
 		retriever.init(user);
 		cdao = ClientDAO.getInstance();
 		client = cdao.getclient(new Integer(221));
+		linkedIn_id = retriever.getLinkedInIDofUser(user, client);
 	}
 
 	@Test
@@ -118,8 +122,6 @@ public class LinkedInTest {
 		//System.out.println(res.getBody());
 		is.setCharacterStream(new StringReader(res.getBody()));
 	    Document doc = db.parse(is);
-		String total = doc.getElementsByTagName("educations").item(0).getAttributes().getNamedItem("total").getTextContent();
-		//System.out.println(total);
 	    NodeList nl = doc.getElementsByTagName("education");
 	    for (int i = 0; i < nl.getLength(); i++) {
 			Node node = nl.item(i);
@@ -133,9 +135,72 @@ public class LinkedInTest {
 		//System.out.println(res.getBody());
 		is.setCharacterStream(new StringReader(res.getBody()));
 	    Document doc = db.parse(is);
-		String total = doc.getElementsByTagName("connections").item(0).getAttributes().getNamedItem("total").getTextContent();
-		//System.out.println(total);
 	    NodeList nl = doc.getElementsByTagName("education");
+	    for (int i = 0; i < nl.getLength(); i++) {
+			Node node = nl.item(i);
+			System.out.println(node.toString());
+		}
+	}
+	
+	@Test
+	public void testMetwitterAccount() throws SAXException, IOException{
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,primary-twitter-account)", false);
+		//System.out.println(res.getBody());
+		is.setCharacterStream(new StringReader(res.getBody()));
+		Document doc = db.parse(is);
+	    NodeList nl = doc.getElementsByTagName("primary-twitter-account");
+	    for (int i = 0; i < nl.getLength(); i++) {
+			Node node = nl.item(i);
+			System.out.println(node.toString());
+		}
+	}
+	
+	@Test
+	public void testMeProfilePicture() throws SAXException, IOException, ParserConfigurationException {
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,picture-url)", false);
+		//System.out.println(res.getBody());
+		is.setCharacterStream(new StringReader(res.getBody()));
+	    Document doc = db.parse(is);
+	    NodeList nl = doc.getElementsByTagName("picture-url");
+	    for (int i = 0; i < nl.getLength(); i++) {
+			Node node = nl.item(i);
+			System.out.println(node.toString());
+		}
+	}
+	
+	@Test
+	public void testMeProfileURL() throws SAXException, IOException, ParserConfigurationException {
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,public-profile-url)", false);
+		//System.out.println(res.getBody());
+		is.setCharacterStream(new StringReader(res.getBody()));
+	    Document doc = db.parse(is);
+	    NodeList nl = doc.getElementsByTagName("public-profile-url");
+	    for (int i = 0; i < nl.getLength(); i++) {
+			Node node = nl.item(i);
+			System.out.println(node.toString());
+		}
+	}
+	
+	@Test
+	public void testMeInterests() throws SAXException, IOException, ParserConfigurationException {
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,interests)", false);
+		//System.out.println(res.getBody());
+		is.setCharacterStream(new StringReader(res.getBody()));
+	    Document doc = db.parse(is);
+	    NodeList nl = doc.getElementsByTagName("interests");
+	    for (int i = 0; i < nl.getLength(); i++) {
+			Node node = nl.item(i);
+			System.out.println(node.toString());
+		}
+	}
+	
+	@Test
+	public void testMePhonesNumbers() throws SAXException, IOException, ParserConfigurationException {
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,phone-numbers)", false);
+		//System.out.println(res.getBody());
+		is.setCharacterStream(new StringReader(res.getBody()));
+	    Document doc = db.parse(is);
+	    NodeList nl = doc.getElementsByTagName("phone-numbers");
 	    for (int i = 0; i < nl.getLength(); i++) {
 			Node node = nl.item(i);
 			System.out.println(node.toString());
@@ -146,6 +211,79 @@ public class LinkedInTest {
 		Gson gson = new Gson();
 		return gson.fromJson(body, LinkedInPositions.class);		
 	}
+	
+	@Test
+	public void testLinkedInID() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.ID );
+		retriever.importLinkedInData(user, client, LinkedInDataType.ID,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInCOMPANY() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.COMPANY);
+		retriever.importLinkedInData(user, client, LinkedInDataType.COMPANY,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInHEADLINES() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.HEADLINES );
+		retriever.importLinkedInData(user, client, LinkedInDataType.HEADLINES,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInCURRENT_JOB() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.CURRENT_JOB );
+		retriever.importLinkedInData(user, client, LinkedInDataType.CURRENT_JOB,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInPOSITIONS() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.POSITIONS );
+		retriever.importLinkedInData(user, client, LinkedInDataType.POSITIONS,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInEDUCATIONS() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.EDUCATIONS );
+		retriever.importLinkedInData(user, client, LinkedInDataType.EDUCATIONS,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInCONTACTS() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.CONTACTS );
+		retriever.importLinkedInData(user, client, LinkedInDataType.CONTACTS,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInTWITTER_ACCOUNT() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.TWITTER_ACCOUNT );
+		retriever.importLinkedInData(user, client, LinkedInDataType.TWITTER_ACCOUNT,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInPHONES_NUMBER() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.PHONES_NUMBER );
+		retriever.importLinkedInData(user, client, LinkedInDataType.PHONES_NUMBER,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInPROFILE_PICTURES() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.PROFILE_PICTURES );
+		retriever.importLinkedInData(user, client, LinkedInDataType.PROFILE_PICTURES,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInINTERESTS() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.INTERESTS );
+		retriever.importLinkedInData(user, client, LinkedInDataType.INTERESTS,linkedIn_id);
+	}
+	
+	@Test
+	public void testLinkedInPROFILE_URL() throws SAXException, IOException  {
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.PROFILE_URL );
+		retriever.importLinkedInData(user, client, LinkedInDataType.PROFILE_URL,linkedIn_id);
+	}
+	
 	
 
 }

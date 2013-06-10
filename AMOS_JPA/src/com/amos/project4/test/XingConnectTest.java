@@ -47,6 +47,7 @@ public class XingConnectTest {
 	ClientDAO cdao;
 	User user;
 	Client client;
+	String xing_id;
 	@Before
 	public void setUp() throws Exception {
 		connect = XingConnect.getInstance();
@@ -56,6 +57,7 @@ public class XingConnectTest {
 		retriever.init(user);
 		cdao = ClientDAO.getInstance();
 		client = cdao.getclient(new Integer(221));
+		xing_id = retriever.importXingIDofUser(user, client);
 	}
 
 	@Test
@@ -100,43 +102,43 @@ public class XingConnectTest {
 	@Test
 	public void testXingRetrieverBirthday()  {
 		retriever.deleteUserXingData(client,XingDataType.BIRTHDAY );
-		retriever.importXingData(user, client, XingDataType.BIRTHDAY);
+		retriever.importXingData(user, client, XingDataType.BIRTHDAY,xing_id);
 	}
 	
 	@Test
 	public void testXingRetrieverID()  {
 		retriever.deleteUserXingData(client,XingDataType.ID );
-		retriever.importXingData(user, client, XingDataType.ID);
+		retriever.importXingData(user, client, XingDataType.ID,xing_id);
 	}
 	
 	@Test
 	public void testXingRetrieverProfileMessage()  {
 		retriever.deleteUserXingData(client,XingDataType.PROFILE_MESSAGE );
-		retriever.importXingData(user, client, XingDataType.PROFILE_MESSAGE);
+		retriever.importXingData(user, client, XingDataType.PROFILE_MESSAGE,xing_id);
 	}
 	
 	@Test
 	public void testXingRetrieverCompany()  {
 		retriever.deleteUserXingData(client,XingDataType.COMPANY );
-		retriever.importXingData(user, client, XingDataType.COMPANY);
+		retriever.importXingData(user, client, XingDataType.COMPANY,xing_id);
 	}
 	
 	@Test
 	public void testXingRetrieverContacts()  {
 		retriever.deleteUserXingData(client,XingDataType.CONTACTS );
-		retriever.importXingData(user, client, XingDataType.CONTACTS);
+		retriever.importXingData(user, client, XingDataType.CONTACTS,xing_id);
 	}
 	
 	@Test
 	public void testXingRetrieverProfileVisits()  {
 		retriever.deleteUserXingData(client,XingDataType.PROFILE_VISITS);
-		retriever.importXingData(user, client, XingDataType.PROFILE_VISITS);
+		retriever.importXingData(user, client, XingDataType.PROFILE_VISITS,xing_id);
 	}
 	
 	@Test
 	public void testXingRetrieverPermalink()  {
 		retriever.deleteUserXingData(client,XingDataType.PERMALINK);
-		retriever.importXingData(user, client, XingDataType.PERMALINK);
+		retriever.importXingData(user, client, XingDataType.PERMALINK,xing_id);
 	}
 	
 	

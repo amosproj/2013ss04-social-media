@@ -232,7 +232,11 @@ public class XingDetailPanel extends JPanel implements AbstractControlledView {
 			// Get the Company from Database
 			 tmp =	 c.getXingDatasByType(XingDataType.COMPANY);
 			 if(tmp != null && !tmp.isEmpty()){
-				 this.txtCompany.setText("" + tmp.get(0).getDataString());
+				if(tmp.get(0).getDataString().contains("#")){
+					this.txtCompany.setText("" + (tmp.get(0).getDataString().split("#"))[0]);
+				}else{
+					this.txtCompany.setText("" + (tmp.get(0).getDataString()));
+				}				 
 			 }else{
 				 this.txtCompany.setText("");
 			 }

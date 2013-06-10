@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -36,6 +37,8 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SpringLayout;
 import javax.swing.SwingWorker;
+
+import org.xml.sax.SAXException;
 
 import com.amos.project4.controllers.SocialMediaScanController;
 import com.amos.project4.models.Client;
@@ -262,6 +265,18 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
     		}
 	    	for (int j = 0; j < clients.size() && X_COUNT > 0; j++) {
 	    		Client client = clients.get(j);
+	    		String xing_id = null;
+	    		try{
+	    			xing_id = controller.getX_retriever().importXingIDofUser(user, client);
+	    		}catch (Exception e) {
+						e.printStackTrace();
+				}
+	    		if(xing_id == null || xing_id.isEmpty()){
+	    			step = step + 2*X_COUNT;
+	    			makeMessage("Unable to get Xing ID of Client : "+client.getFirstname() + " " + client.getName() +"...",1);
+	    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    			continue;
+	    		}
 	 
 	    		// Scan relatives Datas		    		
 	    		for (int i = 0; i < x_types.size(); i++) {
@@ -273,12 +288,12 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));			    		
 		    		
 		    			makeMessage("Scanning Xing " + x_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
-			    		controller.getX_retriever().importXingData(user, client, x_types.get(i));
+			    		controller.getX_retriever().importXingData(user, client, x_types.get(i),xing_id);
 			    		step += 1;
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));
 	    			}catch (Exception e) {
 			    		e.printStackTrace();
-			    		makeMessage("An Error occurs while scanning Twitter data:"+client.getFirstname() + " " + client.getName() , 1);
+			    		makeMessage("An Error occurs while scanning Xing data:"+client.getFirstname() + " " + client.getName() , 1);
 			    		continue;
 					}
 				}
@@ -286,13 +301,27 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    	
 	    	setProgress((int)Math.min(100 * (step/ TOTAL), 100));
 	    	
-	    	// Import Xing Datas
+	    	// Import Linked Datas
 	    	title_lbl.setText("Scanning LinkedIn ...");
 	    	if(!controller.getL_retriever().init(user)){
 	    		makeMessage("Unable to make a connection with LinkedIn. \nPlease verify your settings in the General Setting menu",1);
     		}
 	    	for (int j = 0; j < clients.size() && L_COUNT > 0; j++) {
 	    		Client client = clients.get(j);
+	    		
+	    		String linkedIn_id = null;
+				try {
+					linkedIn_id = controller.getL_retriever().getLinkedInIDofUser(user, client);
+				} catch (SAXException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	    		if(linkedIn_id == null || linkedIn_id.isEmpty()){
+	    			step+=  2*L_COUNT;
+	    			makeMessage("Unable to get LinkedIn ID of Client : "+client.getFirstname() + " " + client.getName() +"...",1);
+	    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    			continue;
+	    		}
 	 
 	    		// Scan relatives Datas		    		
 	    		for (int i = 0; i < l_types.size(); i++) {
@@ -303,13 +332,13 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 		    		
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));			    		
 		    		
-		    			makeMessage("Scanning Linked " + l_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
-			    		controller.getL_retriever().importLinkedInData(user, client, l_types.get(i));
+		    			makeMessage("Scanning LinkedIn " + l_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
+			    		controller.getL_retriever().importLinkedInData(user, client, l_types.get(i),linkedIn_id);
 			    		step += 1;
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));
 	    			}catch (Exception e) {
 			    		e.printStackTrace();
-			    		makeMessage("An Error occurs while scanning Twitter data:"+client.getFirstname() + " " + client.getName() , 1);
+			    		makeMessage("An Error occurs while scanning Linked data:"+client.getFirstname() + " " + client.getName() , 1);
 			    		continue;
 					}
 				}

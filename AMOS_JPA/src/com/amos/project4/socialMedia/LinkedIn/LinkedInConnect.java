@@ -135,6 +135,7 @@ public class LinkedInConnect implements MediaConnectInterface {
 	    if(response.isSuccessful()){
 	    	return response;
 	    }else{
+	    	System.out.println(response.getMessage());
 	    	return null;
 	    }
 	}

@@ -54,4 +54,8 @@ public class SearchParameters extends AbstractViewModel {
 	public int getSearch_cat() {
 		return search_cat;
 	}
+	
+	public void refresh(){
+		this.fireChange("NEW SEARCH", this, this);
+	}
 }

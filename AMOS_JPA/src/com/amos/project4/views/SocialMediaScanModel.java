@@ -19,12 +19,8 @@
 package com.amos.project4.views;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
-import com.amos.project4.models.XingData;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInDataType;
 import com.amos.project4.socialMedia.Xing.XingDataType;
 import com.amos.project4.socialMedia.facebook.FacebookDataType;

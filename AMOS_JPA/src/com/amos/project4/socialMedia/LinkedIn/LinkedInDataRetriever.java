@@ -90,8 +90,8 @@ public class LinkedInDataRetriever {
 		}
 	}
 	
-	public synchronized  void importLinkedInData(User user,Client client, LinkedInDataType type) throws SAXException, IOException{
-		if(user == null || client == null) return;
+	public String getLinkedInIDofUser(User user,Client client) throws SAXException, IOException{
+		if(user == null || client == null) return "";
 		String url_request = "";
 		Response response = null;
 		
@@ -114,9 +114,18 @@ public class LinkedInDataRetriever {
 			linkedIn_id = account.get(0).getDataString();
 		}
 		
+		return linkedIn_id;
+		
+	}
+	
+	public synchronized  void importLinkedInData(User user,Client client, LinkedInDataType type, String linkedIn_id) throws SAXException, IOException{
+		if(user == null || client == null) return ;
+		String url_request = "";
+		Response response = null;
+		
 		switch (type) {
 		case ID:			
-			break;
+			return;
 		case COMPANY:
 			url_request = "http://api.linkedin.com/v1/people/id="+ linkedIn_id +"/positions";
 			response = this.connector.makeRequest(url_request, true);
@@ -226,6 +235,79 @@ public class LinkedInDataRetriever {
 						
 						saveLinkedInData(client, id_ + "#" + first_name_ + "#" + last_name_, type);
 					}
+				}
+			}
+			return;
+		case TWITTER_ACCOUNT:
+			url_request = "http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,primary-twitter-account)";
+			response = this.connector.makeRequest(url_request, false);
+			if(response != null && response.isSuccessful()){
+				is.setCharacterStream(new StringReader(response.getBody()));
+			    Document doc = db.parse(is);
+			    String tmp = doc.getElementsByTagName("primary-twitter-account").getLength()>0?doc.getElementsByTagName("primary-twitter-account").item(0).getTextContent():null;			    
+				if(tmp != null && !tmp.isEmpty()){
+					saveLinkedInData(client, tmp, type);
+				}
+			};
+			return;
+		case INTERESTS:
+			url_request = "http://api.linkedin.com/v1/people/id="+ linkedIn_id + ":(id,interests)";
+			response = this.connector.makeRequest(url_request, false);
+			if(response != null && response.isSuccessful()){
+				is.setCharacterStream(new StringReader(response.getBody()));
+			    Document doc = db.parse(is);
+			    String tmp = doc.getElementsByTagName("interests").getLength()>0?doc.getElementsByTagName("interests").item(0).getTextContent():null;			    
+				if(tmp != null && !tmp.isEmpty()){
+					saveLinkedInData(client, tmp, type);
+				}
+			}
+			return;
+		case PHONES_NUMBER:
+			url_request = "http://api.linkedin.com/v1/people/id="+linkedIn_id+":(id,phone-numbers)";
+			response = this.connector.makeRequest(url_request, true);
+			if(response != null && response.isSuccessful()){
+				is.setCharacterStream(new StringReader(response.getBody()));
+			    Document doc = db.parse(is);
+				String total = doc.getElementsByTagName("phone-numbers").item(0).getAttributes().getNamedItem("total").getTextContent();
+				if(Integer.parseInt(total) > 0){
+				    NodeList nl = doc.getElementsByTagName("phone-number");
+				    for (int i = 0; i < nl.getLength(); i++) {
+						Node number = nl.item(i);
+						Node n_type = number.getChildNodes().item(0);
+						String n_type_ = n_type.getTextContent();
+						
+						Node n_number = number.getChildNodes().item(1);
+						String n_number__ = n_number.getTextContent();
+						
+						saveLinkedInData(client, n_type_ + ":" + n_number__ , type);
+					}
+				}
+			}
+			return;
+		case PROFILE_VIEWS:
+			break;
+		case PROFILE_PICTURES:
+			url_request = "http://api.linkedin.com/v1/people/id="+ linkedIn_id + ":(id,picture-url)";
+			response = this.connector.makeRequest(url_request, false);
+			if(response != null && response.isSuccessful()){
+				is.setCharacterStream(new StringReader(response.getBody()));
+			    Document doc = db.parse(is);
+			    String tmp = doc.getElementsByTagName("picture-url").getLength()>0?doc.getElementsByTagName("picture-url").item(0).getTextContent():null;			    
+				if(tmp != null && !tmp.isEmpty()){
+					saveLinkedInData(client, tmp, type);
+				}
+			}
+			return;
+		case PROFILE_URL:
+			url_request = "http://api.linkedin.com/v1/people/id="+ linkedIn_id + ":(id,public-profile-url)";
+			response = this.connector.makeRequest(url_request, false);
+			if(response != null && response.isSuccessful()){
+				is.setCharacterStream(new StringReader(response.getBody()));
+			    Document doc = db.parse(is);
+			    String profile_url = doc.getElementsByTagName("public-profile-url").getLength()>0?doc.getElementsByTagName("public-profile-url").item(0).getTextContent():null;
+			    
+				if(profile_url != null && !profile_url.isEmpty()){
+					saveLinkedInData(client, profile_url, type);
 				}
 			}
 			return;

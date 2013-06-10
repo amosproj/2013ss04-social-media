@@ -31,6 +31,7 @@ import com.amos.project4.socialMedia.Xing.XingProfileMessage.XingMessage;
 import com.amos.project4.socialMedia.Xing.XingProfileVisits.Visit;
 import com.amos.project4.socialMedia.Xing.XingUser.Company;
 import com.amos.project4.socialMedia.Xing.XingUser.Date;
+import com.amos.project4.socialMedia.Xing.XingUserSearchResult.XingUserId;
 import com.google.gson.Gson;
 
 public class XingDataRetriever {
@@ -74,29 +75,36 @@ public class XingDataRetriever {
 		}
 	}
 	
-	public synchronized  void importXingData(User user,Client client, XingDataType type){
-		if(user == null || client == null) return;
+	public String importXingIDofUser(User user,Client client){
+			if(user == null || client == null) return "";
+			String url_request = "";
+			Response response = null;
+			
+			List<XingData> account = this.Xing_dao.getAllXingDataOfClientByType(client.getID(),XingDataType.ID);
+			String xing_id = "";
+			if(account == null || account.size() == 0 ){
+				url_request = "https://api.xing.com/v1/users/find_by_emails?emails="+ client.getMail();
+				response = this.connector.makeRequest(url_request);
+				if(response != null && response.isSuccessful()){
+					XingUserSearchResult results = parseSearchresults(response.getBody());
+					if(results != null && results.getResults().getTotal() > 0){
+						XingUserId rslt = results.getResults().getItems().get(0).getUser();
+						if(rslt != null){
+							saveXingData(client, ""+rslt.getId(), XingDataType.ID);
+							xing_id = ""+rslt.getId();
+						}
+					}
+				}
+			}else{
+				xing_id = account.get(0).getDataString();
+			}		
+			return xing_id;
+	}
+	
+	public synchronized  void importXingData(User user,Client client, XingDataType type,String xing_id){
 		String url_request = "";
 		Response response = null;
 		
-		List<XingData> account = this.Xing_dao.getAllXingDataOfClientByType(client.getID(),XingDataType.ID);
-		String xing_id = "";
-		if(account == null || account.size() == 0 ){
-			url_request = "https://api.xing.com/v1/users/find_by_emails?emails="+ client.getMail();
-			response = this.connector.makeRequest(url_request);
-			if(response != null && response.isSuccessful()){
-				XingUserSearchResult results = parseSearchresults(response.getBody());
-				if(results != null && results.getResults().getTotal() > 0){
-					saveXingData(client, ""+results.getResults().getItems().get(0).getUser().getId(), XingDataType.ID);
-					xing_id = ""+results.getResults().getItems().get(0).getUser().getId();
-				}
-			}
-		}else{
-			xing_id = account.get(0).getDataString();
-		}
-		
-		if(xing_id == null || xing_id.isEmpty()) return;
-	
 		switch (type) {
 		case ID:
 //			url_request = "https://api.xing.com/v1/users/find_by_emails?emails="+ client.getMail();
