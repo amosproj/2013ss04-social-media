@@ -53,6 +53,8 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 		super();
 		this.c_controller = c_controller;
 		this.c_controller.addView(this);
+		this.controller = new TwitterDataController();
+		this.controller.addView(this);
 		init();		
 	}
 
@@ -169,7 +171,7 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
-			
+			controller.setSelected_client(c);
 			// Get the ID from Database
 			List<TwitterData> tmp = c.getTwitterDatasByType(TwitterDataType.ID);
 			if(tmp != null && !tmp.isEmpty()){

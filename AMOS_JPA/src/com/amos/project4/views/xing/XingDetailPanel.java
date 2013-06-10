@@ -55,6 +55,8 @@ public class XingDetailPanel extends JPanel implements AbstractControlledView {
 		super();
 		this.c_controller = c_controller;
 		this.c_controller.addView(this);
+		this.controller = new XingDataController();
+		this.controller.addView(this);
 		init();
 	}
 
@@ -211,7 +213,7 @@ public class XingDetailPanel extends JPanel implements AbstractControlledView {
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
-
+			controller.setSelected_client(c);
 			
 			 // Get the ID from Database
 			 List<XingData> tmp =	 c.getXingDatasByType(XingDataType.ID);

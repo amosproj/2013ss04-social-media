@@ -279,7 +279,7 @@ public class LinkedInDataRetriever {
 						Node n_number = number.getChildNodes().item(1);
 						String n_number__ = n_number.getTextContent();
 						
-						saveLinkedInData(client, n_type_ + ":" + n_number__ , type);
+						saveLinkedInData(client, n_type_ + "#" + n_number__ , type);
 					}
 				}
 			}
