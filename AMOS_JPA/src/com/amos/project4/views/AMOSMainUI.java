@@ -547,7 +547,7 @@ public class AMOSMainUI {
 				logout();
 			} else if (item.equalsIgnoreCase("Exit application")) {
 				exit();
-			} else if (item.equalsIgnoreCase("General Settings")) {
+			} else if (item.equalsIgnoreCase("Connection Settings")) {
 				showGeneralsettingDialog();
 			} else {
 				System.out.println("" + obj.toString());

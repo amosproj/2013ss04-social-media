@@ -49,39 +49,39 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 	private JPanel twitterPanel;
 	private JPanel xingPanel;
 	private JPanel linkedInPanel;
-	private JCheckBox chckbxBirthday;
-	private JCheckBox chckbxEducation;
-	private JCheckBox chckbxNewCheckBox_2;
-	private JCheckBox chckbxEvents;
-	private JCheckBox chckbxInterests;
-	private JCheckBox chckbxFriends;
-	private JCheckBox chckbxMutualFriends;
-	private JCheckBox chckbxProfilePicture;
-	private JCheckBox chckbxTwitterName;
-	private JCheckBox chckbxId;
-	private JCheckBox chckbxTweets;
-	private JCheckBox checkBox;
-	private JCheckBox chckbxBirthday_1;
-	private JCheckBox chckbxContacts;
-	private JCheckBox chckbxProfileMessage;
-	private JCheckBox chckbxCompan;
+	private JCheckBox FchckbxBirthday;
+	private JCheckBox FchckbxEducation;
+	private JCheckBox FchckbxWork;
+	private JCheckBox FchckbxEvents;
+	private JCheckBox FchckbxInterests;
+	private JCheckBox FchckbxFriends;
+	private JCheckBox FchckbxMutualFriends;
+	private JCheckBox FchckbxProfilePicture;
+	private JCheckBox TchckbxTwitterName;
+	private JCheckBox TchckbxId;
+	private JCheckBox TchckbxTweets;
+	private JCheckBox TchckbxFriends;
+	private JCheckBox XchckbxBirthday;
+	private JCheckBox XchckbxContacts;
+	private JCheckBox XchckbxProfileMessage;
+	private JCheckBox XchckbxCompany;
 	private SpringLayout sl_xingPanel;
-	private JCheckBox chckbxProfileVisits;
-	private JCheckBox chckbxContacts_1;
-	private JCheckBox chckbxSpecialties;
-	private JCheckBox chckbxCompany;
-	private JCheckBox chckbxJobTitle;
-	private JCheckBox chckbxStatus;
+	private JCheckBox XchckbxProfileVisits;
+	private JCheckBox LchckbxContacts;
+	private JCheckBox LchckbxSpecialties;
+	private JCheckBox LchckbxCompany;
+	private JCheckBox LchckbxJobTitle;
+	private JCheckBox LchckbxStatus;
 	private SpringLayout sl_linkedInPanel;
-	private JCheckBox chckbxPositions;
-	private JCheckBox chckbxInterests_1;
-	private JCheckBox chckbxEducation_1;
-	private JCheckBox chckbxProfileViews;
-	private JCheckBox chckbxPhoneNumber;
-	private JCheckBox chckbxTwitterAccount;
-	private JCheckBox chckbxUsername;
-	private JCheckBox chckbxTrends;
-	private JCheckBox chckbxPicture;
+	private JCheckBox LchckbxPositions;
+	private JCheckBox LchckbxInterests;
+	private JCheckBox LchckbxEducation;
+	private JCheckBox LchckbxProfileViews;
+	private JCheckBox LchckbxPhoneNumber;
+	private JCheckBox LchckbxTwitterAccount;
+	private JCheckBox FchckbxUsername;
+	private JCheckBox TchckbxTrends;
+	private JCheckBox TchckbxPicture;
 	
 	private SocialMediaScanModel model;
 	private SocialMediaScanController controller;
@@ -89,9 +89,9 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 	private User user;
 	private List<Client> clients;
 	
-	private JCheckBox chckbxNewCheckBox_1;
-	private JCheckBox chckbxNewCheckBox;
-	private AbstractButton chckbxRelationship;
+	private JCheckBox FchckbxBiography;
+	private JCheckBox FchckbxLastPost;
+	private AbstractButton FchckbxRelationship;
 	
 	private JFrame frame;
 	
@@ -134,8 +134,6 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 		{
 			twitterPanel = new JPanel();
 			springLayout.putConstraint(SpringLayout.WEST, twitterPanel, 5, SpringLayout.EAST, facebookPanel);
-			springLayout.putConstraint(SpringLayout.SOUTH, twitterPanel, -39,
-					SpringLayout.SOUTH, getContentPane());
 			springLayout.putConstraint(SpringLayout.EAST, twitterPanel, -327, SpringLayout.EAST, getContentPane());
 			twitterPanel.setBorder(new TitledBorder(null, "Twitter",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -154,100 +152,106 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			SpringLayout sl_twitterPanel = new SpringLayout();
 			twitterPanel.setLayout(sl_twitterPanel);
 			{
-				chckbxTwitterName = new JCheckBox("Twitter name");
-				chckbxTwitterName.addActionListener(new ActionListener() {
+				TchckbxTwitterName = new JCheckBox("Twitter name");
+				TchckbxTwitterName.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxTwitterName.isSelected())
+						if(TchckbxTwitterName.isSelected())
 							model.addSelectedTwitterDataType(TwitterDataType.TWITTER_NAME);
 						else
 							model.removeSelectedTwitterDataType(TwitterDataType.TWITTER_NAME);
 					}
 				});
 				sl_twitterPanel.putConstraint(SpringLayout.WEST,
-						chckbxTwitterName, 10, SpringLayout.WEST, twitterPanel);
-				twitterPanel.add(chckbxTwitterName);
+						TchckbxTwitterName, 10, SpringLayout.WEST, twitterPanel);
+				twitterPanel.add(TchckbxTwitterName);
 			}
 			{
-				chckbxId = new JCheckBox("ID");
-				chckbxId.addActionListener(new ActionListener() {
+				TchckbxId = new JCheckBox("ID");
+				TchckbxId.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxId.isSelected())
+						if(TchckbxId.isSelected())
 							model.addSelectedTwitterDataType(TwitterDataType.ID);
 						else
 							model.removeSelectedTwitterDataType(TwitterDataType.ID);				
 					}
 				});
 				sl_twitterPanel.putConstraint(SpringLayout.SOUTH,
-						chckbxTwitterName, -6, SpringLayout.NORTH, chckbxId);
-				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxId, 0,
-						SpringLayout.WEST, chckbxTwitterName);
-				twitterPanel.add(chckbxId);
+						TchckbxTwitterName, -6, SpringLayout.NORTH, TchckbxId);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST, TchckbxId, 0,
+						SpringLayout.WEST, TchckbxTwitterName);
+				twitterPanel.add(TchckbxId);
 			}
 			{
-				chckbxTweets = new JCheckBox("Tweets");
-				chckbxTweets.addActionListener(new ActionListener() {
+				TchckbxTweets = new JCheckBox("Tweets");
+				TchckbxTweets.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxTweets.isSelected())
+						if(TchckbxTweets.isSelected())
 							model.addSelectedTwitterDataType(TwitterDataType.TWEETS);
 						else
 							model.removeSelectedTwitterDataType(TwitterDataType.TWEETS);						
 					}
 				});
-				sl_twitterPanel.putConstraint(SpringLayout.SOUTH, chckbxTweets,
+				sl_twitterPanel.putConstraint(SpringLayout.SOUTH, TchckbxTweets,
 						-299, SpringLayout.SOUTH, twitterPanel);
-				sl_twitterPanel.putConstraint(SpringLayout.SOUTH, chckbxId, -6,
-						SpringLayout.NORTH, chckbxTweets);
-				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxTweets,
-						0, SpringLayout.WEST, chckbxTwitterName);
-				twitterPanel.add(chckbxTweets);
+				sl_twitterPanel.putConstraint(SpringLayout.SOUTH, TchckbxId, -6,
+						SpringLayout.NORTH, TchckbxTweets);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST, TchckbxTweets,
+						0, SpringLayout.WEST, TchckbxTwitterName);
+				twitterPanel.add(TchckbxTweets);
 			}
 			{
-				checkBox = new JCheckBox("Friends");
-				checkBox.addActionListener(new ActionListener() {
+				TchckbxFriends = new JCheckBox("Friends");
+				TchckbxFriends.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(checkBox.isSelected())
+						if(TchckbxFriends.isSelected())
 							model.addSelectedTwitterDataType(TwitterDataType.FRIENDS);
 						else
 							model.removeSelectedTwitterDataType(TwitterDataType.FRIENDS);				
 					}
 				});
-				sl_twitterPanel.putConstraint(SpringLayout.NORTH, checkBox, 6,
-						SpringLayout.SOUTH, chckbxTweets);
-				sl_twitterPanel.putConstraint(SpringLayout.WEST, checkBox, 0,
-						SpringLayout.WEST, chckbxTwitterName);
-				twitterPanel.add(checkBox);
+				sl_twitterPanel.putConstraint(SpringLayout.NORTH, TchckbxFriends, 6,
+						SpringLayout.SOUTH, TchckbxTweets);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST, TchckbxFriends, 0,
+						SpringLayout.WEST, TchckbxTwitterName);
+				twitterPanel.add(TchckbxFriends);
 			}
 			{
-				chckbxTrends = new JCheckBox("Trends");
-				chckbxTrends.addActionListener(new ActionListener() {
+				TchckbxTrends = new JCheckBox("Trends");
+				TchckbxTrends.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxTrends.isSelected())
+						if(TchckbxTrends.isSelected())
 							model.addSelectedTwitterDataType(TwitterDataType.TRENDS);
 						else
 							model.removeSelectedTwitterDataType(TwitterDataType.TRENDS);						
 					}
 				});
-				sl_twitterPanel.putConstraint(SpringLayout.NORTH, chckbxTrends,
-						6, SpringLayout.SOUTH, checkBox);
-				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxTrends,
-						0, SpringLayout.WEST, chckbxTwitterName);
-				twitterPanel.add(chckbxTrends);
+				sl_twitterPanel.putConstraint(SpringLayout.NORTH, TchckbxTrends,
+						6, SpringLayout.SOUTH, TchckbxFriends);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST, TchckbxTrends,
+						0, SpringLayout.WEST, TchckbxTwitterName);
+				twitterPanel.add(TchckbxTrends);
 			}
 			
 			{
-				chckbxPicture = new JCheckBox("User photo");
-				chckbxPicture.addActionListener(new ActionListener() {
+				TchckbxPicture = new JCheckBox("User photo");
+				TchckbxPicture.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxPicture.isSelected())
+						if(TchckbxPicture.isSelected())
 							model.addSelectedTwitterDataType(TwitterDataType.USER_PICTURE);
 						else
 							model.removeSelectedTwitterDataType(TwitterDataType.USER_PICTURE);						
 					}
 				});
-				sl_twitterPanel.putConstraint(SpringLayout.NORTH, chckbxPicture, 6, SpringLayout.SOUTH, chckbxTrends);
-				sl_twitterPanel.putConstraint(SpringLayout.WEST, chckbxPicture,0, SpringLayout.WEST, chckbxTwitterName);
-				twitterPanel.add(chckbxPicture);
+				sl_twitterPanel.putConstraint(SpringLayout.NORTH, TchckbxPicture, 6, SpringLayout.SOUTH, TchckbxTrends);
+				sl_twitterPanel.putConstraint(SpringLayout.WEST, TchckbxPicture,0, SpringLayout.WEST, TchckbxTwitterName);
+				twitterPanel.add(TchckbxPicture);
 			}
+			
+			JButton btnTSelectAll = new JButton("Select all");
+			sl_twitterPanel.putConstraint(SpringLayout.WEST, btnTSelectAll, 0, SpringLayout.WEST, TchckbxTwitterName);
+			sl_twitterPanel.putConstraint(SpringLayout.SOUTH, btnTSelectAll, 0, SpringLayout.SOUTH, twitterPanel);
+			twitterPanel.add(btnTSelectAll);
+			btnTSelectAll.addActionListener(new TSelectAllAction());
 			
 			
 			
@@ -270,285 +274,299 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 		}
 		{
 			buttonPane = new JPanel();
+			springLayout.putConstraint(SpringLayout.SOUTH, twitterPanel, -6,
+					SpringLayout.NORTH, buttonPane);
 			springLayout.putConstraint(SpringLayout.SOUTH, linkedInPanel, -6,
 					SpringLayout.NORTH, buttonPane);
 			{
-				chckbxContacts_1 = new JCheckBox("Contacts");
-				chckbxContacts_1.addActionListener(new ActionListener() {
+				LchckbxContacts = new JCheckBox("Contacts");
+				LchckbxContacts.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxContacts_1.isSelected())
+						if(LchckbxContacts.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.CONTACTS);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.CONTACTS);		
 					}
 				});
 				sl_linkedInPanel
-						.putConstraint(SpringLayout.NORTH, chckbxContacts_1,
+						.putConstraint(SpringLayout.NORTH, LchckbxContacts,
 								10, SpringLayout.NORTH, linkedInPanel);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
-						chckbxContacts_1, 10, SpringLayout.WEST, linkedInPanel);
-				linkedInPanel.add(chckbxContacts_1);
+						LchckbxContacts, 10, SpringLayout.WEST, linkedInPanel);
+				linkedInPanel.add(LchckbxContacts);
 			}
 			{
-				chckbxSpecialties = new JCheckBox("Current job");
-				chckbxSpecialties.addActionListener(new ActionListener() {
+				LchckbxSpecialties = new JCheckBox("Current job");
+				LchckbxSpecialties.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxSpecialties.isSelected())
+						if(LchckbxSpecialties.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.CURRENT_JOB);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.CURRENT_JOB);		
 					}
 				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
-						chckbxSpecialties, 126, SpringLayout.NORTH,
+						LchckbxSpecialties, 126, SpringLayout.NORTH,
 						linkedInPanel);
 				sl_linkedInPanel
-						.putConstraint(SpringLayout.WEST, chckbxSpecialties,
+						.putConstraint(SpringLayout.WEST, LchckbxSpecialties,
 								10, SpringLayout.WEST, linkedInPanel);
-				linkedInPanel.add(chckbxSpecialties);
+				linkedInPanel.add(LchckbxSpecialties);
 			}
 			{
-				chckbxCompany = new JCheckBox("Company");
-				chckbxCompany.addActionListener(new ActionListener() {
+				LchckbxCompany = new JCheckBox("Company");
+				LchckbxCompany.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxCompany.isSelected())
+						if(LchckbxCompany.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.COMPANY);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.COMPANY);		
 					}
 				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
-						chckbxCompany, 68, SpringLayout.NORTH, linkedInPanel);
+						LchckbxCompany, 68, SpringLayout.NORTH, linkedInPanel);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
-						chckbxCompany, 10, SpringLayout.WEST, linkedInPanel);
-				linkedInPanel.add(chckbxCompany);
+						LchckbxCompany, 10, SpringLayout.WEST, linkedInPanel);
+				linkedInPanel.add(LchckbxCompany);
 			}
 			{
-				chckbxJobTitle = new JCheckBox("Headline");
-				chckbxJobTitle.addActionListener(new ActionListener() {
+				LchckbxJobTitle = new JCheckBox("Headline");
+				LchckbxJobTitle.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxJobTitle.isSelected())
+						if(LchckbxJobTitle.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.HEADLINES);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.HEADLINES);		
 					}
 				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
-						chckbxJobTitle, 39, SpringLayout.NORTH, linkedInPanel);
+						LchckbxJobTitle, 39, SpringLayout.NORTH, linkedInPanel);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
-						chckbxJobTitle, 10, SpringLayout.WEST, linkedInPanel);
-				linkedInPanel.add(chckbxJobTitle);
+						LchckbxJobTitle, 10, SpringLayout.WEST, linkedInPanel);
+				linkedInPanel.add(LchckbxJobTitle);
 			}
 			{
-				chckbxStatus = new JCheckBox("Status");
-				chckbxStatus.addActionListener(new ActionListener() {
+				LchckbxStatus = new JCheckBox("Status");
+				LchckbxStatus.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxStatus.isSelected())
+						if(LchckbxStatus.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.STATUS);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.STATUS);		
 					}
 				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
-						chckbxStatus, 97, SpringLayout.NORTH, linkedInPanel);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, chckbxStatus,
+						LchckbxStatus, 97, SpringLayout.NORTH, linkedInPanel);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST, LchckbxStatus,
 						10, SpringLayout.WEST, linkedInPanel);
-				linkedInPanel.add(chckbxStatus);
+				linkedInPanel.add(LchckbxStatus);
 			}
 			{
-				chckbxPositions = new JCheckBox("Positions");
-				chckbxPositions.addActionListener(new ActionListener() {
+				LchckbxPositions = new JCheckBox("Positions");
+				LchckbxPositions.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxPositions.isSelected())
+						if(LchckbxPositions.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.POSITIONS);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.POSITIONS);		
 					}
 				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
-						chckbxPositions, 6, SpringLayout.SOUTH,
-						chckbxSpecialties);
+						LchckbxPositions, 6, SpringLayout.SOUTH,
+						LchckbxSpecialties);
 				sl_linkedInPanel
-						.putConstraint(SpringLayout.WEST, chckbxPositions, 0,
-								SpringLayout.WEST, chckbxContacts_1);
-				linkedInPanel.add(chckbxPositions);
+						.putConstraint(SpringLayout.WEST, LchckbxPositions, 0,
+								SpringLayout.WEST, LchckbxContacts);
+				linkedInPanel.add(LchckbxPositions);
 			}
 			{
-				chckbxInterests_1 = new JCheckBox("Interests");
-				chckbxInterests_1.addActionListener(new ActionListener() {
+				LchckbxInterests = new JCheckBox("Interests");
+				LchckbxInterests.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxInterests_1.isSelected())
+						if(LchckbxInterests.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.INTERESTS);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.INTERESTS);		
 					}
 				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
-						chckbxInterests_1, 6, SpringLayout.SOUTH,
-						chckbxPositions);
+						LchckbxInterests, 6, SpringLayout.SOUTH,
+						LchckbxPositions);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
-						chckbxInterests_1, 0, SpringLayout.WEST,
-						chckbxContacts_1);
-				linkedInPanel.add(chckbxInterests_1);
+						LchckbxInterests, 0, SpringLayout.WEST,
+						LchckbxContacts);
+				linkedInPanel.add(LchckbxInterests);
 			}
 			{
-				chckbxEducation_1 = new JCheckBox("Education");
-				chckbxEducation_1.addActionListener(new ActionListener() {
+				LchckbxEducation = new JCheckBox("Education");
+				LchckbxEducation.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxEducation_1.isSelected())
+						if(LchckbxEducation.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.EDUCATIONS);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.EDUCATIONS);		
 					}
 				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
-						chckbxEducation_1, 6, SpringLayout.SOUTH,
-						chckbxInterests_1);
+						LchckbxEducation, 6, SpringLayout.SOUTH,
+						LchckbxInterests);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
-						chckbxEducation_1, 0, SpringLayout.WEST,
-						chckbxContacts_1);
-				linkedInPanel.add(chckbxEducation_1);
+						LchckbxEducation, 0, SpringLayout.WEST,
+						LchckbxContacts);
+				linkedInPanel.add(LchckbxEducation);
 			}
 			{
-				chckbxProfileViews = new JCheckBox("Profile views");
-				chckbxProfileViews.addActionListener(new ActionListener() {
+				LchckbxProfileViews = new JCheckBox("Profile views");
+				LchckbxProfileViews.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxProfileViews.isSelected())
+						if(LchckbxProfileViews.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.PROFILE_VIEWS);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.PROFILE_VIEWS);		
 					}
 				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
-						chckbxProfileViews, 6, SpringLayout.SOUTH,
-						chckbxEducation_1);
+						LchckbxProfileViews, 6, SpringLayout.SOUTH,
+						LchckbxEducation);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
-						chckbxProfileViews, 0, SpringLayout.WEST,
-						chckbxContacts_1);
-				linkedInPanel.add(chckbxProfileViews);
+						LchckbxProfileViews, 0, SpringLayout.WEST,
+						LchckbxContacts);
+				linkedInPanel.add(LchckbxProfileViews);
 			}
 			{
-				chckbxPhoneNumber = new JCheckBox("Phone number");
-				chckbxPhoneNumber.addActionListener(new ActionListener() {
+				LchckbxPhoneNumber = new JCheckBox("Phone number");
+				LchckbxPhoneNumber.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxPhoneNumber.isSelected())
+						if(LchckbxPhoneNumber.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.PHONES_NUMBER);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.PHONES_NUMBER);		
 					}
 				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
-						chckbxPhoneNumber, 6, SpringLayout.SOUTH,
-						chckbxProfileViews);
+						LchckbxPhoneNumber, 6, SpringLayout.SOUTH,
+						LchckbxProfileViews);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
-						chckbxPhoneNumber, 0, SpringLayout.WEST,
-						chckbxContacts_1);
-				linkedInPanel.add(chckbxPhoneNumber);
+						LchckbxPhoneNumber, 0, SpringLayout.WEST,
+						LchckbxContacts);
+				linkedInPanel.add(LchckbxPhoneNumber);
 			}
 			{
-				chckbxTwitterAccount = new JCheckBox("Twitter Account");
-				chckbxTwitterAccount.addActionListener(new ActionListener() {
+				LchckbxTwitterAccount = new JCheckBox("Twitter Account");
+				LchckbxTwitterAccount.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxTwitterAccount.isSelected())
+						if(LchckbxTwitterAccount.isSelected())
 							model.addSelectedLinkedInDataType(LinkedInDataType.TWITTER_ACCOUNT);
 						else
 							model.removeSelectedLinkedInDataType(LinkedInDataType.TWITTER_ACCOUNT);		
 					}
 				});
 				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,
-						chckbxTwitterAccount, 6, SpringLayout.SOUTH,
-						chckbxPhoneNumber);
+						LchckbxTwitterAccount, 6, SpringLayout.SOUTH,
+						LchckbxPhoneNumber);
 				sl_linkedInPanel.putConstraint(SpringLayout.WEST,
-						chckbxTwitterAccount, 0, SpringLayout.WEST,
-						chckbxContacts_1);
-				linkedInPanel.add(chckbxTwitterAccount);
+						LchckbxTwitterAccount, 0, SpringLayout.WEST,
+						LchckbxContacts);
+				linkedInPanel.add(LchckbxTwitterAccount);
 			}
+			
+			JButton btnLSelectAll = new JButton("Select all");
+			sl_linkedInPanel.putConstraint(SpringLayout.WEST, btnLSelectAll, 0, SpringLayout.WEST, LchckbxContacts);
+			sl_linkedInPanel.putConstraint(SpringLayout.SOUTH, btnLSelectAll, 0, SpringLayout.SOUTH, linkedInPanel);
+			linkedInPanel.add(btnLSelectAll);
+			btnLSelectAll.addActionListener(new LSelectAllAction());
 			springLayout.putConstraint(SpringLayout.SOUTH, xingPanel, -6,
 					SpringLayout.NORTH, buttonPane);
 			{
-				chckbxBirthday_1 = new JCheckBox("Birthday");
-				chckbxBirthday_1.addActionListener(new ActionListener() {
+				XchckbxBirthday = new JCheckBox("Birthday");
+				XchckbxBirthday.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxBirthday_1.isSelected())
+						if(XchckbxBirthday.isSelected())
 							model.addSelectedXingDataType(XingDataType.BIRTHDAY);
 						else
 							model.removeSelectedXingDataType(XingDataType.BIRTHDAY);	
 					}
 				});
-				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxBirthday_1,
+				sl_xingPanel.putConstraint(SpringLayout.WEST, XchckbxBirthday,
 						10, SpringLayout.WEST, xingPanel);
-				xingPanel.add(chckbxBirthday_1);
+				xingPanel.add(XchckbxBirthday);
 			}
 			{
-				chckbxContacts = new JCheckBox("Contacts");
-				chckbxContacts.addActionListener(new ActionListener() {
+				XchckbxContacts = new JCheckBox("Contacts");
+				XchckbxContacts.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxContacts.isSelected())
+						if(XchckbxContacts.isSelected())
 							model.addSelectedXingDataType(XingDataType.CONTACTS);
 						else
 							model.removeSelectedXingDataType(XingDataType.CONTACTS);	
 					}
 				});
-				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxContacts,
-						0, SpringLayout.WEST, chckbxBirthday_1);
-				xingPanel.add(chckbxContacts);
+				sl_xingPanel.putConstraint(SpringLayout.WEST, XchckbxContacts,
+						0, SpringLayout.WEST, XchckbxBirthday);
+				xingPanel.add(XchckbxContacts);
 			}
 			{
-				chckbxProfileMessage = new JCheckBox("ProfileMessage");
-				chckbxProfileMessage.addActionListener(new ActionListener() {
+				XchckbxProfileMessage = new JCheckBox("ProfileMessage");
+				XchckbxProfileMessage.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxProfileMessage.isSelected())
+						if(XchckbxProfileMessage.isSelected())
 							model.addSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
 						else
 							model.removeSelectedXingDataType(XingDataType.PROFILE_MESSAGE);	
 					}
 				});
 				sl_xingPanel.putConstraint(SpringLayout.NORTH,
-						chckbxProfileMessage, 6, SpringLayout.SOUTH,
-						chckbxContacts);
+						XchckbxProfileMessage, 6, SpringLayout.SOUTH,
+						XchckbxContacts);
 				sl_xingPanel.putConstraint(SpringLayout.WEST,
-						chckbxProfileMessage, 0, SpringLayout.WEST,
-						chckbxBirthday_1);
-				xingPanel.add(chckbxProfileMessage);
+						XchckbxProfileMessage, 0, SpringLayout.WEST,
+						XchckbxBirthday);
+				xingPanel.add(XchckbxProfileMessage);
 			}
 			{
-				chckbxCompan = new JCheckBox("Company");
-				chckbxCompan.addActionListener(new ActionListener() {
+				XchckbxCompany = new JCheckBox("Company");
+				XchckbxCompany.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxCompan.isSelected())
+						if(XchckbxCompany.isSelected())
 							model.addSelectedXingDataType(XingDataType.COMPANY);
 						else
 							model.removeSelectedXingDataType(XingDataType.COMPANY);	
 					}
 				});
-				sl_xingPanel.putConstraint(SpringLayout.SOUTH, chckbxCompan,
+				sl_xingPanel.putConstraint(SpringLayout.SOUTH, XchckbxCompany,
 						-328, SpringLayout.SOUTH, xingPanel);
-				sl_xingPanel.putConstraint(SpringLayout.NORTH, chckbxContacts,
-						6, SpringLayout.SOUTH, chckbxCompan);
+				sl_xingPanel.putConstraint(SpringLayout.NORTH, XchckbxContacts,
+						6, SpringLayout.SOUTH, XchckbxCompany);
 				sl_xingPanel.putConstraint(SpringLayout.SOUTH,
-						chckbxBirthday_1, -6, SpringLayout.NORTH, chckbxCompan);
-				sl_xingPanel.putConstraint(SpringLayout.WEST, chckbxCompan, 0,
-						SpringLayout.WEST, chckbxBirthday_1);
-				xingPanel.add(chckbxCompan);
+						XchckbxBirthday, -6, SpringLayout.NORTH, XchckbxCompany);
+				sl_xingPanel.putConstraint(SpringLayout.WEST, XchckbxCompany, 0,
+						SpringLayout.WEST, XchckbxBirthday);
+				xingPanel.add(XchckbxCompany);
 			}
 			{
-				chckbxProfileVisits = new JCheckBox("Profile visits");
-				chckbxProfileVisits.addActionListener(new ActionListener() {
+				XchckbxProfileVisits = new JCheckBox("Profile visits");
+				XchckbxProfileVisits.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxCompan.isSelected())
+						if(XchckbxCompany.isSelected())
 							model.addSelectedXingDataType(XingDataType.PROFILE_VISITS);
 						else
 							model.removeSelectedXingDataType(XingDataType.PROFILE_VISITS);	
 					}
 				});
 				sl_xingPanel.putConstraint(SpringLayout.NORTH,
-						chckbxProfileVisits, 6, SpringLayout.SOUTH,
-						chckbxProfileMessage);
+						XchckbxProfileVisits, 6, SpringLayout.SOUTH,
+						XchckbxProfileMessage);
 				sl_xingPanel.putConstraint(SpringLayout.WEST,
-						chckbxProfileVisits, 0, SpringLayout.WEST,
-						chckbxBirthday_1);
-				xingPanel.add(chckbxProfileVisits);
+						XchckbxProfileVisits, 0, SpringLayout.WEST,
+						XchckbxBirthday);
+				xingPanel.add(XchckbxProfileVisits);
 			}
+			
+			JButton btnXSelectAll = new JButton("Select all");
+			sl_xingPanel.putConstraint(SpringLayout.WEST, btnXSelectAll, 0, SpringLayout.WEST, XchckbxBirthday);
+			sl_xingPanel.putConstraint(SpringLayout.SOUTH, btnXSelectAll, 0, SpringLayout.SOUTH, xingPanel);
+			xingPanel.add(btnXSelectAll);
+			btnXSelectAll.addActionListener(new XSelectAllAction());
 			springLayout.putConstraint(SpringLayout.SOUTH, buttonPane, 0,
 					SpringLayout.SOUTH, getContentPane());
 			springLayout.putConstraint(SpringLayout.EAST, buttonPane, 0,
@@ -558,224 +576,236 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 			SpringLayout sl_facebookPanel = new SpringLayout();
 			facebookPanel.setLayout(sl_facebookPanel);
 
-			chckbxRelationship = new JCheckBox("Relationship");
-			chckbxRelationship.addActionListener(new ActionListener() {
+			FchckbxRelationship = new JCheckBox("Relationship");
+			FchckbxRelationship.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(chckbxRelationship.isSelected())
+					if(FchckbxRelationship.isSelected())
 						model.addSelectedFacebookDataType(FacebookDataType.RELATIONSHIP);
 					else
 						model.removeSelectedFacebookDataType(FacebookDataType.RELATIONSHIP);	
 				}
 			});
 			sl_facebookPanel.putConstraint(SpringLayout.NORTH,
-					chckbxRelationship, 97, SpringLayout.NORTH, facebookPanel);
+					FchckbxRelationship, 97, SpringLayout.NORTH, facebookPanel);
 			sl_facebookPanel.putConstraint(SpringLayout.WEST,
-					chckbxRelationship, 10, SpringLayout.WEST, facebookPanel);
-			facebookPanel.add(chckbxRelationship);
+					FchckbxRelationship, 10, SpringLayout.WEST, facebookPanel);
+			facebookPanel.add(FchckbxRelationship);
 			{
-				chckbxBirthday = new JCheckBox("Birthday");
-				chckbxBirthday.addActionListener(new ActionListener() {
+				FchckbxBirthday = new JCheckBox("Birthday");
+				FchckbxBirthday.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxBirthday.isSelected())
+						if(FchckbxBirthday.isSelected())
 							model.addSelectedFacebookDataType(FacebookDataType.BIRTHDAY);
 						else
 							model.removeSelectedFacebookDataType(FacebookDataType.BIRTHDAY);	
 					}
 				});
 				sl_facebookPanel.putConstraint(SpringLayout.WEST,
-						chckbxBirthday, 0, SpringLayout.WEST,
-						chckbxRelationship);
-				facebookPanel.add(chckbxBirthday);
+						FchckbxBirthday, 0, SpringLayout.WEST,
+						FchckbxRelationship);
+				facebookPanel.add(FchckbxBirthday);
 			}
 
-			chckbxNewCheckBox = new JCheckBox("Last post");
-			chckbxNewCheckBox.addActionListener(new ActionListener() {
+			FchckbxLastPost = new JCheckBox("Last post");
+			FchckbxLastPost.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(chckbxNewCheckBox.isSelected())
+					if(FchckbxLastPost.isSelected())
 						model.addSelectedFacebookDataType(FacebookDataType.LAST_POST);
 					else
 						model.removeSelectedFacebookDataType(FacebookDataType.LAST_POST);					
 				}
 			});
-			sl_facebookPanel.putConstraint(SpringLayout.SOUTH, chckbxBirthday,
-					-6, SpringLayout.NORTH, chckbxNewCheckBox);
+			sl_facebookPanel.putConstraint(SpringLayout.SOUTH, FchckbxBirthday,
+					-6, SpringLayout.NORTH, FchckbxLastPost);
 			sl_facebookPanel
-					.putConstraint(SpringLayout.WEST, chckbxNewCheckBox, 0,
-							SpringLayout.WEST, chckbxRelationship);
+					.putConstraint(SpringLayout.WEST, FchckbxLastPost, 0,
+							SpringLayout.WEST, FchckbxRelationship);
 			sl_facebookPanel.putConstraint(SpringLayout.SOUTH,
-					chckbxNewCheckBox, -6, SpringLayout.NORTH,
-					chckbxRelationship);
-			facebookPanel.add(chckbxNewCheckBox);
+					FchckbxLastPost, -6, SpringLayout.NORTH,
+					FchckbxRelationship);
+			facebookPanel.add(FchckbxLastPost);
 
-			chckbxNewCheckBox_1 = new JCheckBox("Biography");
-			chckbxNewCheckBox_1.addActionListener(new ActionListener() {
+			FchckbxBiography = new JCheckBox("Biography");
+			FchckbxBiography.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(chckbxNewCheckBox_1.isSelected())
+					if(FchckbxBiography.isSelected())
 						model.addSelectedFacebookDataType(FacebookDataType.BIOGRAPHY);
 					else
 						model.removeSelectedFacebookDataType(FacebookDataType.BIOGRAPHY);		
 				}
 			});
 			sl_facebookPanel.putConstraint(SpringLayout.SOUTH,
-					chckbxNewCheckBox_1, -357, SpringLayout.SOUTH,
+					FchckbxBiography, -357, SpringLayout.SOUTH,
 					facebookPanel);
 			sl_facebookPanel.putConstraint(SpringLayout.NORTH,
-					chckbxNewCheckBox_1, 10, SpringLayout.NORTH, facebookPanel);
+					FchckbxBiography, 10, SpringLayout.NORTH, facebookPanel);
 			sl_facebookPanel.putConstraint(SpringLayout.WEST,
-					chckbxNewCheckBox_1, 10, SpringLayout.WEST, facebookPanel);
-			facebookPanel.add(chckbxNewCheckBox_1);
+					FchckbxBiography, 10, SpringLayout.WEST, facebookPanel);
+			facebookPanel.add(FchckbxBiography);
 			{
-				chckbxEducation = new JCheckBox("Education");
-				chckbxEducation.addActionListener(new ActionListener() {
+				FchckbxEducation = new JCheckBox("Education");
+				FchckbxEducation.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxEducation.isSelected())
+						if(FchckbxEducation.isSelected())
 							model.addSelectedFacebookDataType(FacebookDataType.EDUCATION);
 						else
 							model.removeSelectedFacebookDataType(FacebookDataType.EDUCATION);
 					}
 				});
 				sl_facebookPanel
-						.putConstraint(SpringLayout.NORTH, chckbxEducation,
+						.putConstraint(SpringLayout.NORTH, FchckbxEducation,
 								126, SpringLayout.NORTH, facebookPanel);
 				sl_facebookPanel.putConstraint(SpringLayout.WEST,
-						chckbxEducation, 10, SpringLayout.WEST, facebookPanel);
+						FchckbxEducation, 10, SpringLayout.WEST, facebookPanel);
 				sl_facebookPanel.putConstraint(SpringLayout.SOUTH,
-						chckbxRelationship, -6, SpringLayout.NORTH,
-						chckbxEducation);
-				facebookPanel.add(chckbxEducation);
+						FchckbxRelationship, -6, SpringLayout.NORTH,
+						FchckbxEducation);
+				facebookPanel.add(FchckbxEducation);
 			}
 			{
-				chckbxNewCheckBox_2 = new JCheckBox("Work");
-				chckbxNewCheckBox_2.addActionListener(new ActionListener() {
+				FchckbxWork = new JCheckBox("Work");
+				FchckbxWork.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxNewCheckBox_2.isSelected())
+						if(FchckbxWork.isSelected())
 							model.addSelectedFacebookDataType(FacebookDataType.WORKS);
 						else
 							model.removeSelectedFacebookDataType(FacebookDataType.WORKS);					
 					}
 				});
 				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
-						chckbxNewCheckBox_2, 155, SpringLayout.NORTH,
+						FchckbxWork, 155, SpringLayout.NORTH,
 						facebookPanel);
 				sl_facebookPanel.putConstraint(SpringLayout.WEST,
-						chckbxNewCheckBox_2, 10, SpringLayout.WEST,
+						FchckbxWork, 10, SpringLayout.WEST,
 						facebookPanel);
 				sl_facebookPanel.putConstraint(SpringLayout.SOUTH,
-						chckbxEducation, -6, SpringLayout.NORTH,
-						chckbxNewCheckBox_2);
-				facebookPanel.add(chckbxNewCheckBox_2);
+						FchckbxEducation, -6, SpringLayout.NORTH,
+						FchckbxWork);
+				facebookPanel.add(FchckbxWork);
 			}
 			{
-				chckbxEvents = new JCheckBox("Events");
-				chckbxEvents.addActionListener(new ActionListener() {
+				FchckbxEvents = new JCheckBox("Events");
+				FchckbxEvents.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxEvents.isSelected())
+						if(FchckbxEvents.isSelected())
 							model.addSelectedFacebookDataType(FacebookDataType.EVENTS);
 						else
 							model.removeSelectedFacebookDataType(FacebookDataType.EVENTS);				
 					}
 				});
 				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
-						chckbxEvents, 6, SpringLayout.SOUTH,
-						chckbxNewCheckBox_2);
-				sl_facebookPanel.putConstraint(SpringLayout.WEST, chckbxEvents,
+						FchckbxEvents, 6, SpringLayout.SOUTH,
+						FchckbxWork);
+				sl_facebookPanel.putConstraint(SpringLayout.WEST, FchckbxEvents,
 						10, SpringLayout.WEST, facebookPanel);
-				facebookPanel.add(chckbxEvents);
+				facebookPanel.add(FchckbxEvents);
 			}
 			{
-				chckbxInterests = new JCheckBox("Interests");
-				chckbxInterests.addActionListener(new ActionListener() {
+				FchckbxInterests = new JCheckBox("Interests");
+				FchckbxInterests.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxInterests.isSelected())
+						if(FchckbxInterests.isSelected())
 							model.addSelectedFacebookDataType(FacebookDataType.INTERESTS);
 						else
 							model.removeSelectedFacebookDataType(FacebookDataType.INTERESTS);			
 					}
 				});
 				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
-						chckbxInterests, 6, SpringLayout.SOUTH, chckbxEvents);
+						FchckbxInterests, 6, SpringLayout.SOUTH, FchckbxEvents);
 				sl_facebookPanel.putConstraint(SpringLayout.WEST,
-						chckbxInterests, 10, SpringLayout.WEST, facebookPanel);
-				facebookPanel.add(chckbxInterests);
+						FchckbxInterests, 10, SpringLayout.WEST, facebookPanel);
+				facebookPanel.add(FchckbxInterests);
 			}
 			{
-				chckbxFriends = new JCheckBox("Friends");
-				chckbxFriends.addActionListener(new ActionListener() {
+				FchckbxFriends = new JCheckBox("Friends");
+				FchckbxFriends.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxFriends.isSelected())
+						if(FchckbxFriends.isSelected())
 							model.addSelectedFacebookDataType(FacebookDataType.FRIENDS);
 						else
 							model.removeSelectedFacebookDataType(FacebookDataType.FRIENDS);			
 					}
 				});
 				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
-						chckbxFriends, 6, SpringLayout.SOUTH, chckbxInterests);
+						FchckbxFriends, 6, SpringLayout.SOUTH, FchckbxInterests);
 				sl_facebookPanel.putConstraint(SpringLayout.WEST,
-						chckbxFriends, 10, SpringLayout.WEST, facebookPanel);
-				facebookPanel.add(chckbxFriends);
+						FchckbxFriends, 10, SpringLayout.WEST, facebookPanel);
+				facebookPanel.add(FchckbxFriends);
 			}
 			{
-				chckbxMutualFriends = new JCheckBox("Mutual Friends");
-				chckbxMutualFriends.addActionListener(new ActionListener() {
+				FchckbxMutualFriends = new JCheckBox("Mutual Friends");
+				FchckbxMutualFriends.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxMutualFriends.isSelected())
+						if(FchckbxMutualFriends.isSelected())
 							model.addSelectedFacebookDataType(FacebookDataType.MUTUAL_FRIENDS);
 						else
 							model.removeSelectedFacebookDataType(FacebookDataType.MUTUAL_FRIENDS);
 					}
 				});
 				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
-						chckbxMutualFriends, 6, SpringLayout.SOUTH,
-						chckbxFriends);
+						FchckbxMutualFriends, 6, SpringLayout.SOUTH,
+						FchckbxFriends);
 				sl_facebookPanel.putConstraint(SpringLayout.WEST,
-						chckbxMutualFriends, 10, SpringLayout.WEST,
+						FchckbxMutualFriends, 10, SpringLayout.WEST,
 						facebookPanel);
-				facebookPanel.add(chckbxMutualFriends);
+				facebookPanel.add(FchckbxMutualFriends);
 			}
 			{
-				chckbxProfilePicture = new JCheckBox("Profile picture");
-				chckbxProfilePicture.addActionListener(new ActionListener() {
+				FchckbxProfilePicture = new JCheckBox("Profile picture");
+				FchckbxProfilePicture.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxProfilePicture.isSelected())
+						if(FchckbxProfilePicture.isSelected())
 							model.addSelectedFacebookDataType(FacebookDataType.PROFILE_PICTURE);
 						else
 							model.removeSelectedFacebookDataType(FacebookDataType.PROFILE_PICTURE);					
 					}
 				});
 				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
-						chckbxProfilePicture, 6, SpringLayout.SOUTH,
-						chckbxMutualFriends);
+						FchckbxProfilePicture, 6, SpringLayout.SOUTH,
+						FchckbxMutualFriends);
 				sl_facebookPanel.putConstraint(SpringLayout.WEST,
-						chckbxProfilePicture, 10, SpringLayout.WEST,
+						FchckbxProfilePicture, 10, SpringLayout.WEST,
 						facebookPanel);
-				facebookPanel.add(chckbxProfilePicture);
+				facebookPanel.add(FchckbxProfilePicture);
 			}
 			{
-				chckbxUsername = new JCheckBox("Username");
-				chckbxUsername.addActionListener(new ActionListener() {
+				FchckbxUsername = new JCheckBox("Username");
+				FchckbxUsername.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(chckbxUsername.isSelected())
+						if(FchckbxUsername.isSelected())
 							model.addSelectedFacebookDataType(FacebookDataType.USERNAME);
 						else
 							model.removeSelectedFacebookDataType(FacebookDataType.USERNAME);					
 					}
 				});
 				sl_facebookPanel.putConstraint(SpringLayout.NORTH,
-						chckbxUsername, 6, SpringLayout.SOUTH,
-						chckbxProfilePicture);
+						FchckbxUsername, 6, SpringLayout.SOUTH,
+						FchckbxProfilePicture);
 				sl_facebookPanel.putConstraint(SpringLayout.WEST,
-						chckbxUsername, 10, SpringLayout.WEST, facebookPanel);
-				facebookPanel.add(chckbxUsername);
+						FchckbxUsername, 10, SpringLayout.WEST, facebookPanel);
+				facebookPanel.add(FchckbxUsername);
 			}
+			
+			JButton btnFSelectAll = new JButton("Select all");
+			sl_facebookPanel.putConstraint(SpringLayout.WEST, btnFSelectAll, 0, SpringLayout.WEST, FchckbxRelationship);
+			sl_facebookPanel.putConstraint(SpringLayout.SOUTH, btnFSelectAll, 0, SpringLayout.SOUTH, facebookPanel);
+			facebookPanel.add(btnFSelectAll);
+			btnFSelectAll.addActionListener(new FSelectAllAction());
 			springLayout.putConstraint(SpringLayout.WEST, buttonPane, 0,
 					SpringLayout.WEST, getContentPane());
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane);
 			{
+				JButton btnSelectAll = new JButton("Select all");
+				btnSelectAll.addActionListener(new SelectAllAction());
+				buttonPane.add(btnSelectAll);
+				
 				JButton okButton = new JButton("Start");
 				okButton.addActionListener(new StartAction());
+				
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
+				
 			}
 
 			{
@@ -803,10 +833,183 @@ public class SocialMediaScanDialog extends JDialog implements AbstractControlled
 		}
 
 	}
+	private class SelectAllAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			TchckbxFriends.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.FRIENDS);
+			TchckbxId.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.ID);
+			TchckbxPicture.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.USER_PICTURE);
+			TchckbxTrends.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.TRENDS);
+			TchckbxTweets.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.TWEETS);
+			TchckbxTwitterName.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.TWITTER_NAME);
+		
+			FchckbxBiography.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.BIOGRAPHY);
+			FchckbxEducation.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.EDUCATION);
+			FchckbxBirthday.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.BIRTHDAY);
+			FchckbxEvents.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.EVENTS);
+			FchckbxFriends.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.FRIENDS);
+			FchckbxInterests.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.INTERESTS);
+			FchckbxLastPost.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.LAST_POST);
+			FchckbxMutualFriends.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.MUTUAL_FRIENDS);
+			FchckbxProfilePicture.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.PROFILE_PICTURE);
+			FchckbxRelationship.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.RELATIONSHIP);
+			FchckbxUsername.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.USERNAME);
+			FchckbxWork.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.WORKS);
+			
+			XchckbxBirthday.setSelected(true);
+			model.addSelectedXingDataType(XingDataType.BIRTHDAY);
+			XchckbxCompany.setSelected(true);
+			model.addSelectedXingDataType(XingDataType.COMPANY);
+			XchckbxContacts.setSelected(true);
+			model.addSelectedXingDataType(XingDataType.CONTACTS);
+			XchckbxProfileMessage.setSelected(true);
+			model.addSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
+			XchckbxProfileVisits.setSelected(true);
+			model.addSelectedXingDataType(XingDataType.PROFILE_VISITS);
+			
+			LchckbxCompany.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.COMPANY);
+			LchckbxContacts.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.CONTACTS);
+			LchckbxEducation.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.EDUCATIONS);
+			LchckbxInterests.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.INTERESTS);
+			LchckbxJobTitle.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.CURRENT_JOB);
+			LchckbxPhoneNumber.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.PHONES_NUMBER);
+			LchckbxPositions.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.POSITIONS);
+			LchckbxProfileViews.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.PROFILE_VIEWS);
+			LchckbxSpecialties.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.HEADLINES);
+			LchckbxStatus.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.STATUS);
+			LchckbxTwitterAccount.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.TWITTER_ACCOUNT);
+		
+		}
+
+	}
+	
+	private class TSelectAllAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			TchckbxFriends.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.FRIENDS);
+			TchckbxId.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.ID);
+			TchckbxPicture.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.USER_PICTURE);
+			TchckbxTrends.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.TRENDS);
+			TchckbxTweets.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.TWEETS);
+			TchckbxTwitterName.setSelected(true);
+			model.addSelectedTwitterDataType(TwitterDataType.TWITTER_NAME);
+			
+		}
+
+	}
+	private class FSelectAllAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			FchckbxBiography.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.BIOGRAPHY);
+			FchckbxEducation.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.EDUCATION);
+			FchckbxBirthday.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.BIRTHDAY);
+			FchckbxEvents.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.EVENTS);
+			FchckbxFriends.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.FRIENDS);
+			FchckbxInterests.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.INTERESTS);
+			FchckbxLastPost.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.LAST_POST);
+			FchckbxMutualFriends.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.MUTUAL_FRIENDS);
+			FchckbxProfilePicture.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.PROFILE_PICTURE);
+			FchckbxRelationship.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.RELATIONSHIP);
+			FchckbxUsername.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.USERNAME);
+			FchckbxWork.setSelected(true);
+			model.addSelectedFacebookDataType(FacebookDataType.WORKS);
+		}
+
+	}
+	private class XSelectAllAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			XchckbxBirthday.setSelected(true);
+			model.addSelectedXingDataType(XingDataType.BIRTHDAY);
+			XchckbxCompany.setSelected(true);
+			model.addSelectedXingDataType(XingDataType.COMPANY);
+			XchckbxContacts.setSelected(true);
+			model.addSelectedXingDataType(XingDataType.CONTACTS);
+			XchckbxProfileMessage.setSelected(true);
+			model.addSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
+			XchckbxProfileVisits.setSelected(true);
+			model.addSelectedXingDataType(XingDataType.PROFILE_VISITS);
+		}
+
+	}
+	private class LSelectAllAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LchckbxCompany.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.COMPANY);
+			LchckbxContacts.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.CONTACTS);
+			LchckbxEducation.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.EDUCATIONS);
+			LchckbxInterests.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.INTERESTS);
+			LchckbxJobTitle.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.CURRENT_JOB);
+			LchckbxPhoneNumber.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.PHONES_NUMBER);
+			LchckbxPositions.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.POSITIONS);
+			LchckbxProfileViews.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.PROFILE_VIEWS);
+			LchckbxSpecialties.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.HEADLINES);
+			LchckbxStatus.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.STATUS);
+			LchckbxTwitterAccount.setSelected(true);
+			model.addSelectedLinkedInDataType(LinkedInDataType.TWITTER_ACCOUNT);
+		}
+
+	}
+	
+
 
 	@Override
 	public void modelPropertyChange(Observable o, Object arg) {
 		//System.out.println("ADDED "+ arg.getClass().toString() + " " + arg.toString());
 	}
-	
 }
