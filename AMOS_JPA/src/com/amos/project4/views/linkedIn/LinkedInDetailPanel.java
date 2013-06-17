@@ -169,6 +169,12 @@ public class LinkedInDetailPanel extends JPanel implements AbstractControlledVie
 		accountDetails_Panel.add(twitter_textField);
 		twitter_textField.setColumns(10);
 		
+		LinkedInClientAccountSetting account_setting_panel = new LinkedInClientAccountSetting(c_controller,controller);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, account_setting_panel, 0, SpringLayout.NORTH, Picture_panel);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, account_setting_panel, 6, SpringLayout.EAST, ID_textField);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.SOUTH, account_setting_panel, 0, SpringLayout.SOUTH, Picture_panel);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, account_setting_panel, -10, SpringLayout.EAST, accountDetails_Panel);
+		accountDetails_Panel.add(account_setting_panel);
 		
 
 		JPanel positions_Panel = new JPanel();

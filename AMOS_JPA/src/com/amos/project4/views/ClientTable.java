@@ -35,11 +35,11 @@ public class ClientTable extends JTable implements AbstractControlledView {
 	private static final long serialVersionUID = -9143258101609845500L;
 	private ClientTableModel model;
 	private SelectedClientViewModel selectedClient;
-	private ClientsController controller;
+//	private ClientsController controller;
 	
 	public ClientTable(ClientsController controller) {
 		super();
-		this.controller = controller;
+//		this.controller = controller;
 		this.model = new ClientTableModel(controller);
 		this.setModel(model);
 		// Initialise and register the Model

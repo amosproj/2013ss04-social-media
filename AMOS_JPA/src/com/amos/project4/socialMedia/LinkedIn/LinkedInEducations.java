@@ -21,82 +21,108 @@ package com.amos.project4.socialMedia.LinkedIn;
 import java.util.List;
 
 public class LinkedInEducations {
-	long _total;
-	private String id;
-	private boolean isCurent;
-	private String title;
-	private List<CompanyValue> values;
-	
+	private long _total;
+	private List<EducationValue> values;	
 	public long get_total() {
 		return _total;
 	}
 	public void set_total(long _total) {
 		this._total = _total;
 	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public boolean isCurent() {
-		return isCurent;
-	}
-	public void setCurent(boolean isCurent) {
-		this.isCurent = isCurent;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public List<CompanyValue> getValues() {
+	public List<EducationValue> getValues() {
 		return values;
 	}
-	public void setValues(List<CompanyValue> values) {
+	public void setValues(List<EducationValue> values) {
 		this.values = values;
 	}
-	public class CompanyValue{
-		private Company company;
-
-		public Company getCompany() {
-			return company;
-		}
-		public void setCompany(Company company) {
-			this.company = company;
-		}
-	}
-	public class Company{
+	public class EducationValue{
+		private Education education;
 		private String id;
-		private String industry;
-		private String name;
-		private String type;
+		private boolean isCurent;
+		private String title;
+		
+		public Education getEducation() {
+			return education;
+		}
+		public void setEducation(Education education) {
+			this.education = education;
+		}
 		public String getId() {
 			return id;
 		}
 		public void setId(String id) {
 			this.id = id;
 		}
-		public String getIndustry() {
-			return industry;
+		public boolean isCurent() {
+			return isCurent;
 		}
-		public void setIndustry(String industry) {
-			this.industry = industry;
+		public void setCurent(boolean isCurent) {
+			this.isCurent = isCurent;
 		}
-		public String getName() {
-			return name;
+		public String getTitle() {
+			return title;
 		}
-		public void setName(String name) {
-			this.name = name;
+		public void setTitle(String title) {
+			this.title = title;
 		}
-		public String getType() {
-			return type;
+	}
+	public class Education{
+		private String id;
+		private String schoolName;
+		private String fieldOfStudy;
+		private String degree;
+		private String activities;
+		private String notes;
+		private String startDate;
+		private String endDate;
+		public String getId() {
+			return id;
 		}
-		public void setType(String type) {
-			this.type = type;
+		public void setId(String id) {
+			this.id = id;
 		}
-		
+		public String getSchoolName() {
+			return schoolName;
+		}
+		public void setSchoolName(String schoolName) {
+			this.schoolName = schoolName;
+		}
+		public String getFieldOfStudy() {
+			return fieldOfStudy;
+		}
+		public void setFieldOfStudy(String fieldOfStudy) {
+			this.fieldOfStudy = fieldOfStudy;
+		}
+		public String getDegree() {
+			return degree;
+		}
+		public void setDegree(String degree) {
+			this.degree = degree;
+		}
+		public String getActivities() {
+			return activities;
+		}
+		public void setActivities(String activities) {
+			this.activities = activities;
+		}
+		public String getNotes() {
+			return notes;
+		}
+		public void setNotes(String notes) {
+			this.notes = notes;
+		}
+		public String getStartDate() {
+			return startDate;
+		}
+		public void setStartDate(String startDate) {
+			this.startDate = startDate;
+		}
+		public String getEndDate() {
+			return endDate;
+		}
+		public void setEndDate(String endDate) {
+			this.endDate = endDate;
+		}		
 	}
 
 }

@@ -51,6 +51,7 @@ public class XingDataDAO {
 	
 	public synchronized List<XingData> getAllXingData(){
 		Query q = em.createQuery("SELECT d FROM XingData ORDER BY d.ID");
+		@SuppressWarnings("unchecked")
 		List<XingData> rslt = q.getResultList();
 		return rslt;
 	}

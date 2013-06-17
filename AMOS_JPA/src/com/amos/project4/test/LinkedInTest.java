@@ -42,9 +42,15 @@ import com.amos.project4.models.ClientDAO;
 import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInConnect;
+import com.amos.project4.socialMedia.LinkedIn.LinkedInConnections;
+import com.amos.project4.socialMedia.LinkedIn.LinkedInConnections.ConnectionsValue;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInDataRetriever;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInDataType;
+import com.amos.project4.socialMedia.LinkedIn.LinkedInEducations;
+import com.amos.project4.socialMedia.LinkedIn.LinkedInEducations.EducationValue;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInPositions;
+import com.amos.project4.socialMedia.LinkedIn.LinkedInUser;
+import com.amos.project4.socialMedia.LinkedIn.linkedInSearchResult;
 import com.google.gson.Gson;
 
 public class LinkedInTest {
@@ -77,29 +83,49 @@ public class LinkedInTest {
 
 	@Test
 	public void testMeDetails() throws SAXException, IOException, ParserConfigurationException {
-		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,public-profile-url)", false);
-//		System.out.println(res.getBody());
-		is.setCharacterStream(new StringReader(res.getBody()));
-	    Document doc = db.parse(is);
-	    String id = doc.getElementsByTagName("id").item(0).getTextContent();
-		assertTrue(res!= null && res.isSuccessful() && id.equalsIgnoreCase("iGNeDrcELX"));
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,public-profile-url,primary-twitter-account)", true);
+		//System.out.println(res.getBody());
+		LinkedInUser user = parseUserResponse(res.getBody());
+		assertTrue(res!= null && res.isSuccessful() && user.getId().equalsIgnoreCase("iGNeDrcELX"));
+	}
+	
+	private LinkedInUser parseUserResponse(String body){		
+		Gson gson = new Gson();
+		return gson.fromJson(body, LinkedInUser.class);		
 	}
 	
 	@Test
 	public void testSearchByName() throws SAXException, IOException {
-		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people-search?first-name=Romuald%20Jupiter&last-name=BAKAKEU%20NGASSAM", false);
-		
-		is.setCharacterStream(new StringReader(res.getBody()));
-	    Document doc = db.parse(is);
-		
-	    String id = doc.getElementsByTagName("id").item(0).getTextContent();
-		assertTrue(res!= null && res.isSuccessful() && id.equalsIgnoreCase("iGNeDrcELX"));
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people-search?first-name=Romuald%20Jupiter&last-name=BAKAKEU%20NGASSAM", true);
+		//System.out.println(res.getBody());
+		linkedInSearchResult rslt = parseSearchUserResponse(res.getBody());
+		if(rslt.getNumResults() > 0 && rslt.getPeople().get_total() > 0){
+			String id = rslt.getPeople().getValues().get(0).getId();
+			assertTrue(res!= null && res.isSuccessful() && id.equalsIgnoreCase("iGNeDrcELX"));
+		}
+	}
+	
+	@Test
+	public void testSearchByName2() throws SAXException, IOException {
+		String url_request = "http://api.linkedin.com/v1/people-search:(people:(id,first-name,last-name,picture-url,headline,public-profile-url),num-results)?start="+ 0 +"&count="+ (20 ) +"&first-name=Romuald%20Jupiter&last-name=BAKAKEU%20NGASSAM";
+		Response response = this.connect.makeRequest(url_request, true);
+		if(response != null && response.isSuccessful()){
+			linkedInSearchResult rslt = parseSearchUserResponse(response.getBody());
+			if(rslt.getNumResults() > 0 && rslt.getPeople().get_total() > 0){
+				
+			}
+		}
+	}
+	
+	private linkedInSearchResult parseSearchUserResponse(String body){		
+		Gson gson = new Gson();
+		return gson.fromJson(body, linkedInSearchResult.class);		
 	}
 	
 	@Test
 	public void testMeCompany() throws SAXException, IOException, ParserConfigurationException, XPathExpressionException {
 		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX/positions", true);
-//		System.out.println(res.getBody());		
+		//System.out.println(res.getBody());		
 		LinkedInPositions pos = parsePositionsResponse(res.getBody());
 		String id = pos.getValues().get(0).getCompany().getId();
 		assertTrue(res!= null && res.isSuccessful() && id.equalsIgnoreCase("743470"));
@@ -118,59 +144,57 @@ public class LinkedInTest {
 	
 	@Test
 	public void testMeEducations() throws SAXException, IOException, ParserConfigurationException {
-		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX/educations", false);
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX/educations", true);
 		//System.out.println(res.getBody());
-		is.setCharacterStream(new StringReader(res.getBody()));
-	    Document doc = db.parse(is);
-	    NodeList nl = doc.getElementsByTagName("education");
-	    for (int i = 0; i < nl.getLength(); i++) {
-			Node node = nl.item(i);
-			System.out.println(node.toString());
+		LinkedInEducations edus = parseEducationsResponse(res.getBody());
+		if(edus.get_total() > 0){
+			for(EducationValue  val : edus.getValues()){
+				System.out.println(val.getEducation().getSchoolName());
+			}
 		}
+	}
+	
+	private LinkedInEducations parseEducationsResponse(String body){		
+		Gson gson = new Gson();
+		return gson.fromJson(body, LinkedInEducations.class);		
 	}
 	
 	@Test
 	public void testMeContacts() throws SAXException, IOException, ParserConfigurationException {
-		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX/connections:(id,last-name)", false);
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX/connections", true);
 		//System.out.println(res.getBody());
-		is.setCharacterStream(new StringReader(res.getBody()));
-	    Document doc = db.parse(is);
-	    NodeList nl = doc.getElementsByTagName("education");
-	    for (int i = 0; i < nl.getLength(); i++) {
-			Node node = nl.item(i);
-			System.out.println(node.toString());
+		LinkedInConnections connections = parseLinkedInConnections(res.getBody());
+		if(connections.get_total() > 0){
+			for(ConnectionsValue val : connections.getValues()){
+				System.out.println(val.getLastName());
+			}
 		}
+	}
+	
+	public LinkedInConnections parseLinkedInConnections(String body){
+		Gson gson = new Gson();
+		return gson.fromJson(body, LinkedInConnections.class);
 	}
 	
 	@Test
 	public void testMetwitterAccount() throws SAXException, IOException{
-		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,primary-twitter-account)", false);
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,primary-twitter-account)", true);
 		//System.out.println(res.getBody());
-		is.setCharacterStream(new StringReader(res.getBody()));
-		Document doc = db.parse(is);
-	    NodeList nl = doc.getElementsByTagName("primary-twitter-account");
-	    for (int i = 0; i < nl.getLength(); i++) {
-			Node node = nl.item(i);
-			System.out.println(node.toString());
-		}
+		LinkedInUser user = parseUserResponse(res.getBody());
+		System.out.println(user.getPrimaryTwitterAccount());
 	}
 	
 	@Test
 	public void testMeProfilePicture() throws SAXException, IOException, ParserConfigurationException {
-		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,picture-url)", false);
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,picture-url)", true);
 		//System.out.println(res.getBody());
-		is.setCharacterStream(new StringReader(res.getBody()));
-	    Document doc = db.parse(is);
-	    NodeList nl = doc.getElementsByTagName("picture-url");
-	    for (int i = 0; i < nl.getLength(); i++) {
-			Node node = nl.item(i);
-			System.out.println(node.toString());
-		}
+		LinkedInUser user = parseUserResponse(res.getBody());
+		assertTrue(res!= null && res.isSuccessful() && user.getId().equalsIgnoreCase("iGNeDrcELX"));
 	}
 	
 	@Test
 	public void testMeProfileURL() throws SAXException, IOException, ParserConfigurationException {
-		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,public-profile-url)", false);
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,public-profile-url)", false);
 		//System.out.println(res.getBody());
 		is.setCharacterStream(new StringReader(res.getBody()));
 	    Document doc = db.parse(is);
@@ -183,15 +207,10 @@ public class LinkedInTest {
 	
 	@Test
 	public void testMeInterests() throws SAXException, IOException, ParserConfigurationException {
-		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,interests)", false);
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,interests)", true);
 		//System.out.println(res.getBody());
-		is.setCharacterStream(new StringReader(res.getBody()));
-	    Document doc = db.parse(is);
-	    NodeList nl = doc.getElementsByTagName("interests");
-	    for (int i = 0; i < nl.getLength(); i++) {
-			Node node = nl.item(i);
-			System.out.println(node.toString());
-		}
+		LinkedInUser user = parseUserResponse(res.getBody());
+		System.out.println(user.getInterests());
 	}
 	
 	@Test

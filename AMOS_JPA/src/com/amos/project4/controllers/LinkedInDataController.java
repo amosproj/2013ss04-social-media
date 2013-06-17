@@ -25,17 +25,21 @@ import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
 import com.amos.project4.models.LinkedInData;
 import com.amos.project4.models.LinkedInDataDAO;
+import com.amos.project4.socialMedia.AccountSearchResult;
+import com.amos.project4.socialMedia.AccountSearchResultItem;
+import com.amos.project4.socialMedia.LinkedIn.LinkedInDataRetriever;
+import com.amos.project4.socialMedia.LinkedIn.LinkedInDataType;
 
-public class LinkedInDataController extends AbstractController {
+public class LinkedInDataController extends AbstractController implements MediaSearchController {
 
 	private Client selected_client;
-	private LinkedInDataDAO xing_DAO;
-	private List<LinkedInData> xingDatas;
+	private LinkedInDataDAO linkedIn_DAO;
+	private List<LinkedInData> linkedInDatas;
 	
 	
 	public LinkedInDataController() {
 		super();
-		this.xing_DAO = LinkedInDataDAO.getInstance();
+		this.linkedIn_DAO = LinkedInDataDAO.getInstance();
 		List<Client> clients = ClientDAO.getInstance().getAllClients();
 		if(clients != null && !clients.isEmpty()) this.selected_client = clients.get(0);
 	}
@@ -52,11 +56,25 @@ public class LinkedInDataController extends AbstractController {
 	}
 
 	public LinkedInDataDAO getLinkedIn_DAO() {
-		return xing_DAO;
+		return linkedIn_DAO;
 	}
 
 	public List<LinkedInData> getLinkedInDatas() {
-		return xingDatas;
+		return linkedInDatas;
+	}
+	
+	public AccountSearchResult<AccountSearchResultItem> getAccountSearchresult(){
+		return new AccountSearchResult<AccountSearchResultItem>(LinkedInDataRetriever.getInstance(),this.selected_client);
 	}
 
+	@Override
+	public void setSelectedClientAccount(String ID) {
+			linkedIn_DAO.deleteLinkedInDatas(selected_client, LinkedInDataType.ID);
+			LinkedInData data = new LinkedInData();
+			data.setType(LinkedInDataType.ID.toString());
+			data.setDataString(ID);
+			data.setOwner(selected_client);
+			selected_client.addLinkedInData(data);
+			linkedIn_DAO.persistLinkedInData(data);
+	}
 }

@@ -26,15 +26,18 @@ import com.amos.project4.models.Client;
 import com.amos.project4.models.User;
 import com.amos.project4.models.XingData;
 import com.amos.project4.models.XingDataDAO;
+import com.amos.project4.socialMedia.AccountSearchResultInterface;
+import com.amos.project4.socialMedia.DataRetrieverInterface;
 import com.amos.project4.socialMedia.Xing.XingContacts.UserCard;
 import com.amos.project4.socialMedia.Xing.XingProfileMessage.XingMessage;
 import com.amos.project4.socialMedia.Xing.XingProfileVisits.Visit;
 import com.amos.project4.socialMedia.Xing.XingUser.Company;
 import com.amos.project4.socialMedia.Xing.XingUser.Date;
+import com.amos.project4.socialMedia.Xing.XingUserSearchResult.Item;
 import com.amos.project4.socialMedia.Xing.XingUserSearchResult.XingUserId;
 import com.google.gson.Gson;
 
-public class XingDataRetriever {
+public class XingDataRetriever implements DataRetrieverInterface{
 	
 	private XingDataDAO Xing_dao;
 	private XingConnect connector;
@@ -73,6 +76,31 @@ public class XingDataRetriever {
 		if(!type.toString().equalsIgnoreCase(XingDataType.ID.toString())){
 			this.Xing_dao.deleteXingDatas(client, type);
 		}
+	}
+	
+	@Override
+	public AccountSearchResultInterface makeSearch(Client selectedClient,int begin, int end) {
+		XingAccountSearchResult list = new XingAccountSearchResult();
+		String url_request = "https://api.xing.com/v1/users/find_by_emails?emails="+ selectedClient.getMail();
+		Response response = this.connector.makeRequest(url_request);
+		if(response != null && response.isSuccessful()){
+			XingUserSearchResult results = parseSearchresults(response.getBody());
+			if(results != null && results.getResults().getTotal() > 0){
+				for(Item  item : results.getResults().getItems()){
+					if(item.getUser() == null) continue;
+					url_request = "https://api.xing.com/v1/users/"+ item.getUser().getId();
+					response = this.connector.makeRequest(url_request);
+					if(response != null){
+						XingUser xuser = parseResponse(response.getBody());
+						if(xuser.users.size() > 0){
+							list.getList().addAll(xuser.users);
+						}
+					}
+					
+				}
+			}
+		}	
+		return list;
 	}
 	
 	public String importXingIDofUser(User user,Client client){

@@ -20,11 +20,10 @@ package com.amos.project4.socialMedia.LinkedIn;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 public class LinkedInPositions {
 	long _total;
-	private String id;
-	private boolean isCurent;
-	private String title;
 	private List<CompanyValue> values;
 	
 	public long get_total() {
@@ -32,24 +31,6 @@ public class LinkedInPositions {
 	}
 	public void set_total(long _total) {
 		this._total = _total;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
-	public boolean isCurent() {
-		return isCurent;
-	}
-	public void setCurent(boolean isCurent) {
-		this.isCurent = isCurent;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
 	}
 	public List<CompanyValue> getValues() {
 		return values;
@@ -59,7 +40,28 @@ public class LinkedInPositions {
 	}
 	public class CompanyValue{
 		private Company company;
+		private String id;
+		@SerializedName("isCurrent") private boolean isCurent;
+		private String title;
 
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
+		public boolean isCurent() {
+			return isCurent;
+		}
+		public void setCurent(boolean isCurent) {
+			this.isCurent = isCurent;
+		}
+		public String getTitle() {
+			return title;
+		}
+		public void setTitle(String title) {
+			this.title = title;
+		}
 		public Company getCompany() {
 			return company;
 		}

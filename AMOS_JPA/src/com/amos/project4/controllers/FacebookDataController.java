@@ -26,9 +26,11 @@ import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
 import com.amos.project4.models.FacebookData;
 import com.amos.project4.models.FacebookDataDAO;
+import com.amos.project4.socialMedia.AccountSearchResult;
+import com.amos.project4.socialMedia.AccountSearchResultItem;
 import com.amos.project4.socialMedia.facebook.FacebookDataType;
 
-public class FacebookDataController extends AbstractController {
+public class FacebookDataController extends AbstractController implements MediaSearchController {
 
 	private Client selected_client;
 	private FacebookDataDAO facebook_DAO;
@@ -66,5 +68,15 @@ public class FacebookDataController extends AbstractController {
 			}
 		}
 		return rslts;
+	}
+
+	@Override
+	public AccountSearchResult<AccountSearchResultItem> getAccountSearchresult() {
+		return null;
+	}
+
+	@Override
+	public void setSelectedClientAccount(String ID) {
+		
 	}
 }

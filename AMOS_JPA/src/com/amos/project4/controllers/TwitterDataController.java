@@ -25,8 +25,10 @@ import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
 import com.amos.project4.models.TwitterData;
 import com.amos.project4.models.TwitterDataDAO;
+import com.amos.project4.socialMedia.AccountSearchResult;
+import com.amos.project4.socialMedia.AccountSearchResultItem;
 
-public class TwitterDataController extends AbstractController {
+public class TwitterDataController extends AbstractController implements MediaSearchController {
 
 	private Client selected_client;
 	private TwitterDataDAO twitter_DAO;
@@ -57,6 +59,18 @@ public class TwitterDataController extends AbstractController {
 
 	public List<TwitterData> getTwitterDatas() {
 		return twitterDatas;
+	}
+
+	@Override
+	public AccountSearchResult<AccountSearchResultItem> getAccountSearchresult() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setSelectedClientAccount(String ID) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -159,6 +159,14 @@ public class FacebookDetailPanel extends JPanel implements AbstractControlledVie
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, biography_textField, 6, SpringLayout.SOUTH, relationship_textField);
 		accountDetails_Panel.add(biography_textField);
 		biography_textField.setColumns(10);
+		
+		FacebookAccountSetting account_setting_panel = new FacebookAccountSetting(c_controller,controller);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, account_setting_panel, 0, SpringLayout.NORTH, Picture_panel);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, account_setting_panel, 6, SpringLayout.EAST, ID_textField);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.SOUTH, account_setting_panel, 0, SpringLayout.SOUTH, Picture_panel);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, account_setting_panel, -10, SpringLayout.EAST, accountDetails_Panel);
+		accountDetails_Panel.add(account_setting_panel);
+		
 		springLayout.putConstraint(SpringLayout.WEST, facebook_tabbedPane, 0, SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, facebook_tabbedPane, 0, SpringLayout.SOUTH, this);
 		springLayout.putConstraint(SpringLayout.EAST, facebook_tabbedPane, 0, SpringLayout.EAST, this);

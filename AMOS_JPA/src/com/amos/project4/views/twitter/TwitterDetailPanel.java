@@ -106,6 +106,13 @@ public class TwitterDetailPanel extends JPanel implements AbstractControlledView
 		accountDetails_Panel.add(twitterName_textField);
 		twitterName_textField.setColumns(10);
 		
+		TwitterAccountSetting account_setting_panel = new TwitterAccountSetting(c_controller,controller);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, account_setting_panel, 0, SpringLayout.NORTH, Picture_panel);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, account_setting_panel, 6, SpringLayout.EAST, ID_textField);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.SOUTH, account_setting_panel, 0, SpringLayout.SOUTH, Picture_panel);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, account_setting_panel, -10, SpringLayout.EAST, accountDetails_Panel);
+		accountDetails_Panel.add(account_setting_panel);
+		
 		JTabbedPane twitter_tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		springLayout.putConstraint(SpringLayout.NORTH, twitter_tabbedPane, 10, SpringLayout.SOUTH, accountDetails_Panel);
 		springLayout.putConstraint(SpringLayout.WEST, twitter_tabbedPane, 0, SpringLayout.WEST, this);

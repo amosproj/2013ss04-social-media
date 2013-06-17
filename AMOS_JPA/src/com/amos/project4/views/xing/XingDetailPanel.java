@@ -114,11 +114,7 @@ public class XingDetailPanel extends JPanel implements AbstractControlledView {
 		 sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, birthday_textField, 0, SpringLayout.EAST, ID_textField);
 		 accountDetails_Panel.add(birthday_textField);
 		 birthday_textField.setColumns(10);
-
-		JTabbedPane xing_tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		springLayout.putConstraint(SpringLayout.NORTH, xing_tabbedPane, 10,
-				SpringLayout.SOUTH, accountDetails_Panel);
-		
+		 
 		JLabel lblCompany = new JLabel("Company :");
 		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, lblId, 0, SpringLayout.EAST, lblCompany);
 		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, lblCompany, 12, SpringLayout.SOUTH, lblBirthday);
@@ -132,6 +128,19 @@ public class XingDetailPanel extends JPanel implements AbstractControlledView {
 		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, txtCompany, 0, SpringLayout.EAST, ID_textField);
 		accountDetails_Panel.add(txtCompany);
 		txtCompany.setColumns(10);
+		
+		XingAccountSetting account_setting_panel = new XingAccountSetting(c_controller,controller);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.NORTH, account_setting_panel, 0, SpringLayout.NORTH, Picture_panel);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.WEST, account_setting_panel, 6, SpringLayout.EAST, ID_textField);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.SOUTH, account_setting_panel, 0, SpringLayout.SOUTH, Picture_panel);
+		sl_accountDetails_Panel.putConstraint(SpringLayout.EAST, account_setting_panel, -10, SpringLayout.EAST, accountDetails_Panel);
+		accountDetails_Panel.add(account_setting_panel);
+
+		JTabbedPane xing_tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		springLayout.putConstraint(SpringLayout.NORTH, xing_tabbedPane, 10,
+				SpringLayout.SOUTH, accountDetails_Panel);
+		
+		
 		springLayout.putConstraint(SpringLayout.WEST, xing_tabbedPane, 0,
 				SpringLayout.WEST, this);
 		springLayout.putConstraint(SpringLayout.SOUTH, xing_tabbedPane, 0,

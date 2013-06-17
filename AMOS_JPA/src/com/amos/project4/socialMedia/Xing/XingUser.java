@@ -20,12 +20,14 @@ package com.amos.project4.socialMedia.Xing;
 
 import java.util.List;
 
+import com.amos.project4.socialMedia.AccountSearchResultItem;
+
 
 public class XingUser {
 	
 	public List<User> users;
 	
-	public class User {
+	public class User implements AccountSearchResultItem{
 		private String id;
 		private String first_name;
 		private String last_name;
@@ -111,6 +113,22 @@ public class XingUser {
 		public void setProfessional_experience(
 				ProfessionalExperience professional_experience) {
 			this.professional_experience = professional_experience;
+		}
+		@Override
+		public String getTitle1() {
+			return display_name;
+		}
+		@Override
+		public String getTitle2() {
+			return "";
+		}
+		@Override
+		public String getProfileURL() {
+			return permalink;
+		}
+		@Override
+		public String getPictureURL() {
+			return getPhoto_urls().getLarge();
 		}	  
 	}
 	public class ProfessionalExperience{
