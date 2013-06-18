@@ -61,7 +61,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	private List<Client> clients;
 	private User user;
 	
-
+	private boolean canceled;
 
 	public SocialMediaProgressBar(SocialMediaScanController controller,
 			SocialMediaScanModel model, List<Client> clients, User user, JFrame frame) {
@@ -128,7 +128,15 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 		task = new SocialMediaScanTask();
 		task.addPropertyChangeListener(this);
 		title_lbl.setText("Start Scanning !");
+		canceled = false;
 		task.execute();
+	}
+	
+	public void stop(){
+		if(task != null){
+			canceled = true;
+			task.done();
+		}
 	}
 
 	/**
@@ -144,7 +152,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	private class CancelAction implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			task.done();
+			stop();
 			dispose();		
 		}		
 	}
@@ -196,6 +204,8 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    	// Import Social Media Data
     		makeMessage("Scanning social medias ...",0);
 	    	setProgress(0);
+	    	if(canceled) return null;
+	    	
 	    	// Import facebook Datas
 	    	makeMessage("Scanning facebook ...",0);
 	    	if(!controller.getF_retriever().init(user)){
@@ -205,6 +215,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    		Client client = clients.get(j);
 	    		
     			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+    			if(canceled) return null;
 	    		
 	    		// Scan relatives Datas
 	    		for (int i = 0; i < f_types.size(); i++) {
@@ -213,11 +224,14 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 			    		controller.getF_retriever().deleteUserFacebookData(client,f_types.get(i));
 			    		step += 1;			    		
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));    			
-		    			
+			    		if(canceled) return null;
+			    		
 		    			makeMessage("Scanning Facebook " + f_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
 		    			controller.getF_retriever().importFacebookData(user, client, f_types.get(i));
 		    			step += 1;
-		    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+		    			
+		    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));    			
+		    			if(canceled) return null;
 	    			}catch (Exception e) {
 	    	    		e.printStackTrace();
 	    	    		makeMessage("An Error occurs while scanning facebook: "+client.getFirstname() + " " + client.getName() , 1);
@@ -226,7 +240,8 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 				}
 	    	}
 	    	
-	    	setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    	setProgress((int)Math.min(100 * (step/ TOTAL), 100));    			
+	    	if(canceled) return null;
 	    	
 	    	// Import Twitter Datas
 	    	title_lbl.setText("Scanning Twitter ...");
@@ -244,11 +259,14 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 			    		step += 1;
 		    		
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));			    		
-		    		
+			    		if(canceled) return null;
+			    		
 		    			makeMessage("Scanning Twitter " + t_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
 			    		controller.getT_retriever().importTwitterData(user, client, t_types.get(i));
 			    		step += 1;
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+			    		if(canceled) return null;
+			    		
 	    			}catch (Exception e) {
 			    		e.printStackTrace();
 			    		makeMessage("An Error occurs while scanning Twitter data:"+client.getFirstname() + " " + client.getName() , 1);
@@ -275,6 +293,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    			step = step + 2*X_COUNT;
 	    			makeMessage("Unable to get Xing ID of Client : "+client.getFirstname() + " " + client.getName() +"...",1);
 	    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    			if(canceled) return null;
 	    			continue;
 	    		}
 	 
@@ -286,11 +305,14 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 			    		step += 1;
 		    		
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));			    		
-		    		
+			    		if(canceled) return null;
+			    		
 		    			makeMessage("Scanning Xing " + x_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
 			    		controller.getX_retriever().importXingData(user, client, x_types.get(i),xing_id);
 			    		step += 1;
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+			    		if(canceled) return null;
+			    		
 	    			}catch (Exception e) {
 			    		e.printStackTrace();
 			    		makeMessage("An Error occurs while scanning Xing data:"+client.getFirstname() + " " + client.getName() , 1);
@@ -300,6 +322,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    	}
 	    	
 	    	setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    	if(canceled) return null;
 	    	
 	    	// Import Linked Datas
 	    	title_lbl.setText("Scanning LinkedIn ...");
@@ -320,6 +343,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    			step+=  2*L_COUNT;
 	    			makeMessage("Unable to get LinkedIn ID of Client : "+client.getFirstname() + " " + client.getName() +"...",1);
 	    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    			if(canceled) return null;
 	    			continue;
 	    		}
 	 
@@ -331,11 +355,14 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 			    		step += 1;
 		    		
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));			    		
-		    		
+			    		if(canceled) return null;
+			    		
 		    			makeMessage("Scanning LinkedIn " + l_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
 			    		controller.getL_retriever().importLinkedInData(user, client, l_types.get(i),linkedIn_id);
 			    		step += 1;
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+			    		if(canceled) return null;
+			    		
 	    			}catch (Exception e) {
 			    		e.printStackTrace();
 			    		makeMessage("An Error occurs while scanning Linked data:"+client.getFirstname() + " " + client.getName() , 1);
