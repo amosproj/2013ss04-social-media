@@ -263,7 +263,7 @@ public class AMOSMainUI {
 
 		// Initialize the settings short cut
 		Vector<String> settingsMenu_vec = new TreeNodeVector<String>(
-				"Settings", new String[] { "Connection Settings", "Twitter Sentiment Settings" });
+				"Settings", new String[] { "Connection Settings", "Twitter Sentiment Settings", "Dashboard Settings" });
 
 		// Initialize the user menu short cut
 //		Vector<String> usersMenu_vec = new TreeNodeVector<String>("Users",
@@ -457,6 +457,9 @@ public class AMOSMainUI {
 		JMenuItem mntmGenSetting = new JMenuItem("Connection Settings");
 		mntmGenSetting.addActionListener(new GeneralsettingsAction());
 		mnSettings.add(mntmGenSetting);
+		
+		JMenuItem mntmDBSetting = new JMenuItem("Dashboard Settings");
+		mnSettings.add(mntmDBSetting);
 
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
