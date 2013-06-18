@@ -27,8 +27,6 @@ import com.amos.project4.models.XingData;
 import com.amos.project4.models.XingDataDAO;
 import com.amos.project4.socialMedia.AccountSearchResult;
 import com.amos.project4.socialMedia.AccountSearchResultItem;
-import com.amos.project4.socialMedia.LinkedIn.LinkedInDataRetriever;
-import com.amos.project4.socialMedia.LinkedIn.LinkedInDataType;
 import com.amos.project4.socialMedia.Xing.XingDataRetriever;
 import com.amos.project4.socialMedia.Xing.XingDataType;
 

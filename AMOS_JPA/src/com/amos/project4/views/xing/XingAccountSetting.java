@@ -7,6 +7,7 @@ import com.amos.project4.controllers.MediaSearchController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.XingData;
 import com.amos.project4.socialMedia.Xing.XingDataType;
+import com.amos.project4.utils.AMOSUtils;
 import com.amos.project4.views.DefaultAccountSettingPanel;
 
 public class XingAccountSetting extends DefaultAccountSettingPanel {
@@ -17,6 +18,7 @@ public class XingAccountSetting extends DefaultAccountSettingPanel {
 		super(controller,media_controller);
 		this.setProfileURL("https://www.xing.com");
 		this.updateButtonTitle("Xing");
+		this.updateButtonIcon(AMOSUtils.makeIcon(AMOSUtils.XING_LOGO_URL, 27, 16));
 	}
 	@Override
 	protected void updatePanel(Client arg) {

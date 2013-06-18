@@ -33,13 +33,15 @@ public class AccountSearchResult<T extends AccountSearchResultItem> implements P
 	private final ArrayList<T> EMPTY_LIST = (ArrayList<T>) new ArrayList<AccountSearchResultItem>(0);
 	private List<T> list;
 
-	private static final int PAGE_SIZE = 20;
+	public static final int PAGE_SIZE = 20;
 	private int index;
 
 	private DataRetrieverInterface retriever;
 	private AccountSearchResultInterface current_rslt;
 
 	private Client client;
+	private int start;
+	private int end;
 
 	/**
 	 * @param PAGE_SIZE
@@ -59,8 +61,8 @@ public class AccountSearchResult<T extends AccountSearchResultItem> implements P
 		if (this.current_rslt.getNumResults() == 0) {
 			this.list = EMPTY_LIST;
 		} else {
-			int start = index * PAGE_SIZE;
-			int end = start + PAGE_SIZE - 1;
+			start = index * PAGE_SIZE;
+			end = start + PAGE_SIZE - 1;
 			if (end >= this.current_rslt.getNumResults()) {
 				end = (int) (this.current_rslt.getNumResults() - 1);
 			}
@@ -74,7 +76,7 @@ public class AccountSearchResult<T extends AccountSearchResultItem> implements P
 				}
 				repaginate();
 			} else {
-				this.current_rslt = this.retriever.makeSearch(client, start,PAGE_SIZE);
+				this.current_rslt = this.retriever.makeSearch(client, start,start + PAGE_SIZE);
 				this.list = (List<T>) this.current_rslt.getValues();
 			}
 		}
@@ -256,5 +258,13 @@ public class AccountSearchResult<T extends AccountSearchResultItem> implements P
 	
 	public int getResultCount(){
 		return (int) (this.current_rslt.getNumResults());
-	}	
+	}
+	
+	public int getStart() {
+		return start;
+	}
+
+	public int getEnd() {
+		return end;
+	}
 }

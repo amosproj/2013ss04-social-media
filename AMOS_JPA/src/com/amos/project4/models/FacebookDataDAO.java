@@ -59,26 +59,30 @@ public class FacebookDataDAO {
 	@SuppressWarnings("unchecked")
 	public synchronized List<FacebookData> getAllFacebookDataOfClient(Integer client_id){
 		if(client_id == null || client_id == 0) return new ArrayList<FacebookData>();
-
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, client_id);
 		Query q = em.createQuery("SELECT d FROM FacebookData d WHERE d.owner = :paramid  ORDER BY d.ID");
 		q.setParameter("paramid", owner);
 		List<FacebookData> rslt = q.getResultList();
+		em.close();
 		return rslt;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public synchronized List<FacebookData> getAllFacebookDataOfClientByType(Integer owner_id, FacebookDataType type){
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM FacebookData d WHERE d.owner = :paramid and d.type = :paramtype  ORDER BY d.ID");
 		q.setParameter("paramid", owner);
 		q.setParameter("paramtype", type.toString());
 		List<FacebookData> rslt = q.getResultList();
+		em.close();
 		return rslt;
 	}
 	
 	public synchronized boolean persistFacebookData(FacebookData data) {
 		if(data == null) return false;
+		em = factory.createEntityManager();
 		try {
 			em.getTransaction().begin();
 			em.persist(data);
@@ -90,12 +94,13 @@ public class FacebookDataDAO {
 			em.getTransaction().rollback();
 			return false;
 		}finally{
-			
+			em.close();
 		}
 	}
 	
 	public synchronized boolean updateFacebookData(FacebookData data){
 		if(data == null) return false;
+		em = factory.createEntityManager();
 		try{
 			em.getTransaction().begin();
 			em.persist(data);
@@ -106,12 +111,14 @@ public class FacebookDataDAO {
 			em.getTransaction().rollback();
 			return false;
 		}finally{
+			em.close();
 		}
 	}
 	
 	public synchronized boolean deleteFacebookData(FacebookData data){
 		if(data == null) return false;
 		try{
+			em = factory.createEntityManager();
 			em.getTransaction().begin();
 			
 			FacebookData tmp = em.find(FacebookData.class,data.getID() );
@@ -123,7 +130,7 @@ public class FacebookDataDAO {
 			em.getTransaction().rollback();
 			return false;
 		}finally{
-
+			em.close();
 		}
 	}
 	
@@ -147,6 +154,7 @@ public class FacebookDataDAO {
 	@SuppressWarnings("unchecked")
 	public synchronized boolean deleteAllFacebookData(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return false;
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM FacebookData d WHERE d.owner = :paramid  ORDER BY d.ID");
 		q.setParameter("paramid", owner);
@@ -154,6 +162,7 @@ public class FacebookDataDAO {
 		for (FacebookData data : rslt) {
 			if(! deleteFacebookData(data)) return false;
 		}
+		em.close();
 		return true;
 	}
 }

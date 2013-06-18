@@ -129,6 +129,10 @@ public class XingUser {
 		@Override
 		public String getPictureURL() {
 			return getPhoto_urls().getLarge();
+		}
+		@Override
+		public String getAccountKey() {
+			return getId();
 		}	  
 	}
 	public class ProfessionalExperience{

@@ -274,5 +274,15 @@ public class ClientDAO {
 		em.close();
 		return true;
 	}
+	
+	public synchronized void refresh(List<Client> clients) {
+		if(clients == null) return;
+		em = factory.createEntityManager();
+		//em.flush();
+		for(Client  client: clients){
+			em.refresh(client);
+		}
+		em.close();
+	}
 
 }

@@ -7,7 +7,7 @@ import com.amos.project4.socialMedia.AccountSearchResultInterface;
 import com.amos.project4.socialMedia.AccountSearchResultItem;
 
 public class linkedInSearchResult implements AccountSearchResultInterface {
-	private long numResults;
+
 	private UserCollection people;
 	
 	public class UserCollection{
@@ -26,9 +26,6 @@ public class linkedInSearchResult implements AccountSearchResultInterface {
 			this.values = values;
 		}
 	}
-	public void setNumResults(long numResults) {
-		this.numResults = numResults;
-	}
 
 	public UserCollection getPeople() {
 		return people;
@@ -40,7 +37,7 @@ public class linkedInSearchResult implements AccountSearchResultInterface {
 	
 	@Override
 	public long getNumResults() {
-		return numResults;
+		return people.get_total();
 	}
 
 	@SuppressWarnings("unchecked")

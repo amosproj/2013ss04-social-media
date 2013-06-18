@@ -7,6 +7,7 @@ import com.amos.project4.controllers.MediaSearchController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.LinkedInData;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInDataType;
+import com.amos.project4.utils.AMOSUtils;
 import com.amos.project4.views.DefaultAccountSettingPanel;
 
 public class LinkedInClientAccountSetting extends DefaultAccountSettingPanel {
@@ -16,6 +17,7 @@ public class LinkedInClientAccountSetting extends DefaultAccountSettingPanel {
 		super(controller,media_controller);
 		this.setProfileURL("http://www.linkedin.com");
 		this.updateButtonTitle("LinkedIn");
+		this.updateButtonIcon(AMOSUtils.makeIcon(AMOSUtils.LINKEDIN_LOGO_URL, 19, 16));
 	}
 	
 	@Override

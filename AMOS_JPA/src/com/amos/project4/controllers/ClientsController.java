@@ -73,6 +73,7 @@ public class ClientsController extends AbstractController implements
 
 	@Override
 	public void refresh() {
+		//clientDAO.refresh(clientlist);
 		clientlist = new ArrayList<Client>(clientDAO.getAllClients());
 	}
 	@Override

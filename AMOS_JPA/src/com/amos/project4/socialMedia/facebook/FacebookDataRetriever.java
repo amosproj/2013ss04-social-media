@@ -19,17 +19,24 @@
 package com.amos.project4.socialMedia.facebook;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.amos.project4.models.Client;
 import com.amos.project4.models.FacebookData;
 import com.amos.project4.models.FacebookDataDAO;
 import com.amos.project4.models.User;
+import com.amos.project4.socialMedia.AccountSearchResultInterface;
+import com.amos.project4.socialMedia.AccountSearchResultItem;
+import com.amos.project4.socialMedia.DataRetrieverInterface;
+import com.restfb.Connection;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.Facebook;
+import com.restfb.Parameter;
+import com.restfb.json.JsonObject;
 
 
-public class FacebookDataRetriever {
+public class FacebookDataRetriever implements DataRetrieverInterface{
 	
 	private FacebookDataDAO facebook_dao;
 	private FacebookConnect connector;
@@ -67,6 +74,51 @@ public class FacebookDataRetriever {
 		if(!type.toString().equalsIgnoreCase(FacebookDataType.UID.toString())){
 			this.facebook_dao.deleteFacebookDatas(client, type);
 		}
+	}
+	
+	@Override
+	public AccountSearchResultInterface makeSearch(Client selectedClient,int begin, int end) {
+		FacebookAccountSearchResult rslt = new FacebookAccountSearchResult(new ArrayList<AccountSearchResultItem>());	
+		Connection<JsonObject> publicSearch =  connector.getFacebookClient().fetchConnection("search", JsonObject.class, 
+				Parameter.with("q", selectedClient.getFirstname() + " " + selectedClient.getName()),//, Parameter.with("q", selectedClient.getName()),
+				Parameter.with("type", "user")
+				,Parameter.with("limit", "100"));
+		if(publicSearch != null && !publicSearch.getData().isEmpty()){
+			rslt.setNumResults(publicSearch.getData().size());
+			int new_end = end > publicSearch.getData().size()?publicSearch.getData().size():end;
+			for(JsonObject  data: publicSearch.getData().subList(begin, new_end)){
+				// Get full User datas
+				FacebookAccountSearchResultItem user_ = connector.getFacebookClient().fetchObject(data.getString("id"), FacebookAccountSearchResultItem.class);
+				if(user_ != null && user_.getId().length() > 0){
+					// get User picture URL
+					String query = "SELECT uid, pic_big FROM user WHERE uid="+data.getString("id");
+					List<FqlObject> pics = connector.getFacebookClient().executeFqlQuery(query, FqlObject.class);
+					if(pics != null && pics.size() > 0){
+						user_.setPictureURL(pics.get(0).pic_big);
+					}
+				}
+				rslt.getList().add(user_);
+			}
+		}		
+		return rslt;
+	}
+	
+	public String getFacebookIDofUser(User user, Client client) {
+		if(user == null || client == null) return "";
+		
+		List<FacebookData> account = this.facebook_dao.getAllFacebookDataOfClientByType(client.getID(),FacebookDataType.UID);
+		String facebook_id = "";
+		if(account == null || account.size() == 0 ){
+			Connection<JsonObject> publicSearch =  connector.getFacebookClient().fetchConnection("search", JsonObject.class, Parameter.with("q", client.getFirstname()), Parameter.with("q", client.getName()),Parameter.with("type", "user"));
+			if(publicSearch != null){
+				facebook_id = publicSearch.getData().get(0).getString("id");
+				saveFacebookData(client, facebook_id, FacebookDataType.UID);
+			}
+		}else{
+			facebook_id = account.get(0).getDataString();
+		}
+		
+		return facebook_id;
 	}
 	
 	public synchronized void importFacebookData(User user,Client client, FacebookDataType type) {

@@ -167,4 +167,8 @@ public class LinkedInUser implements AccountSearchResultItem{
 	public String getPictureURL() {
 		return this.pictureUrl;
 	}
+	@Override
+	public String getAccountKey() {
+		return getId();
+	}
 }

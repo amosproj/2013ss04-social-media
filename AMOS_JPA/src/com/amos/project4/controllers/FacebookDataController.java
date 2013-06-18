@@ -28,6 +28,7 @@ import com.amos.project4.models.FacebookData;
 import com.amos.project4.models.FacebookDataDAO;
 import com.amos.project4.socialMedia.AccountSearchResult;
 import com.amos.project4.socialMedia.AccountSearchResultItem;
+import com.amos.project4.socialMedia.facebook.FacebookDataRetriever;
 import com.amos.project4.socialMedia.facebook.FacebookDataType;
 
 public class FacebookDataController extends AbstractController implements MediaSearchController {
@@ -36,7 +37,7 @@ public class FacebookDataController extends AbstractController implements MediaS
 	private FacebookDataDAO facebook_DAO;
 	private List<FacebookData> facebookDatas;
 	
-	
+
 	public FacebookDataController() {
 		super();
 		this.facebook_DAO = FacebookDataDAO.getInstance();
@@ -59,7 +60,9 @@ public class FacebookDataController extends AbstractController implements MediaS
 	public FacebookDataDAO getFacebook_DAO() {
 		return facebook_DAO;
 	}
-
+	public List<FacebookData> getFacebookDatas() {
+		return facebookDatas;
+	}
 	public List<FacebookData> getFacebookDatas(FacebookDataType type) {
 		ArrayList<FacebookData> rslts = new ArrayList<FacebookData>();
 		for (FacebookData facebookData : this.selected_client.getFacebook_datas()) {
@@ -72,11 +75,17 @@ public class FacebookDataController extends AbstractController implements MediaS
 
 	@Override
 	public AccountSearchResult<AccountSearchResultItem> getAccountSearchresult() {
-		return null;
+		return new AccountSearchResult<AccountSearchResultItem>(FacebookDataRetriever.getInstance(),this.selected_client);
 	}
 
 	@Override
 	public void setSelectedClientAccount(String ID) {
-		
+		facebook_DAO.deleteFacebookDatas(selected_client, FacebookDataType.UID);
+		FacebookData data = new FacebookData();
+		data.setType(FacebookDataType.UID.toString());
+		data.setDataString(ID);
+		data.setOwner(selected_client);
+		selected_client.addFacebookData(data);
+		facebook_DAO.persistFacebookData(data);
 	}
 }

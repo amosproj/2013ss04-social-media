@@ -52,5 +52,5 @@ public interface ClientsControllerInterface {
 
 	public Client getSelectedClient();
 
-	void refresh();
+	public void refresh();
 }

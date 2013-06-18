@@ -18,8 +18,13 @@
  */
 package com.amos.project4.utils;
 
+import java.awt.Image;
+import java.io.IOException;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+import javax.swing.ImageIcon;
 
 public class AMOSUtils {
 
@@ -38,5 +43,24 @@ public class AMOSUtils {
         }
         return hexString.toString();
     }
+	
+	public static ImageIcon makeIcon(String url, int width, int height){
+		
+        Image imgFondo = null;
+		try {
+			java.net.URL imgURL = new URL(url);
+			imgFondo = javax.imageio.ImageIO.read(imgURL);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        imgFondo = imgFondo.getScaledInstance(width, height, Image.SCALE_FAST);	
+        return imgFondo != null?new ImageIcon(imgFondo): null;
+	}
 
+	public static String FACEBOOK_SMALL_LOGO_URL = "https://www.facebookbrand.com/img/assets/asset.f.logo.lg.png";
+	public static String TWITTER_SMALL_LOGO_URL = "https://twitter.com/images/resources/twitter-bird-white-on-blue.png";
+	public static String TWITTER_TOO_SMALL_LOGO_URL = "https://twitter.com/images/resources/twitter-bird-blue-on-white.png";
+	public static String LINKEDIN_LOGO_URL = "http://press.linkedin.com/display-media/206/4";
+	public static String XING_LOGO_URL = "http://corporate.xing.com/typo3temp/pics/b994770776.jpg";
 }

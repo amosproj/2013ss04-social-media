@@ -7,6 +7,7 @@ import com.amos.project4.controllers.MediaSearchController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.TwitterData;
 import com.amos.project4.socialMedia.twitter.TwitterDataType;
+import com.amos.project4.utils.AMOSUtils;
 import com.amos.project4.views.DefaultAccountSettingPanel;
 
 public class TwitterAccountSetting extends DefaultAccountSettingPanel {
@@ -17,6 +18,7 @@ public class TwitterAccountSetting extends DefaultAccountSettingPanel {
 		super(controller,media_controller);
 		this.setProfileURL("https://www.twitter.com");
 		this.updateButtonTitle("Twitter");
+		this.updateButtonIcon(AMOSUtils.makeIcon(AMOSUtils.TWITTER_TOO_SMALL_LOGO_URL, 16, 16));
 	}
 	@Override
 	protected void updatePanel(Client arg) {

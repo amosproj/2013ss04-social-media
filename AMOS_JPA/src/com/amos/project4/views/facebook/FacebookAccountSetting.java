@@ -7,6 +7,7 @@ import com.amos.project4.controllers.MediaSearchController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.FacebookData;
 import com.amos.project4.socialMedia.facebook.FacebookDataType;
+import com.amos.project4.utils.AMOSUtils;
 import com.amos.project4.views.DefaultAccountSettingPanel;
 
 public class FacebookAccountSetting extends DefaultAccountSettingPanel {
@@ -16,6 +17,7 @@ public class FacebookAccountSetting extends DefaultAccountSettingPanel {
 		super(controller, media_controller);
 		this.setProfileURL("http://www.facebook.com");
 		this.updateButtonTitle("Facebook");
+		this.updateButtonIcon(AMOSUtils.makeIcon(AMOSUtils.FACEBOOK_SMALL_LOGO_URL, 16, 16));
 	}
 	@Override
 	protected void updatePanel(Client arg) {

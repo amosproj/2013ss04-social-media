@@ -54,6 +54,7 @@ import javax.swing.tree.TreeSelectionModel;
 import com.amos.project4.controllers.ClientsController;
 import com.amos.project4.controllers.UserController;
 import com.amos.project4.models.Client;
+import com.amos.project4.utils.AMOSUtils;
 import com.amos.project4.views.facebook.FacebookDetailPanel;
 import com.amos.project4.views.linkedIn.LinkedInDetailPanel;
 import com.amos.project4.views.twitter.TwitterDetailPanel;
@@ -263,11 +264,12 @@ public class AMOSMainUI {
 
 		// Initialize the settings short cut
 		Vector<String> settingsMenu_vec = new TreeNodeVector<String>(
-				"Settings", new String[] { "Connection Settings", "Twitter Sentiment Settings", "Dashboard Settings" });
+				"Settings", new String[] { "Connection Settings",
+						"Twitter Sentiment Settings", "Dashboard Settings" });
 
 		// Initialize the user menu short cut
-//		Vector<String> usersMenu_vec = new TreeNodeVector<String>("Users",
-//				new String[] { "Profile", "Change password" });
+		// Vector<String> usersMenu_vec = new TreeNodeVector<String>("Users",
+		// new String[] { "Profile", "Change password" });
 
 		// Initialize the Social media menus short cut
 		Vector<String> socialsMenu_vec = new TreeNodeVector<String>("Social",
@@ -290,20 +292,21 @@ public class AMOSMainUI {
 		// Put horizontal line to separe the categories
 		UIManager.put("Tree.line", Color.GREEN);
 		leftMenuTree.putClientProperty("JTree.lineStyle", "Horizontal");
-		
-		//add a mouse adapter for double click listening
+
+		// add a mouse adapter for double click listening
 		leftMenuTree.addMouseListener(new MenuSelectionMouseAdapter());
-		
+
 		// Customize the Selection listener
-		leftMenuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		
+		leftMenuTree.getSelectionModel().setSelectionMode(
+				TreeSelectionModel.SINGLE_TREE_SELECTION);
+
 		// Expand All
 		int row = 0;
 		while (row < leftMenuTree.getRowCount()) {
 			leftMenuTree.expandRow(row);
 			row++;
 		}
-	    
+
 		return leftMenuTree;
 
 	}
@@ -418,17 +421,17 @@ public class AMOSMainUI {
 		mediaPanes.setEnabledAt(0, true);
 
 		facebookDetailPane = new FacebookDetailPanel(client_controller);
-		mediaPanes.addTab("Facebook", null, facebookDetailPane, null);
+		mediaPanes.addTab("Facebook", AMOSUtils.makeIcon(AMOSUtils.FACEBOOK_SMALL_LOGO_URL, 20, 20), facebookDetailPane, null);
 
 		// Initialise the Twitter detail Pane
 		twitterDetailPane = new TwitterDetailPanel(client_controller);
-		mediaPanes.addTab("Twitter", null, twitterDetailPane, null);
+		mediaPanes.addTab("Twitter", AMOSUtils.makeIcon(AMOSUtils.TWITTER_SMALL_LOGO_URL, 20, 20), twitterDetailPane, null);
 		
 		JPanel xingPane = new XingDetailPanel(client_controller);
-		mediaPanes.addTab("Xing", null, xingPane, null);
+		mediaPanes.addTab("Xing", AMOSUtils.makeIcon(AMOSUtils.XING_LOGO_URL, 34, 20), xingPane, null);
 
 		JPanel linkedInPane = new LinkedInDetailPanel(client_controller);
-		mediaPanes.addTab("LinkedIn", null, linkedInPane, null);
+		mediaPanes.addTab("LinkedIn", AMOSUtils.makeIcon(AMOSUtils.LINKEDIN_LOGO_URL, 23, 20), linkedInPane, null);
 
 		return panel_right_bottom;
 	}
@@ -459,6 +462,7 @@ public class AMOSMainUI {
 		mnSettings.add(mntmGenSetting);
 		
 		JMenuItem mntmDBSetting = new JMenuItem("Dashboard Settings");
+		mntmDBSetting.addActionListener(new DashboardSettingDialogAction());
 		mnSettings.add(mntmDBSetting);
 
 		JMenu mnHelp = new JMenu("Help");
@@ -486,6 +490,18 @@ public class AMOSMainUI {
 		GeneralSettingsDialog dialog = new GeneralSettingsDialog(user_controller, user_model,frame);
 		dialog.setVisible(true);
 	}
+	private void openDashboardSettingDialog() {
+		ArrayList<Client> c_list = new ArrayList<Client>();
+		Client selected_client = client_controller.getSelectedClient();
+		if (selected_client == null) {
+			c_list.addAll(client_controller.getAllClients());
+		} else {
+			c_list.add(selected_client);
+		}
+		DashboardSettingDialog dialog = new DashboardSettingDialog(
+				user_controller.getCurrent_user(), c_list, frame);
+		dialog.setVisible(true);
+	}
 	
 	private void logout(){
 		int dialogResult = JOptionPane.showConfirmDialog (frame, 
@@ -509,8 +525,11 @@ public class AMOSMainUI {
 	
 	private void makeRefresh(){
 		search_params.refresh();
-		tclients.clearSelection();
-		tclients.getModel().fireTableDataChanged();
+		this.client_controller.refresh();
+//		tclients.clearSelection();
+//		tclients.getModel().fireTableDataChanged();
+		tclients = new ClientTable(client_controller);
+		clienTable_scrollPane.setViewportView(tclients);
 		clienTable_scrollPane.invalidate();
 		clienTable_scrollPane.revalidate();
 		frame.repaint();
@@ -552,7 +571,9 @@ public class AMOSMainUI {
 				exit();
 			} else if (item.equalsIgnoreCase("Connection Settings")) {
 				showGeneralsettingDialog();
-			} else {
+			} else if (item.equalsIgnoreCase("Dashboard Settings")) {
+				openDashboardSettingDialog();
+			}else {
 				System.out.println("" + obj.toString());
 			}
 		}
@@ -600,6 +621,12 @@ public class AMOSMainUI {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			openSocialMediaScanDialog();
+		}
+	}
+	private class DashboardSettingDialogAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			openDashboardSettingDialog();
 		}
 	}
 

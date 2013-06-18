@@ -5,4 +5,5 @@ public interface AccountSearchResultItem {
 	public String getTitle2();
 	public String getProfileURL();
 	public String getPictureURL();
+	public String getAccountKey();
 }

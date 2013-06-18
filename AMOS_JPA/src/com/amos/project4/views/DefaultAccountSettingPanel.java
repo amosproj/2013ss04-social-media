@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.net.URI;
 import java.util.Observable;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -107,6 +108,12 @@ public abstract class DefaultAccountSettingPanel extends JPanel implements Abstr
 			this.getBtnSearchAndAssign().setText("Search and assign client' s account on " + provider);
 		}
 	}
+	
+	public void updateButtonIcon(ImageIcon img){
+		if(img != null ){
+			this.getBtnViewProfileOn().setIcon(img);
+		}
+	}
 	@Override
 	public void modelPropertyChange(Observable o, Object arg) {
 		if(arg != null && arg instanceof Client){
@@ -146,7 +153,7 @@ public abstract class DefaultAccountSettingPanel extends JPanel implements Abstr
 	}
 	
 	public void makeSearchAccountDialog() {
-		SearchAccountDialog dialog = new SearchAccountDialog(media_controller.getAccountSearchresult());
+		SearchAccountDialog dialog = new SearchAccountDialog(media_controller);
 		dialog.setVisible(true);
 	}
 }

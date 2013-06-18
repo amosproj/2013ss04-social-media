@@ -18,6 +18,7 @@
  */
 package com.amos.project4.socialMedia.twitter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import twitter4j.ResponseList;
@@ -28,8 +29,12 @@ import com.amos.project4.models.Client;
 import com.amos.project4.models.TwitterData;
 import com.amos.project4.models.TwitterDataDAO;
 import com.amos.project4.models.User;
+import com.amos.project4.socialMedia.AccountSearchResult;
+import com.amos.project4.socialMedia.AccountSearchResultInterface;
+import com.amos.project4.socialMedia.AccountSearchResultItem;
+import com.amos.project4.socialMedia.DataRetrieverInterface;
 
-public class TwitterDataRetriever {
+public class TwitterDataRetriever implements DataRetrieverInterface{
 	
 	private TwitterDataDAO twitter_dao;
 	private TwitterConnect connector;
@@ -68,12 +73,46 @@ public class TwitterDataRetriever {
 		if(!type.toString().equalsIgnoreCase(TwitterDataType.TWITTER_NAME.toString())){
 			this.twitter_dao.deleteTwitterDatas(client, type);
 		}
-//		if(client == null || type == null) return;
-//		for(TwitterData data : client.getTwitter_datas()){
-//			if(data.getType().toString().equalsIgnoreCase(type.toString()) && !type.toString().equalsIgnoreCase(TwitterDataType.TWITTER_NAME.toString())){
-//				this.twitter_dao.deleteTwitterData(data);
-//			}
-//		}
+	}
+	
+	@Override
+	public AccountSearchResultInterface makeSearch(Client selectedClient,int begin, int end) {
+		TwitterAccountSearchResult rslts = new TwitterAccountSearchResult(new ArrayList<AccountSearchResultItem>());
+		Twitter twitter = connector.getTwitter();
+		int page = end / AccountSearchResult.PAGE_SIZE;
+		try {
+			ResponseList<twitter4j.User> users = twitter.searchUsers(selectedClient.getFirstname() + " " + selectedClient.getName(), page );
+			if(users != null && !users.isEmpty()){
+				rslts.setNumResults(users.size());
+				for(twitter4j.User data : users){
+					rslts.getList().add(new TwitterAccountSearchresultItem(data));
+				}
+			}
+		} catch (TwitterException e) {
+		}
+		return rslts;
+	}
+	
+	public String getTwitterIDofUser(User user, Client client) {
+		if(user == null || client == null) return "";
+		Twitter twitter = connector.getTwitter();
+		
+		List<TwitterData> account = this.twitter_dao.getAllTwitterDataOfClientByType(client.getID(),TwitterDataType.TWITTER_NAME);
+		String twitter_id = "";
+		if(account == null || account.size() == 0 ){
+			try {
+				ResponseList<twitter4j.User> users = twitter.searchUsers(client.getFirstname() + " " + client.getName(), 1 );
+				if(users != null && !users.isEmpty()){
+					twitter_id = users.get(0).getScreenName();
+					saveTwitterData(client,users.get(0).getScreenName(),TwitterDataType.TWITTER_NAME);					
+				}
+			} catch (TwitterException e) {
+			}
+		}else{
+			twitter_id = account.get(0).getDataString();
+		}
+		
+		return twitter_id;
 	}
 	
 	public synchronized  void importTwitterData(User user,Client client, TwitterDataType type) throws TwitterException{
@@ -112,7 +151,7 @@ public class TwitterDataRetriever {
 			return;
 		case TRENDS:
 			ResponseList<twitter4j.Location> trends = twitter.getAvailableTrends();
-			for(twitter4j.Location trend : trends){
+			for(twitter4j.Location trend : trends.subList(0, 20)){
 				saveTwitterData(client,trend.getName()  + "#" + trend.getCountryName() + "#" + trend.getURL(),TwitterDataType.TRENDS);				
 			}
 			return;

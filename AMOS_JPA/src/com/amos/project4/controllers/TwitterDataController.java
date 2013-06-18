@@ -25,8 +25,13 @@ import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
 import com.amos.project4.models.TwitterData;
 import com.amos.project4.models.TwitterDataDAO;
+import com.amos.project4.models.XingData;
 import com.amos.project4.socialMedia.AccountSearchResult;
 import com.amos.project4.socialMedia.AccountSearchResultItem;
+import com.amos.project4.socialMedia.Xing.XingDataRetriever;
+import com.amos.project4.socialMedia.Xing.XingDataType;
+import com.amos.project4.socialMedia.twitter.TwitterDataRetriever;
+import com.amos.project4.socialMedia.twitter.TwitterDataType;
 
 public class TwitterDataController extends AbstractController implements MediaSearchController {
 
@@ -63,14 +68,18 @@ public class TwitterDataController extends AbstractController implements MediaSe
 
 	@Override
 	public AccountSearchResult<AccountSearchResultItem> getAccountSearchresult() {
-		// TODO Auto-generated method stub
-		return null;
+		return new AccountSearchResult<AccountSearchResultItem>(TwitterDataRetriever.getInstance(),this.selected_client);
 	}
 
 	@Override
 	public void setSelectedClientAccount(String ID) {
-		// TODO Auto-generated method stub
-		
+		twitter_DAO.deleteTwitterDatas(selected_client, TwitterDataType.TWITTER_NAME);
+		TwitterData data = new TwitterData();
+		data.setType(TwitterDataType.TWITTER_NAME.toString());
+		data.setDataString(ID);
+		data.setOwner(selected_client);
+		selected_client.addTwitterData(data);
+		twitter_DAO.persistTwitterData(data);		
 	}
 
 }

@@ -19,21 +19,26 @@
 package com.amos.project4.views.accountSearch;
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.URI;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import com.amos.project4.controllers.MediaSearchController;
 import com.amos.project4.socialMedia.AccountSearchResult;
 import com.amos.project4.socialMedia.AccountSearchResultItem;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class SearchAccountDialog extends JDialog {
 
@@ -41,7 +46,17 @@ public class SearchAccountDialog extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private AccountSearchList<AccountSearchResultItem> searchResultlist;
 	private AccountSearchResult<AccountSearchResultItem> search_result;
+	private MediaSearchController media_controller;
+	
 	private JLabel lblStatus;
+	private JButton btnStart;
+	private JButton btnPrevious;
+	private JButton btnNext;
+	private JButton btnEnd;
+	private JButton cancelButton;
+	private JButton btnView;
+	private JButton btnSelect;
+	private SearchAccountDialog me;
 
 	/**
 	 * Launch the application.
@@ -63,15 +78,17 @@ public class SearchAccountDialog extends JDialog {
 		init();
 	}
 	
-	public SearchAccountDialog(AccountSearchResult<AccountSearchResultItem> search_result) {
+	public SearchAccountDialog(MediaSearchController media_controller) {
 		super();
-		this.search_result = search_result;
+		this.search_result = media_controller.getAccountSearchresult();
+		this.media_controller = media_controller;
 		init();
+		me = this;
 	}
 
 	private void init() {
 		setTitle("AMOS Project 4 : Account Search Results");
-		setBounds(100, 100, 500, 400);
+		setBounds(100, 100, 620, 400);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -81,6 +98,7 @@ public class SearchAccountDialog extends JDialog {
 			contentPanel.add(scrollPane, BorderLayout.CENTER);
 			{
 				searchResultlist = new AccountSearchList<AccountSearchResultItem>(search_result);
+				searchResultlist.addListSelectionListener(new AccountListSelectionListener());
 				scrollPane.setViewportView(searchResultlist);
 			}
 		}
@@ -89,14 +107,7 @@ public class SearchAccountDialog extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				lblStatus = new JLabel("0 - 0 of 0 Results");
-				lblStatus.setHorizontalAlignment(SwingConstants.TRAILING);
-				lblStatus.setPreferredSize(new Dimension(200, 14));
-				lblStatus.setSize(new Dimension(200, 0));
-				buttonPane.add(lblStatus);
-			}
-			{
-				JButton btnStart = new JButton("<<");
+				btnStart = new JButton("<<");
 				btnStart.addActionListener(new ActionListener() {					
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -107,7 +118,7 @@ public class SearchAccountDialog extends JDialog {
 				buttonPane.add(btnStart);
 			}
 			{
-				JButton btnPrevious = new JButton("<");
+				btnPrevious = new JButton("<");
 				btnPrevious.addActionListener(new ActionListener() {					
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -118,7 +129,7 @@ public class SearchAccountDialog extends JDialog {
 				buttonPane.add(btnPrevious);
 			}
 			{
-				JButton btnNext = new JButton(">");
+				btnNext = new JButton(">");
 				btnNext.setToolTipText("Next");
 				btnNext.addActionListener(new ActionListener() {					
 					@Override
@@ -129,7 +140,7 @@ public class SearchAccountDialog extends JDialog {
 				buttonPane.add(btnNext);
 			}
 			{
-				JButton btnEnd = new JButton(">>");
+				btnEnd = new JButton(">>");
 				btnEnd.setToolTipText("End");
 				btnEnd.addActionListener(new ActionListener() {					
 					@Override
@@ -140,7 +151,35 @@ public class SearchAccountDialog extends JDialog {
 				buttonPane.add(btnEnd);
 			}
 			{
-				JButton cancelButton = new JButton("Cancel");
+				lblStatus = new JLabel("0 - 0 of 0 Results");
+				lblStatus.setPreferredSize(new Dimension(170, 14));
+				lblStatus.setSize(new Dimension(170, 0));
+				buttonPane.add(lblStatus);
+			}
+			{
+				btnView = new JButton("View");
+				btnView.setEnabled(false);
+				btnView.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						openViewOnWebsite();
+					}
+				});
+				btnView.setToolTipText("View profile on website");
+				buttonPane.add(btnView);
+			}
+			{
+				btnSelect = new JButton("Select");
+				btnSelect.setEnabled(false);
+				btnSelect.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						saveSelectedAccount();
+					}
+				});
+				btnSelect.setToolTipText("Select account");
+				buttonPane.add(btnSelect);
+			}
+			{
+				cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
 				cancelButton.addActionListener(new ActionListener() {					
 					@Override
@@ -150,8 +189,9 @@ public class SearchAccountDialog extends JDialog {
 				});
 				buttonPane.add(cancelButton);
 			}
+			
 		}
-		initStatusLabel();
+		updateUI();
 	}
 
 	public AccountSearchList<AccountSearchResultItem> getSearchResultlist() {
@@ -164,19 +204,27 @@ public class SearchAccountDialog extends JDialog {
 	
 	private void initStatusLabel(){
 		if(search_result != null){
-			int current_page = search_result.getPageIndex();
 			int total = search_result.getResultCount();
-			int count_begin = (search_result.getPageCount() * current_page);
-			int count_end = (search_result.getPageCount() * current_page) + search_result.size();
+			int count_begin = search_result.getStart()+1;
+			int count_end = search_result.getEnd()+1;
 			String text = count_begin + " - " + count_end + " of " + total + " Results";
 			getLblStatus().setText(text );
 		}
 	}
 	
 	private void updateUI(){
-		getSearchResultlist().update();
+		if(search_result != null) getSearchResultlist().update();
 		initStatusLabel();
 		this.repaint();
+		// Next
+		this.btnNext.setEnabled(search_result != null && search_result.isNextPageAvailable());
+		// Previous
+		this.btnPrevious.setEnabled(search_result != null && search_result.isPreviousPageAvailable());
+		// first
+		this.btnStart.setEnabled(search_result != null && !this.search_result.isFirstPage());
+		// last
+		this.btnEnd.setEnabled(search_result != null && !this.search_result.isLastPage());
+		
 	}
 	
 	private void next(){
@@ -205,4 +253,43 @@ public class SearchAccountDialog extends JDialog {
 		}
 	}
 	
+	private void saveSelectedAccount(){
+		AccountSearchResultItem item = searchResultlist.getSelectedValue();
+    	if(item != null && Desktop.isDesktopSupported()){
+    		String ID = item.getAccountKey();
+    		try {
+				if(ID != null && ID.length() > 0 && media_controller != null){
+					media_controller.setSelectedClientAccount(ID);
+				}
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(me, "Could not the selected Account for the user. ACCOUNT ID : " +
+						ID, "Error launching the browser", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+    	dispose();
+	}
+	
+	private void openViewOnWebsite(){
+		AccountSearchResultItem item = searchResultlist.getSelectedValue();
+    	if(item != null && Desktop.isDesktopSupported()){
+    		String profileURL = item.getProfileURL();
+    		try {
+				if(profileURL != null && profileURL.length() > 0)
+					Desktop.getDesktop().browse(new URI(profileURL));
+			} catch (Exception e1) {
+				JOptionPane.showMessageDialog(me, "Could not open the URL. Please go to the folloeing url manually: \n" +
+						profileURL, "Error launching the browser", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+	
+	private class AccountListSelectionListener implements ListSelectionListener{
+		public void valueChanged(ListSelectionEvent arg0) {
+			AccountSearchResultItem item = searchResultlist.getSelectedValue();
+	    	if(item != null && Desktop.isDesktopSupported()){
+	    		btnView.setEnabled(true);
+	    		btnSelect.setEnabled(true);
+			}
+		}
+	}
 }
