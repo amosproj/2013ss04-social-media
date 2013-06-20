@@ -265,7 +265,7 @@ public class AMOSMainUI {
 		// Initialize the settings short cut
 		Vector<String> settingsMenu_vec = new TreeNodeVector<String>(
 				"Settings", new String[] { "Connection Settings",
-						"Twitter Sentiment Settings", "Dashboard Settings" });
+						"Twitter Sentiment Settings", "Notification Settings" });
 
 		// Initialize the user menu short cut
 		// Vector<String> usersMenu_vec = new TreeNodeVector<String>("Users",
@@ -461,7 +461,7 @@ public class AMOSMainUI {
 		mntmGenSetting.addActionListener(new GeneralsettingsAction());
 		mnSettings.add(mntmGenSetting);
 		
-		JMenuItem mntmDBSetting = new JMenuItem("Dashboard Settings");
+		JMenuItem mntmDBSetting = new JMenuItem("Notification Settings");
 		mntmDBSetting.addActionListener(new DashboardSettingDialogAction());
 		mnSettings.add(mntmDBSetting);
 
@@ -571,7 +571,7 @@ public class AMOSMainUI {
 				exit();
 			} else if (item.equalsIgnoreCase("Connection Settings")) {
 				showGeneralsettingDialog();
-			} else if (item.equalsIgnoreCase("Dashboard Settings")) {
+			} else if (item.equalsIgnoreCase("Notification Settings")) {
 				openDashboardSettingDialog();
 			}else {
 				System.out.println("" + obj.toString());
