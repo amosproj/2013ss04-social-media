@@ -118,7 +118,7 @@ public class DashboardSettingDialog extends JDialog implements
 	 */
 	private DashboardSettingDialog() {
 		super();
-		setTitle("AMOS Project 4 - Dashboard Settings");
+		setTitle("AMOS Project 4 - Notification Settings");
 
 		setSize(658, 500);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
