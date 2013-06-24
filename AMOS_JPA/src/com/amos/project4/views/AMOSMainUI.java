@@ -498,7 +498,7 @@ public class AMOSMainUI {
 		} else {
 			c_list.add(selected_client);
 		}
-		DashboardSettingDialog dialog = new DashboardSettingDialog(
+		NotificationSettingsDialog dialog = new NotificationSettingsDialog(
 				user_controller.getCurrent_user(), c_list, frame);
 		dialog.setVisible(true);
 	}
