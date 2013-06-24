@@ -56,12 +56,9 @@ public class NotificationSettingsDialog extends JDialog implements
 	private JCheckBox XchckbxBirthday;
 	private JCheckBox XchckbxCompany;
 	private SpringLayout sl_xingPanel;
-	private JCheckBox LchckbxSpecialties;
-	private JCheckBox LchckbxCompany;
 	private JCheckBox LchckbxJobTitle;
 	private JCheckBox LchckbxStatus;
 	private SpringLayout sl_linkedInPanel;
-	private JCheckBox LchckbxPositions;
 	private JCheckBox btnLSelectAll;
 	private JCheckBox btnFSelectAll;
 	private JCheckBox btnXSelectAll;
@@ -97,7 +94,7 @@ public class NotificationSettingsDialog extends JDialog implements
 		super();
 		setTitle("AMOS Project 4 - Notification Settings");
 
-		setSize(658, 317);
+		setSize(658, 251);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(frame);
 
@@ -186,37 +183,10 @@ public class NotificationSettingsDialog extends JDialog implements
 			springLayout.putConstraint(SpringLayout.SOUTH, linkedInPanel, -6,
 					SpringLayout.NORTH, buttonPane);
 			{
-				LchckbxSpecialties = new JCheckBox("Current job");
-				LchckbxSpecialties.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						// if(LchckbxSpecialties.isSelected())
-						// model.addSelectedLinkedInDataType(LinkedInDataType.CURRENT_JOB);
-						// else
-						// model.removeSelectedLinkedInDataType(LinkedInDataType.CURRENT_JOB);
-					}
-				});
-				linkedInPanel.add(LchckbxSpecialties);
-			}
-			{
-				LchckbxCompany = new JCheckBox("Company");
-				sl_linkedInPanel.putConstraint(SpringLayout.SOUTH, LchckbxCompany, -174, SpringLayout.SOUTH, linkedInPanel);
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, LchckbxSpecialties, 6, SpringLayout.SOUTH, LchckbxCompany);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, LchckbxSpecialties, 0, SpringLayout.WEST, LchckbxCompany);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, LchckbxCompany, 10, SpringLayout.WEST, linkedInPanel);
-				LchckbxCompany.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						// if(LchckbxCompany.isSelected())
-						// model.addSelectedLinkedInDataType(LinkedInDataType.COMPANY);
-						// else
-						// model.removeSelectedLinkedInDataType(LinkedInDataType.COMPANY);
-					}
-				});
-				linkedInPanel.add(LchckbxCompany);
-			}
-			{
 				LchckbxJobTitle = new JCheckBox("Headline");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, LchckbxJobTitle, 6, SpringLayout.SOUTH, LchckbxSpecialties);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, LchckbxJobTitle, 0, SpringLayout.WEST, LchckbxSpecialties);
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, LchckbxJobTitle, 10, SpringLayout.NORTH, linkedInPanel);
+//				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, LchckbxJobTitle, 6, SpringLayout.SOUTH, LchckbxSpecialties);
+//				sl_linkedInPanel.putConstraint(SpringLayout.WEST, LchckbxJobTitle, 0, SpringLayout.WEST, LchckbxSpecialties);
 				LchckbxJobTitle.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						// if(LchckbxJobTitle.isSelected())
@@ -227,36 +197,9 @@ public class NotificationSettingsDialog extends JDialog implements
 				});
 				linkedInPanel.add(LchckbxJobTitle);
 			}
-			{
-				LchckbxStatus = new JCheckBox("Status");
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, LchckbxStatus, 0, SpringLayout.WEST, LchckbxSpecialties);
-				LchckbxStatus.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						// if(LchckbxStatus.isSelected())
-						// model.addSelectedLinkedInDataType(LinkedInDataType.STATUS);
-						// else
-						// model.removeSelectedLinkedInDataType(LinkedInDataType.STATUS);
-					}
-				});
-				linkedInPanel.add(LchckbxStatus);
-			}
-			{
-				LchckbxPositions = new JCheckBox("Positions");
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, LchckbxPositions, 126, SpringLayout.NORTH, linkedInPanel);
-				sl_linkedInPanel.putConstraint(SpringLayout.SOUTH, LchckbxStatus, -6, SpringLayout.NORTH, LchckbxPositions);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, LchckbxPositions, 10, SpringLayout.WEST, linkedInPanel);
-				LchckbxPositions.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						// if(LchckbxPositions.isSelected())
-						// model.addSelectedLinkedInDataType(LinkedInDataType.POSITIONS);
-						// else
-						// model.removeSelectedLinkedInDataType(LinkedInDataType.POSITIONS);
-					}
-				});
-				linkedInPanel.add(LchckbxPositions);
-			}
 
 			btnLSelectAll = new JCheckBox("Select all");
+			sl_linkedInPanel.putConstraint(SpringLayout.EAST, LchckbxJobTitle, 0, SpringLayout.EAST, btnLSelectAll);
 			sl_linkedInPanel.putConstraint(SpringLayout.WEST, btnLSelectAll, 10, SpringLayout.WEST, linkedInPanel);
 			sl_linkedInPanel.putConstraint(SpringLayout.SOUTH, btnLSelectAll,
 					0, SpringLayout.SOUTH, linkedInPanel);
@@ -401,7 +344,6 @@ public class NotificationSettingsDialog extends JDialog implements
 				LchckbxCompany.setSelected(false);
 				LchckbxJobTitle.setSelected(false);
 				LchckbxPositions.setSelected(false);
-				LchckbxSpecialties.setSelected(false);
 				LchckbxStatus.setSelected(false);
 
 				TchckbxTweets.setSelected(false);
@@ -430,7 +372,6 @@ public class NotificationSettingsDialog extends JDialog implements
 				LchckbxCompany.setSelected(true);
 				LchckbxJobTitle.setSelected(true);
 				LchckbxPositions.setSelected(true);
-				LchckbxSpecialties.setSelected(true);
 				LchckbxStatus.setSelected(true);
 
 				btnFSelectAll.setSelected(true);
@@ -489,13 +430,11 @@ public class NotificationSettingsDialog extends JDialog implements
 				LchckbxCompany.setSelected(false);
 				LchckbxJobTitle.setSelected(false);
 				LchckbxPositions.setSelected(false);
-				LchckbxSpecialties.setSelected(false);
 				LchckbxStatus.setSelected(false);
 			} else {
 				LchckbxCompany.setSelected(true);
 				LchckbxJobTitle.setSelected(true);
 				LchckbxPositions.setSelected(true);
-				LchckbxSpecialties.setSelected(true);
 				LchckbxStatus.setSelected(true);
 			}
 		}
