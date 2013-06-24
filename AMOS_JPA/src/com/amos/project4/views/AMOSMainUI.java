@@ -54,6 +54,12 @@ import javax.swing.tree.TreeSelectionModel;
 import com.amos.project4.controllers.ClientsController;
 import com.amos.project4.controllers.UserController;
 import com.amos.project4.models.Client;
+import com.amos.project4.models.User;
+import com.amos.project4.socialMedia.DataRetrieverInterface;
+import com.amos.project4.socialMedia.LinkedIn.LinkedInDataRetriever;
+import com.amos.project4.socialMedia.Xing.XingDataRetriever;
+import com.amos.project4.socialMedia.facebook.FacebookDataRetriever;
+import com.amos.project4.socialMedia.twitter.TwitterDataRetriever;
 import com.amos.project4.utils.AMOSUtils;
 import com.amos.project4.views.facebook.FacebookDetailPanel;
 import com.amos.project4.views.linkedIn.LinkedInDetailPanel;
@@ -83,8 +89,6 @@ public class AMOSMainUI {
 	
 	private UserController user_controller;	
 	private ClientsController client_controller;
-	//private TwitterDataController twitterData_controller;
-	//private FacebookDataController facebookData_controller;
 
 	private static AMOSMainUI instance;
 	
@@ -203,10 +207,6 @@ public class AMOSMainUI {
 				SpringLayout.WEST, StatusbarPanel);
 		StatusbarPanel.add(lbl_statusBar);
 
-		// The left Panel
-		// JPanel panel_left = new JPanel();
-		// horizontalSplitPane.setLeftComponent(panel_left);
-
 		// The right Panel
 		JPanel panel_right = new JPanel();
 
@@ -238,7 +238,8 @@ public class AMOSMainUI {
 
 		// Register The Views to the controller
 		this.getClient_controller().addView(this.getTclients());
-
+		
+		
 	}
 
 	public ClientsController getClient_controller() {
@@ -316,7 +317,7 @@ public class AMOSMainUI {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JPanel initRightTopPanel() {
 		JPanel panel_right_top = new JPanel();
-		panel_right_top.setPreferredSize(new Dimension(10, 350));
+		panel_right_top.setPreferredSize(new Dimension(10, 250));
 
 		SpringLayout sl_panel_right_top = new SpringLayout();
 		panel_right_top.setLayout(sl_panel_right_top);
@@ -470,6 +471,59 @@ public class AMOSMainUI {
 
 		JMenuItem mntmAbout = new JMenuItem("About");
 		mnHelp.add(mntmAbout);
+	}
+	
+	/**
+	 * Try to connect to the different social Media
+	 * @return
+	 */
+	public void connectToSocialMedia(){
+		ArrayList<String> media_list = new ArrayList<String>();
+		if(this.user_controller == null || this.user_controller.getCurrent_user() == null) return;
+		User c_user = this.user_controller.getCurrent_user();
+		DataRetrieverInterface retriever = null;
+		
+		// try to connect to Facebook
+		retriever = FacebookDataRetriever.getInstance();
+		if(retriever == null || !((FacebookDataRetriever)retriever).init(c_user)){
+			media_list.add("Facebook");
+		}
+		
+		// try to connect to Twitter
+		retriever = TwitterDataRetriever.getInstance();
+		if(retriever == null || !((TwitterDataRetriever)retriever).init(c_user)){
+			media_list.add("Twitter");
+		}
+		
+		// try to connect to Xing
+		retriever = XingDataRetriever.getInstance();
+		if(retriever == null || !((XingDataRetriever)retriever).init(c_user)){
+			media_list.add("Xing");
+		}
+		
+		// try to connect to LinkedIn
+		retriever = LinkedInDataRetriever.getInstance();
+		if(retriever == null || !((LinkedInDataRetriever)retriever).init(c_user)){
+			media_list.add("LinkedIn");
+		}
+		
+		if(media_list.size() > 0){
+			String message = "The application could not make a connectipon to the following social media websites: \n";
+			for(String  m : media_list ){
+				message += "<html><body><b><i>" + m + "</i></b></body></html>\n";
+			}
+			message += "Please make sure your acces token are valid. " +
+					"To do this go to the left menu panel -> Settings -> Connection Settings";
+			Object[] options = {"OK"};
+		    JOptionPane.showOptionDialog(frame,
+		                   message,"Connections Errors",
+		                   JOptionPane.WARNING_MESSAGE,
+		                   JOptionPane.QUESTION_MESSAGE,
+		                   null,
+		                   options,
+		                   options[0]);
+		}
+		
 	}
 	
 	public ClientTable getTclients() {

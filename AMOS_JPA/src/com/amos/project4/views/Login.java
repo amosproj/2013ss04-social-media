@@ -189,6 +189,7 @@ public class Login extends JDialog implements AbstractControlledView {
 				AMOSMainUI window = AMOSMainUI.getInstance((UserController)user_controller,u_model);
 				window.getMainFrame().setVisible(true);
 				setVisible(false);
+				window.connectToSocialMedia();
 			} catch (Exception e) {
 				e.printStackTrace();
 				setloginMessage("Something went wrong. Please try again !", 1);

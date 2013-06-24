@@ -20,8 +20,10 @@
 package com.amos.project4.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
+import com.amos.project4.models.BirthdayClient;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
 import com.amos.project4.views.AbstractControlledView;
@@ -73,7 +75,7 @@ public class ClientsController extends AbstractController implements
 
 	@Override
 	public void refresh() {
-		//clientDAO.refresh(clientlist);
+		clientDAO.refresh();
 		clientlist = new ArrayList<Client>(clientDAO.getAllClients());
 	}
 	@Override
@@ -94,6 +96,10 @@ public class ClientsController extends AbstractController implements
 	@Override
 	public Client getSelectedClient() {
 		return selectedClient;
+	}
+	
+	public List<BirthdayClient> getAllBirthDayOfTheWeek() {
+		return clientDAO.getAllBirthdayOfTheWeek();
 	}
 
 }

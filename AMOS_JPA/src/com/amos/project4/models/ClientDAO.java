@@ -28,6 +28,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
+import org.eclipse.persistence.jpa.JpaEntityManager;
+
 import com.amos.project4.views.SearchParameters;
 
 /**
@@ -275,14 +277,23 @@ public class ClientDAO {
 		return true;
 	}
 	
-	public synchronized void refresh(List<Client> clients) {
-		if(clients == null) return;
+	public synchronized void refresh() {
 		em = factory.createEntityManager();
-		//em.flush();
-		for(Client  client: clients){
-			em.refresh(client);
-		}
+		((JpaEntityManager)em.getDelegate()).getServerSession().getIdentityMapAccessor().invalidateAll();
+	}
+	
+	public static String BIRTHDAY_SQL = "select kd.* from \"Kundendaten\" as kd " +
+				"where (date_part('day',\"Geburtstag\") >= date_part('day',CURRENT_DATE) " +
+				"and date_part('day',\"Geburtstag\") <= date_part('day',CURRENT_DATE)+7 ) " +
+				"and date_part('MONTH',\"Geburtstag\") = date_part('MONTH',CURRENT_DATE);";
+	
+	@SuppressWarnings("unchecked")
+	public synchronized List<BirthdayClient> getAllBirthdayOfTheWeek(){
+		em = factory.createEntityManager();
+		Query q = em.createQuery("select c from BirthdayClient c ORDER BY c.ID");
+		List<BirthdayClient> clients = q.getResultList();
 		em.close();
+		return clients;
 	}
 
 }

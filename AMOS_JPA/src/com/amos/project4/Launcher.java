@@ -17,13 +17,15 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-package com.amos.project4.views;
+package com.amos.project4;
 
 import java.awt.EventQueue;
 import java.util.Locale;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+
+import com.amos.project4.views.Login;
 
 public class Launcher {
 

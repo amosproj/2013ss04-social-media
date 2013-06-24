@@ -341,9 +341,9 @@ public class NotificationSettingsDialog extends JDialog implements
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!btnSelectAll.isSelected()) {
-				LchckbxCompany.setSelected(false);
+				//LchckbxCompany.setSelected(false);
 				LchckbxJobTitle.setSelected(false);
-				LchckbxPositions.setSelected(false);
+				//LchckbxPositions.setSelected(false);
 				LchckbxStatus.setSelected(false);
 
 				TchckbxTweets.setSelected(false);
@@ -369,9 +369,9 @@ public class NotificationSettingsDialog extends JDialog implements
 				XchckbxBirthday.setSelected(true);
 				XchckbxCompany.setSelected(true);
 
-				LchckbxCompany.setSelected(true);
+				//LchckbxCompany.setSelected(true);
 				LchckbxJobTitle.setSelected(true);
-				LchckbxPositions.setSelected(true);
+				//LchckbxPositions.setSelected(true);
 				LchckbxStatus.setSelected(true);
 
 				btnFSelectAll.setSelected(true);
@@ -427,14 +427,14 @@ public class NotificationSettingsDialog extends JDialog implements
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (!btnLSelectAll.isSelected()) {
-				LchckbxCompany.setSelected(false);
+				//LchckbxCompany.setSelected(false);
 				LchckbxJobTitle.setSelected(false);
-				LchckbxPositions.setSelected(false);
+				//LchckbxPositions.setSelected(false);
 				LchckbxStatus.setSelected(false);
 			} else {
-				LchckbxCompany.setSelected(true);
+				//LchckbxCompany.setSelected(true);
 				LchckbxJobTitle.setSelected(true);
-				LchckbxPositions.setSelected(true);
+				//LchckbxPositions.setSelected(true);
 				LchckbxStatus.setSelected(true);
 			}
 		}

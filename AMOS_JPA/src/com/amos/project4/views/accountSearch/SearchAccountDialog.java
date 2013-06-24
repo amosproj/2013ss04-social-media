@@ -205,8 +205,8 @@ public class SearchAccountDialog extends JDialog {
 	private void initStatusLabel(){
 		if(search_result != null){
 			int total = search_result.getResultCount();
-			int count_begin = search_result.getStart()+1;
-			int count_end = search_result.getEnd()+1;
+			int count_begin = search_result.size() > 0 ?search_result.getStart()+1:search_result.getStart();
+			int count_end = search_result.size() > 0 ? search_result.getEnd()+1:search_result.getEnd();
 			String text = count_begin + " - " + count_end + " of " + total + " Results";
 			getLblStatus().setText(text );
 		}
