@@ -33,6 +33,7 @@ import com.amos.project4.socialMedia.Xing.XingProfileMessage.XingMessage;
 import com.amos.project4.socialMedia.Xing.XingProfileVisits.Visit;
 import com.amos.project4.socialMedia.Xing.XingUser.Company;
 import com.amos.project4.socialMedia.Xing.XingUser.Date;
+import com.amos.project4.socialMedia.Xing.XingUser.Pictures;
 import com.amos.project4.socialMedia.Xing.XingUserSearchResult.Item;
 import com.amos.project4.socialMedia.Xing.XingUserSearchResult.XingUserId;
 import com.google.gson.Gson;
@@ -217,6 +218,20 @@ public class XingDataRetriever implements DataRetrieverInterface{
 				}
 			}
 			return;
+		case USER_PICTURE:
+			url_request = "https://api.xing.com/v1/users/"+ xing_id;
+			response = this.connector.makeRequest(url_request);
+			if(response != null){
+				XingUser xuser = parseResponse(response.getBody());
+				if(xuser.users.size() > 0){
+					String pictureURL = xuser.users.get(0).getPictureURL();
+					if(pictureURL != null){
+						saveXingData(client, pictureURL, type);
+					}
+				}
+			}
+			return;
+
 		default:
 			break;
 		}		

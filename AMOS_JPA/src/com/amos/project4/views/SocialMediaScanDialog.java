@@ -101,8 +101,9 @@ public class SocialMediaScanDialog extends JDialog implements
 	private JFrame frame;
 	private SpringLayout sl_twitterPanel;
 	private JCheckBox chckbxSelectAll;
-	
+
 	private SocialMediaProgressBar bar;
+	private JCheckBox chckbxProfilePicture;
 
 	public SocialMediaScanDialog(User user, List<Client> clients, JFrame frame) {
 		this();
@@ -597,6 +598,25 @@ public class SocialMediaScanDialog extends JDialog implements
 			sl_xingPanel.putConstraint(SpringLayout.SOUTH, chckbxXSelectAll, 0,
 					SpringLayout.SOUTH, xingPanel);
 			xingPanel.add(chckbxXSelectAll);
+			{
+				chckbxProfilePicture = new JCheckBox("Profile picture");
+				chckbxProfilePicture.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					if (chckbxProfilePicture.isSelected())
+						model.addSelectedXingDataType(XingDataType.USER_PICTURE);
+					else
+						model.removeSelectedXingDataType(XingDataType.USER_PICTURE);
+					}
+				});
+				sl_xingPanel.putConstraint(SpringLayout.NORTH,
+						chckbxProfilePicture, 6, SpringLayout.SOUTH,
+						XchckbxProfileVisits);
+				sl_xingPanel.putConstraint(SpringLayout.WEST,
+						chckbxProfilePicture, 0, SpringLayout.WEST,
+						XchckbxBirthday);
+				xingPanel.add(chckbxProfilePicture);
+			}
+			
 
 			chckbxXSelectAll.addActionListener(new XSelectAllAction());
 
@@ -853,7 +873,7 @@ public class SocialMediaScanDialog extends JDialog implements
 	private class CancelAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(bar != null ){
+			if (bar != null) {
 				bar.stop();
 			}
 			dispose();
@@ -864,8 +884,8 @@ public class SocialMediaScanDialog extends JDialog implements
 	private class StartAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			bar = new SocialMediaProgressBar(controller,
-					model, clients, user, frame);
+			bar = new SocialMediaProgressBar(controller, model, clients, user,
+					frame);
 			bar.start();
 			// dispose();
 		}
@@ -925,6 +945,8 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.removeSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
 				XchckbxProfileVisits.setSelected(false);
 				model.removeSelectedXingDataType(XingDataType.PROFILE_VISITS);
+				chckbxProfilePicture.setSelected(false);
+				model.removeSelectedXingDataType(XingDataType.USER_PICTURE);
 
 				LchckbxCompany.setSelected(false);
 				model.removeSelectedLinkedInDataType(LinkedInDataType.COMPANY);
@@ -1004,6 +1026,8 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.addSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
 				XchckbxProfileVisits.setSelected(true);
 				model.addSelectedXingDataType(XingDataType.PROFILE_VISITS);
+				chckbxProfilePicture.setSelected(true);
+				model.addSelectedXingDataType(XingDataType.USER_PICTURE);
 
 				LchckbxCompany.setSelected(true);
 				model.addSelectedLinkedInDataType(LinkedInDataType.COMPANY);
@@ -1143,6 +1167,8 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.removeSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
 				XchckbxProfileVisits.setSelected(false);
 				model.removeSelectedXingDataType(XingDataType.PROFILE_VISITS);
+				chckbxProfilePicture.setSelected(false);
+				model.removeSelectedXingDataType(XingDataType.USER_PICTURE);
 				chckbxXSelectAll.setSelected(false);
 			} else {
 				XchckbxBirthday.setSelected(true);
@@ -1155,6 +1181,8 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.addSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
 				XchckbxProfileVisits.setSelected(true);
 				model.addSelectedXingDataType(XingDataType.PROFILE_VISITS);
+				chckbxProfilePicture.setSelected(true);
+				model.addSelectedXingDataType(XingDataType.USER_PICTURE);
 				chckbxXSelectAll.setSelected(true);
 			}
 		}
@@ -1218,9 +1246,5 @@ public class SocialMediaScanDialog extends JDialog implements
 	public void modelPropertyChange(Observable o, Object arg) {
 		// System.out.println("ADDED "+ arg.getClass().toString() + " " +
 		// arg.toString());
-	}
-
-	public JCheckBox getChckbxSelectAll() {
-		return chckbxSelectAll;
 	}
 }
