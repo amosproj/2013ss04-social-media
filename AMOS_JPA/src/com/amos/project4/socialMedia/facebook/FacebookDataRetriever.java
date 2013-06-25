@@ -20,7 +20,9 @@ package com.amos.project4.socialMedia.facebook;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
 import com.amos.project4.models.Client;
 import com.amos.project4.models.FacebookData;
@@ -77,7 +79,7 @@ public class FacebookDataRetriever implements DataRetrieverInterface{
 	}
 	
 	@Override
-	public AccountSearchResultInterface makeSearch(Client selectedClient,int begin, int end) {
+	public synchronized AccountSearchResultInterface makeSearch(Client selectedClient,int begin, int end) {
 		FacebookAccountSearchResult rslt = new FacebookAccountSearchResult(new ArrayList<AccountSearchResultItem>());	
 		Connection<JsonObject> publicSearch =  connector.getFacebookClient().fetchConnection("search", JsonObject.class, 
 				Parameter.with("q", selectedClient.getFirstname() + " " + selectedClient.getName()),//, Parameter.with("q", selectedClient.getName()),
@@ -103,7 +105,7 @@ public class FacebookDataRetriever implements DataRetrieverInterface{
 		return rslt;
 	}
 	
-	public String getFacebookIDofUser(User user, Client client) {
+	public synchronized String importFacebookIDofUser(User user, Client client) {
 		if(user == null || client == null) return "";
 		
 		List<FacebookData> account = this.facebook_dao.getAllFacebookDataOfClientByType(client.getID(),FacebookDataType.UID);
@@ -121,17 +123,13 @@ public class FacebookDataRetriever implements DataRetrieverInterface{
 		return facebook_id;
 	}
 	
-	public synchronized void importFacebookData(User user,Client client, FacebookDataType type) {
-		if(user == null || client == null) return;
+	public synchronized void importFacebookData(User user,Client client, FacebookDataType type, String facebook_id) {
+		if(user == null || client == null || facebook_id == null || facebook_id.isEmpty()) return;
 		
 		// get the facebook client
 		DefaultFacebookClient facebook = connector.getFacebookClient();
 		
-		//Check if account of client exist and get it
-		List<FacebookData> account = facebook_dao.getAllFacebookDataOfClientByType(client.getID(), FacebookDataType.UID);
-		if(account == null || account.size() == 0 ) 
-			return; // the client doesn't have an account yet
-		String client_facebook_ID = account.get(0).getDataString();
+		String client_facebook_ID = facebook_id;
 		
 
 		com.restfb.types.User user_;
@@ -306,7 +304,66 @@ public class FacebookDataRetriever implements DataRetrieverInterface{
 		}		
 	}
 	
-	private void saveFacebookData(Client client,String dataString,FacebookDataType type){
+	public synchronized List<FacebookData> getLastPostOfClients(List<Client> clients, int count){
+		if(clients == null ) return new ArrayList<FacebookData>();
+		TreeMap<Date,FacebookData> datas = new TreeMap<Date,FacebookData>();
+		
+		// get the facebook client
+		DefaultFacebookClient facebook = connector.getFacebookClient();
+					
+		for(Client c : clients){
+			List<FacebookData> ids = c.getFacebookDatasByType(FacebookDataType.UID);
+			if(ids == null || ids.isEmpty()|| ids.get(0).getDataString() == null || ids.get(0).getDataString().isEmpty()) continue;
+			String client_facebook_ID = ids.get(0).getDataString();
+			
+			
+			String query_p = "SELECT status_id FROM status WHERE uid =" + client_facebook_ID;
+			List<FqlObject> rslts = facebook.executeFqlQuery(query_p, FqlObject.class);
+			if(rslts != null && rslts.size() > 0){
+				for (FqlObject ev : rslts) {
+					try{
+						com.restfb.types.StatusMessage tmp = facebook.fetchObject(ev.status_id, com.restfb.types.StatusMessage.class);
+						if(tmp != null && tmp.getId() != null){
+							FacebookData data = new FacebookData();
+							data.setType(FacebookDataType.LAST_POST.toString());
+							data.setDataString(tmp.getId()+"#"+tmp.getUpdatedTime()+"#"+tmp.getMessage());
+							data.setOwner(c);
+							datas.put(tmp.getUpdatedTime(), data);
+						}
+					} catch (Exception e) {
+						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + FacebookDataType.LAST_POST.toString() + " ObjectID = " + ev.status_id );
+					}
+				}				
+			}
+			String query_p2 = "SELECT post_id, actor_id, target_id, message, comments  FROM stream  WHERE source_id = "+ client_facebook_ID +" and actor_id =" + client_facebook_ID +
+					"and not message ='' ORDER BY created_time  DESC LIMIT 100";
+			rslts = facebook.executeFqlQuery(query_p2, FqlObject.class);
+			if(rslts != null && rslts.size() > 0){
+				//System.out.println("Count = " + rslts.size() );
+				for (FqlObject ev : rslts) {
+					try{
+						com.restfb.types.Post tmp = facebook.fetchObject(ev.post_id, com.restfb.types.Post.class);
+						if(tmp != null && tmp.getId() != null){
+							FacebookData data = new FacebookData();
+							data.setType(FacebookDataType.LAST_POST.toString());
+							data.setDataString(tmp.getId()+"#"+tmp.getCreatedTime()+"#"+tmp.getMessage());
+							data.setOwner(c);
+							datas.put(tmp.getCreatedTime(), data);
+						}
+					} catch (Exception e) {
+						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + FacebookDataType.LAST_POST.toString() + " ObjectID = " + ev.post_id );
+					}
+				}				
+			}
+			if(datas.size()>count){
+				ArrayList<Date> dates = new ArrayList<Date>(datas.descendingMap().keySet());
+				datas = new TreeMap<Date,FacebookData>(datas.tailMap(dates.get(count -1)));
+			}
+		}
+		return new ArrayList<FacebookData>(datas.descendingMap().values());
+	}
+	
+	private synchronized void saveFacebookData(Client client,String dataString,FacebookDataType type){
 		FacebookData data = new FacebookData();
 		data.setType(type.toString());
 		data.setDataString("" +dataString);

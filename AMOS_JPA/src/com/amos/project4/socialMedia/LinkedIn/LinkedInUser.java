@@ -1,5 +1,6 @@
 package com.amos.project4.socialMedia.LinkedIn;
 
+import java.util.Date;
 import java.util.List;
 
 import com.amos.project4.socialMedia.AccountSearchResultItem;
@@ -16,6 +17,8 @@ public class LinkedInUser implements AccountSearchResultItem{
 	private Positions positions;
 	private String interests;
 	private String primaryTwitterAccount;
+	//@SerializedName("last-modified-timestamp")
+	private long lastModifiedTimestamp;
 	
 	public class Positions{
 		@SerializedName("_total")
@@ -150,6 +153,15 @@ public class LinkedInUser implements AccountSearchResultItem{
 	}
 	public void setPrimaryTwitterAccount(String primaryTwitterAccount) {
 		this.primaryTwitterAccount = primaryTwitterAccount;
+	}
+	public long getLastModifiedTimestamp() {
+		return lastModifiedTimestamp;
+	}
+	public void setLastModifiedTimestamp(long lastModifiedTimestamp) {
+		this.lastModifiedTimestamp = lastModifiedTimestamp;
+	}
+	public Date getLastModifiedDate(){
+		return new Date(this.getLastModifiedTimestamp());
 	}
 	@Override
 	public String getTitle1() {

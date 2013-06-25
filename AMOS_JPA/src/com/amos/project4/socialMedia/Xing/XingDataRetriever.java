@@ -18,7 +18,13 @@
  */
 package com.amos.project4.socialMedia.Xing;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TreeMap;
 
 import org.scribe.model.Response;
 
@@ -33,7 +39,6 @@ import com.amos.project4.socialMedia.Xing.XingProfileMessage.XingMessage;
 import com.amos.project4.socialMedia.Xing.XingProfileVisits.Visit;
 import com.amos.project4.socialMedia.Xing.XingUser.Company;
 import com.amos.project4.socialMedia.Xing.XingUser.Date;
-import com.amos.project4.socialMedia.Xing.XingUser.Pictures;
 import com.amos.project4.socialMedia.Xing.XingUserSearchResult.Item;
 import com.amos.project4.socialMedia.Xing.XingUserSearchResult.XingUserId;
 import com.google.gson.Gson;
@@ -80,7 +85,7 @@ public class XingDataRetriever implements DataRetrieverInterface{
 	}
 	
 	@Override
-	public AccountSearchResultInterface makeSearch(Client selectedClient,int begin, int end) {
+	public synchronized AccountSearchResultInterface makeSearch(Client selectedClient,int begin, int end) {
 		XingAccountSearchResult list = new XingAccountSearchResult();
 		String url_request = "https://api.xing.com/v1/users/find_by_emails?emails="+ selectedClient.getMail();
 		Response response = this.connector.makeRequest(url_request);
@@ -104,7 +109,7 @@ public class XingDataRetriever implements DataRetrieverInterface{
 		return list;
 	}
 	
-	public String importXingIDofUser(User user,Client client){
+	public synchronized String importXingIDofUser(User user,Client client){
 			if(user == null || client == null) return "";
 			String url_request = "";
 			Response response = null;
@@ -199,7 +204,7 @@ public class XingDataRetriever implements DataRetrieverInterface{
 				XingProfileVisits visits = parseProfileVisitsResponse(response.getBody());
 				if(visits != null && visits.getVisits() != null){
 					for(Visit v : visits.getVisits()){
-						saveXingData(client,v.getVisited_at() + "#" + v.getUser_id() + "#" + v.getDisplay_name() + "#" + v.getPhotos_urls().getLarge() + "#" +  v.getCompany_name() , type);
+						saveXingData(client,v.getVisited_at() + "#" + v.getUser_id() + "#" + v.getDisplay_name() + "#" + "" + "#" +  v.getCompany_name() , type);
 					}
 				}
 			}
@@ -231,10 +236,51 @@ public class XingDataRetriever implements DataRetrieverInterface{
 				}
 			}
 			return;
-
 		default:
 			break;
 		}		
+	}
+	
+	public synchronized List<XingData> getLastModifiedCompanies(List<Client> clients, int count){
+		if(clients == null ) return new ArrayList<XingData>();
+		TreeMap<Date,XingData> datas = new TreeMap<Date,XingData>();
+					
+		for(Client c : clients){
+			List<XingData> ids = c.getXingDatasByType(XingDataType.ID);
+			if(ids == null || ids.isEmpty()|| ids.get(0).getDataString() == null || ids.get(0).getDataString().isEmpty()) continue;
+			String xing_id = ids.get(0).getDataString();
+			
+			String url_request = "https://api.xing.com/v1/users/"+ xing_id;
+			Response response = this.connector.makeRequest(url_request);
+			if(response != null){
+				XingUser xuser = parseResponse(response.getBody());
+				if(xuser.users.size() > 0){
+					Company company = xuser.users.get(0).getProfessional_experience().getPrimary_company();
+					if(company != null && company.getBegin_date() != null && !company.getBegin_date().isEmpty()){
+						String target = company.getBegin_date();
+					    DateFormat df = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);
+					    java.util.Date result = null;
+						try {
+							result = df.parse(target);
+						} catch (ParseException e) {
+							e.printStackTrace();
+						}
+					    
+					    XingData data = new XingData();
+						data.setType(XingDataType.COMPANY.toString());
+						data.setDataString(result+"#"+company.getName()+"#"+company.getCareer_level()+"#"+company.getIndustry());
+						data.setOwner(c);
+					}
+				}
+			}
+			
+			
+			if(datas.size()>count){
+				ArrayList<Date> dates = new ArrayList<Date>(datas.descendingMap().keySet());
+				datas = new TreeMap<Date,XingData>(datas.tailMap(dates.get(count -1)));
+			}
+		}
+		return new ArrayList<XingData>(datas.descendingMap().values());
 	}
 	
 	private synchronized void saveXingData(Client client,String dataString,XingDataType type){
@@ -246,27 +292,27 @@ public class XingDataRetriever implements DataRetrieverInterface{
 		Xing_dao.persistXingData(data);
 	}
 	
-	private XingUser parseResponse(String body){		
+	private synchronized XingUser parseResponse(String body){		
 		Gson gson = new Gson();
 		return gson.fromJson(body, XingUser.class);		
 	}
 	
-	private XingUserSearchResult parseSearchresults(String body){		
+	private synchronized XingUserSearchResult parseSearchresults(String body){		
 		Gson gson = new Gson();
 		return gson.fromJson(body, XingUserSearchResult.class);		
 	}
 	
-	private XingProfileMessage parseProfileResponse(String body){		
+	private synchronized XingProfileMessage parseProfileResponse(String body){		
 		Gson gson = new Gson();
 		return gson.fromJson(body, XingProfileMessage.class);		
 	}
 	
-	private XingContacts parseContactResponse(String body){		
+	private synchronized XingContacts parseContactResponse(String body){		
 		Gson gson = new Gson();
 		return gson.fromJson(body, XingContacts.class);		
 	}
 	
-	private XingProfileVisits parseProfileVisitsResponse(String body){		
+	private synchronized XingProfileVisits parseProfileVisitsResponse(String body){		
 		Gson gson = new Gson();
 		return gson.fromJson(body, XingProfileVisits.class);		
 	}

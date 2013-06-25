@@ -18,6 +18,8 @@
  */
 package com.amos.project4.test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -29,11 +31,11 @@ import org.xml.sax.SAXException;
 
 import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
+import com.amos.project4.models.FacebookData;
 import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
 import com.amos.project4.socialMedia.facebook.FacebookConnect;
 import com.amos.project4.socialMedia.facebook.FacebookDataRetriever;
-import com.amos.project4.socialMedia.facebook.FacebookDataRetriever.FqlObject;
 import com.restfb.Connection;
 import com.restfb.Parameter;
 import com.restfb.json.JsonObject;
@@ -58,7 +60,7 @@ public class FacebookTest {
 		retriever.init(user);
 		cdao = ClientDAO.getInstance();
 		client = cdao.getclient(new Integer(221));
-		facebook_id = retriever.getFacebookIDofUser(user, client);
+		facebook_id = retriever.importFacebookIDofUser(user, client);
 	}
 
 	@Test
@@ -69,10 +71,20 @@ public class FacebookTest {
 	
 	@Test
 	public void testFQLSearch(){
-		String query = "SELECT uid, about_me, name, pic_big FROM user WHERE strpos(name,'jupiter') >=0";
-		List<FqlObject> pics = connect.getFacebookClient().executeFqlQuery(query, FqlObject.class);
-		if(pics != null && pics.size() > 0){
-			System.out.println(pics.get(0).toString());
+//		String query = "SELECT uid, about_me, name, pic_big FROM user WHERE strpos(name,'jupiter') >=0";
+//		List<FqlObject> pics = connect.getFacebookClient().executeFqlQuery(query, FqlObject.class);
+//		if(pics != null && pics.size() > 0){
+//			System.out.println(pics.get(0).toString());
+//		}
+	}
+	
+	@Test
+	public void testGetLastPostOfClients(){
+		int count = 10;
+		List<FacebookData> datas = retriever.getLastPostOfClients(cdao.getAllClients(), count);
+		assertTrue(datas!= null && !datas.isEmpty() && datas.size() == count);
+		for (FacebookData data : datas) {
+			System.out.println(data.getDataString().split("#")[1] + " : " + data.getDataString().split("#")[2] + " from " + data.getOwner().getFirstname() + " " + data.getOwner().getName());
 		}
 	}
 }

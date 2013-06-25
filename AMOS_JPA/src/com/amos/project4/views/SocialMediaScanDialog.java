@@ -71,6 +71,7 @@ public class SocialMediaScanDialog extends JDialog implements
 	private JCheckBox LchckbxContacts;
 	private JCheckBox LchckbxSpecialties;
 	private JCheckBox LchckbxCompany;
+	private JCheckBox LchckbxPicture;
 	private JCheckBox LchckbxJobTitle;
 	private JCheckBox LchckbxStatus;
 	private SpringLayout sl_linkedInPanel;
@@ -103,8 +104,7 @@ public class SocialMediaScanDialog extends JDialog implements
 	private JCheckBox chckbxSelectAll;
 
 	private SocialMediaProgressBar bar;
-	private JCheckBox XchckbxProfilePicture;
-	private JCheckBox LchckbxProfilePicture;
+	private JCheckBox chckbxProfilePicture;
 
 	public SocialMediaScanDialog(User user, List<Client> clients, JFrame frame) {
 		this();
@@ -495,6 +495,20 @@ public class SocialMediaScanDialog extends JDialog implements
 						LchckbxContacts);
 				linkedInPanel.add(LchckbxTwitterAccount);
 			}
+			{
+				LchckbxPicture = new JCheckBox("Profile Picture");
+				LchckbxPicture.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						if (LchckbxPicture.isSelected())
+							model.addSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURE);
+						else
+							model.removeSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURE);
+					}
+				});
+				sl_linkedInPanel.putConstraint(SpringLayout.NORTH,	LchckbxPicture, 6, SpringLayout.SOUTH, LchckbxTwitterAccount);
+				sl_linkedInPanel.putConstraint(SpringLayout.WEST,  LchckbxPicture, 0, SpringLayout.WEST, LchckbxTwitterAccount);
+				linkedInPanel.add(LchckbxPicture);
+			}
 
 			// LinkedIn Select All
 
@@ -504,21 +518,6 @@ public class SocialMediaScanDialog extends JDialog implements
 			sl_linkedInPanel.putConstraint(SpringLayout.SOUTH,
 					chckbxLSelectAll, 0, SpringLayout.SOUTH, linkedInPanel);
 			linkedInPanel.add(chckbxLSelectAll);
-			{
-				LchckbxProfilePicture = new JCheckBox("Profile picture");
-				LchckbxProfilePicture.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						if (LchckbxProfilePicture.isSelected())
-							model.addSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURES);
-						else
-							model.removeSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURES);
-					}
-				});
-				sl_linkedInPanel.putConstraint(SpringLayout.NORTH, LchckbxProfilePicture, 6, SpringLayout.SOUTH, LchckbxTwitterAccount);
-				sl_linkedInPanel.putConstraint(SpringLayout.WEST, LchckbxProfilePicture, 0, SpringLayout.WEST, LchckbxContacts);
-				linkedInPanel.add(LchckbxProfilePicture);
-			}
-			
 			chckbxLSelectAll.addActionListener(new LSelectAllAction());
 			springLayout.putConstraint(SpringLayout.SOUTH, xingPanel, -6,
 					SpringLayout.NORTH, buttonPane);
@@ -615,22 +614,22 @@ public class SocialMediaScanDialog extends JDialog implements
 					SpringLayout.SOUTH, xingPanel);
 			xingPanel.add(chckbxXSelectAll);
 			{
-				XchckbxProfilePicture = new JCheckBox("Profile picture");
-				XchckbxProfilePicture.addActionListener(new ActionListener() {
+				chckbxProfilePicture = new JCheckBox("Profile picture");
+				chckbxProfilePicture.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-					if (XchckbxProfilePicture.isSelected())
+					if (chckbxProfilePicture.isSelected())
 						model.addSelectedXingDataType(XingDataType.USER_PICTURE);
 					else
 						model.removeSelectedXingDataType(XingDataType.USER_PICTURE);
 					}
 				});
 				sl_xingPanel.putConstraint(SpringLayout.NORTH,
-						XchckbxProfilePicture, 6, SpringLayout.SOUTH,
+						chckbxProfilePicture, 6, SpringLayout.SOUTH,
 						XchckbxProfileVisits);
 				sl_xingPanel.putConstraint(SpringLayout.WEST,
-						XchckbxProfilePicture, 0, SpringLayout.WEST,
+						chckbxProfilePicture, 0, SpringLayout.WEST,
 						XchckbxBirthday);
-				xingPanel.add(XchckbxProfilePicture);
+				xingPanel.add(chckbxProfilePicture);
 			}
 			
 
@@ -961,7 +960,7 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.removeSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
 				XchckbxProfileVisits.setSelected(false);
 				model.removeSelectedXingDataType(XingDataType.PROFILE_VISITS);
-				XchckbxProfilePicture.setSelected(false);
+				chckbxProfilePicture.setSelected(false);
 				model.removeSelectedXingDataType(XingDataType.USER_PICTURE);
 
 				LchckbxCompany.setSelected(false);
@@ -986,9 +985,8 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.removeSelectedLinkedInDataType(LinkedInDataType.STATUS);
 				LchckbxTwitterAccount.setSelected(false);
 				model.removeSelectedLinkedInDataType(LinkedInDataType.TWITTER_ACCOUNT);
-				LchckbxProfilePicture.setSelected(false);
-				model.removeSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURES);
-
+				LchckbxPicture.setSelected(false);
+				model.removeSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURE);
 
 				chckbxFSelectAll.setSelected(false);
 				chckbxXSelectAll.setSelected(false);
@@ -1045,7 +1043,7 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.addSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
 				XchckbxProfileVisits.setSelected(true);
 				model.addSelectedXingDataType(XingDataType.PROFILE_VISITS);
-				XchckbxProfilePicture.setSelected(true);
+				chckbxProfilePicture.setSelected(true);
 				model.addSelectedXingDataType(XingDataType.USER_PICTURE);
 
 				LchckbxCompany.setSelected(true);
@@ -1070,8 +1068,9 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.addSelectedLinkedInDataType(LinkedInDataType.STATUS);
 				LchckbxTwitterAccount.setSelected(true);
 				model.addSelectedLinkedInDataType(LinkedInDataType.TWITTER_ACCOUNT);
-				LchckbxProfilePicture.setSelected(true);
-				model.addSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURES);
+				LchckbxPicture.setSelected(true);
+				model.addSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURE);
+				
 				chckbxFSelectAll.setSelected(true);
 				chckbxXSelectAll.setSelected(true);
 				chckbxLSelectAll.setSelected(true);
@@ -1188,7 +1187,7 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.removeSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
 				XchckbxProfileVisits.setSelected(false);
 				model.removeSelectedXingDataType(XingDataType.PROFILE_VISITS);
-				XchckbxProfilePicture.setSelected(false);
+				chckbxProfilePicture.setSelected(false);
 				model.removeSelectedXingDataType(XingDataType.USER_PICTURE);
 				chckbxXSelectAll.setSelected(false);
 			} else {
@@ -1202,7 +1201,7 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.addSelectedXingDataType(XingDataType.PROFILE_MESSAGE);
 				XchckbxProfileVisits.setSelected(true);
 				model.addSelectedXingDataType(XingDataType.PROFILE_VISITS);
-				XchckbxProfilePicture.setSelected(true);
+				chckbxProfilePicture.setSelected(true);
 				model.addSelectedXingDataType(XingDataType.USER_PICTURE);
 				chckbxXSelectAll.setSelected(true);
 			}
@@ -1236,8 +1235,8 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.removeSelectedLinkedInDataType(LinkedInDataType.STATUS);
 				LchckbxTwitterAccount.setSelected(false);
 				model.removeSelectedLinkedInDataType(LinkedInDataType.TWITTER_ACCOUNT);
-				LchckbxProfilePicture.setSelected(false);
-				model.removeSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURES);
+				LchckbxPicture.setSelected(false);
+				model.removeSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURE);
 			} else {
 				LchckbxCompany.setSelected(true);
 				model.addSelectedLinkedInDataType(LinkedInDataType.COMPANY);
@@ -1261,8 +1260,8 @@ public class SocialMediaScanDialog extends JDialog implements
 				model.addSelectedLinkedInDataType(LinkedInDataType.STATUS);
 				LchckbxTwitterAccount.setSelected(true);
 				model.addSelectedLinkedInDataType(LinkedInDataType.TWITTER_ACCOUNT);
-				LchckbxProfilePicture.setSelected(true);
-				model.addSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURES);
+				LchckbxPicture.setSelected(true);
+				model.addSelectedLinkedInDataType(LinkedInDataType.PROFILE_PICTURE);
 			}
 		}
 	}

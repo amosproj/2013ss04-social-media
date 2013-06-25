@@ -24,7 +24,6 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.Observable;
 
-import javax.swing.AbstractButton;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
@@ -36,10 +35,6 @@ import javax.swing.border.TitledBorder;
 import com.amos.project4.controllers.SocialMediaScanController;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.User;
-import com.amos.project4.socialMedia.LinkedIn.LinkedInDataType;
-import com.amos.project4.socialMedia.Xing.XingDataType;
-import com.amos.project4.socialMedia.facebook.FacebookDataType;
-import com.amos.project4.socialMedia.twitter.TwitterDataType;
 
 public class NotificationSettingsDialog extends JDialog implements
 		AbstractControlledView {

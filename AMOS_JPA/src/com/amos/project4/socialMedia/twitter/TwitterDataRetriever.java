@@ -19,7 +19,9 @@
 package com.amos.project4.socialMedia.twitter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
 import twitter4j.ResponseList;
 import twitter4j.Twitter;
@@ -76,7 +78,7 @@ public class TwitterDataRetriever implements DataRetrieverInterface{
 	}
 	
 	@Override
-	public AccountSearchResultInterface makeSearch(Client selectedClient,int begin, int end) {
+	public synchronized AccountSearchResultInterface makeSearch(Client selectedClient,int begin, int end) {
 		TwitterAccountSearchResult rslts = new TwitterAccountSearchResult(new ArrayList<AccountSearchResultItem>());
 		Twitter twitter = connector.getTwitter();
 		int page = end / AccountSearchResult.PAGE_SIZE;
@@ -93,7 +95,7 @@ public class TwitterDataRetriever implements DataRetrieverInterface{
 		return rslts;
 	}
 	
-	public String getTwitterIDofUser(User user, Client client) {
+	public synchronized String importTwitterIDofUser(User user, Client client) {
 		if(user == null || client == null) return "";
 		Twitter twitter = connector.getTwitter();
 		
@@ -115,16 +117,13 @@ public class TwitterDataRetriever implements DataRetrieverInterface{
 		return twitter_id;
 	}
 	
-	public synchronized  void importTwitterData(User user,Client client, TwitterDataType type) throws TwitterException{
-		if(user == null || client == null) return;
+	public synchronized  void importTwitterData(User user,Client client, TwitterDataType type, String twitter_id) throws TwitterException{
+		if(user == null || client == null || twitter_id == null || twitter_id.isEmpty()) return;
 		
 		// get the Twitter
 		Twitter twitter = connector.getTwitter();
 		
-		//Check if account of client exist and get it
-		List<TwitterData> account = twitter_dao.getAllTwitterDataOfClientByType(client.getID(), TwitterDataType.TWITTER_NAME);
-		if(account == null || account.size() == 0 ) return; // the client doesn't have an account yet
-		String client_twitter_name = account.get(0).getDataString();
+		String client_twitter_name = twitter_id;
 		
 		switch (type) {
 		case FRIENDS:
@@ -169,6 +168,43 @@ public class TwitterDataRetriever implements DataRetrieverInterface{
 		default:
 			break;
 		}		
+	}
+	
+	public synchronized List<TwitterData> getLastTweetsOfClients(List<Client> clients, int count){
+		if(clients == null ) return new ArrayList<TwitterData>();
+		TreeMap<Date,TwitterData> datas = new TreeMap<Date,TwitterData>();
+		// get the Twitter
+		Twitter twitter = connector.getTwitter();
+		
+		for(Client c : clients){
+			List<TwitterData> ids = c.getTwitterDatasByType(TwitterDataType.TWITTER_NAME);
+			if(ids == null || ids.isEmpty()|| ids.get(0).getDataString() == null || ids.get(0).getDataString().isEmpty()) continue;
+			String twitter_name = ids.get(0).getDataString();
+			
+			ResponseList<twitter4j.Status> tweets = null;
+			try{
+				tweets = twitter.getUserTimeline(twitter_name);
+			}catch (Exception e) {
+				System.err.println("Access denied to get Tweets : " + twitter_name);
+				continue;
+			}
+			if(tweets != null ){
+				for(twitter4j.Status tweet : tweets){
+					if(tweet != null && tweet.getId() > 0){
+						TwitterData data = new TwitterData();
+						data.setType(TwitterDataType.TWEETS.toString());
+						data.setDataString(tweet.getId()+"#"+tweet.getCreatedAt()+"#"+tweet.getText());
+						data.setOwner(c);
+						datas.put(tweet.getCreatedAt(), data);
+					}				
+				}
+			}
+			if(datas.size()>count){
+				ArrayList<Date> dates = new ArrayList<Date>(datas.descendingMap().keySet());
+				datas = new TreeMap<Date,TwitterData>(datas.tailMap(dates.get(count -1)));
+			}
+		}
+		return new ArrayList<TwitterData>(datas.descendingMap().values());
 	}
 	
 	private synchronized void saveTwitterData(Client client,String dataString,TwitterDataType type){

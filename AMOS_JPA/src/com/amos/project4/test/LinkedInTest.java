@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -39,6 +40,7 @@ import org.xml.sax.SAXException;
 
 import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
+import com.amos.project4.models.LinkedInData;
 import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
 import com.amos.project4.socialMedia.LinkedIn.LinkedInConnect;
@@ -83,8 +85,8 @@ public class LinkedInTest {
 
 	@Test
 	public void testMeDetails() throws SAXException, IOException, ParserConfigurationException {
-		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,public-profile-url,primary-twitter-account)", true);
-		//System.out.println(res.getBody());
+		Response res = this.connect.makeRequest("http://api.linkedin.com/v1/people/~:(id,first-name,last-name,headline,picture-url,public-profile-url,primary-twitter-account,last-modified-timestamp)", true);
+		System.out.println(res.getBody());
 		LinkedInUser user = parseUserResponse(res.getBody());
 		assertTrue(res!= null && res.isSuccessful() && user.getId().equalsIgnoreCase("iGNeDrcELX"));
 	}
@@ -92,6 +94,16 @@ public class LinkedInTest {
 	private LinkedInUser parseUserResponse(String body){		
 		Gson gson = new Gson();
 		return gson.fromJson(body, LinkedInUser.class);		
+	}
+	
+	@Test
+	public void testGetLastPostOfClients(){
+		int count = 10;
+		List<LinkedInData> datas = retriever.getLastModifiedClients(cdao.getAllClients(), count);
+		assertTrue(datas!= null &&  datas.size() <= count);
+		for (LinkedInData data : datas) {
+			System.out.println(data.getDataString().split("#")[1] + " : " + data.getDataString().split("#")[2] + " from " + data.getOwner().getFirstname() + " " + data.getOwner().getName());
+		}
 	}
 	
 	@Test
@@ -287,8 +299,8 @@ public class LinkedInTest {
 	
 	@Test
 	public void testLinkedInPROFILE_PICTURES() throws SAXException, IOException  {
-		retriever.deleteUserLinkedInData(client,LinkedInDataType.PROFILE_PICTURES );
-		retriever.importLinkedInData(user, client, LinkedInDataType.PROFILE_PICTURES,linkedIn_id);
+		retriever.deleteUserLinkedInData(client,LinkedInDataType.PROFILE_PICTURE );
+		retriever.importLinkedInData(user, client, LinkedInDataType.PROFILE_PICTURE,linkedIn_id);
 	}
 	
 	@Test

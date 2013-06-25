@@ -24,7 +24,7 @@ import com.restfb.types.User;
 
 public class FacebookConnect implements MediaConnectInterface {
 	
-	private static String ACCESS_TOKEN = "CAACEdEose0cBAJzhp6gQhNksXJHQSoPb3WVhWtEly4TSwuw99Pd1ZAm513V8tk30OvpGjk2378oKPpI9F0Haz6ZCimFrZBDG3NYMQMae3qzOfVNOq6GdBLtyCrfJZCdFXuHN2XpbLcSCUIKapy4o0Xbdlcy6n8JdmUO6YpGNiKqXpaO1QA37qGuZAPCPMJQ4VRSTo8d7NAgZDZD";
+	private static String ACCESS_TOKEN = "CAACEdEose0cBAFH9dnmHKW53hYZAPm1Xxw7xy6Cyrcge2Bg8SMycHvQ5rGmUGVktZBMya2Yoe22bPniLylt8ORYfbDi2TLHDr7mMyy7FZB3nczrQE7LBF975jhZA21szs5ZCMXWmhDMJ8WfClZCyZBOxtNxubjfZBGwZD";
 	private static String ACCESS_TOKEN_URL = "http://developers.facebook.com/tools/explorer";
 	
 	private DefaultFacebookClient facebookClient;

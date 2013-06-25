@@ -21,7 +21,9 @@ package com.amos.project4.socialMedia.LinkedIn;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -98,7 +100,7 @@ public class LinkedInDataRetriever implements DataRetrieverInterface{
 	}
 	
 	@Override
-	public AccountSearchResultInterface makeSearch(Client selectedClient, int begin, int end) {
+	public synchronized AccountSearchResultInterface makeSearch(Client selectedClient, int begin, int end) {
 		String url_request = "http://api.linkedin.com/v1/people-search:(people:(id,first-name,last-name,picture-url,headline,public-profile-url),num-results)?start="+ begin +"&count="+ (end - begin ) +"&first-name="+selectedClient.getFirstname().replace(" ", "%20")+"&last-name="+ selectedClient.getName().replace(" ", "%20");
 		Response response = this.connector.makeRequest(url_request, true);
 		if(response != null && response.isSuccessful()){
@@ -118,7 +120,7 @@ public class LinkedInDataRetriever implements DataRetrieverInterface{
 		};
 	}
 	
-	public String getLinkedInIDofUser(User user,Client client) throws SAXException, IOException{
+	public synchronized String getLinkedInIDofUser(User user,Client client) throws SAXException, IOException{
 		if(user == null || client == null) return "";
 		String url_request = "";
 		Response response = null;
@@ -297,7 +299,7 @@ public class LinkedInDataRetriever implements DataRetrieverInterface{
 			}
 			return;
 		case TWITTER_ACCOUNT:
-			url_request = "http://api.linkedin.com/v1/people/id=iGNeDrcELX:(id,primary-twitter-account)";
+			url_request = "http://api.linkedin.com/v1/people/id="+ linkedIn_id+":(id,primary-twitter-account)";
 			response = this.connector.makeRequest(url_request, true);
 			if(response != null && response.isSuccessful()){
 				LinkedInUser user_tw = parseUserResponse(response.getBody());
@@ -342,7 +344,7 @@ public class LinkedInDataRetriever implements DataRetrieverInterface{
 			return;
 		case PROFILE_VIEWS:
 			break;
-		case PROFILE_PICTURES:
+		case PROFILE_PICTURE:
 			url_request = "http://api.linkedin.com/v1/people/id="+ linkedIn_id + ":(id,picture-url)";
 			response = this.connector.makeRequest(url_request, true);
 			if(response != null && response.isSuccessful()){
@@ -371,6 +373,38 @@ public class LinkedInDataRetriever implements DataRetrieverInterface{
 		
 	}
 	
+	public synchronized List<LinkedInData> getLastModifiedClients(List<Client> clients, int count){
+		if(clients == null ) return new ArrayList<LinkedInData>();
+		TreeMap<Date,LinkedInData> datas = new TreeMap<Date,LinkedInData>();
+					
+		for(Client c : clients){
+			List<LinkedInData> ids = c.getLinkedInDatasByType(LinkedInDataType.ID);
+			if(ids == null || ids.isEmpty()|| ids.get(0).getDataString() == null || ids.get(0).getDataString().isEmpty()) continue;
+			String linkedIn_id = ids.get(0).getDataString();
+			
+			
+			String url_request = "http://api.linkedin.com/v1/people/id="+ linkedIn_id+":(id,first-name,last-name,headline,last-modified-timestamp)" ;
+			Response response = this.connector.makeRequest(url_request, true);
+			if(response != null && response.isSuccessful()){
+				LinkedInUser user_pro_head = parseUserResponse(response.getBody());
+						    
+				if(user_pro_head != null && user_pro_head.getHeadline() != null && !user_pro_head.getHeadline().isEmpty()){
+					LinkedInData data = new LinkedInData();
+					data.setType(LinkedInDataType.HEADLINES.toString());
+					data.setDataString(user_pro_head.getId()+"#"+user_pro_head.getLastModifiedDate()+"#"+user_pro_head.getHeadline());
+					data.setOwner(c);
+					datas.put(user_pro_head.getLastModifiedDate(), data);
+				}
+			}
+			if(datas.size()>count){
+				ArrayList<Date> dates = new ArrayList<Date>(datas.descendingMap().keySet());
+				datas = new TreeMap<Date,LinkedInData>(datas.tailMap(dates.get(count -1)));
+			}
+		}
+		return new ArrayList<LinkedInData>(datas.descendingMap().values());
+	}
+	
+	
 	private synchronized void saveLinkedInData(Client client,String dataString,LinkedInDataType type){
 		LinkedInData data = new LinkedInData();
 		data.setType(type.toString());
@@ -380,27 +414,27 @@ public class LinkedInDataRetriever implements DataRetrieverInterface{
 		LinkedIn_dao.persistLinkedInData(data);
 	}
 	
-	private LinkedInPositions parsePositionsResponse(String body){		
+	private synchronized LinkedInPositions parsePositionsResponse(String body){		
 		Gson gson = new Gson();
 		return gson.fromJson(body, LinkedInPositions.class);		
 	}
 	
-	private LinkedInUser parseUserResponse(String body){		
+	private synchronized LinkedInUser parseUserResponse(String body){		
 		Gson gson = new Gson();
 		return gson.fromJson(body, LinkedInUser.class);		
 	}
 	
-	private LinkedInEducations parseEducationsResponse(String body){		
+	private synchronized LinkedInEducations parseEducationsResponse(String body){		
 		Gson gson = new Gson();
 		return gson.fromJson(body, LinkedInEducations.class);		
 	}
 	
-	public LinkedInConnections parseLinkedInConnections(String body){
+	public synchronized LinkedInConnections parseLinkedInConnections(String body){
 		Gson gson = new Gson();
 		return gson.fromJson(body, LinkedInConnections.class);
 	}
 	
-	private linkedInSearchResult parseSearchUserResponse(String body){		
+	private synchronized linkedInSearchResult parseSearchUserResponse(String body){		
 		Gson gson = new Gson();
 		return gson.fromJson(body, linkedInSearchResult.class);		
 	}	

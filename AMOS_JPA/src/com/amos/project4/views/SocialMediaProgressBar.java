@@ -205,29 +205,45 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
     		makeMessage("Scanning social medias ...",0);
 	    	setProgress(0);
 	    	if(canceled) return null;
-	    	
+	    		    	
 	    	// Import facebook Datas
-	    	makeMessage("Scanning facebook ...",0);
-	    	if(!controller.getF_retriever().init(user)){
-	    		makeMessage( "Unable to make a connection with facebook. \nPlease verify your settings in the General Setting menu",1);
-    		}		    	
-	    	for (int j = 0; j < clients.size() && F_COUNT > 0; j++) {
-	    		Client client = clients.get(j);
-	    		
-    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
-    			if(canceled) return null;
+	    	boolean f_init = false;
+	    	if(F_COUNT > 0){
+	    		makeMessage("Scanning facebook ...",0);
+	    		f_init = controller.getF_retriever().init(user);
+	    		if(!f_init){
+		    		makeMessage( "Unable to make a connection with facebook. \nPlease verify your settings in the General Setting menu",1);
+	    		}
+	    	}
+	    	if(canceled) return null;		    	
+	    	for (int j = 0; j < clients.size() && F_COUNT > 0 && f_init; j++) {
+	    		Client client = clients.get(j);    			
+	    		String facebook_id = null;
+	    		try{
+	    			facebook_id = controller.getF_retriever().importFacebookIDofUser(user, client);
+	    		}catch (Exception e) {
+						e.printStackTrace();
+				}
+	    		if(facebook_id == null || facebook_id.isEmpty()){
+	    			step = step + 2 * F_COUNT;
+	    			makeMessage("Unable to get Facebook ID of Client : "+client.getFirstname() + " " + client.getName() +"...",1);
+	    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    			if(canceled) return null;
+	    			continue;
+	    		}
 	    		
 	    		// Scan relatives Datas
 	    		for (int i = 0; i < f_types.size(); i++) {
 	    			try{
-		    			makeMessage("Deleting Facebook " + f_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
+	    				
+	    				makeMessage("Deleting Facebook " + f_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
 			    		controller.getF_retriever().deleteUserFacebookData(client,f_types.get(i));
 			    		step += 1;			    		
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));    			
 			    		if(canceled) return null;
 			    		
 		    			makeMessage("Scanning Facebook " + f_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
-		    			controller.getF_retriever().importFacebookData(user, client, f_types.get(i));
+		    			controller.getF_retriever().importFacebookData(user, client, f_types.get(i),facebook_id);
 		    			step += 1;
 		    			
 		    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));    			
@@ -244,12 +260,30 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    	if(canceled) return null;
 	    	
 	    	// Import Twitter Datas
-	    	title_lbl.setText("Scanning Twitter ...");
-	    	if(!controller.getT_retriever().init(user)){
-	    		makeMessage("Unable to make a connection with twitter. \nPlease verify your settings in the General Setting menu",1);
-    		}
-	    	for (int j = 0; j < clients.size() && T_COUNT > 0; j++) {
-	    		Client client = clients.get(j);
+	    	boolean t_init = false;
+	    	if(T_COUNT > 0){
+	    		title_lbl.setText("Scanning Twitter ...");
+	    		t_init = controller.getT_retriever().init(user);
+		    	if(!t_init){
+		    		makeMessage("Unable to make a connection with twitter. \nPlease verify your settings in the General Setting menu",1);
+	    		}
+	    	}
+	    	if(canceled) return null;
+	    	for (int j = 0; j < clients.size() && T_COUNT > 0 && t_init; j++) {
+	    		Client client = clients.get(j);    			
+	    		String twitter_id = null;
+	    		try{
+	    			twitter_id = controller.getT_retriever().importTwitterIDofUser(user, client);
+	    		}catch (Exception e) {
+						e.printStackTrace();
+				}
+	    		if(twitter_id == null || twitter_id.isEmpty()){
+	    			step = step + 2 * T_COUNT;
+	    			makeMessage("Unable to get Twitter ID of Client : "+client.getFirstname() + " " + client.getName() +"...",1);
+	    			setProgress((int)Math.min(100 * (step/ TOTAL), 100));
+	    			if(canceled) return null;
+	    			continue;
+	    		}
 	 
 	    		// Scan relatives Datas		    		
 	    		for (int i = 0; i < t_types.size(); i++) {
@@ -262,7 +296,7 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 			    		if(canceled) return null;
 			    		
 		    			makeMessage("Scanning Twitter " + t_types.get(i).toString() + " : "+client.getFirstname() + " " + client.getName() +"...",0);
-			    		controller.getT_retriever().importTwitterData(user, client, t_types.get(i));
+			    		controller.getT_retriever().importTwitterData(user, client, t_types.get(i),twitter_id);
 			    		step += 1;
 			    		setProgress((int)Math.min(100 * (step/ TOTAL), 100));
 			    		if(canceled) return null;
@@ -277,11 +311,16 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    	setProgress((int)Math.min(100 * (step/ TOTAL), 100));
 	    	
 	    	// Import Xing Datas
-	    	title_lbl.setText("Scanning Xing ...");
-	    	if(!controller.getX_retriever().init(user)){
-	    		makeMessage("Unable to make a connection with Xing. \nPlease verify your settings in the General Setting menu",1);
-    		}
-	    	for (int j = 0; j < clients.size() && X_COUNT > 0; j++) {
+	    	boolean x_init = false;
+	    	if(X_COUNT > 0){
+		    	title_lbl.setText("Scanning Xing ...");
+		    	x_init = controller.getX_retriever().init(user);
+		    	if(!x_init){
+		    		makeMessage("Unable to make a connection with Xing. \nPlease verify your settings in the General Setting menu",1);
+	    		}
+	    	}
+	    	if(canceled) return null;
+	    	for (int j = 0; j < clients.size() && X_COUNT > 0 && x_init; j++) {
 	    		Client client = clients.get(j);
 	    		String xing_id = null;
 	    		try{
@@ -325,11 +364,15 @@ public class SocialMediaProgressBar extends JDialog implements PropertyChangeLis
 	    	if(canceled) return null;
 	    	
 	    	// Import Linked Datas
-	    	title_lbl.setText("Scanning LinkedIn ...");
-	    	if(!controller.getL_retriever().init(user)){
-	    		makeMessage("Unable to make a connection with LinkedIn. \nPlease verify your settings in the General Setting menu",1);
-    		}
-	    	for (int j = 0; j < clients.size() && L_COUNT > 0; j++) {
+	    	boolean l_init = false;
+	    	if(L_COUNT > 0){
+		    	title_lbl.setText("Scanning LinkedIn ...");
+		    	l_init = controller.getL_retriever().init(user);
+		    	if(!l_init){
+		    		makeMessage("Unable to make a connection with LinkedIn. \nPlease verify your settings in the General Setting menu",1);
+	    		}
+	    	}
+	    	for (int j = 0; j < clients.size() && L_COUNT > 0 && l_init; j++) {
 	    		Client client = clients.get(j);
 	    		
 	    		String linkedIn_id = null;

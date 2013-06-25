@@ -20,6 +20,8 @@ package com.amos.project4.test;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.scribe.model.Response;
@@ -28,6 +30,7 @@ import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
 import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
+import com.amos.project4.models.XingData;
 import com.amos.project4.socialMedia.Xing.XingConnect;
 import com.amos.project4.socialMedia.Xing.XingContacts;
 import com.amos.project4.socialMedia.Xing.XingDataRetriever;
@@ -66,6 +69,16 @@ public class XingConnectTest {
 		System.out.println(res.getBody());
 		XingUser user = parseUserResponse(res.getBody());
 		assertTrue(res!= null && res.isSuccessful() && !user.users.isEmpty());
+	}
+	
+	@Test
+	public void testGetLastPostOfClients(){
+		int count = 10;
+		List<XingData> datas = retriever.getLastModifiedCompanies(cdao.getAllClients(), count);		
+		for (XingData data : datas) {
+			System.out.println(data.getDataString().split("#")[0] + " : " + data.getDataString().split("#")[1] + " from " + data.getOwner().getFirstname() + " " + data.getOwner().getName());
+		}
+		assertTrue(datas!= null && datas.size() <= count);
 	}
 	
 	@Test

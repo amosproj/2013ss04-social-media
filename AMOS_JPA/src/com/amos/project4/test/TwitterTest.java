@@ -18,7 +18,10 @@
  */
 package com.amos.project4.test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.IOException;
+import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -32,6 +35,7 @@ import twitter4j.TwitterException;
 
 import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
+import com.amos.project4.models.TwitterData;
 import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
 import com.amos.project4.socialMedia.twitter.TwitterConnect;
@@ -57,7 +61,7 @@ public class TwitterTest {
 		retriever.init(user);
 		cdao = ClientDAO.getInstance();
 		client = cdao.getclient(new Integer(221));
-		facebook_id = retriever.getTwitterIDofUser(user, client);
+		facebook_id = retriever.importTwitterIDofUser(user, client);
 	}
 
 	@Test
@@ -78,7 +82,17 @@ public class TwitterTest {
                 }
             }
             page++;
-        } while (users.size() != 0 && page < 50);
+        } while (users.size() != 0 && page < 10);
 		
+	}
+	
+	@Test
+	public void testGetLastPostOfClients(){
+		int count = 10;
+		List<TwitterData> datas = retriever.getLastTweetsOfClients(cdao.getAllClients(), count);
+		assertTrue(datas!= null && !datas.isEmpty() && datas.size() == count);
+		for (TwitterData data : datas) {
+			System.out.println(data.getDataString().split("#")[1] + " : " + data.getDataString().split("#")[2] + " from " + data.getOwner().getFirstname() + " " + data.getOwner().getName());
+		}
 	}
 }
