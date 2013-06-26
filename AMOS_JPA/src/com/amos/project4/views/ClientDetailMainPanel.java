@@ -22,8 +22,11 @@ package com.amos.project4.views;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -94,6 +97,9 @@ public class ClientDetailMainPanel extends JPanel implements
 		this.client_controller = client_controller;
 		this.client_controller.addView(this);
 		init();
+		CardLayout cl = (CardLayout) this.getLayout();
+		cl.show(this, "NOTIFICATIONS");		
+		fillbirthdayOfTheWeek();
 	}
 
 	private void fillbirthdayOfTheWeek() {
@@ -158,7 +164,7 @@ public class ClientDetailMainPanel extends JPanel implements
 		springLayout.putConstraint(SpringLayout.SOUTH, Notification_container, -6, SpringLayout.SOUTH, top);
 		springLayout.putConstraint(SpringLayout.EAST, Notification_container, -6, SpringLayout.EAST, top);
 		top.add(Notification_container);
-		fillbirthdayOfTheWeek();
+		
 		return top;
 	}
 	private JPanel initOnlyPersonnalInformation(){
@@ -480,7 +486,8 @@ public class ClientDetailMainPanel extends JPanel implements
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
 //			CardLayout cl = (CardLayout) this.getLayout();
-//			cl.show(this, "PERSONAL");
+//			cl.show(this, "PERSONAL");	
+			lunchSearchMediaUpdates();
 			name_textField.setText("" +c.getName());
 			firstnameTextField.setText("" + c.getFirstname());
 			birthdateTextField.setText("" + c.getBirthdate());
@@ -502,30 +509,6 @@ public class ClientDetailMainPanel extends JPanel implements
 		    	msg = "";
 		    }			
 			this.getLblBirthday().setText(msg);
-			// Start facebook search
-			if(f == null) f = new facebookThread();
-			if(f != null && !f.isAlive()){
-				f = new facebookThread();
-				f.start();
-			}
-			// Start twitter search
-			if(t == null) t = new twitterThread();
-			if(t != null && !t.isAlive()){
-				t = new twitterThread();
-				t.start();
-			}
-			// Start xing search
-			if(x == null) x = new xingThread();
-			if(x != null && !x.isAlive()){
-				x = new xingThread();
-				x.start();
-			}
-			// Start LinkedIn search
-			if(l == null) l = new linkedInThread();
-			if(f != null && !l.isAlive()){
-				l = new linkedInThread();
-				l.start();
-			}
 		}
 	}
 	
@@ -660,9 +643,10 @@ public class ClientDetailMainPanel extends JPanel implements
 			lblCompany.setText(
 					datas.get(0).getOwner().getFirstname() + " " 
 							+ datas.get(0).getOwner().getName()
-							+ "changed to " + datas.get(0).getDataString().split("#")[1]
 							+ " on " + datas.get(0).getDataString().split("#")[0]
-							+ " as " + datas.get(0).getDataString().split("#")[2]
+							+ " to \"" + datas.get(0).getDataString().split("#")[1]
+							
+							+ "\" as " + datas.get(0).getDataString().split("#")[2]
 					);
 					
 		}else{
@@ -674,22 +658,24 @@ public class ClientDetailMainPanel extends JPanel implements
 		}
 		if(datas != null && datas.size() >= 2){
 			lblCompany_1.setText(
-					datas.get(0).getOwner().getFirstname() + " " 
+					datas.get(1).getOwner().getFirstname() + " " 
 							+ datas.get(1).getOwner().getName()
-							+ "changed to " + datas.get(1).getDataString().split("#")[1]
 							+ " on " + datas.get(1).getDataString().split("#")[0]
-							+ " as " + datas.get(1).getDataString().split("#")[2]
+							+ " to \"" + datas.get(1).getDataString().split("#")[1]
+							
+							+ "\" as " + datas.get(1).getDataString().split("#")[2]
 					);
 		}else{
 			lblCompany_1.setText("");
 		}
 		if(datas != null && datas.size() >= 3){
 			lblCompany_2.setText(
-					datas.get(2).getOwner().getFirstname() + " " 
+					datas.get(0).getOwner().getFirstname() + " " 
 							+ datas.get(2).getOwner().getName()
-							+ "changed to " + datas.get(2).getDataString().split("#")[1]
 							+ " on " + datas.get(2).getDataString().split("#")[0]
-							+ " as " + datas.get(2).getDataString().split("#")[2]
+							+ " to \"" + datas.get(2).getDataString().split("#")[1]
+							
+							+ "\" as " + datas.get(2).getDataString().split("#")[2]
 					);
 		}else{
 			lblCompany_2.setText("");
@@ -698,9 +684,10 @@ public class ClientDetailMainPanel extends JPanel implements
 			lblCompany_3.setText(
 					datas.get(3).getOwner().getFirstname() + " " 
 							+ datas.get(3).getOwner().getName()
-							+ "changed to " + datas.get(3).getDataString().split("#")[1]
 							+ " on " + datas.get(3).getDataString().split("#")[0]
-							+ " as " + datas.get(3).getDataString().split("#")[2]
+							+ " to \"" + datas.get(3).getDataString().split("#")[1]
+							
+							+ "\" as " + datas.get(3).getDataString().split("#")[2]
 					);
 		}else{
 			lblCompany_3.setText("");
@@ -709,9 +696,10 @@ public class ClientDetailMainPanel extends JPanel implements
 			lblCompany_4.setText(
 					datas.get(4).getOwner().getFirstname() + " " 
 							+ datas.get(4).getOwner().getName()
-							+ "changed to " + datas.get(4).getDataString().split("#")[1]
 							+ " on " + datas.get(4).getDataString().split("#")[0]
-							+ " as " + datas.get(4).getDataString().split("#")[2]
+							+ " to \"" + datas.get(4).getDataString().split("#")[1]
+							
+							+ "\" as " + datas.get(4).getDataString().split("#")[2]
 					);
 		}else{
 			lblCompany_4.setText("");
@@ -802,5 +790,52 @@ public class ClientDetailMainPanel extends JPanel implements
 				fillLinkedInPanel(LinkedInDataRetriever.getInstance().getLastModifiedClients(clients, 5));
 			}
 		}
+	}
+	
+	public void setDetailsUI(){		
+		CardLayout cl = (CardLayout) this.getLayout();
+		if(client_controller == null || client_controller.getSelectedClient() == null){
+			cl.show(this, "NOTIFICATIONS");
+			java.awt.EventQueue.invokeLater(new Runnable() {
+			    @Override
+			    public void run() {
+			    	fillbirthdayOfTheWeek();
+					lunchSearchMediaUpdates();
+			    }
+			});
+		}else{
+			cl.show(this, "PERSONAL");
+		}		
+	}
+	
+	private void lunchSearchMediaUpdates() {
+		// Start facebook search
+    	if(f == null) f = new facebookThread();
+		if(f != null && !f.isAlive()){
+			//f.destroy();
+			f = new facebookThread();
+			f.start();
+		}else{
+			
+		}
+		// Start twitter search
+		if(t == null) t = new twitterThread();
+		if(t != null && !t.isAlive()){
+			t = new twitterThread();
+			t.start();
+		}
+		// Start xing search
+		if(x == null) x = new xingThread();
+		if(x != null && !x.isAlive()){
+			x = new xingThread();
+			x.start();
+		}
+		// Start LinkedIn search
+		if(l == null) l = new linkedInThread();
+		if(f != null && !l.isAlive()){
+			l = new linkedInThread();
+			l.start();
+		}
+		
 	}
 }

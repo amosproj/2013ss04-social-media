@@ -26,6 +26,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.Vector;
 
@@ -239,7 +241,8 @@ public class AMOSMainUI {
 		// Register The Views to the controller
 		this.getClient_controller().addView(this.getTclients());
 		
-		
+		// Add the window listener
+		this.frame.addWindowListener( new AMOSMainWindowListener());
 	}
 
 	public ClientsController getClient_controller() {
@@ -681,6 +684,39 @@ public class AMOSMainUI {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			openDashboardSettingDialog();
+		}
+	}
+	
+	private class AMOSMainWindowListener implements WindowListener {
+
+		public void windowDeiconified(WindowEvent e) {
+		}
+
+		@Override
+		public void windowActivated(WindowEvent arg0) {
+			
+		}
+
+		@Override
+		public void windowClosed(WindowEvent arg0) {
+		}
+
+		@Override
+		public void windowClosing(WindowEvent arg0) {
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent arg0) {
+		}
+
+		@Override
+		public void windowIconified(WindowEvent arg0) {
+		}
+
+		@Override
+		public void windowOpened(WindowEvent arg0) {
+			connectToSocialMedia();
+			//if(clientDetailsPane != null) clientDetailsPane.setDetailsUI();
 		}
 	}
 

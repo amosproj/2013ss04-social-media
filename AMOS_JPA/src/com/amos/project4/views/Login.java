@@ -187,16 +187,8 @@ public class Login extends JDialog implements AbstractControlledView {
 				// Update UserViewModel
 				u_model.updateModel(_user);
 				final AMOSMainUI window = AMOSMainUI.getInstance((UserController)user_controller,u_model);
-				setVisible(false);
 				window.getMainFrame().setVisible(true);
-				window.getMainFrame().toFront();
-				java.awt.EventQueue.invokeLater(new Runnable() {
-				    @Override
-				    public void run() {
-				    	window.connectToSocialMedia();
-				    }
-				});
-				
+				setVisible(false);				
 			} catch (Exception e) {
 				e.printStackTrace();
 				setloginMessage("Something went wrong. Please try again !", 1);
