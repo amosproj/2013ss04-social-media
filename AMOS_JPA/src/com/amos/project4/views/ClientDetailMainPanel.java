@@ -22,13 +22,9 @@ package com.amos.project4.views;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -38,6 +34,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.SwingWorker;
+import javax.swing.SwingWorker.StateValue;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
@@ -53,7 +51,6 @@ import com.amos.project4.socialMedia.Xing.XingDataRetriever;
 import com.amos.project4.socialMedia.facebook.FacebookDataRetriever;
 import com.amos.project4.socialMedia.twitter.TwitterDataRetriever;
 import com.amos.project4.utils.AMOSUtils;
-import javax.swing.JButton;
 
 public class ClientDetailMainPanel extends JPanel implements
 		AbstractControlledView {
@@ -93,7 +90,7 @@ public class ClientDetailMainPanel extends JPanel implements
 	private facebookThread f;
 	private xingThread x;
 	private linkedInThread l;
-	private JPanel Notification_container_1;
+	private JTextField txtAdditionalInformations;
 	
 	
 	public ClientDetailMainPanel(ClientsController client_controller) {
@@ -108,6 +105,7 @@ public class ClientDetailMainPanel extends JPanel implements
 
 	private void fillbirthdayOfTheWeek() {
 		String msg = "No Birthdays this week";
+		//String msg_2 = "No Birthdays this week";
 		if(client_controller == null){
 			msg = "Client controller not initialised";
 			msg = msg + ".";
@@ -169,12 +167,6 @@ public class ClientDetailMainPanel extends JPanel implements
 		springLayout.putConstraint(SpringLayout.EAST, Notification_container, -6, SpringLayout.EAST, top);
 		top.add(Notification_container);
 		
-		JButton btnRefreshButton = new JButton("Refresh");
-		springLayout.putConstraint(SpringLayout.NORTH, btnRefreshButton, 10, SpringLayout.NORTH, top);
-		springLayout.putConstraint(SpringLayout.EAST, btnRefreshButton, -10, SpringLayout.EAST, top);
-		top.add(btnRefreshButton);
-		btnRefreshButton.addActionListener(new RefreshAction());
-		
 		return top;
 	}
 	private JPanel initOnlyPersonnalInformation(){
@@ -196,12 +188,12 @@ public class ClientDetailMainPanel extends JPanel implements
 	}
 
 	private JPanel initNotificationPanel() {
-		Notification_container_1 = new JPanel();
+		JPanel Notification_container = new JPanel();
 		
-		Notification_container_1.setLayout(new GridLayout(0, 2, 6, 6));
+		Notification_container.setLayout(new GridLayout(0, 2, 6, 6));
 		
 		JPanel facebook_panel = new JPanel();
-		Notification_container_1.add(facebook_panel);
+		Notification_container.add(facebook_panel);
 //		springLayout.putConstraint(SpringLayout.NORTH, facebook_panel, 10, SpringLayout.SOUTH, lblBirthday);
 //		springLayout.putConstraint(SpringLayout.WEST, facebook_panel, 0, SpringLayout.WEST, personalInformationsPanel);
 //		springLayout.putConstraint(SpringLayout.SOUTH, facebook_panel, 120, SpringLayout.SOUTH, lblBirthday);
@@ -250,7 +242,7 @@ public class ClientDetailMainPanel extends JPanel implements
 		
 		JPanel twitter_panel = new JPanel();
 		twitter_panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		Notification_container_1.add(twitter_panel);
+		Notification_container.add(twitter_panel);
 		SpringLayout sl_twitter_panel = new SpringLayout();
 		twitter_panel.setLayout(sl_twitter_panel);
 		
@@ -262,7 +254,7 @@ public class ClientDetailMainPanel extends JPanel implements
 		sl_twitter_panel.putConstraint(SpringLayout.EAST, label, 60, SpringLayout.WEST, twitter_panel);
 		twitter_panel.add(label);
 		
-		lblTwits = new JLabel("Twits_1");
+		lblTwits = new JLabel("twits_1");
 		sl_twitter_panel.putConstraint(SpringLayout.NORTH, lblTwits, 0, SpringLayout.NORTH, label);
 		sl_twitter_panel.putConstraint(SpringLayout.WEST, lblTwits, 6, SpringLayout.EAST, label);
 		sl_twitter_panel.putConstraint(SpringLayout.EAST, lblTwits, 0, SpringLayout.EAST, twitter_panel);
@@ -294,7 +286,7 @@ public class ClientDetailMainPanel extends JPanel implements
 		
 		JPanel Xing_panel = new JPanel();
 		Xing_panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		Notification_container_1.add(Xing_panel);
+		Notification_container.add(Xing_panel);
 		SpringLayout sl_Xing_panel = new SpringLayout();
 		Xing_panel.setLayout(sl_Xing_panel);
 		
@@ -338,7 +330,7 @@ public class ClientDetailMainPanel extends JPanel implements
 		
 		JPanel linkedIn_panel = new JPanel();
 		linkedIn_panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		Notification_container_1.add(linkedIn_panel);
+		Notification_container.add(linkedIn_panel);
 		SpringLayout sl_linkedIn_panel = new SpringLayout();
 		linkedIn_panel.setLayout(sl_linkedIn_panel);
 		
@@ -380,113 +372,110 @@ public class ClientDetailMainPanel extends JPanel implements
 		sl_linkedIn_panel.putConstraint(SpringLayout.EAST, lblPosition_4, 0, SpringLayout.EAST, lblPosition);
 		linkedIn_panel.add(lblPosition_4);
 		
-		return Notification_container_1;
+		return Notification_container;
 	}
 
 	private JPanel initClientDetails() {
 		JPanel personalInformationsPanel = new JPanel();
 		
-		personalInformationsPanel.setBorder(new TitledBorder(new LineBorder(
-				new Color(0, 0, 0)), "Personal informations",
+		personalInformationsPanel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Personal informations",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
+		
+		personalInformationsPanel.setPreferredSize(new Dimension(400,400));
 		
 		SpringLayout sl_personalInformationsPanel = new SpringLayout();
 		personalInformationsPanel.setLayout(sl_personalInformationsPanel);
 
 		JLabel lblName = new JLabel("Name :");
-		lblName.setPreferredSize(new Dimension(70, 20));
-		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH, lblName,
-				10, SpringLayout.NORTH, personalInformationsPanel);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST, lblName,
-				10, SpringLayout.WEST, personalInformationsPanel);
+		//lblName.setPreferredSize(new Dimension(120, 20));
+		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH, lblName,10, SpringLayout.NORTH, personalInformationsPanel);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST, lblName,10, SpringLayout.WEST, personalInformationsPanel);
 		personalInformationsPanel.add(lblName);
 
 		name_textField = new JTextField();
 		name_textField.setEditable(false);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
 				name_textField, 0, SpringLayout.NORTH, lblName);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
-				name_textField, 10, SpringLayout.EAST, lblName);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,
-				name_textField, 350, SpringLayout.WEST, lblName);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,	name_textField, 10, SpringLayout.EAST, lblName);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,	name_textField, 350, SpringLayout.WEST, lblName);
 		personalInformationsPanel.add(name_textField);
 		name_textField.setColumns(50);
 
 		JLabel lblFirstname = new JLabel("Firstname :");
-		lblFirstname.setPreferredSize(new Dimension(70, 20));
-		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				lblFirstname, 0, SpringLayout.NORTH, lblName);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
-				lblFirstname, 10, SpringLayout.EAST, name_textField);
+		//lblFirstname.setPreferredSize(new Dimension(120, 20));
+		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,lblFirstname, 0, SpringLayout.NORTH, lblName);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,lblFirstname, 10, SpringLayout.EAST, name_textField);
 		personalInformationsPanel.add(lblFirstname);
 
 		firstnameTextField = new JTextField();
 		firstnameTextField.setEditable(false);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
 				firstnameTextField, 0, SpringLayout.NORTH, lblName);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
-				firstnameTextField, 10, SpringLayout.EAST, lblFirstname);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,
-				firstnameTextField, 280, SpringLayout.EAST, lblFirstname);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,firstnameTextField, 10, SpringLayout.EAST, lblFirstname);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,firstnameTextField, 280, SpringLayout.EAST, lblFirstname);
 		personalInformationsPanel.add(firstnameTextField);
 		firstnameTextField.setColumns(50);
 
 		JLabel lblBirthdate = new JLabel("Birthdate :");
-		lblBirthdate.setPreferredSize(new Dimension(70, 20));
-		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				lblBirthdate, 10, SpringLayout.SOUTH, name_textField);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
-				lblBirthdate, 0, SpringLayout.WEST, lblName);
+		//lblBirthdate.setPreferredSize(new Dimension(120, 20));
+		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,lblBirthdate, 10, SpringLayout.SOUTH, name_textField);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST, lblBirthdate, 0, SpringLayout.WEST, lblName);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST, lblBirthdate, 0, SpringLayout.EAST, lblName);
 		personalInformationsPanel.add(lblBirthdate);
 
 		birthdateTextField = new JTextField();
 		birthdateTextField.setEditable(false);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				birthdateTextField, 10, SpringLayout.SOUTH, name_textField);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
-				birthdateTextField, 10, SpringLayout.EAST, lblBirthdate);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,
-				birthdateTextField, 0, SpringLayout.EAST, name_textField);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,	birthdateTextField, 10, SpringLayout.SOUTH, name_textField);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,	birthdateTextField, 10, SpringLayout.EAST, lblBirthdate);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,	birthdateTextField, 0, SpringLayout.EAST, name_textField);
 		personalInformationsPanel.add(birthdateTextField);
 		birthdateTextField.setColumns(50);
 
 		JLabel lblPlace = new JLabel("Place :");
-		lblPlace.setPreferredSize(new Dimension(70, 20));
-		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				lblPlace, 0, SpringLayout.NORTH, birthdateTextField);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST, lblPlace,
-				0, SpringLayout.WEST, lblFirstname);
+		//lblPlace.setPreferredSize(new Dimension(120, 20));
+		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,	lblPlace, 0, SpringLayout.NORTH, birthdateTextField);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST, lblPlace,	0, SpringLayout.WEST, lblFirstname);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST, lblPlace,	0, SpringLayout.EAST, lblFirstname);
 		personalInformationsPanel.add(lblPlace);
 
 		PlaceTextField = new JTextField();
 		PlaceTextField.setEditable(false);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
 				PlaceTextField, 0, SpringLayout.NORTH, lblBirthdate);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
-				PlaceTextField, 10, SpringLayout.EAST, lblPlace);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,
-				PlaceTextField, 280, SpringLayout.EAST, lblPlace);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,PlaceTextField, 10, SpringLayout.EAST, lblPlace);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,PlaceTextField, 280, SpringLayout.EAST, lblPlace);
 		personalInformationsPanel.add(PlaceTextField);
 		PlaceTextField.setColumns(50);
 
 		JLabel lblEmail = new JLabel("E-Mail :");
-		lblEmail.setPreferredSize(new Dimension(70, 20));
-		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				lblEmail, 10, SpringLayout.SOUTH, PlaceTextField);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST, lblEmail,
-				0, SpringLayout.WEST, lblName);
+		//lblEmail.setPreferredSize(new Dimension(120, 20));
+		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,lblEmail, 10, SpringLayout.SOUTH, PlaceTextField);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST, lblEmail,	0, SpringLayout.WEST, lblName);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST, lblEmail,	0, SpringLayout.EAST, lblName);
 		personalInformationsPanel.add(lblEmail);
 
 		emailTextField = new JTextField();
 		emailTextField.setEditable(false);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
-				emailTextField, 10, SpringLayout.SOUTH, PlaceTextField);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,
-				emailTextField, 10, SpringLayout.EAST, lblEmail);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,
-				emailTextField, 0, SpringLayout.EAST, birthdateTextField);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,	emailTextField, 10, SpringLayout.SOUTH, PlaceTextField);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,	emailTextField, 10, SpringLayout.EAST, lblEmail);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,	emailTextField, 0, SpringLayout.EAST, birthdateTextField);
 		personalInformationsPanel.add(emailTextField);
 		emailTextField.setColumns(50);
+		
+		JLabel lblAdditionalInformations = new JLabel("Additional Information :");
+		lblAdditionalInformations.setPreferredSize(new Dimension(120, 20));
+		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH, lblAdditionalInformations, 10, SpringLayout.SOUTH, emailTextField);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST, lblAdditionalInformations,0, SpringLayout.WEST, lblName);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST, lblName,0, SpringLayout.EAST, lblAdditionalInformations);
+		personalInformationsPanel.add(lblAdditionalInformations);
+
+		txtAdditionalInformations = new JTextField();
+		txtAdditionalInformations.setEditable(false);
+		txtAdditionalInformations.setFont(new Font("Tahoma", Font.BOLD, 11));
+		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,	txtAdditionalInformations, 10, SpringLayout.SOUTH, lblAdditionalInformations);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,	txtAdditionalInformations, 10, SpringLayout.EAST, lblAdditionalInformations);
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,	txtAdditionalInformations, 0, SpringLayout.EAST, firstnameTextField);
+		personalInformationsPanel.add(txtAdditionalInformations);
 		
 		return personalInformationsPanel;		
 	}
@@ -495,9 +484,8 @@ public class ClientDetailMainPanel extends JPanel implements
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
-//			CardLayout cl = (CardLayout) this.getLayout();
-//			cl.show(this, "PERSONAL");	
-			lunchSearchMediaUpdates();
+			CardLayout cl = (CardLayout) this.getLayout();
+			cl.show(this, "PERSONAL");	
 			name_textField.setText("" +c.getName());
 			firstnameTextField.setText("" + c.getFirstname());
 			birthdateTextField.setText("" + c.getBirthdate());
@@ -573,18 +561,35 @@ public class ClientDetailMainPanel extends JPanel implements
 		}
 	}
 	
-	private class facebookThread extends Thread {
-		public void run() {
+	private class facebookThread extends SwingWorker<String, String> {		
+		private ArrayList<Client> clients;
+		private List<FacebookData> rslt_clients = new ArrayList<FacebookData>();
+		@Override
+		protected String doInBackground() throws Exception {
 			if(client_controller!= null){
-				List<Client> clients = client_controller.getAllClients();
-				lblPost.setText("Searching for last posts ...");
-				lblPost_1.setText("");
-				lblPost_2.setText("");
-				lblPost_3.setText("");
-				lblPost_4.setText("");
-				fillFacebookPanel(FacebookDataRetriever.getInstance().getLastPostOfClients(clients, 5));
+				publish("Searching for last posts ...");
+				clients = client_controller.getAllClients();
+				rslt_clients = FacebookDataRetriever.getInstance().getLastPostOfClients(clients, 5);				
 			}
+			return null;
 		}
+		
+		@Override
+		protected void process(List<String> chunks) {
+			if(chunks != null && !chunks.isEmpty()){
+				lblPost.setText(chunks.get(0));
+			}else{
+				lblPost.setText("");
+			}			
+			lblPost_1.setText("");
+			lblPost_2.setText("");
+			lblPost_3.setText("");
+			lblPost_4.setText("");
+		}
+		@Override
+		protected void done() {
+			fillFacebookPanel(rslt_clients);
+		}		
 	}
 	
 	public synchronized void fillTwitterPanel(List<TwitterData> datas){
@@ -634,18 +639,37 @@ public class ClientDetailMainPanel extends JPanel implements
 		}
 	}
 	
-	private class twitterThread extends Thread {
-		public void run() {
+	private class twitterThread extends SwingWorker<String, String> {		
+		private ArrayList<Client> clients;
+		private List<TwitterData> rslt_clients = new ArrayList<TwitterData>();
+		
+		@Override
+		protected String doInBackground() throws Exception {
 			if(client_controller!= null){
-				List<Client> clients = client_controller.getAllClients();
-				lblTwits.setText("Searching for last tweets...");
-				lblTwits_1.setText("");
-				lblTwits_2.setText("");
-				lblTwits_3.setText("");
-				lblTwits_4.setText("");
-				fillTwitterPanel(TwitterDataRetriever.getInstance().getLastTweetsOfClients(clients, 5));
+				publish("Searching for last tweets...");
+				clients = client_controller.getAllClients();
+				rslt_clients = TwitterDataRetriever.getInstance().getLastTweetsOfClients(clients, 5);				
 			}
+			return null;
 		}
+		
+		@Override
+		protected void process(List<String> chunks) {
+			if(chunks != null && !chunks.isEmpty()){
+				lblTwits.setText(chunks.get(0));
+			}else{
+				lblTwits.setText("");
+			}			
+			lblTwits_1.setText("");
+			lblTwits_2.setText("");
+			lblTwits_3.setText("");
+			lblTwits_4.setText("");
+		}
+		@Override
+		protected void done() {
+			fillTwitterPanel(rslt_clients);
+		}		
+		
 	}
 	
 	public synchronized void fillXingPanel(List<XingData> datas){
@@ -716,18 +740,37 @@ public class ClientDetailMainPanel extends JPanel implements
 		}
 	}
 	
-	private class xingThread extends Thread {
-		public void run() {
+	private class xingThread extends SwingWorker<String, String> {		
+		private ArrayList<Client> clients;
+		private List<XingData> rslt_clients = new ArrayList<XingData>();
+		
+		@Override
+		protected String doInBackground() throws Exception {
 			if(client_controller!= null){
-				List<Client> clients = client_controller.getAllClients();
-				lblCompany.setText("Searching for last companies updates ...");
-				lblCompany_1.setText("");
-				lblCompany_2.setText("");
-				lblCompany_3.setText("");
-				lblCompany_4.setText("");
-				fillXingPanel(XingDataRetriever.getInstance().getLastModifiedCompanies(clients, 5));
+				publish("Searching for last companies updates ...");
+				clients = client_controller.getAllClients();
+				rslt_clients = XingDataRetriever.getInstance().getLastModifiedCompanies(clients, 5);				
 			}
+			return null;
 		}
+		
+		@Override
+		protected void process(List<String> chunks) {
+			if(chunks != null && !chunks.isEmpty()){
+				lblCompany.setText(chunks.get(0));
+			}else{
+				lblCompany.setText("");
+			}			
+			lblCompany_1.setText("");
+			lblCompany_2.setText("");
+			lblCompany_3.setText("");
+			lblCompany_4.setText("");
+		}
+		@Override
+		protected void done() {
+			fillXingPanel(rslt_clients);
+		}	
+		
 	}
 	
 	public synchronized void fillLinkedInPanel(List<LinkedInData> list){
@@ -788,69 +831,60 @@ public class ClientDetailMainPanel extends JPanel implements
 		}
 	}
 	
-	private class linkedInThread extends Thread {
-		public void run() {
+	private class linkedInThread extends SwingWorker<String, String> {		
+		private ArrayList<Client> clients;
+		private List<LinkedInData> rslt_clients = new ArrayList<LinkedInData>();
+		
+		@Override
+		protected String doInBackground() throws Exception {
 			if(client_controller!= null){
-				List<Client> clients = client_controller.getAllClients();
-				lblPosition.setText("Searching for last headlines updates ...");
-				lblPosition_1.setText("");
-				lblPosition_2.setText("");
-				lblPosition_3.setText("");
-				lblPosition_4.setText("");
-				fillLinkedInPanel(LinkedInDataRetriever.getInstance().getLastModifiedClients(clients, 5));
+				publish("Searching for last headlines updates ...");
+				clients = client_controller.getAllClients();
+				rslt_clients = LinkedInDataRetriever.getInstance().getLastModifiedClients(clients, 5);				
 			}
+			return null;
+		}
+		
+		@Override
+		protected void process(List<String> chunks) {
+			if(chunks != null && !chunks.isEmpty()){
+				lblPosition.setText(chunks.get(0));
+			}else{
+				lblPosition.setText("");
+			}			
+			lblPosition_1.setText("");
+			lblPosition_2.setText("");
+			lblPosition_3.setText("");
+			lblPosition_4.setText("");
+		}
+		@Override
+		protected void done() {
+			fillLinkedInPanel(rslt_clients);
 		}
 	}
 	
-	public void setDetailsUI(){		
-		CardLayout cl = (CardLayout) this.getLayout();
-		if(client_controller == null || client_controller.getSelectedClient() == null){
-			cl.show(this, "NOTIFICATIONS");
-			java.awt.EventQueue.invokeLater(new Runnable() {
-			    @Override
-			    public void run() {
-			    	fillbirthdayOfTheWeek();
-					lunchSearchMediaUpdates();
-			    }
-			});
-		}else{
-			cl.show(this, "PERSONAL");
-		}		
-	}
-	
-	private void lunchSearchMediaUpdates() {
+	public synchronized void lunchSearchMediaUpdates() {
 		// Start facebook search
     	if(f == null) f = new facebookThread();
-		if(f != null && !f.isAlive()){
-			//f.destroy();
-			f = new facebookThread();
-			f.start();
-		}else{
-			
+		if(f.getState() == StateValue.DONE || f.getState() == StateValue.PENDING){
+			f.execute();
 		}
+		
 		// Start twitter search
 		if(t == null) t = new twitterThread();
-		if(t != null && !t.isAlive()){
-			t = new twitterThread();
-			t.start();
+		if(t.getState() == StateValue.DONE || t.getState() == StateValue.PENDING){
+			t.execute();
 		}
 		// Start xing search
 		if(x == null) x = new xingThread();
-		if(x != null && !x.isAlive()){
-			x = new xingThread();
-			x.start();
+		if(x.getState() == StateValue.DONE || x.getState() == StateValue.PENDING){
+			x.execute();
 		}
 		// Start LinkedIn search
 		if(l == null) l = new linkedInThread();
-		if(f != null && !l.isAlive()){
-			l = new linkedInThread();
-			l.start();
+		if(l.getState() == StateValue.DONE || l.getState() == StateValue.PENDING){
+			l.execute();
 		}
 		
-	}
-	private class RefreshAction implements ActionListener {
-		public void actionPerformed(ActionEvent e) {
-			repaint();
-		}
 	}
 }
