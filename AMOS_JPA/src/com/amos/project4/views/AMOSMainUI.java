@@ -29,6 +29,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -46,6 +48,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.SpringLayout;
+import javax.swing.SwingWorker;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EtchedBorder;
@@ -68,7 +71,7 @@ import com.amos.project4.views.linkedIn.LinkedInDetailPanel;
 import com.amos.project4.views.twitter.TwitterDetailPanel;
 import com.amos.project4.views.xing.XingDetailPanel;
 
-public class AMOSMainUI {
+public class AMOSMainUI implements AbstractControlledView{
 
 	//standard settings
 	
@@ -91,10 +94,12 @@ public class AMOSMainUI {
 	
 	private UserController user_controller;	
 	private ClientsController client_controller;
+	private JLabel lbl_statusBar;
+	private SwingWorker<String, String> checkConnectWorker;
 
 	private static AMOSMainUI instance;
 	
-	public static AMOSMainUI getInstance(UserController user_controller, UserViewModel u_model){
+	public static AMOSMainUI getInstance(UserController user_controller, UserViewModel u_model) {
 		if(instance == null){
 			try {
 				instance = new AMOSMainUI(user_controller, u_model);
@@ -151,7 +156,8 @@ public class AMOSMainUI {
 			UnsupportedLookAndFeelException {
 		// Initialized The Controller
 		client_controller = new ClientsController();
-
+		client_controller.addView(this);
+		
 		// Initialise and register the search view Model
 		search_params = new SearchParameters();
 		client_controller.addModel(search_params);
@@ -202,7 +208,7 @@ public class AMOSMainUI {
 		SpringLayout sl_StatusbarPanel = new SpringLayout();
 		StatusbarPanel.setLayout(sl_StatusbarPanel);
 
-		JLabel lbl_statusBar = new JLabel("Loading ...");
+		lbl_statusBar = new JLabel("Loading ...");
 		sl_StatusbarPanel.putConstraint(SpringLayout.SOUTH, lbl_statusBar, 0,
 				SpringLayout.SOUTH, StatusbarPanel);
 		sl_StatusbarPanel.putConstraint(SpringLayout.WEST, lbl_statusBar, 5,
@@ -270,10 +276,6 @@ public class AMOSMainUI {
 		Vector<String> settingsMenu_vec = new TreeNodeVector<String>(
 				"Settings", new String[] { "Connection Settings",
 						"Twitter Sentiment Settings", "Notification Settings" });
-
-		// Initialize the user menu short cut
-		// Vector<String> usersMenu_vec = new TreeNodeVector<String>("Users",
-		// new String[] { "Profile", "Change password" });
 
 		// Initialize the Social media menus short cut
 		Vector<String> socialsMenu_vec = new TreeNodeVector<String>("Social",
@@ -375,24 +377,6 @@ public class AMOSMainUI {
 		sl_panel_right_top.putConstraint(SpringLayout.EAST,	client_result_panel, -5, SpringLayout.EAST, panel_right_top);
 		panel_right_top.add(client_result_panel);
 
-//		JList list = new JList();
-//		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list, 22,
-//				SpringLayout.NORTH, panel_right_top);
-//		panel_right_top.add(list);
-//
-//		JList list_1 = new JList();
-//		sl_panel_right_top.putConstraint(SpringLayout.NORTH, list_1, 10,
-//				SpringLayout.NORTH, panel_right_top);
-//		sl_panel_right_top.putConstraint(SpringLayout.WEST, list_1, -7,
-//				SpringLayout.WEST, search_textField);
-//		sl_panel_right_top.putConstraint(SpringLayout.SOUTH, list_1, 30,
-//				SpringLayout.NORTH, panel_right_top);
-//		sl_panel_right_top.putConstraint(SpringLayout.EAST, list_1, -166,
-//				SpringLayout.WEST, search_textField);
-//		panel_right_top.add(list_1);
-
-		
-
 		return panel_right_top;
 	}
 
@@ -481,52 +465,88 @@ public class AMOSMainUI {
 	 * @return
 	 */
 	public void connectToSocialMedia(){
-		ArrayList<String> media_list = new ArrayList<String>();
-		if(this.user_controller == null || this.user_controller.getCurrent_user() == null) return;
-		User c_user = this.user_controller.getCurrent_user();
-		DataRetrieverInterface retriever = null;
-		
-		// try to connect to Facebook
-		retriever = FacebookDataRetriever.getInstance();
-		if(retriever == null || !((FacebookDataRetriever)retriever).init(c_user)){
-			media_list.add("Facebook");
-		}
-		
-		// try to connect to Twitter
-		retriever = TwitterDataRetriever.getInstance();
-		if(retriever == null || !((TwitterDataRetriever)retriever).init(c_user)){
-			media_list.add("Twitter");
-		}
-		
-		// try to connect to Xing
-		retriever = XingDataRetriever.getInstance();
-		if(retriever == null || !((XingDataRetriever)retriever).init(c_user)){
-			media_list.add("Xing");
-		}
-		
-		// try to connect to LinkedIn
-		retriever = LinkedInDataRetriever.getInstance();
-		if(retriever == null || !((LinkedInDataRetriever)retriever).init(c_user)){
-			media_list.add("LinkedIn");
-		}
-		
-		if(media_list.size() > 0){
-			String message = "The application could not make a connectipon to the following social media websites: \n";
-			for(String  m : media_list ){
-				message += "<html><body><b><i>" + m + "</i></b></body></html>\n";
+		if(checkConnectWorker == null){
+			checkConnectWorker = new SwingWorker<String, String>(){
+	
+				private ArrayList<String> media_list = new ArrayList<String>();
+	
+				@Override
+				protected String doInBackground() throws Exception {
+					publish("Check selected user ...");
+					media_list  = new ArrayList<String>();
+					if(user_controller == null || user_controller.getCurrent_user() == null) return null;
+					User c_user = user_controller.getCurrent_user();
+					DataRetrieverInterface retriever = null;
+					
+					if(isCancelled()) return null;
+					// try to connect to Facebook
+					publish("Try to connect facebook ...");
+					retriever = FacebookDataRetriever.getInstance();
+					if(retriever == null || !((FacebookDataRetriever)retriever).init(c_user)){
+						media_list.add("Facebook");
+					}
+					
+					if(isCancelled()) return null;
+					
+					// try to connect to Twitter
+					publish("Try to connect Twitter ...");
+					retriever = TwitterDataRetriever.getInstance();
+					if(retriever == null || !((TwitterDataRetriever)retriever).init(c_user)){
+						media_list.add("Twitter");
+					}
+					if(isCancelled()) return null;
+					
+					// try to connect to Xing
+					publish("Try to connect Xing ...");
+					retriever = XingDataRetriever.getInstance();
+					if(retriever == null || !((XingDataRetriever)retriever).init(c_user)){
+						media_list.add("Xing");
+					}
+					if(isCancelled()) return null;
+					
+					// try to connect to LinkedIn
+					publish("Try to connect Xing ...");
+					retriever = LinkedInDataRetriever.getInstance();
+					if(retriever == null || !((LinkedInDataRetriever)retriever).init(c_user)){
+						media_list.add("LinkedIn");
+					}
+					return null;
+				}
+	
+				@Override
+				protected void process(List<String> chunks) {
+					 if(chunks != null && !chunks.isEmpty()) 
+						 updateStatusBar(chunks.get(0),0);
+				}
+	
+				@Override
+				protected void done() {
+					updateStatusBar("Done .",0);
+					if(media_list.size() > 0){
+						String message = "The application could not make a connectipon to the following social media websites: \n";
+						for(String  m : media_list ){
+							message += "<html><body><b><i>" + m + "</i></b></body></html>\n";
+						}
+						message += "Please make sure your acces token are valid. " +
+								"To do this go to the left menu panel -> Settings -> Connection Settings";
+						Object[] options = {"OK"};
+					    JOptionPane.showOptionDialog(frame,
+					                   message,"Connections Errors",
+					                   JOptionPane.WARNING_MESSAGE,
+					                   JOptionPane.QUESTION_MESSAGE,
+					                   null,
+					                   options,
+					                   options[0]);
+					}
+				}
+				
+			};
+		}else{
+			if(!checkConnectWorker.isDone()){
+				checkConnectWorker.cancel(true);
 			}
-			message += "Please make sure your acces token are valid. " +
-					"To do this go to the left menu panel -> Settings -> Connection Settings";
-			Object[] options = {"OK"};
-		    JOptionPane.showOptionDialog(frame,
-		                   message,"Connections Errors",
-		                   JOptionPane.WARNING_MESSAGE,
-		                   JOptionPane.QUESTION_MESSAGE,
-		                   null,
-		                   options,
-		                   options[0]);
 		}
-		
+		checkConnectWorker.execute();
 	}
 	
 	public ClientTable getTclients() {
@@ -547,6 +567,7 @@ public class AMOSMainUI {
 		GeneralSettingsDialog dialog = new GeneralSettingsDialog(user_controller, user_model,frame);
 		dialog.setVisible(true);
 	}
+	
 	private void openDashboardSettingDialog() {
 		ArrayList<Client> c_list = new ArrayList<Client>();
 		Client selected_client = client_controller.getSelectedClient();
@@ -581,14 +602,13 @@ public class AMOSMainUI {
 	}
 	
 	private void makeRefresh(){
-		search_params.refresh();
+		//search_params.refresh();
 		this.client_controller.refresh();
-//		tclients.clearSelection();
-//		tclients.getModel().fireTableDataChanged();
+		//tclients.clearSelection();
+		tclients.getModel().fireTableDataChanged();
 		tclients = new ClientTable(client_controller);
 		clienTable_scrollPane.setViewportView(tclients);
 		clienTable_scrollPane.invalidate();
-		clienTable_scrollPane.revalidate();
 		frame.repaint();
 	}
 	
@@ -687,6 +707,23 @@ public class AMOSMainUI {
 		}
 	}
 	
+	private synchronized void updateStatusBar(String msg, int severity){
+		switch (severity) {
+		case 0:
+			lbl_statusBar.setText(msg);
+			lbl_statusBar.setForeground(Color.BLACK);
+			break;
+		case 1:
+			lbl_statusBar.setText(msg);
+			lbl_statusBar.setForeground(Color.RED);
+			break;
+		default:
+			lbl_statusBar.setText(msg);
+			lbl_statusBar.setForeground(Color.BLACK);
+			break;
+		}
+	}
+	
 	private class AMOSMainWindowListener implements WindowListener {
 
 		public void windowDeiconified(WindowEvent e) {
@@ -716,8 +753,19 @@ public class AMOSMainUI {
 		@Override
 		public void windowOpened(WindowEvent arg0) {
 			connectToSocialMedia();
-			//if(clientDetailsPane != null) clientDetailsPane.setDetailsUI();
+			if(clientDetailsPane != null) clientDetailsPane.lunchSearchMediaUpdates();
 		}
+	}
+
+	@Override
+	public void modelPropertyChange(Observable o, Object arg) {
+		if (arg != null && arg.getClass().equals(Client.class)) {
+			Client c = (Client) arg;
+			updateStatusBar(c.getFormatedname() + " selected .",0);
+			if(checkConnectWorker != null && !checkConnectWorker.isDone()){
+				checkConnectWorker.cancel(true);
+			}
+		}		
 	}
 
 }

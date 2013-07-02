@@ -153,6 +153,7 @@ public abstract class DefaultAccountSettingPanel extends JPanel implements Abstr
 	}
 	
 	public void makeSearchAccountDialog() {
+		
 		SearchAccountDialog dialog = new SearchAccountDialog(media_controller);
 		dialog.setVisible(true);
 	}

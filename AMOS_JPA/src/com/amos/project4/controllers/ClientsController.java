@@ -69,14 +69,12 @@ public class ClientsController extends AbstractController implements
 
 	@Override
 	public ArrayList<Client> getAllClients() {
-		//clientlist = new ArrayList<Client>(clientDAO.getAllClients());
 		return clientlist != null ? clientlist : new ArrayList<Client>();
 	}
 
 	@Override
 	public void refresh() {
 		clientDAO.refresh();
-		clientlist = new ArrayList<Client>(clientDAO.getAllClients());
 	}
 	@Override
 	public boolean addClient(Client client) {

@@ -19,12 +19,14 @@
 package com.amos.project4.views.accountSearch;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.URI;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -32,6 +34,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingWorker;
 import javax.swing.border.EmptyBorder;
 
 import com.amos.project4.controllers.MediaSearchController;
@@ -57,6 +60,7 @@ public class SearchAccountDialog extends JDialog {
 	private JButton btnView;
 	private JButton btnSelect;
 	private SearchAccountDialog me;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Launch the application.
@@ -80,9 +84,9 @@ public class SearchAccountDialog extends JDialog {
 	
 	public SearchAccountDialog(MediaSearchController media_controller) {
 		super();
-		this.search_result = media_controller.getAccountSearchresult();
 		this.media_controller = media_controller;
 		init();
+		searchAndInitList();
 		me = this;
 	}
 
@@ -94,12 +98,10 @@ public class SearchAccountDialog extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
-			JScrollPane scrollPane = new JScrollPane();
+			scrollPane = new JScrollPane();
 			contentPanel.add(scrollPane, BorderLayout.CENTER);
 			{
-				searchResultlist = new AccountSearchList<AccountSearchResultItem>(search_result);
-				searchResultlist.addListSelectionListener(new AccountListSelectionListener());
-				scrollPane.setViewportView(searchResultlist);
+				
 			}
 		}
 		{
@@ -151,7 +153,7 @@ public class SearchAccountDialog extends JDialog {
 				buttonPane.add(btnEnd);
 			}
 			{
-				lblStatus = new JLabel("0 - 0 of 0 Results");
+				lblStatus = new JLabel("Search ...");
 				lblStatus.setPreferredSize(new Dimension(170, 14));
 				lblStatus.setSize(new Dimension(170, 0));
 				buttonPane.add(lblStatus);
@@ -193,6 +195,43 @@ public class SearchAccountDialog extends JDialog {
 		}
 		updateUI();
 	}
+	
+	private void searchAndInitList(){
+		SwingWorker<String, String> worker = new SwingWorker<String, String>() {
+
+			@Override
+			protected String doInBackground() throws Exception {
+				publish("Seach");
+				if(media_controller != null){
+					search_result = media_controller.getAccountSearchresult();
+					searchResultlist = new AccountSearchList<AccountSearchResultItem>(search_result);
+				}else{
+					publish("Error");
+				}
+				return null;
+			}
+
+			@Override
+			protected void process(List<String> chunks) {
+				if(chunks != null && !chunks.isEmpty()){
+					initStatusLabel(chunks.get(0).equalsIgnoreCase("Error"));
+				}
+			}
+
+			@Override
+			protected void done() {
+				if(searchResultlist != null && scrollPane != null){
+					searchResultlist.addListSelectionListener(new AccountListSelectionListener());
+					scrollPane.setViewportView(searchResultlist);
+					initStatusLabel(false);
+				}else{
+					initStatusLabel(true);
+				}
+				
+			}			
+		};
+		worker.execute();
+	}
 
 	public AccountSearchList<AccountSearchResultItem> getSearchResultlist() {
 		return searchResultlist;
@@ -202,19 +241,26 @@ public class SearchAccountDialog extends JDialog {
 		return lblStatus;
 	}
 	
-	private void initStatusLabel(){
-		if(search_result != null){
+	private synchronized void initStatusLabel(boolean error){
+		if(error){
+			getLblStatus().setText("Error !");
+			getLblStatus().setForeground(Color.RED);
+			return;
+		}
+		if(search_result != null ){
 			int total = search_result.getResultCount();
 			int count_begin = search_result.size() > 0 ?search_result.getStart()+1:search_result.getStart();
 			int count_end = search_result.size() > 0 ? search_result.getEnd()+1:search_result.getEnd();
 			String text = count_begin + " - " + count_end + " of " + total + " Results";
 			getLblStatus().setText(text );
+		}else{
+			getLblStatus().setText("Please wait ...");
 		}
 	}
 	
 	private void updateUI(){
 		if(search_result != null) getSearchResultlist().update();
-		initStatusLabel();
+		initStatusLabel(false);
 		this.repaint();
 		// Next
 		this.btnNext.setEnabled(search_result != null && search_result.isNextPageAvailable());

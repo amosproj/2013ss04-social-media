@@ -280,6 +280,7 @@ public class ClientDAO {
 	public synchronized void refresh() {
 		em = factory.createEntityManager();
 		((JpaEntityManager)em.getDelegate()).getServerSession().getIdentityMapAccessor().invalidateAll();
+		em.close();
 	}
 	
 	public static String BIRTHDAY_SQL = "select kd.* from \"Kundendaten\" as kd " +

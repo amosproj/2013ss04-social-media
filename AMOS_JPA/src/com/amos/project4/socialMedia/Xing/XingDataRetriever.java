@@ -243,7 +243,7 @@ public class XingDataRetriever implements DataRetrieverInterface{
 	
 	public synchronized List<XingData> getLastModifiedCompanies(List<Client> clients, int count){
 		if(clients == null ) return new ArrayList<XingData>();
-		TreeMap<Date,XingData> datas = new TreeMap<Date,XingData>();
+		TreeMap<java.util.Date,XingData> datas = new TreeMap<java.util.Date,XingData>();
 					
 		for(Client c : clients){
 			List<XingData> ids = c.getXingDatasByType(XingDataType.ID);
@@ -256,12 +256,15 @@ public class XingDataRetriever implements DataRetrieverInterface{
 				XingUser xuser = parseResponse(response.getBody());
 				if(xuser.users.size() > 0){
 					Company company = xuser.users.get(0).getProfessional_experience().getPrimary_company();
-					if(company != null && company.getBegin_date() != null && !company.getBegin_date().isEmpty()){
-						String target = company.getBegin_date();
+					if(company != null ){
+						
 					    DateFormat df = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);
-					    java.util.Date result = null;
+					    java.util.Date result = new java.util.Date(System.currentTimeMillis());
 						try {
-							result = df.parse(target);
+							String target = company.getBegin_date();
+							if(target != null && !target.isEmpty()){
+								result = df.parse(target);
+							}
 						} catch (ParseException e) {
 							e.printStackTrace();
 						}
@@ -270,14 +273,15 @@ public class XingDataRetriever implements DataRetrieverInterface{
 						data.setType(XingDataType.COMPANY.toString());
 						data.setDataString(result+"#"+company.getName()+"#"+company.getCareer_level()+"#"+company.getIndustry());
 						data.setOwner(c);
+						datas.put(result, data);
 					}
 				}
 			}
 			
 			
 			if(datas.size()>count){
-				ArrayList<Date> dates = new ArrayList<Date>(datas.descendingMap().keySet());
-				datas = new TreeMap<Date,XingData>(datas.tailMap(dates.get(count -1)));
+				ArrayList<java.util.Date> dates = new ArrayList<java.util.Date>(datas.descendingMap().keySet());
+				datas = new TreeMap<java.util.Date,XingData>(datas.tailMap(dates.get(count -1)));
 			}
 		}
 		return new ArrayList<XingData>(datas.descendingMap().values());

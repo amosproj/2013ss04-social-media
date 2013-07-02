@@ -282,5 +282,10 @@ public class Client implements Serializable {
 		return rslts;
 	}
 	
+	public synchronized String getFormatedname(){
+		String rslt = this.getFirstname()!= null ? this.getFirstname() + " ":"";
+		return rslt + getName();
+	}
+	
 	
 }
