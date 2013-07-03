@@ -47,12 +47,13 @@ public class FacebookDataDAO {
 	private FacebookDataDAO() {
 		super();
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		em = factory.createEntityManager();
 	}
 	
 	public synchronized FacebookData getFacebookData(Integer data_id){
 		if(data_id == null || data_id == 0) return null;
+		em = factory.createEntityManager();
 		FacebookData rslt = em.find(FacebookData.class, data_id);
+		em.close();
 		return rslt;
 	}
 	

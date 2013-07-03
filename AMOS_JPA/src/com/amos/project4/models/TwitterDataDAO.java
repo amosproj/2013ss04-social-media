@@ -46,39 +46,45 @@ public class TwitterDataDAO {
 	private TwitterDataDAO() {
 		super();
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		em = factory.createEntityManager();
 	}
 	
 	public synchronized TwitterData getTwitterData(Integer data_id){
 		if(data_id == null || data_id == 0) return null;
+		em = factory.createEntityManager();
 		TwitterData rslt = em.find(TwitterData.class, data_id);
+		em.close();
 		return rslt;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public synchronized List<TwitterData> getAllTwitterDataOfClient(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return new ArrayList<TwitterData>();
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM TwitterData d WHERE d.owner = :paramid ORDER BY d.ID");
 		q.setParameter("paramid", owner);
 		List<TwitterData> rslt = q.getResultList();
+		em.close();
 		return rslt;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public synchronized List<TwitterData> getAllTwitterDataOfClientByType(Integer owner_id, TwitterDataType type){
 		if(owner_id == null || owner_id == 0) return new ArrayList<TwitterData>();
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM TwitterData d WHERE d.owner = :paramid and d.type = :paramtype ORDER BY d.ID");
 		q.setParameter("paramid", owner);
 		q.setParameter("paramtype", type.toString());
 		List<TwitterData> rslt = q.getResultList();
+		em.close();
 		return rslt;
 	}
 	
 	public synchronized boolean persistTwitterData(TwitterData data) {
 		if(data == null) return false;
 		try {
+			em = factory.createEntityManager();
 			em.getTransaction().begin();
 			
 			em.persist(data);
@@ -89,6 +95,7 @@ public class TwitterDataDAO {
 			em.getTransaction().rollback();
 			return false;
 		}finally{
+			em.close();
 		}
 		
 		
@@ -97,29 +104,35 @@ public class TwitterDataDAO {
 	public synchronized boolean updateTwitterData(TwitterData data){
 		if(data == null) return false;
 		try{
+			em = factory.createEntityManager();
 			em.getTransaction().begin();
 			em.persist(data);
 			
 			em.getTransaction().commit();
+			em.close();
 			return true;
 		}catch(Exception e){
 			em.getTransaction().rollback();
+			em.close();
 			return false;
-		}finally{
+		}finally{;
 		}
 	}
 	
 	public synchronized boolean deleteTwitterData(TwitterData data){
 		if(data == null) return false;
 		try{
+			em = factory.createEntityManager();
 			em.getTransaction().begin();
 			TwitterData tmp = em.find(TwitterData.class,data.getID() );
 			em.merge(tmp);
 			em.remove(tmp);
 			em.getTransaction().commit();
+			em.close();
 			return true;
 		}catch(Exception e){
 			em.getTransaction().rollback();
+			em.close();
 			return false;
 		}finally{
 		}
@@ -161,6 +174,7 @@ public class TwitterDataDAO {
 	@SuppressWarnings("unchecked")
 	public synchronized boolean deleteAllTwitterData(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return false;
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM TwitterData d WHERE d.owner = :paramid ORDER BY d.ID");
 		q.setParameter("paramid", owner);
@@ -168,6 +182,7 @@ public class TwitterDataDAO {
 		for (TwitterData data : rslt) {
 			if(! deleteTwitterData(data)) return false;
 		}
+		em.close();
 		return true;
 	}
 }

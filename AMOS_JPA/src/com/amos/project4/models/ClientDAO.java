@@ -54,7 +54,6 @@ public class ClientDAO {
 	private ClientDAO() {
 		super();
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		em = factory.createEntityManager();
 	}
 
 	@SuppressWarnings("unchecked")

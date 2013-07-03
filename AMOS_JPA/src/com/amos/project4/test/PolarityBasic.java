@@ -1,4 +1,6 @@
 package com.amos.project4.test;
+import com.aliasi.util.AbstractExternalizable;
+import com.aliasi.util.Compilable;
 import com.aliasi.util.Files;
 
 import com.aliasi.classify.Classification;
@@ -60,6 +62,9 @@ public class PolarityBasic {
         }
         System.out.println("  # Training Cases=" + numTrainingCases);
         System.out.println("  # Training Chars=" + numTrainingChars);
+        File src = new File("C:\\Users\\Silas\\Downloads","DefaultSentimentClassifier.model");
+		if(!src.exists()) src.createNewFile();
+		AbstractExternalizable.compileTo((Compilable) mClassifier, src);
     }
 
     void evaluate() throws IOException {
@@ -90,7 +95,7 @@ public class PolarityBasic {
 
     public static void main(String[] args) {
         try {
-        	String[] tmps = {"/tmp/Jupiter/polarity/review_polarity"};
+        	String[] tmps = {"C:\\Users\\Silas\\Downloads"};
             new PolarityBasic(tmps).run();
         } catch (Throwable t) {
             System.out.println("Thrown: " + t);

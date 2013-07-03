@@ -96,6 +96,8 @@ public class AMOSMainUI implements AbstractControlledView{
 	private ClientsController client_controller;
 	private JLabel lbl_statusBar;
 	private SwingWorker<String, String> checkConnectWorker;
+	private GlobalOverviewPanel globalOverviewPane;
+	private JTabbedPane mediaPanes;
 
 	private static AMOSMainUI instance;
 	
@@ -400,13 +402,18 @@ public class AMOSMainUI implements AbstractControlledView{
 		JPanel panel_right_bottom = new JPanel();
 		panel_right_bottom.setLayout(new BorderLayout(0, 0));
 
-		JTabbedPane mediaPanes = new JTabbedPane(JTabbedPane.TOP);
+		mediaPanes = new JTabbedPane(JTabbedPane.TOP);
 		panel_right_bottom.add(mediaPanes, BorderLayout.CENTER);
 
 		// Initialise Client Detail Panel
+		globalOverviewPane = new GlobalOverviewPanel(client_controller);
+		mediaPanes.addTab("Global overview", null, globalOverviewPane, null);
+		mediaPanes.setEnabledAt(0, true);
+				
+		// Initialise Client Detail Panel
 		clientDetailsPane = new ClientDetailMainPanel(client_controller);
 		mediaPanes.addTab("Client' details", null, clientDetailsPane, null);
-		mediaPanes.setEnabledAt(0, true);
+		
 
 		facebookDetailPane = new FacebookDetailPanel(client_controller);
 		mediaPanes.addTab("Facebook", AMOSUtils.makeIcon(AMOSUtils.FACEBOOK_SMALL_LOGO_URL, 20, 20), facebookDetailPane, null);
@@ -452,6 +459,10 @@ public class AMOSMainUI implements AbstractControlledView{
 		JMenuItem mntmDBSetting = new JMenuItem("Notification Settings");
 		mntmDBSetting.addActionListener(new DashboardSettingDialogAction());
 		mnSettings.add(mntmDBSetting);
+		
+		JMenuItem mntmTSSetting = new JMenuItem("Twitter Sentiment Settings");
+		mntmDBSetting.addActionListener(new TSSettingDialogAction());
+		mnSettings.add(mntmTSSetting);
 
 		JMenu mnHelp = new JMenu("Help");
 		menuBar.add(mnHelp);
@@ -650,10 +661,17 @@ public class AMOSMainUI implements AbstractControlledView{
 				showGeneralsettingDialog();
 			} else if (item.equalsIgnoreCase("Notification Settings")) {
 				openDashboardSettingDialog();
+			} else if (item.equalsIgnoreCase("Twitter Sentiment Settings")) {
+				openTSSettingDialog();
 			}else {
 				System.out.println("" + obj.toString());
 			}
 		}
+	}
+	
+	private synchronized void openTSSettingDialog() {
+		TwitterSentimentResultsDialog dialog = new TwitterSentimentResultsDialog(this.client_controller);
+		dialog.setVisible(true);
 	}
 
 	private class ExitAction implements ActionListener {
@@ -707,6 +725,14 @@ public class AMOSMainUI implements AbstractControlledView{
 		}
 	}
 	
+	private class TSSettingDialogAction implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			openTSSettingDialog();		
+		}
+	}
+	
 	private synchronized void updateStatusBar(String msg, int severity){
 		switch (severity) {
 		case 0:
@@ -753,7 +779,7 @@ public class AMOSMainUI implements AbstractControlledView{
 		@Override
 		public void windowOpened(WindowEvent arg0) {
 			connectToSocialMedia();
-			if(clientDetailsPane != null) clientDetailsPane.lunchSearchMediaUpdates();
+			if(globalOverviewPane != null) globalOverviewPane.lunchSearchMediaUpdates();
 		}
 	}
 
@@ -765,6 +791,7 @@ public class AMOSMainUI implements AbstractControlledView{
 			if(checkConnectWorker != null && !checkConnectWorker.isDone()){
 				checkConnectWorker.cancel(true);
 			}
+			mediaPanes.setEnabledAt(1, true);
 		}		
 	}
 

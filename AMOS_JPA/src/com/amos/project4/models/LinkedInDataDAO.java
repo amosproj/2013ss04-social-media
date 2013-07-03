@@ -46,47 +46,55 @@ public class LinkedInDataDAO {
 	private LinkedInDataDAO() {
 		super();
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		em = factory.createEntityManager();
 	}
 	
 	public synchronized LinkedInData getLinkedInData(Integer data_id){
 		if(data_id == null || data_id == 0) return null;
+		em = factory.createEntityManager();
 		LinkedInData rslt = em.find(LinkedInData.class, data_id);
+		em.close();
 		return rslt;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public synchronized List<LinkedInData> getAllLinkedInDataOfClient(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return new ArrayList<LinkedInData>();
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM LinkedInData d WHERE d.owner = :paramid ORDER BY d.ID");
 		q.setParameter("paramid", owner);
 		List<LinkedInData> rslt = q.getResultList();
+		em.close();
 		return rslt;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public synchronized List<LinkedInData> getAllLinkedInDataOfClientByType(Integer owner_id, LinkedInDataType type){
 		if(owner_id == null || owner_id == 0) return new ArrayList<LinkedInData>();
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM LinkedInData d WHERE d.owner = :paramid and d.type = :paramtype ORDER BY d.ID");
 		q.setParameter("paramid", owner);
 		q.setParameter("paramtype", type.toString());
 		List<LinkedInData> rslt = q.getResultList();
+		em.close();
 		return rslt;
 	}
 	
 	public synchronized boolean persistLinkedInData(LinkedInData data) {
 		if(data == null) return false;
 		try {
+			em = factory.createEntityManager();
 			em.getTransaction().begin();
 			
 			em.persist(data);
 			em.getTransaction().commit();
+			em.close();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
+			em.close();
 			return false;
 		}finally{
 		}
@@ -97,13 +105,16 @@ public class LinkedInDataDAO {
 	public synchronized boolean updateLinkedInData(LinkedInData data){
 		if(data == null) return false;
 		try{
+			em = factory.createEntityManager();
 			em.getTransaction().begin();
 			em.persist(data);
 			
 			em.getTransaction().commit();
+			em.close();
 			return true;
 		}catch(Exception e){
 			em.getTransaction().rollback();
+			em.close();
 			return false;
 		}finally{
 		}
@@ -112,14 +123,17 @@ public class LinkedInDataDAO {
 	public synchronized boolean deleteLinkedInData(LinkedInData data){
 		if(data == null) return false;
 		try{
+			em = factory.createEntityManager();
 			em.getTransaction().begin();
 			LinkedInData tmp = em.find(LinkedInData.class,data.getID() );
 			em.merge(tmp);
 			em.remove(tmp);
 			em.getTransaction().commit();
+			em.close();
 			return true;
 		}catch(Exception e){
 			em.getTransaction().rollback();
+			em.close();
 			return false;
 		}finally{
 		}
@@ -144,6 +158,7 @@ public class LinkedInDataDAO {
 	@SuppressWarnings("unchecked")
 	public synchronized boolean deleteAllLinkedInData(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return false;
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM LinkedInData d WHERE d.owner = :paramid ORDER BY d.ID");
 		q.setParameter("paramid", owner);
@@ -151,6 +166,7 @@ public class LinkedInDataDAO {
 		for (LinkedInData data : rslt) {
 			if(! deleteLinkedInData(data)) return false;
 		}
+		em.close();
 		return true;
 	}
 }

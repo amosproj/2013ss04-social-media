@@ -46,54 +46,64 @@ public class XingDataDAO {
 	private XingDataDAO() {
 		super();
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		em = factory.createEntityManager();
 	}
 	
 	public synchronized List<XingData> getAllXingData(){
+		em = factory.createEntityManager();
 		Query q = em.createQuery("SELECT d FROM XingData ORDER BY d.ID");
 		@SuppressWarnings("unchecked")
 		List<XingData> rslt = q.getResultList();
+		em.close();
 		return rslt;
 	}
 	
 	public synchronized XingData getXingData(Integer data_id){
 		if(data_id == null || data_id == 0) return null;
+		em = factory.createEntityManager();
 		XingData rslt = em.find(XingData.class, data_id);
+		em.close();
 		return rslt;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public synchronized List<XingData> getAllXingDataOfClient(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return new ArrayList<XingData>();
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM XingData d WHERE d.owner = :paramid ORDER BY d.ID");
 		q.setParameter("paramid", owner);
 		List<XingData> rslt = q.getResultList();
+		em.close();
 		return rslt;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public synchronized List<XingData> getAllXingDataOfClientByType(Integer owner_id, XingDataType type){
 		if(owner_id == null || owner_id == 0) return new ArrayList<XingData>();
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM XingData d WHERE d.owner = :paramid and d.type = :paramtype ORDER BY d.ID");
 		q.setParameter("paramid", owner);
 		q.setParameter("paramtype", type.toString());
 		List<XingData> rslt = q.getResultList();
+		em.close();
 		return rslt;
 	}
 	
 	public synchronized boolean persistXingData(XingData data) {
 		if(data == null) return false;
 		try {
+			em = factory.createEntityManager();
 			em.getTransaction().begin();
 			
 			em.persist(data);
 			em.getTransaction().commit();
+			em.close();
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 			em.getTransaction().rollback();
+			em.close();
 			return false;
 		}finally{
 		}
@@ -104,13 +114,16 @@ public class XingDataDAO {
 	public synchronized boolean updateXingData(XingData data){
 		if(data == null) return false;
 		try{
+			em = factory.createEntityManager();
 			em.getTransaction().begin();
 			em.persist(data);
 			
 			em.getTransaction().commit();
+			em.close();
 			return true;
 		}catch(Exception e){
 			em.getTransaction().rollback();
+			em.close();
 			return false;
 		}finally{
 		}
@@ -119,14 +132,17 @@ public class XingDataDAO {
 	public synchronized boolean deleteXingData(XingData data){
 		if(data == null) return false;
 		try{
+			em = factory.createEntityManager();
 			em.getTransaction().begin();
 			XingData tmp = em.find(XingData.class,data.getID() );
 			em.merge(tmp);
 			em.remove(tmp);
 			em.getTransaction().commit();
+			em.close();
 			return true;
 		}catch(Exception e){
 			em.getTransaction().rollback();
+			em.close();
 			return false;
 		}finally{
 		}
@@ -151,6 +167,7 @@ public class XingDataDAO {
 	@SuppressWarnings("unchecked")
 	public synchronized boolean deleteAllXingData(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return false;
+		em = factory.createEntityManager();
 		Client owner = em.find(Client.class, owner_id);
 		Query q = em.createQuery("SELECT d FROM XingData d WHERE d.owner = :paramid ORDER BY d.ID");
 		q.setParameter("paramid", owner);
@@ -158,6 +175,7 @@ public class XingDataDAO {
 		for (XingData data : rslt) {
 			if(! deleteXingData(data)) return false;
 		}
+		em.close();
 		return true;
 	}
 }

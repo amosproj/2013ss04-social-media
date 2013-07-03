@@ -42,7 +42,6 @@ public class UserDAO {
 	private UserDAO() {
 		super();
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
-		em = factory.createEntityManager();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -82,7 +81,7 @@ public class UserDAO {
 		if(q.getResultList().size() > 0){
 			_user = (User) q.getSingleResult();
 		}
-		
+		em.close();
 		return _user;
 	}
 	
@@ -100,7 +99,7 @@ public class UserDAO {
 		if(q.getResultList().size() > 0){
 			_user = (User) q.getSingleResult();
 		}
-		
+		em.close();
 		return _user;
 	}
 	

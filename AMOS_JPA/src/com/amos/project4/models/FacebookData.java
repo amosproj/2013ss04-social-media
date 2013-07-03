@@ -46,6 +46,8 @@ public class FacebookData {
 	@Column(name = "\"data\"",columnDefinition="VARCHAR(1000)",nullable = false, length=1000)
 	String dataString;
 
+	
+	
 	public synchronized Integer getID() {
 		return ID;
 	}

@@ -18,10 +18,17 @@
  */
 package com.amos.project4.sentimentAnalysis;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 public interface SentimentAnalysisTool {	
 	
-	public void init();
-	public boolean train(String text, String category);
+	public void init(List<String> categories);
+	public boolean train(Map<String,List<String>> dataset);
 	public String evaluatetext(String text);
-
+	public boolean isExportable();
+	public File export() throws IOException;
+	void init(File src) throws ClassNotFoundException, IOException;
 }
