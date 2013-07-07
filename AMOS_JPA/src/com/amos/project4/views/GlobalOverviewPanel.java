@@ -383,11 +383,14 @@ public class GlobalOverviewPanel extends JPanel {
 		private List<FacebookData> rslt_clients = new ArrayList<FacebookData>();
 		@Override
 		protected String doInBackground() throws Exception {
-			if(client_controller!= null){
-				publish("Searching for last posts ...");
-				clients = client_controller.getAllClients();
-				rslt_clients = FacebookDataRetriever.getInstance().getLastPostOfClients(clients, 5);				
+			synchronized (client_controller) {
+				if(client_controller!= null){
+					publish("Searching for last posts ...");
+					clients = new ArrayList<Client>(client_controller.getAllClients());
+				}
 			}
+			if(clients != null && !clients.isEmpty())
+				rslt_clients = FacebookDataRetriever.getInstance().getLastPostOfClients(clients, 5);				
 			return null;
 		}
 		
@@ -462,11 +465,14 @@ public class GlobalOverviewPanel extends JPanel {
 		
 		@Override
 		protected String doInBackground() throws Exception {
-			if(client_controller!= null){
-				publish("Searching for last tweets...");
-				clients = client_controller.getAllClients();
-				rslt_clients = TwitterDataRetriever.getInstance().getLastTweetsOfClients(clients, 5);				
+			synchronized (client_controller) {
+				if(client_controller!= null){
+					publish("Searching for last posts ...");
+					clients = new ArrayList<Client>(client_controller.getAllClients());
+				}
 			}
+			if(clients != null && !clients.isEmpty())	
+				rslt_clients = TwitterDataRetriever.getInstance().getLastTweetsOfClients(clients, 5);				
 			return null;
 		}
 		
@@ -563,11 +569,15 @@ public class GlobalOverviewPanel extends JPanel {
 		
 		@Override
 		protected String doInBackground() throws Exception {
-			if(client_controller!= null){
-				publish("Searching for last companies updates ...");
-				clients = client_controller.getAllClients();
-				rslt_clients = XingDataRetriever.getInstance().getLastModifiedCompanies(clients, 5);				
+			synchronized (client_controller) {
+				if(client_controller!= null){
+					publish("Searching for last posts ...");
+					clients = new ArrayList<Client>(client_controller.getAllClients());
+				}
 			}
+			if(clients != null && !clients.isEmpty())
+				rslt_clients = XingDataRetriever.getInstance().getLastModifiedCompanies(clients, 5);				
+
 			return null;
 		}
 		
@@ -654,11 +664,14 @@ public class GlobalOverviewPanel extends JPanel {
 		
 		@Override
 		protected String doInBackground() throws Exception {
-			if(client_controller!= null){
-				publish("Searching for last headlines updates ...");
-				clients = client_controller.getAllClients();
-				rslt_clients = LinkedInDataRetriever.getInstance().getLastModifiedClients(clients, 5);				
+			synchronized (client_controller) {
+				if(client_controller!= null){
+					publish("Searching for last posts ...");
+					clients = new ArrayList<Client>(client_controller.getAllClients());
+				}
 			}
+			if(clients != null && !clients.isEmpty())
+				rslt_clients = LinkedInDataRetriever.getInstance().getLastModifiedClients(clients, 5);
 			return null;
 		}
 		

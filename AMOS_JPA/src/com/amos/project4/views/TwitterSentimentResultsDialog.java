@@ -52,8 +52,12 @@ import com.amos.project4.models.TwitterData;
 import com.amos.project4.models.TwitterDataDAO;
 import com.amos.project4.sentimentAnalysis.DefaultSentimentClassifier;
 import com.amos.project4.socialMedia.twitter.TwitterDataType;
+import com.amos.project4.test.PieChart;
+
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import java.awt.BorderLayout;
 
 public class TwitterSentimentResultsDialog extends JDialog {
 
@@ -65,8 +69,9 @@ public class TwitterSentimentResultsDialog extends JDialog {
 	private JLabel lblPositivevalue;
 	private JLabel lblNegativevalue;
 	private JLabel lblNeutralvalue;
-	private JLabel lblLasttrainingdata;
 	private ClientsController controller;
+	private JLabel lblLasttrainingdata;
+	private PieChart chartPanel;
 
 	/**
 	 * Create the application.
@@ -82,9 +87,9 @@ public class TwitterSentimentResultsDialog extends JDialog {
 	}
 
 	private void init() {
-		setTitle("AMOS Project 4 - Notification Settings");
+		setTitle("AMOS Project 4 - Twitter Sentioments Analysis");
 
-		setSize(650, 400);
+		setSize(650, 450);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(frame);
 
@@ -126,111 +131,98 @@ public class TwitterSentimentResultsDialog extends JDialog {
 		springLayout.putConstraint(SpringLayout.SOUTH, resultWrapperpanel, -6, SpringLayout.NORTH, btnClose);
 		springLayout.putConstraint(SpringLayout.EAST, resultWrapperpanel, 632, SpringLayout.WEST, getContentPane());
 		getContentPane().add(resultWrapperpanel);
-		resultWrapperpanel.setLayout(new GridLayout(0, 2, 0, 0));
+		resultWrapperpanel.setLayout(new GridLayout(0, 2, 6, 6));
 		
-		JPanel chartPanel = new JPanel();
-		resultWrapperpanel.add(chartPanel);
+		chartPanel = new PieChart("Twitter Sentiment",0,0,0);
+		resultWrapperpanel.add(chartPanel);		
 		
 		JPanel detailsPanel = new JPanel();
-		detailsPanel.setBorder(new LineBorder(new Color(0, 0, 0)));
+		detailsPanel.setBorder(new TitledBorder(null, "Total Data Volume", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		resultWrapperpanel.add(detailsPanel);
 		GridBagLayout gbl_detailsPanel = new GridBagLayout();
-		gbl_detailsPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_detailsPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_detailsPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		gbl_detailsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_detailsPanel.columnWidths = new int[] {10, 0};
+		gbl_detailsPanel.rowHeights = new int[] {0, 0, 0, 0, 0};
+		gbl_detailsPanel.columnWeights = new double[]{0.0, 0.0};
+		gbl_detailsPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0};
 		detailsPanel.setLayout(gbl_detailsPanel);
-		
-		JLabel lblTotalDataVolume = new JLabel("Total Data Volume");
-		lblTotalDataVolume.setFont(new Font("Tahoma", Font.BOLD, 14));
-		GridBagConstraints gbc_lblTotalDataVolume = new GridBagConstraints();
-		gbc_lblTotalDataVolume.fill = GridBagConstraints.VERTICAL;
-		gbc_lblTotalDataVolume.insets = new Insets(0, 0, 5, 0);
-		gbc_lblTotalDataVolume.anchor = GridBagConstraints.WEST;
-		gbc_lblTotalDataVolume.ipady = 10;
-		gbc_lblTotalDataVolume.ipadx = 6;
-		gbc_lblTotalDataVolume.gridwidth = 2;
-		gbc_lblTotalDataVolume.gridx = 1;
-		gbc_lblTotalDataVolume.gridy = 0;
-		detailsPanel.add(lblTotalDataVolume, gbc_lblTotalDataVolume);
 		
 		JLabel lblTotal = new JLabel("Total:");
 		GridBagConstraints gbc_lblTotal = new GridBagConstraints();
 		gbc_lblTotal.anchor = GridBagConstraints.WEST;
 		gbc_lblTotal.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTotal.gridx = 1;
-		gbc_lblTotal.gridy = 1;
+		gbc_lblTotal.gridx = 0;
+		gbc_lblTotal.gridy = 0;
 		detailsPanel.add(lblTotal, gbc_lblTotal);
 		
-		lblTotalvalue = new JLabel("TotalValue");
+		lblTotalvalue = new JLabel("0");
 		GridBagConstraints gbc_lblTotalvalue = new GridBagConstraints();
 		gbc_lblTotalvalue.anchor = GridBagConstraints.WEST;
-		gbc_lblTotalvalue.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTotalvalue.gridx = 2;
-		gbc_lblTotalvalue.gridy = 1;
+		gbc_lblTotalvalue.insets = new Insets(0, 0, 5, 0);
+		gbc_lblTotalvalue.gridx = 1;
+		gbc_lblTotalvalue.gridy = 0;
 		detailsPanel.add(lblTotalvalue, gbc_lblTotalvalue);
 		
 		JLabel lblPositive = new JLabel("Positive:");
 		GridBagConstraints gbc_lblPositive = new GridBagConstraints();
 		gbc_lblPositive.anchor = GridBagConstraints.WEST;
 		gbc_lblPositive.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPositive.gridx = 1;
-		gbc_lblPositive.gridy = 2;
+		gbc_lblPositive.gridx = 0;
+		gbc_lblPositive.gridy = 1;
 		detailsPanel.add(lblPositive, gbc_lblPositive);
 		
-		lblPositivevalue = new JLabel("PositiveValue");
+		lblPositivevalue = new JLabel("0");
 		GridBagConstraints gbc_lblPositivevalue = new GridBagConstraints();
 		gbc_lblPositivevalue.anchor = GridBagConstraints.WEST;
-		gbc_lblPositivevalue.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPositivevalue.gridx = 2;
-		gbc_lblPositivevalue.gridy = 2;
+		gbc_lblPositivevalue.insets = new Insets(0, 0, 5, 0);
+		gbc_lblPositivevalue.gridx = 1;
+		gbc_lblPositivevalue.gridy = 1;
 		detailsPanel.add(lblPositivevalue, gbc_lblPositivevalue);
 		
 		JLabel lblNegative = new JLabel("Negative:");
 		GridBagConstraints gbc_lblNegative = new GridBagConstraints();
 		gbc_lblNegative.anchor = GridBagConstraints.WEST;
 		gbc_lblNegative.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNegative.gridx = 1;
-		gbc_lblNegative.gridy = 3;
+		gbc_lblNegative.gridx = 0;
+		gbc_lblNegative.gridy = 2;
 		detailsPanel.add(lblNegative, gbc_lblNegative);
 		
-		lblNegativevalue = new JLabel("NegativeValue");
+		lblNegativevalue = new JLabel("0");
 		GridBagConstraints gbc_lblNegativevalue = new GridBagConstraints();
 		gbc_lblNegativevalue.anchor = GridBagConstraints.WEST;
-		gbc_lblNegativevalue.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNegativevalue.gridx = 2;
-		gbc_lblNegativevalue.gridy = 3;
+		gbc_lblNegativevalue.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNegativevalue.gridx = 1;
+		gbc_lblNegativevalue.gridy = 2;
 		detailsPanel.add(lblNegativevalue, gbc_lblNegativevalue);
 		
 		JLabel lblNeutral = new JLabel("Neutral:");
 		GridBagConstraints gbc_lblNeutral = new GridBagConstraints();
 		gbc_lblNeutral.anchor = GridBagConstraints.WEST;
 		gbc_lblNeutral.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNeutral.gridx = 1;
-		gbc_lblNeutral.gridy = 4;
+		gbc_lblNeutral.gridx = 0;
+		gbc_lblNeutral.gridy = 3;
 		detailsPanel.add(lblNeutral, gbc_lblNeutral);
 		
-		lblNeutralvalue = new JLabel("NeutralValue");
+		lblNeutralvalue = new JLabel("0");
 		GridBagConstraints gbc_lblNeutralvalue = new GridBagConstraints();
 		gbc_lblNeutralvalue.anchor = GridBagConstraints.WEST;
-		gbc_lblNeutralvalue.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNeutralvalue.gridx = 2;
-		gbc_lblNeutralvalue.gridy = 4;
+		gbc_lblNeutralvalue.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNeutralvalue.gridx = 1;
+		gbc_lblNeutralvalue.gridy = 3;
 		detailsPanel.add(lblNeutralvalue, gbc_lblNeutralvalue);
 		
 		JLabel lblLastTraining = new JLabel("Last Training:");
 		GridBagConstraints gbc_lblLastTraining = new GridBagConstraints();
-		gbc_lblLastTraining.insets = new Insets(0, 0, 0, 5);
-		gbc_lblLastTraining.gridx = 1;
-		gbc_lblLastTraining.gridy = 5;
+		gbc_lblLastTraining.insets = new Insets(0, 0, 5, 5);
+		gbc_lblLastTraining.gridx = 0;
+		gbc_lblLastTraining.gridy = 4;
 		detailsPanel.add(lblLastTraining, gbc_lblLastTraining);
 		
-		lblLasttrainingdata = new JLabel("lastTrainingData");
+		lblLasttrainingdata = new JLabel("now()");
 		GridBagConstraints gbc_lblLasttrainingdata = new GridBagConstraints();
 		gbc_lblLasttrainingdata.anchor = GridBagConstraints.WEST;
-		gbc_lblLasttrainingdata.insets = new Insets(0, 0, 0, 5);
-		gbc_lblLasttrainingdata.gridx = 2;
-		gbc_lblLasttrainingdata.gridy = 5;
+		gbc_lblLasttrainingdata.insets = new Insets(0, 0, 5, 0);
+		gbc_lblLasttrainingdata.gridx = 1;
+		gbc_lblLasttrainingdata.gridy = 4;
 		detailsPanel.add(lblLasttrainingdata, gbc_lblLasttrainingdata);
 		
 		progressBar = new JProgressBar();
@@ -277,10 +269,10 @@ public class TwitterSentimentResultsDialog extends JDialog {
 		private ClassifierDAO c_dao;
 		private DefaultSentimentClassifier classifier;
 		
-		private long total;
-		private long pos;
-		private long neg;
-		private long neu;
+		private int total;
+		private int pos;
+		private int neg;
+		private int neu;
 		private String lastTrainingDate;
 		
 		@Override
@@ -357,6 +349,14 @@ public class TwitterSentimentResultsDialog extends JDialog {
 			getLblNegativevalue().setText(total != 0 ? "" + neg + " (" + (neg * 100 / total) + "%)": "");
 			getLblNeutralvalue().setText(total != 0 ? "" + neu + " (" + (neu * 100 / total) + "%)": "");
 			getLblLasttrainingdata().setText(total != 0 ? "" + lastTrainingDate: "");
+			
+			if(pos > 0)  chartPanel.getResult().setValue("Pos", pos);
+			if(neg > 0)  chartPanel.getResult().setValue("Neg", neg);
+			if(neu <= 0)  
+				chartPanel.getResult().remove("Neu");
+			else 
+				chartPanel.getResult().setValue("Neu", neu);
+			
 			progressBar.setVisible(false);
 			setCursor(null);
 			Toolkit.getDefaultToolkit().beep();

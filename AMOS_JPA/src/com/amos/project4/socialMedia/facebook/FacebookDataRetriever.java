@@ -331,7 +331,9 @@ public class FacebookDataRetriever implements DataRetrieverInterface{
 							datas.put(tmp.getUpdatedTime(), data);
 						}
 					} catch (Exception e) {
+						e.printStackTrace();
 						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + FacebookDataType.LAST_POST.toString() + " ObjectID = " + ev.status_id );
+						return new ArrayList<FacebookData>(datas.descendingMap().values());
 					}
 				}				
 			}
@@ -351,7 +353,9 @@ public class FacebookDataRetriever implements DataRetrieverInterface{
 							datas.put(tmp.getCreatedTime(), data);
 						}
 					} catch (Exception e) {
+						e.printStackTrace();
 						System.err.println("Could not get Data from Face book: Client ID = "+client_facebook_ID + " - Type : " + FacebookDataType.LAST_POST.toString() + " ObjectID = " + ev.post_id );
+						return new ArrayList<FacebookData>(datas.descendingMap().values());
 					}
 				}				
 			}

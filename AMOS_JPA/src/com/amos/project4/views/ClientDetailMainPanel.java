@@ -52,6 +52,9 @@ public class ClientDetailMainPanel extends JPanel implements
 	private JTextField emailTextField;
 	private JTextField txtAdditionalInformations;
 	private ClientsController client_controller;
+	private JPanel top;
+	private SpringLayout springLayout;
+	private SpringLayout sl_top;
 	
 	
 	public ClientDetailMainPanel(ClientsController client_controller) {
@@ -79,31 +82,26 @@ public class ClientDetailMainPanel extends JPanel implements
 	}
 
 	private void init() {
-		SpringLayout springLayout = new SpringLayout();
+		springLayout = new SpringLayout();
 		setLayout(springLayout);
 		
 		JPanel accountDetails_Panel = initOnlyPersonnalInformation();
 		springLayout.putConstraint(SpringLayout.NORTH, accountDetails_Panel, 0, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.WEST, accountDetails_Panel, 0, SpringLayout.WEST, this);
-		springLayout.putConstraint(SpringLayout.SOUTH, accountDetails_Panel, 160, SpringLayout.NORTH, this);
 		springLayout.putConstraint(SpringLayout.EAST, accountDetails_Panel, 0, SpringLayout.EAST, this);
 		add(accountDetails_Panel);
 	}
 	
 	private JPanel initOnlyPersonnalInformation(){
-		JPanel top = new JPanel();
-		SpringLayout springLayout = new SpringLayout();
-		top.setLayout(springLayout);
+		top = new JPanel();
+		springLayout.putConstraint(SpringLayout.SOUTH, top, 0, SpringLayout.SOUTH, this);
+		springLayout.putConstraint(SpringLayout.SOUTH, top, 290, SpringLayout.NORTH, this);
+		sl_top = new SpringLayout();
+		top.setLayout(sl_top);
 
 		JPanel personalInformationsPanel = initClientDetails();
-		springLayout.putConstraint(SpringLayout.NORTH,
+		sl_top.putConstraint(SpringLayout.NORTH,
 				personalInformationsPanel, 10, SpringLayout.NORTH, top);
-		springLayout.putConstraint(SpringLayout.WEST,
-				personalInformationsPanel, 4, SpringLayout.WEST, top);
-		springLayout.putConstraint(SpringLayout.SOUTH,
-				personalInformationsPanel, 130, SpringLayout.NORTH, top);
-		springLayout.putConstraint(SpringLayout.EAST,
-				personalInformationsPanel, 1, SpringLayout.EAST, top);
 		top.add(personalInformationsPanel);
 		
 		return top;
@@ -111,6 +109,13 @@ public class ClientDetailMainPanel extends JPanel implements
 
 	private JPanel initClientDetails() {
 		JPanel personalInformationsPanel = new JPanel();
+		sl_top.putConstraint(SpringLayout.WEST,
+				personalInformationsPanel, 6, SpringLayout.WEST, top);
+		sl_top.putConstraint(SpringLayout.SOUTH, personalInformationsPanel, 180, SpringLayout.NORTH, top);
+		sl_top.putConstraint(SpringLayout.EAST,
+				personalInformationsPanel, -6, SpringLayout.EAST, top);
+		springLayout.putConstraint(SpringLayout.SOUTH,
+				personalInformationsPanel, 280, SpringLayout.NORTH, top);
 		
 		personalInformationsPanel.setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0)), "Personal informations",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.BLACK));
@@ -127,11 +132,11 @@ public class ClientDetailMainPanel extends JPanel implements
 		personalInformationsPanel.add(lblName);
 
 		name_textField = new JTextField();
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,	name_textField, 350, SpringLayout.EAST, lblName);
 		name_textField.setEditable(false);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
 				name_textField, 0, SpringLayout.NORTH, lblName);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,	name_textField, 10, SpringLayout.EAST, lblName);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,	name_textField, 350, SpringLayout.WEST, lblName);
 		personalInformationsPanel.add(name_textField);
 		name_textField.setColumns(50);
 
@@ -142,11 +147,11 @@ public class ClientDetailMainPanel extends JPanel implements
 		personalInformationsPanel.add(lblFirstname);
 
 		firstnameTextField = new JTextField();
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,firstnameTextField, 350, SpringLayout.EAST, lblFirstname);
 		firstnameTextField.setEditable(false);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
 				firstnameTextField, 0, SpringLayout.NORTH, lblName);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,firstnameTextField, 10, SpringLayout.EAST, lblFirstname);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,firstnameTextField, 280, SpringLayout.EAST, lblFirstname);
 		personalInformationsPanel.add(firstnameTextField);
 		firstnameTextField.setColumns(50);
 
@@ -173,11 +178,11 @@ public class ClientDetailMainPanel extends JPanel implements
 		personalInformationsPanel.add(lblPlace);
 
 		PlaceTextField = new JTextField();
+		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,PlaceTextField, 0, SpringLayout.EAST, firstnameTextField);
 		PlaceTextField.setEditable(false);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,
 				PlaceTextField, 0, SpringLayout.NORTH, lblBirthdate);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,PlaceTextField, 10, SpringLayout.EAST, lblPlace);
-		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,PlaceTextField, 280, SpringLayout.EAST, lblPlace);
 		personalInformationsPanel.add(PlaceTextField);
 		PlaceTextField.setColumns(50);
 
@@ -197,16 +202,16 @@ public class ClientDetailMainPanel extends JPanel implements
 		emailTextField.setColumns(50);
 		
 		JLabel lblAdditionalInformations = new JLabel("Additional Information :");
-		lblAdditionalInformations.setPreferredSize(new Dimension(120, 20));
+		
 		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH, lblAdditionalInformations, 10, SpringLayout.SOUTH, emailTextField);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST, lblAdditionalInformations,0, SpringLayout.WEST, lblName);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST, lblName,0, SpringLayout.EAST, lblAdditionalInformations);
 		personalInformationsPanel.add(lblAdditionalInformations);
 
 		txtAdditionalInformations = new JTextField();
+		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,	txtAdditionalInformations, 10, SpringLayout.SOUTH, emailTextField);
 		txtAdditionalInformations.setEditable(false);
 		txtAdditionalInformations.setFont(new Font("Tahoma", Font.BOLD, 11));
-		sl_personalInformationsPanel.putConstraint(SpringLayout.NORTH,	txtAdditionalInformations, 10, SpringLayout.SOUTH, lblAdditionalInformations);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.WEST,	txtAdditionalInformations, 10, SpringLayout.EAST, lblAdditionalInformations);
 		sl_personalInformationsPanel.putConstraint(SpringLayout.EAST,	txtAdditionalInformations, 0, SpringLayout.EAST, firstnameTextField);
 		personalInformationsPanel.add(txtAdditionalInformations);

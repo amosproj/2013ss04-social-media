@@ -1,20 +1,15 @@
 package com.amos.project4.test;
-import com.aliasi.util.Files;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 import com.aliasi.classify.Classification;
 import com.aliasi.classify.Classified;
 import com.aliasi.classify.DynamicLMClassifier;
-import com.aliasi.classify.JointClassification;
-import com.aliasi.classify.JointClassifier;
 import com.aliasi.classify.JointClassifierEvaluator;
-
-import com.aliasi.lm.LanguageModel;
 import com.aliasi.lm.NGramProcessLM;
-
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.File;
-import java.io.IOException;
+import com.aliasi.util.Files;
 
 
 public class SubjectivityBasic {

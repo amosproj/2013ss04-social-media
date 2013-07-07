@@ -1,6 +1,6 @@
 /*
  *
- * This file is part of the Datev and Social Media project.
+* This file is part of the Datev and Social Media project.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as

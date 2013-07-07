@@ -68,35 +68,35 @@ public class ClientsController extends AbstractController implements
 	}
 
 	@Override
-	public ArrayList<Client> getAllClients() {
+	public synchronized ArrayList<Client> getAllClients() {
 		return clientlist != null ? clientlist : new ArrayList<Client>();
 	}
 
 	@Override
-	public void refresh() {
+	public synchronized void refresh() {
 		clientDAO.refresh();
 	}
 	@Override
-	public boolean addClient(Client client) {
+	public synchronized boolean addClient(Client client) {
 		return clientDAO.addClient(client);
 	}
 
 	@Override
-	public boolean updateClient(Client oldClient, Client newClient) {
+	public synchronized boolean updateClient(Client oldClient, Client newClient) {
 		return clientDAO.updateClient(newClient);
 	}
 
 	@Override
-	public boolean deleteClient(Client client) {
+	public synchronized boolean deleteClient(Client client) {
 		return clientDAO.deleteClient(client);
 	}
 
 	@Override
-	public Client getSelectedClient() {
+	public synchronized Client getSelectedClient() {
 		return selectedClient;
 	}
 	
-	public List<BirthdayClient> getAllBirthDayOfTheWeek() {
+	public synchronized List<BirthdayClient> getAllBirthDayOfTheWeek() {
 		return clientDAO.getAllBirthdayOfTheWeek();
 	}
 

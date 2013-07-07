@@ -461,7 +461,7 @@ public class AMOSMainUI implements AbstractControlledView{
 		mnSettings.add(mntmDBSetting);
 		
 		JMenuItem mntmTSSetting = new JMenuItem("Twitter Sentiment Settings");
-		mntmDBSetting.addActionListener(new TSSettingDialogAction());
+		mntmTSSetting.addActionListener(new TSSettingDialogAction());
 		mnSettings.add(mntmTSSetting);
 
 		JMenu mnHelp = new JMenu("Help");
@@ -587,8 +587,7 @@ public class AMOSMainUI implements AbstractControlledView{
 		} else {
 			c_list.add(selected_client);
 		}
-		NotificationSettingsDialog dialog = new NotificationSettingsDialog(
-				user_controller.getCurrent_user(), c_list, frame);
+		NotificationSettingsDialog dialog = new NotificationSettingsDialog(	user_controller.getCurrent_user(), c_list, frame);
 		dialog.setVisible(true);
 	}
 	

@@ -174,6 +174,8 @@ public class UserDAO {
 		User _user = em.find(User.class, user.getID());
 		em.remove(_user);
 		em.getTransaction().commit();
+		em.clear();
+		em.close();
 		return true;
 	}
 	

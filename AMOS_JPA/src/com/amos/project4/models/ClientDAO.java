@@ -58,9 +58,12 @@ public class ClientDAO {
 
 	@SuppressWarnings("unchecked")
 	public synchronized List<Client> getAllClients() {
+			
 		em = factory.createEntityManager();
 		Query q = em.createQuery("select c from Client c ORDER BY c.ID");
 		List<Client> clients = q.getResultList();
+		
+		em.clear();
 		em.close();
 		return clients;
 
@@ -217,6 +220,8 @@ public class ClientDAO {
 
 		List<Client> clients = new ArrayList<Client>();
 		clients.addAll(resultlist.values());
+		
+		em.clear();
 		em.close();
 		return clients;
 	}
