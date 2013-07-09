@@ -21,7 +21,6 @@ package com.amos.project4.models;
 
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;

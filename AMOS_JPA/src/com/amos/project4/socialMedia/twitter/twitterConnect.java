@@ -30,9 +30,9 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterConnect implements MediaConnectInterface {
 
-	private static final String ACCESS_TOKEN = "1392245641-ZrerD6ClCwGZANUZA2n1z86vSArMYfuBAjHDajz";
-	private static final String ACCESS_TOKEN_SECRET = "cYKG9nJz4dpjoX41zE5xApNpI0YEswojMJg9qRutM";
-	private static final String AUTHENTIFICATION_URL = "";
+//	private static final String ACCESS_TOKEN = "1392245641-ZrerD6ClCwGZANUZA2n1z86vSArMYfuBAjHDajz";
+//	private static final String ACCESS_TOKEN_SECRET = "cYKG9nJz4dpjoX41zE5xApNpI0YEswojMJg9qRutM";
+//	private static final String AUTHENTIFICATION_URL = "";
 	
 	private static final String ACCESS_TOKEN_URL = "https://api.twitter.com/oauth/access_token";
 	private static final String AUTORIZATION_URL = "https://api.twitter.com/oauth/authorize";

@@ -98,7 +98,7 @@ public class DefaultSentimentClassifier implements SentimentAnalysisTool {
 				if (text == null || text.isEmpty())
 					continue;
 				Classified<CharSequence> classified = new Classified<CharSequence>(text, classification);
-				((ObjectHandler) classifier).handle(classified);
+				((ObjectHandler<Classified<CharSequence>>) classifier).handle(classified);
 			}
 		}
 		return true;

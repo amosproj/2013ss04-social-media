@@ -162,31 +162,31 @@ public class GlobalOverviewPanel extends JPanel {
 		lblFacebook.setIcon(AMOSUtils.makeIcon(AMOSUtils.FACEBOOK_SMALL_LOGO_URL, 50, 50));
 		facebook_panel.add(lblFacebook);
 		
-		lblPost = new JLabel("post_1");
+		lblPost = new JLabel("No data avialable");
 		sl_facebook_panel.putConstraint(SpringLayout.NORTH, lblPost, 0, SpringLayout.NORTH, lblFacebook);
 		sl_facebook_panel.putConstraint(SpringLayout.WEST, lblPost, 6, SpringLayout.EAST, lblFacebook);
 		sl_facebook_panel.putConstraint(SpringLayout.EAST, lblPost, 0, SpringLayout.EAST, facebook_panel);
 		facebook_panel.add(lblPost);
 		
-		lblPost_1 = new JLabel("post_2");
+		lblPost_1 = new JLabel(" ");
 		sl_facebook_panel.putConstraint(SpringLayout.NORTH, lblPost_1, 6, SpringLayout.SOUTH, lblPost);
 		sl_facebook_panel.putConstraint(SpringLayout.WEST, lblPost_1, 0, SpringLayout.WEST, lblPost);
 		sl_facebook_panel.putConstraint(SpringLayout.EAST, lblPost_1, 0, SpringLayout.EAST, facebook_panel);
 		facebook_panel.add(lblPost_1);
 		
-		lblPost_2 = new JLabel("post_3");
+		lblPost_2 = new JLabel(" ");
 		sl_facebook_panel.putConstraint(SpringLayout.NORTH, lblPost_2, 6, SpringLayout.SOUTH, lblPost_1);
 		sl_facebook_panel.putConstraint(SpringLayout.WEST, lblPost_2, 0, SpringLayout.WEST, lblPost);
 		sl_facebook_panel.putConstraint(SpringLayout.EAST, lblPost_2, 0, SpringLayout.EAST, facebook_panel);
 		facebook_panel.add(lblPost_2);
 		
-		lblPost_3 = new JLabel("post_4");
+		lblPost_3 = new JLabel(" ");
 		sl_facebook_panel.putConstraint(SpringLayout.NORTH, lblPost_3, 6, SpringLayout.SOUTH, lblPost_2);
 		sl_facebook_panel.putConstraint(SpringLayout.WEST, lblPost_3, 0, SpringLayout.WEST, lblPost);
 		sl_facebook_panel.putConstraint(SpringLayout.EAST, lblPost_3, 0, SpringLayout.EAST, facebook_panel);
 		facebook_panel.add(lblPost_3);
 		
-		lblPost_4 = new JLabel("post_5");
+		lblPost_4 = new JLabel(" ");
 		sl_facebook_panel.putConstraint(SpringLayout.NORTH, lblPost_4, 6, SpringLayout.SOUTH, lblPost_3);
 		sl_facebook_panel.putConstraint(SpringLayout.WEST, lblPost_4, 0, SpringLayout.WEST, lblPost);
 		sl_facebook_panel.putConstraint(SpringLayout.EAST, lblPost_4, 0, SpringLayout.EAST, facebook_panel);
@@ -206,31 +206,31 @@ public class GlobalOverviewPanel extends JPanel {
 		sl_twitter_panel.putConstraint(SpringLayout.EAST, label, 60, SpringLayout.WEST, twitter_panel);
 		twitter_panel.add(label);
 		
-		lblTwits = new JLabel("twits_1");
+		lblTwits = new JLabel("No data avialable");
 		sl_twitter_panel.putConstraint(SpringLayout.NORTH, lblTwits, 0, SpringLayout.NORTH, label);
 		sl_twitter_panel.putConstraint(SpringLayout.WEST, lblTwits, 6, SpringLayout.EAST, label);
 		sl_twitter_panel.putConstraint(SpringLayout.EAST, lblTwits, 0, SpringLayout.EAST, twitter_panel);
 		twitter_panel.add(lblTwits);
 		
-		lblTwits_1 = new JLabel("Twits_2");
+		lblTwits_1 = new JLabel(" ");
 		sl_twitter_panel.putConstraint(SpringLayout.NORTH, lblTwits_1, 6, SpringLayout.SOUTH, lblTwits);
 		sl_twitter_panel.putConstraint(SpringLayout.WEST, lblTwits_1, 0, SpringLayout.WEST, lblTwits);
 		sl_twitter_panel.putConstraint(SpringLayout.EAST, lblTwits_1, 0, SpringLayout.EAST, twitter_panel);
 		twitter_panel.add(lblTwits_1);
 		
-		lblTwits_2 = new JLabel("Twits_3");
+		lblTwits_2 = new JLabel(" ");
 		sl_twitter_panel.putConstraint(SpringLayout.NORTH, lblTwits_2, 6, SpringLayout.SOUTH, lblTwits_1);
 		sl_twitter_panel.putConstraint(SpringLayout.WEST, lblTwits_2, 0, SpringLayout.WEST, lblTwits_1);
 		sl_twitter_panel.putConstraint(SpringLayout.EAST, lblTwits_2, 0, SpringLayout.EAST, twitter_panel);
 		twitter_panel.add(lblTwits_2);
 		
-		lblTwits_3 = new JLabel("Twits_4");
+		lblTwits_3 = new JLabel(" ");
 		sl_twitter_panel.putConstraint(SpringLayout.NORTH, lblTwits_3, 7, SpringLayout.SOUTH, lblTwits_2);
 		sl_twitter_panel.putConstraint(SpringLayout.WEST, lblTwits_3, 0, SpringLayout.WEST, lblTwits);
 		sl_twitter_panel.putConstraint(SpringLayout.EAST, lblTwits_3, 0, SpringLayout.EAST, lblTwits);
 		twitter_panel.add(lblTwits_3);
 		
-		lblTwits_4 = new JLabel("Twits_5");
+		lblTwits_4 = new JLabel(" ");
 		sl_twitter_panel.putConstraint(SpringLayout.NORTH, lblTwits_4, 6, SpringLayout.SOUTH, lblTwits_3);
 		sl_twitter_panel.putConstraint(SpringLayout.WEST, lblTwits_4, 0, SpringLayout.WEST, lblTwits);
 		sl_twitter_panel.putConstraint(SpringLayout.EAST, lblTwits_4, 0, SpringLayout.EAST, lblTwits);
@@ -250,31 +250,31 @@ public class GlobalOverviewPanel extends JPanel {
 		sl_Xing_panel.putConstraint(SpringLayout.EAST, lblLabel, 56, SpringLayout.WEST, Xing_panel);
 		Xing_panel.add(lblLabel);
 		
-		lblCompany = new JLabel("Company_1");
+		lblCompany = new JLabel("No data avialable");
 		sl_Xing_panel.putConstraint(SpringLayout.NORTH, lblCompany, 0, SpringLayout.NORTH, lblLabel);
 		sl_Xing_panel.putConstraint(SpringLayout.WEST, lblCompany, 6, SpringLayout.EAST, lblLabel);
 		sl_Xing_panel.putConstraint(SpringLayout.EAST, lblCompany, 0, SpringLayout.EAST, Xing_panel);
 		Xing_panel.add(lblCompany);
 		
-		lblCompany_1 = new JLabel("Company_2");
+		lblCompany_1 = new JLabel(" ");
 		sl_Xing_panel.putConstraint(SpringLayout.NORTH, lblCompany_1, 6, SpringLayout.SOUTH, lblCompany);
 		sl_Xing_panel.putConstraint(SpringLayout.WEST, lblCompany_1, 0, SpringLayout.WEST, lblCompany);
 		sl_Xing_panel.putConstraint(SpringLayout.EAST, lblCompany_1, 0, SpringLayout.EAST, Xing_panel);
 		Xing_panel.add(lblCompany_1);
 		
-		lblCompany_2 = new JLabel("Company_3");
+		lblCompany_2 = new JLabel(" ");
 		sl_Xing_panel.putConstraint(SpringLayout.NORTH, lblCompany_2, 6, SpringLayout.SOUTH, lblCompany_1);
 		sl_Xing_panel.putConstraint(SpringLayout.WEST, lblCompany_2, 0, SpringLayout.WEST, lblCompany);
 		sl_Xing_panel.putConstraint(SpringLayout.EAST, lblCompany_2, 0, SpringLayout.EAST, Xing_panel);
 		Xing_panel.add(lblCompany_2);
 		
-		lblCompany_3 = new JLabel("Company_4");
+		lblCompany_3 = new JLabel(" ");
 		sl_Xing_panel.putConstraint(SpringLayout.NORTH, lblCompany_3, 6, SpringLayout.SOUTH, lblCompany_2);
 		sl_Xing_panel.putConstraint(SpringLayout.WEST, lblCompany_3, 0, SpringLayout.WEST, lblCompany);
 		sl_Xing_panel.putConstraint(SpringLayout.EAST, lblCompany_3, 0, SpringLayout.EAST, Xing_panel);
 		Xing_panel.add(lblCompany_3);
 		
-		lblCompany_4 = new JLabel("Company_5");
+		lblCompany_4 = new JLabel(" ");
 		sl_Xing_panel.putConstraint(SpringLayout.NORTH, lblCompany_4, 6, SpringLayout.SOUTH, lblCompany_3);
 		sl_Xing_panel.putConstraint(SpringLayout.WEST, lblCompany_4, 0, SpringLayout.WEST, lblCompany);
 		sl_Xing_panel.putConstraint(SpringLayout.EAST, lblCompany_4, 0, SpringLayout.EAST, Xing_panel);
@@ -294,31 +294,31 @@ public class GlobalOverviewPanel extends JPanel {
 		sl_linkedIn_panel.putConstraint(SpringLayout.WEST, LinkedIn_LOGO, 6, SpringLayout.WEST, linkedIn_panel);
 		linkedIn_panel.add(LinkedIn_LOGO);
 		
-		lblPosition = new JLabel("Position_1");
+		lblPosition = new JLabel("No data avialable");
 		sl_linkedIn_panel.putConstraint(SpringLayout.NORTH, lblPosition, 0, SpringLayout.NORTH, LinkedIn_LOGO);
 		sl_linkedIn_panel.putConstraint(SpringLayout.WEST, lblPosition, 6, SpringLayout.EAST, LinkedIn_LOGO);
 		sl_linkedIn_panel.putConstraint(SpringLayout.EAST, lblPosition, 0, SpringLayout.EAST, linkedIn_panel);
 		linkedIn_panel.add(lblPosition);
 		
-		lblPosition_1 = new JLabel("Position_2");
+		lblPosition_1 = new JLabel(" ");
 		sl_linkedIn_panel.putConstraint(SpringLayout.NORTH, lblPosition_1, 6, SpringLayout.SOUTH, lblPosition);
 		sl_linkedIn_panel.putConstraint(SpringLayout.WEST, lblPosition_1, 0, SpringLayout.WEST, lblPosition);
 		sl_linkedIn_panel.putConstraint(SpringLayout.EAST, lblPosition_1, 0, SpringLayout.EAST, lblPosition);
 		linkedIn_panel.add(lblPosition_1);
 		
-		lblPosition_2 = new JLabel("Position_3");
+		lblPosition_2 = new JLabel(" ");
 		sl_linkedIn_panel.putConstraint(SpringLayout.NORTH, lblPosition_2, 6, SpringLayout.SOUTH, lblPosition_1);
 		sl_linkedIn_panel.putConstraint(SpringLayout.WEST, lblPosition_2, 0, SpringLayout.WEST, lblPosition);
 		sl_linkedIn_panel.putConstraint(SpringLayout.EAST, lblPosition_2, 0, SpringLayout.EAST, lblPosition);
 		linkedIn_panel.add(lblPosition_2);
 		
-		lblPosition_3 = new JLabel("Position_4");
+		lblPosition_3 = new JLabel(" ");
 		sl_linkedIn_panel.putConstraint(SpringLayout.NORTH, lblPosition_3, 6, SpringLayout.SOUTH, lblPosition_2);
 		sl_linkedIn_panel.putConstraint(SpringLayout.WEST, lblPosition_3, 0, SpringLayout.WEST, lblPosition);
 		sl_linkedIn_panel.putConstraint(SpringLayout.EAST, lblPosition_3, 0, SpringLayout.EAST, lblPosition);
 		linkedIn_panel.add(lblPosition_3);
 		
-		lblPosition_4 = new JLabel("Position_5");
+		lblPosition_4 = new JLabel(" ");
 		sl_linkedIn_panel.putConstraint(SpringLayout.NORTH, lblPosition_4, 6, SpringLayout.SOUTH, lblPosition_3);
 		sl_linkedIn_panel.putConstraint(SpringLayout.WEST, lblPosition_4, 0, SpringLayout.WEST, lblPosition);
 		sl_linkedIn_panel.putConstraint(SpringLayout.EAST, lblPosition_4, 0, SpringLayout.EAST, lblPosition);

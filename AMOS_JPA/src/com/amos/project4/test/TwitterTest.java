@@ -36,10 +36,12 @@ import twitter4j.TwitterException;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.ClientDAO;
 import com.amos.project4.models.TwitterData;
+import com.amos.project4.models.TwitterDataDAO;
 import com.amos.project4.models.User;
 import com.amos.project4.models.UserDAO;
 import com.amos.project4.socialMedia.twitter.TwitterConnect;
 import com.amos.project4.socialMedia.twitter.TwitterDataRetriever;
+import com.amos.project4.socialMedia.twitter.TwitterDataType;
 
 public class TwitterTest {
 
@@ -49,6 +51,7 @@ public class TwitterTest {
 	ClientDAO cdao;
 	User user;
 	Client client;
+	TwitterDataDAO t_dao;
 	
 	String facebook_id = "";
 	
@@ -62,6 +65,7 @@ public class TwitterTest {
 		cdao = ClientDAO.getInstance();
 		client = cdao.getclient(new Integer(221));
 		facebook_id = retriever.importTwitterIDofUser(user, client);
+		t_dao = TwitterDataDAO.getInstance();
 	}
 
 	@Test
@@ -95,4 +99,14 @@ public class TwitterTest {
 			System.out.println(data.getDataString().split("#")[1] + " : " + data.getDataString().split("#")[2] + " from " + data.getOwner().getFirstname() + " " + data.getOwner().getName());
 		}
 	}
+	
+	@Test
+	public void testGetDataByTypeAndFilter(){
+		List<TwitterData> datas = t_dao.getAllTwitterDatabyType(client, TwitterDataType.TWEETS, "datev");
+		assertTrue(datas!= null && !datas.isEmpty());
+		for (TwitterData data : datas) {
+			System.out.println(data.getDataString().split("#")[1] + " : " + data.getDataString().split("#")[2] + " from " + data.getOwner().getFirstname() + " " + data.getOwner().getName());
+		}
+	}
+	
 }

@@ -55,6 +55,10 @@ public class TwitterDataRetriever implements DataRetrieverInterface{
 		return instance;
 	}
 	
+	public TwitterConnect getConnector() {
+		return connector;
+	}
+
 	public synchronized boolean init(User user){
 		try{
 			if(user == null) return false;

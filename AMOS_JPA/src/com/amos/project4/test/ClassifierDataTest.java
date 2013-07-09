@@ -16,6 +16,8 @@
  */
 package com.amos.project4.test;
 
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -47,19 +49,19 @@ public class ClassifierDataTest {
 //	public void checkAddData() throws IOException{
 //		ClassifierData data = new ClassifierData();
 //		data.setName("Twitter");
-//		File f = new File("C:\\Users\\Silas\\Downloads","DefaultSentimentClassifier.model");
-//		if(!f.exists()) f.createNewFile();
+//		File f = new File("C:\\Users\\Silas\\Desktop\\TEST_TWITTER","classifier.txt");
+//		assertTrue(f.exists());
 //		Path path = Paths.get(f.getAbsolutePath());
 //		data.setClassifier(Files.readAllBytes(path));
 //		
 //		dao.addClassifierData(data);
 //	}
 
-//	@Test
-//	public void checkAvailableClassifier() {
-//		List<ClassifierData> datas = dao.getAllClassifierDatas();
-//		assertTrue(!datas.isEmpty());
-//	}
+	@Test
+	public void checkAvailableClassifier() {
+		List<ClassifierData> datas = dao.getAllClassifierDatas();
+		assertTrue(!datas.isEmpty());
+	}
 	
 	@Test
 	public void evaluationTest() throws IOException, ClassNotFoundException {
@@ -74,7 +76,7 @@ public class ClassifierDataTest {
 		List<TwitterData> tweets = t_dao.getAllTwitterDataOfClientByType(157, TwitterDataType.TWEETS);
 
 		for(TwitterData t : tweets){
-			String cat = classifier.evaluatetext(t.getDataString());
+			String cat = classifier.evaluatetext(t.getDataString().split("#")[1]);
 			System.out.println(cat  + " - " + t.getDataString());
 		}
 	}

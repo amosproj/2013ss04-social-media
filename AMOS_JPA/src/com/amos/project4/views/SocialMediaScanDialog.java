@@ -107,7 +107,8 @@ public class SocialMediaScanDialog extends JDialog implements
 	private JCheckBox chckbxProfilePicture;
 
 	public SocialMediaScanDialog(User user, List<Client> clients, JFrame frame) {
-		this();
+		super(frame);
+		init();
 		this.model = new SocialMediaScanModel();
 		this.controller = new SocialMediaScanController();
 		this.controller.addModel(model);
@@ -121,8 +122,8 @@ public class SocialMediaScanDialog extends JDialog implements
 	/**
 	 * Create the dialog.
 	 */
-	private SocialMediaScanDialog() {
-		super();
+	private void init() {
+		
 		setTitle("AMOS Project 4 - Social Media Scan");
 
 		setSize(658, 500);

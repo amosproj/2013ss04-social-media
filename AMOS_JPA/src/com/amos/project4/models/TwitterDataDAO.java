@@ -57,6 +57,16 @@ public class TwitterDataDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
+	public synchronized List<TwitterData> getAllTwitterDatabyType(Client owner_id,TwitterDataType type , String filter){
+		String tmp = filter != null?filter:"";
+		em = factory.createEntityManager();
+		Query q = em.createNativeQuery("SELECT * FROM \"TwitterDatas\" WHERE (\"clientid\" = "+ owner_id.getID() + " AND \"data\" ~* "+  "'" + tmp + "'" + ") AND (\"type\" = "+ "'" + type.toString() + "'" + " )",TwitterData.class);
+		List<TwitterData> rslt = q.getResultList();
+		em.close();
+		return new ArrayList<TwitterData>(rslt);
+	}
+	
+	@SuppressWarnings("unchecked")
 	public synchronized List<TwitterData> getAllTwitterDataOfClient(Integer owner_id){
 		if(owner_id == null || owner_id == 0) return new ArrayList<TwitterData>();
 		em = factory.createEntityManager();

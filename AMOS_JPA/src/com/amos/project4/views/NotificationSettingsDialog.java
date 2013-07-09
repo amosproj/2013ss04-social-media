@@ -63,8 +63,8 @@ public class NotificationSettingsDialog extends JDialog implements
 	private SocialMediaScanModel model;
 	private SocialMediaScanController controller;
 
-	private User user;
-	private List<Client> clients;
+//	private User user;
+//	private List<Client> clients;
 
 	private JCheckBox FchckbxLastPost;
 
@@ -78,8 +78,8 @@ public class NotificationSettingsDialog extends JDialog implements
 		this.controller.addView(this);
 		this.frame = frame;
 
-		this.user = user;
-		this.clients = clients;
+//		this.user = user;
+//		this.clients = clients;
 	}
 
 	/**

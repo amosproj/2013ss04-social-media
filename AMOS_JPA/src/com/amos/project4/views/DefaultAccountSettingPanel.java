@@ -9,11 +9,13 @@ import java.util.Observable;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
@@ -154,7 +156,7 @@ public abstract class DefaultAccountSettingPanel extends JPanel implements Abstr
 	
 	public void makeSearchAccountDialog() {
 		
-		SearchAccountDialog dialog = new SearchAccountDialog(media_controller);
+		SearchAccountDialog dialog = new SearchAccountDialog(media_controller,(JFrame) SwingUtilities.getWindowAncestor(this));
 		dialog.setVisible(true);
 	}
 }

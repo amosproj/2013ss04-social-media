@@ -58,6 +58,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.amos.project4.controllers.ClientsController;
 import com.amos.project4.controllers.UserController;
+import com.amos.project4.help.HelpDialog;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.User;
 import com.amos.project4.socialMedia.DataRetrieverInterface;
@@ -71,15 +72,15 @@ import com.amos.project4.views.linkedIn.LinkedInDetailPanel;
 import com.amos.project4.views.twitter.TwitterDetailPanel;
 import com.amos.project4.views.xing.XingDetailPanel;
 
-public class AMOSMainUI implements AbstractControlledView {
+public class AMOSMainUI implements AbstractControlledView{
 
-	// standard settings
-
+	//standard settings
+	
 	private JFrame frame;
 	JScrollPane clienTable_scrollPane;
 	private ClientTable tclients;
 	private JTextField search_textField;
-
+	
 	@SuppressWarnings("rawtypes")
 	private JComboBox drop_down;
 	private String[] dd_input = { " ", "ID", "Name", "Firstname", "Birthdate",
@@ -88,11 +89,11 @@ public class AMOSMainUI implements AbstractControlledView {
 	private TwitterDetailPanel twitterDetailPane;
 	private FacebookDetailPanel facebookDetailPane;
 	private JTree leftMenuTree;
-
+	
 	private SearchParameters search_params;
 	private UserViewModel user_model;
-
-	private UserController user_controller;
+	
+	private UserController user_controller;	
 	private ClientsController client_controller;
 	private JLabel lbl_statusBar;
 	private SwingWorker<String, String> checkConnectWorker;
@@ -100,10 +101,9 @@ public class AMOSMainUI implements AbstractControlledView {
 	private JTabbedPane mediaPanes;
 
 	private static AMOSMainUI instance;
-
-	public static AMOSMainUI getInstance(UserController user_controller,
-			UserViewModel u_model) {
-		if (instance == null) {
+	
+	public static AMOSMainUI getInstance(UserController user_controller, UserViewModel u_model) {
+		if(instance == null){
 			try {
 				instance = new AMOSMainUI(user_controller, u_model);
 			} catch (ClassNotFoundException e) {
@@ -116,13 +116,13 @@ public class AMOSMainUI implements AbstractControlledView {
 				e.printStackTrace();
 			}
 		}
-
+		
 		instance.user_controller = user_controller;
 		instance.user_model = u_model;
 		return instance;
 	}
-
-	public JFrame getMainFrame() {
+	
+	public JFrame getMainFrame(){
 		return frame;
 	}
 
@@ -136,16 +136,14 @@ public class AMOSMainUI implements AbstractControlledView {
 	 */
 	public AMOSMainUI() throws ClassNotFoundException, InstantiationException,
 			IllegalAccessException, UnsupportedLookAndFeelException {
-		initialize();
+		initialize();		
 	}
 
-	public AMOSMainUI(UserController user_controller, UserViewModel u_model)
-			throws ClassNotFoundException, InstantiationException,
-			IllegalAccessException, UnsupportedLookAndFeelException {
+	public AMOSMainUI(UserController user_controller, UserViewModel u_model) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		super();
 		this.user_controller = user_controller;
 		this.user_model = u_model;
-		initialize();
+		initialize();		
 	}
 
 	/**
@@ -162,14 +160,14 @@ public class AMOSMainUI implements AbstractControlledView {
 		// Initialized The Controller
 		client_controller = new ClientsController();
 		client_controller.addView(this);
-
+		
 		// Initialise and register the search view Model
 		search_params = new SearchParameters();
 		client_controller.addModel(search_params);
-
+		
 		// Initialize and register the TwitterData controller
-		// twitterData_controller = new TwitterDataController();
-		// facebookData_controller = new FacebookDataController();
+//		twitterData_controller = new TwitterDataController();
+//		facebookData_controller = new FacebookDataController();
 
 		// Initialise the Frame
 		frame = new JFrame();
@@ -251,9 +249,9 @@ public class AMOSMainUI implements AbstractControlledView {
 
 		// Register The Views to the controller
 		this.getClient_controller().addView(this.getTclients());
-
+		
 		// Add the window listener
-		this.frame.addWindowListener(new AMOSMainWindowListener());
+		this.frame.addWindowListener( new AMOSMainWindowListener());
 	}
 
 	public ClientsController getClient_controller() {
@@ -279,20 +277,21 @@ public class AMOSMainUI implements AbstractControlledView {
 
 		// Initialize the settings short cut
 		Vector<String> settingsMenu_vec = new TreeNodeVector<String>(
-				"Settings", new String[] { "Connection Settings",
-						"Twitter Sentiment Settings", "Notification Settings" });
+				"Settings", new String[] { "Connection Settings", "Notification Settings" });
+		
+		// Initialize the sentiment analysis
+		Vector<String> analysisMenu_vec = new TreeNodeVector<String>(
+				"Sentiment Analysis", new String[] { "Twitter Sentiment Analysis"});
 
-		// Initialize the Social media menus short cut
-		Vector<String> socialsMenu_vec = new TreeNodeVector<String>("Social",
-				new String[] { "Twitter Social" });
+		// Initialize the Help menus short cut
+		Vector<String> helplsMenu_vec = new TreeNodeVector<String>("Help", new String[] { "Help" });
 
 		// Initialize the Social media menus short cut
 		Vector<String> exitsMenu_vec = new TreeNodeVector<String>("Exit",
 				new String[] { "Logout", "Exit application" });
 
 		// Initialize the categories
-		Object rootNodes[] = new Object[] { socialsMenu_vec, // usersMenu_vec,
-				settingsMenu_vec, exitsMenu_vec };
+		Object rootNodes[] = new Object[] { settingsMenu_vec, analysisMenu_vec, helplsMenu_vec, exitsMenu_vec };
 
 		Vector<Object> root_vec = new TreeNodeVector<Object>("Menu Root",
 				rootNodes);
@@ -322,6 +321,8 @@ public class AMOSMainUI implements AbstractControlledView {
 
 	}
 
+	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private JPanel initRightTopPanel() {
 		JPanel panel_right_top = new JPanel();
@@ -329,55 +330,43 @@ public class AMOSMainUI implements AbstractControlledView {
 
 		SpringLayout sl_panel_right_top = new SpringLayout();
 		panel_right_top.setLayout(sl_panel_right_top);
-
+		
 		JButton btnRefresh = new JButton("Refresh");
 		btnRefresh.addActionListener(new refreshchAction());
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnRefresh, 10,
-				SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, btnRefresh, -5,
-				SpringLayout.EAST, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH,	btnRefresh, 10, SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST,		btnRefresh, -5, SpringLayout.EAST, panel_right_top);
 		btnRefresh.setPreferredSize(new Dimension(75, 25));
 		panel_right_top.add(btnRefresh);
 
 		JButton btnCheckSocialMedia = new JButton("Check Social Media");
 		btnCheckSocialMedia.addActionListener(new SocialMediaScanAction());
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH,
-				btnCheckSocialMedia, 0, SpringLayout.NORTH, btnRefresh);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST,
-				btnCheckSocialMedia, -5, SpringLayout.WEST, btnRefresh);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH,	btnCheckSocialMedia, 0, SpringLayout.NORTH, btnRefresh);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST,		btnCheckSocialMedia, -5, SpringLayout.WEST, btnRefresh);
 		btnCheckSocialMedia.setPreferredSize(new Dimension(150, 25));
 		panel_right_top.add(btnCheckSocialMedia);
+
 
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new searchAction());
 
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnSearch, 0,
-				SpringLayout.NORTH, btnCheckSocialMedia);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, btnSearch, -5,
-				SpringLayout.WEST, btnCheckSocialMedia);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, btnSearch, 0,	SpringLayout.NORTH, btnCheckSocialMedia);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, btnSearch, -5,	SpringLayout.WEST, btnCheckSocialMedia);
 		panel_right_top.add(btnSearch);
 		btnSearch.setPreferredSize(new Dimension(75, 25));
-
+		
 		drop_down = new JComboBox(dd_input);
 		drop_down.addActionListener(new SearchCatListener());
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, drop_down, 10,
-				SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.WEST, drop_down, 10,
-				SpringLayout.WEST, panel_right_top);
-		// sl_panel_right_top.putConstraint(SpringLayout.SOUTH, drop_down, 30,
-		// SpringLayout.NORTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, drop_down, 150,
-				SpringLayout.WEST, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, drop_down, 10, SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.WEST, drop_down, 10,	SpringLayout.WEST, panel_right_top);
+		//sl_panel_right_top.putConstraint(SpringLayout.SOUTH, drop_down, 30,	SpringLayout.NORTH, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, drop_down, 150,	SpringLayout.WEST, panel_right_top);
 		panel_right_top.add(drop_down);
 
 		search_textField = new JTextField();
 		search_textField.addActionListener(new searchAction());
-		sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField,
-				0, SpringLayout.NORTH, btnCheckSocialMedia);
-		sl_panel_right_top.putConstraint(SpringLayout.WEST, search_textField,
-				5, SpringLayout.EAST, drop_down);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST, search_textField,
-				-5, SpringLayout.WEST, btnSearch);
+		sl_panel_right_top.putConstraint(SpringLayout.NORTH, search_textField,0, SpringLayout.NORTH, btnCheckSocialMedia);
+		sl_panel_right_top.putConstraint(SpringLayout.WEST, search_textField, 5, SpringLayout.EAST, drop_down);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST, search_textField,-5, SpringLayout.WEST, btnSearch);
 		panel_right_top.add(search_textField);
 		search_textField.setColumns(20);
 
@@ -389,8 +378,7 @@ public class AMOSMainUI implements AbstractControlledView {
 				client_result_panel, 0, SpringLayout.WEST, panel_right_top);
 		sl_panel_right_top.putConstraint(SpringLayout.SOUTH,
 				client_result_panel, -10, SpringLayout.SOUTH, panel_right_top);
-		sl_panel_right_top.putConstraint(SpringLayout.EAST,
-				client_result_panel, -5, SpringLayout.EAST, panel_right_top);
+		sl_panel_right_top.putConstraint(SpringLayout.EAST,	client_result_panel, -5, SpringLayout.EAST, panel_right_top);
 		panel_right_top.add(client_result_panel);
 
 		return panel_right_top;
@@ -423,31 +411,24 @@ public class AMOSMainUI implements AbstractControlledView {
 		globalOverviewPane = new GlobalOverviewPanel(client_controller);
 		mediaPanes.addTab("Global overview", null, globalOverviewPane, null);
 		mediaPanes.setEnabledAt(0, true);
-
+				
 		// Initialise Client Detail Panel
 		clientDetailsPane = new ClientDetailMainPanel(client_controller);
 		mediaPanes.addTab("Client' details", null, clientDetailsPane, null);
+		
 
 		facebookDetailPane = new FacebookDetailPanel(client_controller);
-		mediaPanes.addTab("Facebook",
-				AMOSUtils.makeIcon(AMOSUtils.FACEBOOK_SMALL_LOGO_URL, 20, 20),
-				facebookDetailPane, null);
+		mediaPanes.addTab("Facebook", AMOSUtils.makeIcon(AMOSUtils.FACEBOOK_SMALL_LOGO_URL, 20, 20), facebookDetailPane, null);
 
 		// Initialise the Twitter detail Pane
 		twitterDetailPane = new TwitterDetailPanel(client_controller);
-		mediaPanes.addTab("Twitter",
-				AMOSUtils.makeIcon(AMOSUtils.TWITTER_SMALL_LOGO_URL, 20, 20),
-				twitterDetailPane, null);
-
+		mediaPanes.addTab("Twitter", AMOSUtils.makeIcon(AMOSUtils.TWITTER_SMALL_LOGO_URL, 20, 20), twitterDetailPane, null);
+		
 		JPanel xingPane = new XingDetailPanel(client_controller);
-		mediaPanes.addTab("Xing",
-				AMOSUtils.makeIcon(AMOSUtils.XING_LOGO_URL, 34, 20), xingPane,
-				null);
+		mediaPanes.addTab("Xing", AMOSUtils.makeIcon(AMOSUtils.XING_LOGO_URL, 34, 20), xingPane, null);
 
 		JPanel linkedInPane = new LinkedInDetailPanel(client_controller);
-		mediaPanes.addTab("LinkedIn",
-				AMOSUtils.makeIcon(AMOSUtils.LINKEDIN_LOGO_URL, 23, 20),
-				linkedInPane, null);
+		mediaPanes.addTab("LinkedIn", AMOSUtils.makeIcon(AMOSUtils.LINKEDIN_LOGO_URL, 23, 20), linkedInPane, null);
 
 		return panel_right_bottom;
 	}
@@ -492,134 +473,115 @@ public class AMOSMainUI implements AbstractControlledView {
 		mntmHelp.addActionListener(new HelpAction());
 		mnHelp.add(mntmHelp);
 	}
-
+	
 	/**
 	 * Try to connect to the different social Media
-	 * 
 	 * @return
 	 */
-	public void connectToSocialMedia() {
-		if (checkConnectWorker == null) {
-			checkConnectWorker = new SwingWorker<String, String>() {
-
+	public void connectToSocialMedia(){
+		if(checkConnectWorker == null){
+			checkConnectWorker = new SwingWorker<String, String>(){
+	
 				private ArrayList<String> media_list = new ArrayList<String>();
-
+	
 				@Override
 				protected String doInBackground() throws Exception {
 					publish("Check selected user ...");
-					media_list = new ArrayList<String>();
-					if (user_controller == null
-							|| user_controller.getCurrent_user() == null)
-						return null;
+					media_list  = new ArrayList<String>();
+					if(user_controller == null || user_controller.getCurrent_user() == null) return null;
 					User c_user = user_controller.getCurrent_user();
 					DataRetrieverInterface retriever = null;
-
-					if (isCancelled())
-						return null;
+					
+					if(isCancelled()) return null;
 					// try to connect to Facebook
 					publish("Try to connect facebook ...");
 					retriever = FacebookDataRetriever.getInstance();
-					if (retriever == null
-							|| !((FacebookDataRetriever) retriever)
-									.init(c_user)) {
+					if(retriever == null || !((FacebookDataRetriever)retriever).init(c_user)){
 						media_list.add("Facebook");
 					}
-
-					if (isCancelled())
-						return null;
-
+					
+					if(isCancelled()) return null;
+					
 					// try to connect to Twitter
 					publish("Try to connect Twitter ...");
 					retriever = TwitterDataRetriever.getInstance();
-					if (retriever == null
-							|| !((TwitterDataRetriever) retriever).init(c_user)) {
+					if(retriever == null || !((TwitterDataRetriever)retriever).init(c_user)){
 						media_list.add("Twitter");
 					}
-					if (isCancelled())
-						return null;
-
+					if(isCancelled()) return null;
+					
 					// try to connect to Xing
 					publish("Try to connect Xing ...");
 					retriever = XingDataRetriever.getInstance();
-					if (retriever == null
-							|| !((XingDataRetriever) retriever).init(c_user)) {
+					if(retriever == null || !((XingDataRetriever)retriever).init(c_user)){
 						media_list.add("Xing");
 					}
-					if (isCancelled())
-						return null;
-
+					if(isCancelled()) return null;
+					
 					// try to connect to LinkedIn
 					publish("Try to connect Xing ...");
 					retriever = LinkedInDataRetriever.getInstance();
-					if (retriever == null
-							|| !((LinkedInDataRetriever) retriever)
-									.init(c_user)) {
+					if(retriever == null || !((LinkedInDataRetriever)retriever).init(c_user)){
 						media_list.add("LinkedIn");
 					}
 					return null;
 				}
-
+	
 				@Override
 				protected void process(List<String> chunks) {
-					if (chunks != null && !chunks.isEmpty())
-						updateStatusBar(chunks.get(0), 0);
+					 if(chunks != null && !chunks.isEmpty()) 
+						 updateStatusBar(chunks.get(0),0);
 				}
-
+	
 				@Override
 				protected void done() {
-					updateStatusBar("Done .", 0);
-					if (media_list.size() > 0) {
+					updateStatusBar("Done .",0);
+					if(media_list.size() > 0){
 						String message = "The application could not make a connectipon to the following social media websites: \n";
-						for (String m : media_list) {
-							message += "<html><body><b><i>" + m
-									+ "</i></b></body></html>\n";
+						for(String  m : media_list ){
+							message += "<html><body><b><i>" + m + "</i></b></body></html>\n";
 						}
-						message += "Please make sure your acces token are valid. "
-								+ "To do this go to the left menu panel -> Settings -> Connection Settings";
-						Object[] options = { "OK" };
-						JOptionPane.showOptionDialog(frame, message,
-								"Connections Errors",
-								JOptionPane.WARNING_MESSAGE,
-								JOptionPane.QUESTION_MESSAGE, null, options,
-								options[0]);
+						message += "Please make sure your acces token are valid. " +
+								"To do this go to the left menu panel -> Settings -> Connection Settings";
+						Object[] options = {"OK"};
+					    JOptionPane.showOptionDialog(frame,
+					                   message,"Connections Errors",
+					                   JOptionPane.WARNING_MESSAGE,
+					                   JOptionPane.QUESTION_MESSAGE,
+					                   null,
+					                   options,
+					                   options[0]);
 					}
 				}
-
+				
 			};
-		} else {
-			if (!checkConnectWorker.isDone()) {
+		}else{
+			if(!checkConnectWorker.isDone()){
 				checkConnectWorker.cancel(true);
 			}
 		}
 		checkConnectWorker.execute();
 	}
-
+	
 	public ClientTable getTclients() {
 		return tclients;
 	}
-
-	private void exit() {
-		int dialogResult = JOptionPane.showConfirmDialog(frame,
-				"Exit the application ?", "Exit confirmation",
-				JOptionPane.YES_NO_OPTION);
-		if (dialogResult == JOptionPane.YES_OPTION) {
+	
+	private void exit(){
+		int dialogResult = JOptionPane.showConfirmDialog (frame, 
+				"Exit the application ?","Exit confirmation",JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.dispose();
 			System.exit(0);
 		}
 	}
-
-	private void showGeneralsettingDialog() {
-		GeneralSettingsDialog dialog = new GeneralSettingsDialog(
-				user_controller, user_model, frame);
+	
+	private void showGeneralsettingDialog(){
+		GeneralSettingsDialog dialog = new GeneralSettingsDialog(user_controller, user_model,frame);
 		dialog.setVisible(true);
 	}
-
-	private void openHelpDialog() {
-		HelpDialog dialog = new HelpDialog(frame);
-		dialog.setVisible(true);
-	}
-
+	
 	private void openDashboardSettingDialog() {
 		ArrayList<Client> c_list = new ArrayList<Client>();
 		Client selected_client = client_controller.getSelectedClient();
@@ -628,23 +590,21 @@ public class AMOSMainUI implements AbstractControlledView {
 		} else {
 			c_list.add(selected_client);
 		}
-		NotificationSettingsDialog dialog = new NotificationSettingsDialog(
-				user_controller.getCurrent_user(), c_list, frame);
+		NotificationSettingsDialog dialog = new NotificationSettingsDialog(	user_controller.getCurrent_user(), c_list, frame);
 		dialog.setVisible(true);
 	}
-
-	private void logout() {
-		int dialogResult = JOptionPane.showConfirmDialog(frame,
-				"Are you sure you want to logout from the application ?",
-				"Logout confirmation", JOptionPane.YES_NO_OPTION);
-		if (dialogResult == JOptionPane.YES_OPTION) {
+	
+	private void logout(){
+		int dialogResult = JOptionPane.showConfirmDialog (frame, 
+				"Are you sure you want to logout from the application ?","Logout confirmation",JOptionPane.YES_NO_OPTION);
+		if(dialogResult == JOptionPane.YES_OPTION){
 			frame.dispose();
 			Login dialog = new Login();
 			dialog.setVisible(true);
 		}
 	}
-
-	private void makeSimpleSearch() {
+	
+	private void makeSimpleSearch(){
 		search_params.setSearchCat(drop_down.getSelectedIndex());
 		search_params.setSearchText(search_textField.getText());
 		tclients.clearSelection();
@@ -653,19 +613,19 @@ public class AMOSMainUI implements AbstractControlledView {
 		clienTable_scrollPane.revalidate();
 		frame.repaint();
 	}
-
-	private void makeRefresh() {
-		// search_params.refresh();
+	
+	private void makeRefresh(){
+		//search_params.refresh();
 		this.client_controller.refresh();
-		// tclients.clearSelection();
+		//tclients.clearSelection();
 		tclients.getModel().fireTableDataChanged();
 		tclients = new ClientTable(client_controller);
 		clienTable_scrollPane.setViewportView(tclients);
 		clienTable_scrollPane.invalidate();
 		frame.repaint();
 	}
-
-	private void makeSearchWithCat() {
+	
+	private void makeSearchWithCat(){
 		search_params.setSearchCat(drop_down.getSelectedIndex());
 		tclients.getModel().fireTableDataChanged();
 		tclients.clearSelection();
@@ -673,20 +633,24 @@ public class AMOSMainUI implements AbstractControlledView {
 		clienTable_scrollPane.revalidate();
 		frame.repaint();
 	}
-
-	private void openSocialMediaScanDialog() {
+	
+	private void openSocialMediaScanDialog(){
 		ArrayList<Client> c_list = new ArrayList<Client>();
 		Client selected_client = client_controller.getSelectedClient();
-		if (selected_client == null) {
+		if(selected_client == null){
 			c_list.addAll(client_controller.getAllClients());
-		} else {
+		}else{
 			c_list.add(selected_client);
 		}
-		SocialMediaScanDialog dialog = new SocialMediaScanDialog(
-				user_controller.getCurrent_user(), c_list, frame);
+		SocialMediaScanDialog dialog = new SocialMediaScanDialog(user_controller.getCurrent_user(),c_list,frame);
 		dialog.setVisible(true);
 	}
-
+	
+	private void openHelpDialog() {
+		HelpDialog dialog = new HelpDialog(frame);
+		dialog.setVisible(true);
+	}
+	
 	// Action listeners implementations
 	private class MenuSelectionMouseAdapter extends MouseAdapter {
 		public void mouseClicked(MouseEvent me) {
@@ -704,20 +668,18 @@ public class AMOSMainUI implements AbstractControlledView {
 				showGeneralsettingDialog();
 			} else if (item.equalsIgnoreCase("Notification Settings")) {
 				openDashboardSettingDialog();
-			} else if (item.equalsIgnoreCase("Twitter Sentiment Settings")) {
+			} else if (item.equalsIgnoreCase("Twitter Sentiment Analysis")) {
 				openTSSettingDialog();
 			} else if (item.equalsIgnoreCase("Help")) {
 				openHelpDialog();
-
-			} else {
+			}else {
 				System.out.println("" + obj.toString());
 			}
 		}
 	}
-
+	
 	private synchronized void openTSSettingDialog() {
-		TwitterSentimentResultsDialog dialog = new TwitterSentimentResultsDialog(
-				this.client_controller);
+		TwitterSentimentResultsDialog dialog = TwitterSentimentResultsDialog.getInstance(this.client_controller,this.frame);
 		dialog.setVisible(true);
 	}
 
@@ -726,26 +688,19 @@ public class AMOSMainUI implements AbstractControlledView {
 			exit();
 		}
 	}
-
-	private class GeneralsettingsAction implements ActionListener {
+	
+	private class GeneralsettingsAction implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			showGeneralsettingDialog();
-		}
+		}		
 	}
-
-	private class HelpAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			openHelpDialog();
-		}
-	}
-
-	private class LogoutAction implements ActionListener {
+	
+	private class LogoutAction implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			logout();
-		}
+		}		
 	}
 
 	private class searchAction implements ActionListener {
@@ -753,7 +708,7 @@ public class AMOSMainUI implements AbstractControlledView {
 			makeSimpleSearch();
 		}
 	}
-
+	
 	private class refreshchAction implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			makeRefresh();
@@ -765,30 +720,36 @@ public class AMOSMainUI implements AbstractControlledView {
 			makeSearchWithCat();
 		}
 	}
-
+	
 	public class SocialMediaScanAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			openSocialMediaScanDialog();
 		}
 	}
-
 	private class DashboardSettingDialogAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			openDashboardSettingDialog();
 		}
 	}
-
-	private class TSSettingDialogAction implements ActionListener {
+	
+	private class TSSettingDialogAction implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			openTSSettingDialog();
+			openTSSettingDialog();		
 		}
 	}
-
-	private synchronized void updateStatusBar(String msg, int severity) {
+	
+	private class HelpAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			openHelpDialog();
+		}
+	}
+	
+	private synchronized void updateStatusBar(String msg, int severity){
 		switch (severity) {
 		case 0:
 			lbl_statusBar.setText(msg);
@@ -804,7 +765,7 @@ public class AMOSMainUI implements AbstractControlledView {
 			break;
 		}
 	}
-
+	
 	private class AMOSMainWindowListener implements WindowListener {
 
 		public void windowDeiconified(WindowEvent e) {
@@ -812,7 +773,7 @@ public class AMOSMainUI implements AbstractControlledView {
 
 		@Override
 		public void windowActivated(WindowEvent arg0) {
-
+			
 		}
 
 		@Override
@@ -834,8 +795,7 @@ public class AMOSMainUI implements AbstractControlledView {
 		@Override
 		public void windowOpened(WindowEvent arg0) {
 			connectToSocialMedia();
-			if (globalOverviewPane != null)
-				globalOverviewPane.lunchSearchMediaUpdates();
+			//if(globalOverviewPane != null) globalOverviewPane.lunchSearchMediaUpdates();
 		}
 	}
 
@@ -843,12 +803,12 @@ public class AMOSMainUI implements AbstractControlledView {
 	public void modelPropertyChange(Observable o, Object arg) {
 		if (arg != null && arg.getClass().equals(Client.class)) {
 			Client c = (Client) arg;
-			updateStatusBar(c.getFormatedname() + " selected .", 0);
-			if (checkConnectWorker != null && !checkConnectWorker.isDone()) {
+			updateStatusBar(c.getFormatedname() + " selected .",0);
+			if(checkConnectWorker != null && !checkConnectWorker.isDone()){
 				checkConnectWorker.cancel(true);
 			}
 			mediaPanes.setEnabledAt(1, true);
-		}
+		}		
 	}
 
 }

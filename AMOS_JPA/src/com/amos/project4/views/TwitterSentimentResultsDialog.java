@@ -20,7 +20,6 @@
 package com.amos.project4.views;
 
 import java.awt.Cursor;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -30,7 +29,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -42,28 +40,22 @@ import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.SwingWorker;
+import javax.swing.border.TitledBorder;
 
 import com.amos.project4.controllers.ClientsController;
 import com.amos.project4.models.ClassifierDAO;
 import com.amos.project4.models.ClassifierData;
 import com.amos.project4.models.Client;
-import com.amos.project4.models.ClientDAO;
 import com.amos.project4.models.TwitterData;
 import com.amos.project4.models.TwitterDataDAO;
 import com.amos.project4.sentimentAnalysis.DefaultSentimentClassifier;
 import com.amos.project4.socialMedia.twitter.TwitterDataType;
-import com.amos.project4.test.PieChart;
-
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.TitledBorder;
-import java.awt.BorderLayout;
 
 public class TwitterSentimentResultsDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private JTextField textField;
+	private JTextField querryTextField;
 	private JProgressBar progressBar;
 	private JLabel lblTotalvalue;
 	private JLabel lblPositivevalue;
@@ -72,6 +64,16 @@ public class TwitterSentimentResultsDialog extends JDialog {
 	private ClientsController controller;
 	private JLabel lblLasttrainingdata;
 	private PieChart chartPanel;
+	private DefaultSentimentClassifier classifier;
+	private static TwitterSentimentResultsDialog instance;
+	
+	public static TwitterSentimentResultsDialog getInstance(ClientsController controller, JFrame frame) {
+		
+		if(instance == null){
+			instance = new TwitterSentimentResultsDialog(controller,frame);
+		}
+		return instance;
+	}
 
 	/**
 	 * Create the application.
@@ -79,8 +81,8 @@ public class TwitterSentimentResultsDialog extends JDialog {
 	 * @param c_list 
 	 * @param user 
 	 */
-	TwitterSentimentResultsDialog(ClientsController controller) {
-		super();
+	private TwitterSentimentResultsDialog(ClientsController controller, JFrame frame) {
+		super(frame);
 		this.controller = controller;
 		init();
 		initialize();
@@ -90,7 +92,7 @@ public class TwitterSentimentResultsDialog extends JDialog {
 		setTitle("AMOS Project 4 - Twitter Sentioments Analysis");
 
 		setSize(650, 450);
-		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
 		setLocationRelativeTo(frame);
 
 		
@@ -108,17 +110,18 @@ public class TwitterSentimentResultsDialog extends JDialog {
 		springLayout.putConstraint(SpringLayout.EAST, btnClose, -10, SpringLayout.EAST, getContentPane());
 		getContentPane().add(btnClose);
 		
-		textField = new JTextField();
-		springLayout.putConstraint(SpringLayout.EAST, textField, -6, SpringLayout.WEST, btnAnalyse);
-		springLayout.putConstraint(SpringLayout.NORTH, btnAnalyse, 0, SpringLayout.NORTH, textField);
-		springLayout.putConstraint(SpringLayout.WEST, textField, 10, SpringLayout.WEST, getContentPane());
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		querryTextField = new JTextField();
+		querryTextField.addActionListener(new AnalyseAction());
+		springLayout.putConstraint(SpringLayout.EAST, querryTextField, -6, SpringLayout.WEST, btnAnalyse);
+		springLayout.putConstraint(SpringLayout.NORTH, btnAnalyse, 0, SpringLayout.NORTH, querryTextField);
+		springLayout.putConstraint(SpringLayout.WEST, querryTextField, 10, SpringLayout.WEST, getContentPane());
+		getContentPane().add(querryTextField);
+		querryTextField.setColumns(10);
 		
 		JTextField txtpnPleaseEnterYour = new JTextField();
 		springLayout.putConstraint(SpringLayout.EAST, txtpnPleaseEnterYour, -10, SpringLayout.EAST, getContentPane());
 		springLayout.putConstraint(SpringLayout.EAST, btnAnalyse, 0, SpringLayout.EAST, txtpnPleaseEnterYour);
-		springLayout.putConstraint(SpringLayout.NORTH, textField, 6, SpringLayout.SOUTH, txtpnPleaseEnterYour);
+		springLayout.putConstraint(SpringLayout.NORTH, querryTextField, 6, SpringLayout.SOUTH, txtpnPleaseEnterYour);
 		springLayout.putConstraint(SpringLayout.NORTH, txtpnPleaseEnterYour, 10, SpringLayout.NORTH, getContentPane());
 		springLayout.putConstraint(SpringLayout.WEST, txtpnPleaseEnterYour, 10, SpringLayout.WEST, getContentPane());
 		txtpnPleaseEnterYour.setEditable(false);
@@ -129,7 +132,7 @@ public class TwitterSentimentResultsDialog extends JDialog {
 		springLayout.putConstraint(SpringLayout.NORTH, resultWrapperpanel, 6, SpringLayout.SOUTH, btnAnalyse);
 		springLayout.putConstraint(SpringLayout.WEST, resultWrapperpanel, 10, SpringLayout.WEST, getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, resultWrapperpanel, -6, SpringLayout.NORTH, btnClose);
-		springLayout.putConstraint(SpringLayout.EAST, resultWrapperpanel, 632, SpringLayout.WEST, getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, resultWrapperpanel, -10, SpringLayout.EAST, getContentPane());
 		getContentPane().add(resultWrapperpanel);
 		resultWrapperpanel.setLayout(new GridLayout(0, 2, 6, 6));
 		
@@ -228,16 +231,15 @@ public class TwitterSentimentResultsDialog extends JDialog {
 		progressBar = new JProgressBar();
 		progressBar.setVisible(false);
 		springLayout.putConstraint(SpringLayout.NORTH, progressBar, 0, SpringLayout.NORTH, btnClose);
-		springLayout.putConstraint(SpringLayout.WEST, progressBar, 0, SpringLayout.WEST, textField);
+		springLayout.putConstraint(SpringLayout.WEST, progressBar, 0, SpringLayout.WEST, querryTextField);
 		springLayout.putConstraint(SpringLayout.SOUTH, progressBar, 0, SpringLayout.SOUTH, btnClose);
 		springLayout.putConstraint(SpringLayout.EAST, progressBar, -6, SpringLayout.WEST, btnClose);
 		getContentPane().add(progressBar);
-		btnClose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-			}
-		});
-		
+//		btnClose.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent arg0) {
+//				setVisible(false);
+//			}
+//		});
 	}
 
 	/**
@@ -252,14 +254,14 @@ public class TwitterSentimentResultsDialog extends JDialog {
 	
 	private class CloseAction implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {			
-			dispose();
+			setVisible(false);
 		}
 	}
 	
 	private class AnalyseAction implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
 			setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-			AnalisisTask worker = new AnalisisTask();
+			AnalisisTask worker = new AnalisisTask(querryTextField.getText());
 			worker.execute();
 		}
 	}
@@ -267,11 +269,16 @@ public class TwitterSentimentResultsDialog extends JDialog {
 	private class AnalisisTask extends SwingWorker<String, Integer>{
 		private TwitterDataDAO t_dao;
 		private ClassifierDAO c_dao;
-		private DefaultSentimentClassifier classifier;
 		
 		private int total;
 		private int pos;
 		private int neg;
+		private String filter;
+		public AnalisisTask(String filter) {
+			super();
+			this.filter = filter != null ?filter:"";
+		}
+
 		private int neu;
 		private String lastTrainingDate;
 		
@@ -280,35 +287,47 @@ public class TwitterSentimentResultsDialog extends JDialog {
 			publish(1);
 			// Init the DAO
 			t_dao = TwitterDataDAO.getInstance();
-			c_dao = ClassifierDAO.getInstance();
+			
 			// get the clients from the database
-			List<Client> clients = controller.getAllClients();
+			List<Client> clients = null;
+			synchronized (controller) {
+				clients = controller.getAllClients();
+			}			
 			
-			// Retrieve the trained Classifier from the Databse
-			List<ClassifierData> classifiers = c_dao.getAllClassifierDatas();
-			if(classifiers == null || classifiers.isEmpty()) return null;
 			
-			lastTrainingDate = classifiers.get(0).getLastModified();
-			
-			// Create new File with the readed data
-			File f = File.createTempFile("AMOSClassifier", ".model");
-			FileOutputStream output = new FileOutputStream(f);
-			output.write(classifiers.get(0).getClassifier());
-			output.flush();
-			output.close();
-			publish(5);
 			// initialise the Classifier
 			try {
-				classifier = DefaultSentimentClassifier.getInstance(f);
+				
+				if(classifier == null){
+					c_dao = ClassifierDAO.getInstance();
+					// Retrieve the trained Classifier from the Databse
+					List<ClassifierData> classifiers = c_dao.getAllClassifierDatas();
+					if(classifiers == null || classifiers.isEmpty()) return null;
+					
+					lastTrainingDate = classifiers.get(0).getLastModified();
+					
+					// Create new File with the readed data
+					File f = File.createTempFile("AMOSClassifier", ".model");
+					FileOutputStream output = new FileOutputStream(f);
+					output.write(classifiers.get(0).getClassifier());
+					output.flush();
+					output.close();
+					publish(5);
+					classifier = DefaultSentimentClassifier.getInstance(f);
+					
+				}
+				
+				
 				
 				int c_count = clients.size();
 				int i = 0;
 				publish(10);
 				for(Client c: clients){
-					List<TwitterData> tweets =c.getTwitterDatasByType(TwitterDataType.TWEETS);
+					//List<TwitterData> tweets =c.getTwitterDatasByType(TwitterDataType.TWEETS);
+					List<TwitterData> tweets =t_dao.getAllTwitterDatabyType(c, TwitterDataType.TWEETS, filter);
 					for(TwitterData tweet : tweets){
 						total++;
-						String category = classifier.evaluatetext(tweet.getDataString());
+						String category = classifier.evaluatetext(tweet.getDataString().split("#")[1]);
 						if(category.equalsIgnoreCase("pos")){
 							pos++;
 						}else if(category.equalsIgnoreCase("neg")){
@@ -349,13 +368,7 @@ public class TwitterSentimentResultsDialog extends JDialog {
 			getLblNegativevalue().setText(total != 0 ? "" + neg + " (" + (neg * 100 / total) + "%)": "");
 			getLblNeutralvalue().setText(total != 0 ? "" + neu + " (" + (neu * 100 / total) + "%)": "");
 			getLblLasttrainingdata().setText(total != 0 ? "" + lastTrainingDate: "");
-			
-			if(pos > 0)  chartPanel.getResult().setValue("Pos", pos);
-			if(neg > 0)  chartPanel.getResult().setValue("Neg", neg);
-			if(neu <= 0)  
-				chartPanel.getResult().remove("Neu");
-			else 
-				chartPanel.getResult().setValue("Neu", neu);
+			chartPanel.refresh("Twitter Sentiment", pos, neg, neu);
 			
 			progressBar.setVisible(false);
 			setCursor(null);

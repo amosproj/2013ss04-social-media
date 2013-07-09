@@ -30,6 +30,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -82,8 +83,8 @@ public class SearchAccountDialog extends JDialog {
 		init();
 	}
 	
-	public SearchAccountDialog(MediaSearchController media_controller) {
-		super();
+	public SearchAccountDialog(MediaSearchController media_controller, JFrame frame) {
+		super(frame);
 		this.media_controller = media_controller;
 		init();
 		searchAndInitList();

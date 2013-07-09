@@ -81,7 +81,7 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	private JFrame frame;
 	
 	public GeneralSettingsDialog(UserController user_controller,UserViewModel viewModel, JFrame frame) {
-		super();
+		super(frame);
 		this.frame = frame;		
 		this.user_controller = user_controller;
 		this.user_controller.InitConnector();
@@ -89,7 +89,6 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 		this.viewModel = viewModel;
 		init();
 		this.updateView(this.user_controller.getCurrent_user());
-		setLocationRelativeTo(frame);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setVisible(true);		
 	}
