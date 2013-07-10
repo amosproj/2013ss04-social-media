@@ -4,17 +4,20 @@
          "http://java.sun.com/products/javahelp/index_1_0.dtd">
 
 <index version="1.0">
-  <indexitem target="computers" text="computer interests"/>
-  <indexitem text="favorites">
-    <indexitem target="movies" text="movies"/>
-    <indexitem target="music" text="music"/>
+  <indexitem text="Social Media Connect">
+    <indexitem target="connectoverview" text="Connection Overview"/>
+    <indexitem target="facebook" text="Facebook"/>
+	 <indexitem target="twitter" text="Twitter"/>
+	  <indexitem target="xing" text="Xing"/>
+	   <indexitem target="linkedin" text="LinkedIn"/>
   </indexitem>
-  <indexitem target="fitness" text="fitness interests"/>
-  <indexitem text="interests">
-    <indexitem target="computers" text="computers"/>
-    <indexitem target="fitness" text="fitness"/>
+  <indexitem text="Search Client Account">
+  <indexitem target="search" text="How to Search?"/>
+    </indexitem>
+  <indexitem text="Scan Client Account">
+    <indexitem target="scan" text="How to Scan?"/>
   </indexitem>
-  <indexitem target="movies" text="movies, favorite"/>
-  <indexitem target="music" text="music, favorite"/>
-  <indexitem target="overview" text="overview"/>
+    <indexitem text="Sentiment Analysis">
+  <indexitem target="sentiment" text="How does the Sentiment Analysis work?"/>
+  </indexitem>
 </index>
