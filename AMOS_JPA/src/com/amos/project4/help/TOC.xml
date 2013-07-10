@@ -6,17 +6,19 @@
 <toc version="1.0">
   <tocitem image="toplevelfolder" target="overview" text="AMOS Project 4">
     <tocitem text="Connect to Social Medias">
-      <tocitem target="fitness" text="Fitness"/>
-      <tocitem target="computers" text="Computers"/>
+      <tocitem target="twitter" text="Twitter"/>
+      <tocitem target="facebook" text="Facebook"/>
+       <tocitem target="xing" text="Xing"/>
+      <tocitem target="linkedin" text="LinkedIn"/>
     </tocitem>
     <tocitem text="Search client's accounts">
-      <tocitem target="movies" text="Favorite Movies"/>
+      <tocitem target="search" text="How to search"/>
     </tocitem>
     <tocitem text="Scan client's account">
-      <tocitem target="movies" text="Favorite Movies"/>
+      <tocitem target="scan" text="How to scan"/>
     </tocitem>
     <tocitem text="Sentiment analysis">
-      <tocitem target="music" text="Favorite Music"/>
+      <tocitem target="sentiment" text="How does it work?"/>
     </tocitem>
   </tocitem>
 </toc>

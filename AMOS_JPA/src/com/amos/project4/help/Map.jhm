@@ -9,10 +9,14 @@
 
   <mapID target="overview" url="Topics/Overview.htm" />
 
-  <mapID target="computers" url="Topics/Interests/Computers.htm" />
-  <mapID target="fitness" url="Topics/Interests/Fitness.htm" />
+  <mapID target="facebook" url="Topics/SocialMediaConnect/Facebook.htm" />
+  <mapID target="twitter" url="Topics/SocialMediaConnect/Twitter.htm" />
+   <mapID target="xing" url="Topics/SocialMediaConnect/Xing.htm" />
+    <mapID target="linkedin" url="Topics/SocialMediaConnect/LinkedIn.htm" />
 
-  <mapID target="movies" url="Topics/FavoriteMovies/Movies.htm" />
-  <mapID target="music" url="Topics/FavoriteMusic/Music.htm" />
+  <mapID target="search" url="Topics/SearchClientAccount/Search.htm" />
+  <mapID target="scan" url="Topics/ScanClientAccount/Scan.htm" />
+  
+  <mapID target="sentiment" url="Topics/SentimentAnalysis/Sentiment.htm" />
 
 </map>
