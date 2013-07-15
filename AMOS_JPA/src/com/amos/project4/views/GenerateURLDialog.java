@@ -55,6 +55,7 @@ public class GenerateURLDialog extends JDialog {
 	 * Create the dialog.
 	 */
 	public  GenerateURLDialog(UserController user,UserViewModel viewModel,SocialMediaType sType, JFrame parent) {
+		super(parent);
 		this.sType = sType;
 		this.user_controller = user;
 		this.viewModel = viewModel;

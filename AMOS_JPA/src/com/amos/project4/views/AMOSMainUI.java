@@ -22,12 +22,16 @@ package com.amos.project4.views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -58,7 +62,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import com.amos.project4.controllers.ClientsController;
 import com.amos.project4.controllers.UserController;
-import com.amos.project4.help.HelpDialog;
+import com.amos.project4.help.HelpFrame;
 import com.amos.project4.models.Client;
 import com.amos.project4.models.User;
 import com.amos.project4.socialMedia.DataRetrieverInterface;
@@ -176,6 +180,8 @@ public class AMOSMainUI implements AbstractControlledView{
 		frame.setLocationRelativeTo(null);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 		frame.setLocationByPlatform(true);
+		// Initialise the icons
+		initIcons();
 
 		// Initialise The menus
 		initMenus();
@@ -252,6 +258,16 @@ public class AMOSMainUI implements AbstractControlledView{
 		
 		// Add the window listener
 		this.frame.addWindowListener( new AMOSMainWindowListener());
+	}
+
+	private void initIcons() {
+		try {
+			frame.setIconImage(Toolkit.getDefaultToolkit().getImage(new URL(AMOSUtils.DATEV_ICON_URL)));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 	public ClientsController getClient_controller() {
@@ -440,9 +456,6 @@ public class AMOSMainUI implements AbstractControlledView{
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 
-		JMenuItem mntmUpdateDatabase = new JMenuItem("Update Database");
-		mnFile.add(mntmUpdateDatabase);
-
 		JMenuItem mntmLogout = new JMenuItem("Logout");
 		mntmLogout.addActionListener(new LogoutAction());
 		mnFile.add(mntmLogout);
@@ -463,7 +476,7 @@ public class AMOSMainUI implements AbstractControlledView{
 		mnSettings.add(mntmDBSetting);
 
 		JMenuItem mntmTSSetting = new JMenuItem("Twitter Sentiment Settings");
-		mntmDBSetting.addActionListener(new TSSettingDialogAction());
+		mntmTSSetting.addActionListener(new TSSettingDialogAction());
 		mnSettings.add(mntmTSSetting);
 
 		JMenu mnHelp = new JMenu("About");
@@ -647,8 +660,17 @@ public class AMOSMainUI implements AbstractControlledView{
 	}
 	
 	private void openHelpDialog() {
-		HelpDialog dialog = new HelpDialog(frame);
-		dialog.setVisible(true);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					HelpFrame dialog = new HelpFrame(frame);
+					dialog.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
 	}
 	
 	// Action listeners implementations

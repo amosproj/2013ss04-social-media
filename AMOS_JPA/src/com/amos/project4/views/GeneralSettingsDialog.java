@@ -94,8 +94,9 @@ public class GeneralSettingsDialog extends JDialog implements AbstractControlled
 	}
 	
 	private void init(){
-		setTitle("AMOS Project 4 General settings");
+		setTitle("AMOS Project 4 General Connection Settings");
 		setBounds(100, 100, 800, 400);
+		setLocationRelativeTo(frame);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);

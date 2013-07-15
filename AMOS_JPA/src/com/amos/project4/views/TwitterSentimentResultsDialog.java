@@ -29,6 +29,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -220,7 +221,7 @@ public class TwitterSentimentResultsDialog extends JDialog {
 		gbc_lblLastTraining.gridy = 4;
 		detailsPanel.add(lblLastTraining, gbc_lblLastTraining);
 		
-		lblLasttrainingdata = new JLabel("now()");
+		lblLasttrainingdata = new JLabel("" + new Date().toString());
 		GridBagConstraints gbc_lblLasttrainingdata = new GridBagConstraints();
 		gbc_lblLasttrainingdata.anchor = GridBagConstraints.WEST;
 		gbc_lblLasttrainingdata.insets = new Insets(0, 0, 5, 0);

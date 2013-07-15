@@ -19,6 +19,7 @@
 package com.amos.project4.help;
 
 import java.awt.BorderLayout;
+import java.awt.EventQueue;
 import java.net.URL;
 
 import javax.help.HelpSet;
@@ -28,7 +29,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
-public class HelpDialog extends JDialog {
+public class HelpFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -38,26 +39,34 @@ public class HelpDialog extends JDialog {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try {
-			HelpDialog dialog = new HelpDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					HelpFrame dialog = new HelpFrame();
+					dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+					dialog.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
 	/**
 	 * Create the dialog.
 	 */
-	public HelpDialog(JFrame frame) {
-		super(frame);
+	public HelpFrame(JFrame frame) {
+		super();
+		setIconImage(frame.getIconImage());
+		setLocationRelativeTo(null);
 		init();
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}
 
-	public HelpDialog() {
+	public HelpFrame() {
 		super();
 		init();
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}
 
 	private void init() {
@@ -78,7 +87,7 @@ public class HelpDialog extends JDialog {
 	private JHelp initHelper() {
 		try {
 			// Get the classloader of this class.
-			ClassLoader cl = HelpDialog.class.getClassLoader();
+			ClassLoader cl = HelpFrame.class.getClassLoader();
 			URL url = this.getClass().getResource("/com/amos/project4/help/HelpSet.hs");
 			return new JHelp(new HelpSet(cl, url));
 		} catch (Exception e) {

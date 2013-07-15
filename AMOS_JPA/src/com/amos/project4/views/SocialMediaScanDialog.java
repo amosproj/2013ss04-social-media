@@ -125,7 +125,7 @@ public class SocialMediaScanDialog extends JDialog implements
 	private void init() {
 		
 		setTitle("AMOS Project 4 - Social Media Scan");
-
+		setLocationRelativeTo(frame);
 		setSize(658, 500);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(frame);

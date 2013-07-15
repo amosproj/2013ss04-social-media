@@ -63,4 +63,6 @@ public class AMOSUtils {
 	public static String TWITTER_TOO_SMALL_LOGO_URL = "https://twitter.com/images/resources/twitter-bird-blue-on-white.png";
 	public static String LINKEDIN_LOGO_URL = "http://press.linkedin.com/display-media/206/4";
 	public static String XING_LOGO_URL = "http://corporate.xing.com/typo3temp/pics/b994770776.jpg";
+	
+	public static String DATEV_ICON_URL = "http://www.stb-bolle.de/images/stories/datev-logo.jpg";
 }

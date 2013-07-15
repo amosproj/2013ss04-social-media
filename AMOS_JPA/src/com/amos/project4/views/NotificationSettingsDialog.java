@@ -68,25 +68,20 @@ public class NotificationSettingsDialog extends JDialog implements
 
 	private JCheckBox FchckbxLastPost;
 
-	private JFrame frame;
-
 	public NotificationSettingsDialog(User user, List<Client> clients, JFrame frame) {
-		this();
+		this(frame);
 		this.model = new SocialMediaScanModel();
 		this.controller = new SocialMediaScanController();
 		this.controller.addModel(model);
 		this.controller.addView(this);
-		this.frame = frame;
 
-//		this.user = user;
-//		this.clients = clients;
 	}
 
 	/**
 	 * Create the dialog.
 	 */
-	private NotificationSettingsDialog() {
-		super();
+	private NotificationSettingsDialog(JFrame frame) {
+		super(frame);
 		setTitle("AMOS Project 4 - Notification Settings");
 
 		setSize(658, 251);
