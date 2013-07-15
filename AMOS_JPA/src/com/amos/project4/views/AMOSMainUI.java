@@ -22,12 +22,15 @@ package com.amos.project4.views;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -175,7 +178,9 @@ public class AMOSMainUI implements AbstractControlledView{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
 		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-		frame.setLocationByPlatform(true);
+		//frame.setLocationByPlatform(true);
+		// Initialise the icons
+		initIcons();
 
 		// Initialise The menus
 		initMenus();
@@ -252,6 +257,18 @@ public class AMOSMainUI implements AbstractControlledView{
 		
 		// Add the window listener
 		this.frame.addWindowListener( new AMOSMainWindowListener());
+		
+		
+	}
+
+	private void initIcons() {
+		try {
+			frame.setIconImage(Toolkit.getDefaultToolkit().getImage(new URL(AMOSUtils.DATEV_ICON_URL)));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//frame.setIconImage(AMOSUtils.makeIcon(AMOSUtils.DATEV_ICON_URL, 48, 48).getImage());		
 	}
 
 	public ClientsController getClient_controller() {
@@ -463,7 +480,7 @@ public class AMOSMainUI implements AbstractControlledView{
 		mnSettings.add(mntmDBSetting);
 
 		JMenuItem mntmTSSetting = new JMenuItem("Twitter Sentiment Settings");
-		mntmDBSetting.addActionListener(new TSSettingDialogAction());
+		mntmTSSetting.addActionListener(new TSSettingDialogAction());
 		mnSettings.add(mntmTSSetting);
 
 		JMenu mnHelp = new JMenu("About");
