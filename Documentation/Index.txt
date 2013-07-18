@@ -7,6 +7,20 @@
 --> documentation of the functionalities for each part of the Datev Social Media application
 --> Can also be found within the application
 
-2. sprint planning documents:
+2. Presentations
+  2.1 MidtermRelease
+  2.2 DemoDay
+
+--> The presentation slides for the two release events
+
+3. SocialMedia_icons
+  3.1 Desktop_icons
+  3.2 Android_icons
+  3.3 iPhone_icons
+
+--> the designed and used icons for the Social Media Application
+
+4. sprint planning documents
+
 --> All sprint planning documents from 01 to 13
 
