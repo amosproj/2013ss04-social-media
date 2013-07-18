@@ -1,0 +1,1 @@
+App Documentation --> Whole documentation of the functionalities of our app. Can also be found within the application
